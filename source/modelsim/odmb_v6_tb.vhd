@@ -60,6 +60,31 @@ COMPONENT file_handler IS
 
 end COMPONENT;
 
+COMPONENT file_handler_event IS
+	port (
+     clk : in std_logic;
+     en : in std_logic;
+     l1a : out std_logic;
+     lct : out std_logic_vector(7 downto 0)
+    );
+
+end COMPONENT;
+
+COMPONENT dcfeb_data_gen is
+   port(
+  
+   clk : in std_logic;
+   rst : in std_logic;
+   l1a : in std_logic;
+   l1a_match : in std_logic;
+   dcfeb_addr : in std_logic_vector(3 downto 0);
+   dcfeb_dv : out std_logic;
+   dcfeb_data : out std_logic_vector(15 downto 0)
+	
+	);
+
+end COMPONENT;
+
 COMPONENT test_controller is
 
    port(
@@ -535,6 +560,16 @@ signal MIDCLK : std_logic:= '0';
 signal FASTCLK : std_logic:= '0';
 signal SUPERFASTCLK : std_logic:= '0';
 
+-- signals from file_handler_event
+
+signal l1a : std_logic;
+signal lct : std_logic_vector(NFEB downto 0);
+
+-- signals from dcfeb_data_gen
+
+signal dcfeb_dv : std_logic;
+signal dcfeb_data : std_logic_vector(15 downto 0);
+
 -- signals to/from test_controller (from/to slv_mgt module)
 
 signal start : std_logic;
@@ -828,6 +863,30 @@ begin
 
 -- Beginning of the Test Bench Section
 
+PMAP_file_handler_event : file_handler_event
+
+   port map(
+  
+	   clk => clk,
+     en => go,
+     l1a => l1a,
+     lct => lct
+  );
+
+PMAP_dcfeb_data_gen : dcfeb_data_gen
+
+   port map(
+  
+	 clk => clk,
+   rst => rst,
+   l1a => l1a,
+   l1a_match => l1a,
+   dcfeb_addr => "1111",
+   dcfeb_dv => dcfeb_dv,
+   dcfeb_data => dcfeb_data
+	
+	);
+
 PMAP_file_handler : file_handler
 
    port map(
@@ -993,7 +1052,8 @@ PMAP_odmb_v6 : odmb_v6
 		ccb_bx0 => ccb_bx0, -- in
 		ccb_bxrst => ccb_bxrst, -- in
 		ccb_l1arst => ccb_l1arst, -- in
-		ccb_l1acc => ccb_l1acc, -- in
+--		ccb_l1acc => ccb_l1acc, -- in
+		ccb_l1acc => l1a, -- from file_handler_event
 		ccb_l1rls => ccb_l1rls, -- out
 		ccb_clken => ccb_clken, -- in
 		ccb_hardrst => ccb_hardrst, -- in		
@@ -1003,7 +1063,8 @@ PMAP_odmb_v6 : odmb_v6
 
 		tmb => tmb, -- in
 		alct => alct, -- in
-		rawlct => rawlct, -- in
+--		rawlct => rawlct, -- in
+		rawlct => lct,	-- from file_handler_event
 		tmbffclk => tmbffclk, -- in
 
 -- From/To J3/J4 t/fromo ODMB_CTRL
