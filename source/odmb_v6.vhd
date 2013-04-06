@@ -498,8 +498,17 @@ COMPONENT LVMB_ADC IS
 END COMPONENT;
 
 COMPONENT DCFEB_V6 is
+generic (
+    dcfeb_addr : std_logic_vector(3 downto 0) := "1000"  -- DCFEB address
+    );  
 port 
-	(adc_mask : OUT STD_LOGIC_VECTOR(11 downto 0);
+	(clk: IN STD_LOGIC;
+	 rst: IN STD_LOGIC;
+	 l1a : IN STD_LOGIC;
+	 l1a_match : IN STD_LOGIC;
+	 dcfeb_dv : OUT STD_LOGIC;
+   dcfeb_data : OUT STD_LOGIC_VECTOR(15 downto 0);
+   adc_mask : OUT STD_LOGIC_VECTOR(11 downto 0);
 	 dcfeb_fsel : OUT STD_LOGIC_VECTOR(32 downto 0);
 	 dcfeb_jtag_ir : OUT STD_LOGIC_VECTOR(9 downto 0);
 	 trst : IN STD_LOGIC;
@@ -830,20 +839,34 @@ signal	test_vme_clk, int_vme_clk : STD_LOGIC;
 
 -- To/From FIFOs
 
-signal	dcfeb0_data, dcfeb0_fifo_in, dcfeb0_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
+signal	dcfeb0_data : STD_LOGIC_VECTOR (15 downto 0);
+signal	dcfeb0_fifo_in, dcfeb0_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
 signal	dcfeb0_data_valid	: STD_LOGIC;
-signal	dcfeb1_data, dcfeb1_fifo_in, dcfeb1_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
+
+signal	dcfeb1_data : STD_LOGIC_VECTOR (15 downto 0);
+signal	dcfeb1_fifo_in, dcfeb1_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
 signal	dcfeb1_data_valid	: STD_LOGIC;
-signal	dcfeb2_data, dcfeb2_fifo_in, dcfeb2_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
+
+signal	dcfeb2_data : STD_LOGIC_VECTOR (15 downto 0);
+signal	dcfeb2_fifo_in, dcfeb2_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
 signal	dcfeb2_data_valid	: STD_LOGIC;
-signal	dcfeb3_data, dcfeb3_fifo_in, dcfeb3_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
+
+signal	dcfeb3_data : STD_LOGIC_VECTOR (15 downto 0);
+signal	dcfeb3_fifo_in, dcfeb3_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
 signal	dcfeb3_data_valid	: STD_LOGIC;
-signal	dcfeb4_data, dcfeb4_fifo_in, dcfeb4_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
+
+signal	dcfeb4_data : STD_LOGIC_VECTOR (15 downto 0);
+signal	dcfeb4_fifo_in, dcfeb4_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
 signal	dcfeb4_data_valid	: STD_LOGIC;
-signal	dcfeb5_data, dcfeb5_fifo_in, dcfeb5_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
+
+signal	dcfeb5_data : STD_LOGIC_VECTOR (15 downto 0);
+signal	dcfeb5_fifo_in, dcfeb5_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
 signal	dcfeb5_data_valid	: STD_LOGIC;
-signal	dcfeb6_data, dcfeb6_fifo_in, dcfeb6_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
+
+signal	dcfeb6_data : STD_LOGIC_VECTOR (15 downto 0);
+signal	dcfeb6_fifo_in, dcfeb6_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
 signal	dcfeb6_data_valid	: STD_LOGIC;
+
 signal	dcfeb7_data, dcfeb7_fifo_in, dcfeb7_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
 signal	dcfeb7_data_valid	: STD_LOGIC;
 signal	tmb_data, tmb_fifo_in, tmb_fifo_out : STD_LOGIC_VECTOR (17 downto 0);
@@ -2604,18 +2627,12 @@ FIFO_DUALCLOCK_MACRO_dcfeb0 : FIFO_DUALCLOCK_MACRO
       WREN => dcfeb0_fifo_wr_en           -- Input write enable
    );
 
--- dcfeb0_data <= d(17 downto 0);
--- dcfeb0_data_valid <= d(18);
-dcfeb0_data <= (OTHERS => '0');
-dcfeb0_data_valid <= '0';
-
 dl_resync(1) <= dl_global_rst;
-
 
 dcfeb0_fifo_in_proc : process(fifo_rm_en,dcfeb0_data_valid,fifo_tm_en,fifo_tm_wr_en,fifo_rw_en,dcfeb0_data,fifo_out,fifo_in)
 begin
 	if (fifo_rm_en(1) = '1') then
-		dcfeb0_fifo_in <= dcfeb0_data;
+		dcfeb0_fifo_in <= "00" & dcfeb0_data;
 	elsif (fifo_rw_en(1) = '1') then
 		dcfeb0_fifo_in <= fifo_out;
 	else
@@ -2649,7 +2666,15 @@ b2v_dcfeb0_fifo : FIFO_SYNC_MACRO
    );
 
 DCFEB0_V6_PM : DCFEB_V6
+	GENERIC MAP(
+	  dcfeb_addr => "1000")
 	PORT MAP(
+	  clk => clk40,
+	  rst => reset, 
+	  l1a => ccb_l1acc,
+	  l1a_match => ccb_l1acc,
+	  dcfeb_dv => dcfeb0_data_valid,
+    dcfeb_data => dcfeb0_data,
 		adc_mask => dcfeb0_adc_mask,
 		dcfeb_fsel => dcfeb0_fsel,
 		dcfeb_jtag_ir => dcfeb0_jtag_ir,
@@ -2712,18 +2737,13 @@ FIFO_DUALCLOCK_MACRO_dcfeb1 : FIFO_DUALCLOCK_MACRO
       WREN => dcfeb1_fifo_wr_en           -- Input write enable
    );
 
--- dcfeb1_data <= d(17 downto 0);
--- dcfeb1_data_valid <= d(18);
-dcfeb1_data <= (OTHERS => '0');
-dcfeb1_data_valid <= '0';
-
 dl_resync(2) <= dl_global_rst;
 
 dcfeb1_fifo_in_proc : process(fifo_rm_en,dcfeb1_data_valid,fifo_tm_en,fifo_tm_wr_en,fifo_rw_en,dcfeb1_data,fifo_out,fifo_in)
 
 begin
 	if (fifo_rm_en(2) = '1') then
-		dcfeb1_fifo_in <= dcfeb1_data;
+		dcfeb1_fifo_in <= "00" & dcfeb1_data;
 	elsif (fifo_rw_en(2) = '1') then
 		dcfeb1_fifo_in <= fifo_out;
 	else
@@ -2757,7 +2777,15 @@ b2v_dcfeb1_fifo : FIFO_SYNC_MACRO
    );
 
 DCFEB1_V6_PM : DCFEB_V6
+	GENERIC MAP(
+	  dcfeb_addr => "1001")
 	PORT MAP(
+	  clk => clk40,
+	  rst => reset, 
+	  l1a => ccb_l1acc,
+	  l1a_match => ccb_l1acc,
+	  dcfeb_dv => dcfeb1_data_valid,
+    dcfeb_data => dcfeb1_data,
 		adc_mask => dcfeb1_adc_mask,
 		dcfeb_fsel => dcfeb1_fsel,
 		dcfeb_jtag_ir => dcfeb1_jtag_ir,
@@ -2819,18 +2847,13 @@ FIFO_DUALCLOCK_MACRO_dcfeb2 : FIFO_DUALCLOCK_MACRO
       WREN => dcfeb2_fifo_wr_en           -- Input write enable
    );
 
--- dcfeb2_data <= d(17 downto 0);
--- dcfeb2_data_valid <= d(18);
-dcfeb2_data <= (OTHERS => '0');
-dcfeb2_data_valid <= '0';
-
 dl_resync(3) <= dl_global_rst;
 
 dcfeb2_fifo_in_proc : process(fifo_rm_en,dcfeb2_data_valid,fifo_tm_en,fifo_tm_wr_en,fifo_rw_en,dcfeb2_data,fifo_out,fifo_in)
 
 begin
 	if (fifo_rm_en(3) = '1') then
-		dcfeb2_fifo_in <= dcfeb2_data;
+		dcfeb2_fifo_in <= "00" & dcfeb2_data;
 	elsif (fifo_rw_en(3) = '1') then
 		dcfeb2_fifo_in <= fifo_out;
 	else
@@ -2864,7 +2887,15 @@ b2v_dcfeb2_fifo : FIFO_SYNC_MACRO
    );
 
 DCFEB2_V6_PM : DCFEB_V6
+	GENERIC MAP(
+	  dcfeb_addr => "1010")
 	PORT MAP(
+	  clk => clk40,
+	  rst => reset, 
+	  l1a => ccb_l1acc,
+	  l1a_match => ccb_l1acc,
+	  dcfeb_dv => dcfeb2_data_valid,
+    dcfeb_data => dcfeb2_data,
 		adc_mask => dcfeb2_adc_mask,
 		dcfeb_fsel => dcfeb2_fsel,
 		dcfeb_jtag_ir => dcfeb2_jtag_ir,
@@ -2926,18 +2957,13 @@ FIFO_DUALCLOCK_MACRO_dcfeb3 : FIFO_DUALCLOCK_MACRO
       WREN => dcfeb3_fifo_wr_en           -- Input write enable
    );
 
--- dcfeb3_data <= d(17 downto 0);
--- dcfeb3_data_valid <= d(18);
-dcfeb3_data <= (OTHERS => '0');
-dcfeb3_data_valid <= '0';
-
 dl_resync(4) <= dl_global_rst;
 
 dcfeb3_fifo_in_proc : process(fifo_rm_en,dcfeb3_data_valid,fifo_tm_en,fifo_tm_wr_en,fifo_rw_en,dcfeb3_data,fifo_out,fifo_in)
 
 begin
 	if (fifo_rm_en(4) = '1') then
-		dcfeb3_fifo_in <= dcfeb3_data;
+		dcfeb3_fifo_in <= "00" & dcfeb3_data;
 	elsif (fifo_rw_en(4) = '1') then
 		dcfeb3_fifo_in <= fifo_out;
 	else
@@ -2971,7 +2997,15 @@ b2v_dcfeb3_fifo : FIFO_SYNC_MACRO
    );
 
 DCFEB3_V6_PM : DCFEB_V6
+	GENERIC MAP(
+	  dcfeb_addr => "1011")
 	PORT MAP(
+	  clk => clk40,
+	  rst => reset, 
+	  l1a => ccb_l1acc,
+	  l1a_match => ccb_l1acc,
+	  dcfeb_dv => dcfeb3_data_valid,
+    dcfeb_data => dcfeb3_data,
 		adc_mask => dcfeb3_adc_mask,
 		dcfeb_fsel => dcfeb3_fsel,
 		dcfeb_jtag_ir => dcfeb3_jtag_ir,
@@ -3010,18 +3044,13 @@ FIFO_DUALCLOCK_MACRO_dcfeb4 : FIFO_DUALCLOCK_MACRO
       WREN => dcfeb4_fifo_wr_en           -- Input write enable
    );
 
--- dcfeb4_data <= d(17 downto 0);
--- dcfeb4_data_valid <= d(18);
-dcfeb4_data <= (OTHERS => '0');
-dcfeb4_data_valid <= '0';
-
 dl_resync(5) <= dl_global_rst;
 
 dcfeb4_fifo_in_proc : process(fifo_rm_en,dcfeb4_data_valid,fifo_tm_en,fifo_tm_wr_en,fifo_rw_en,dcfeb4_data,fifo_out,fifo_in)
 
 begin
 	if (fifo_rm_en(5) = '1') then
-		dcfeb4_fifo_in <= dcfeb4_data;
+		dcfeb4_fifo_in <= "00" & dcfeb4_data;
 	elsif (fifo_rw_en(5) = '1') then
 		dcfeb4_fifo_in <= fifo_out;
 	else
@@ -3055,7 +3084,15 @@ b2v_dcfeb4_fifo : FIFO_SYNC_MACRO
    );
 
 DCFEB4_V6_PM : DCFEB_V6
+	GENERIC MAP(
+	  dcfeb_addr => "1100")
 	PORT MAP(
+	  clk => clk40,
+	  rst => reset, 
+	  l1a => ccb_l1acc,
+	  l1a_match => ccb_l1acc,
+	  dcfeb_dv => dcfeb4_data_valid,
+    dcfeb_data => dcfeb4_data,
 		adc_mask => dcfeb4_adc_mask,
 		dcfeb_fsel => dcfeb4_fsel,
 		dcfeb_jtag_ir => dcfeb4_jtag_ir,
@@ -3094,18 +3131,13 @@ FIFO_DUALCLOCK_MACRO_dcfeb5 : FIFO_DUALCLOCK_MACRO
       WREN => dcfeb5_fifo_wr_en           -- Input write enable
    );
 
--- dcfeb5_data <= d(17 downto 0);
--- dcfeb5_data_valid <= d(18);
-dcfeb5_data <= (OTHERS => '0');
-dcfeb5_data_valid <= '0';
-
 dl_resync(6) <= dl_global_rst;
 
 dcfeb5_fifo_in_proc : process(fifo_rm_en,dcfeb5_data_valid,fifo_tm_en,fifo_tm_wr_en,fifo_rw_en,dcfeb5_data,fifo_out,fifo_in)
 
 begin
 	if (fifo_rm_en(6) = '1') then
-		dcfeb5_fifo_in <= dcfeb5_data;
+		dcfeb5_fifo_in <= "00" & dcfeb5_data;
 	elsif (fifo_rw_en(6) = '1') then
 		dcfeb5_fifo_in <= fifo_out;
 	else
@@ -3139,7 +3171,15 @@ b2v_dcfeb5_fifo : FIFO_SYNC_MACRO
    );
 
 DCFEB5_V6_PM : DCFEB_V6
+	GENERIC MAP(
+	  dcfeb_addr => "1101")
 	PORT MAP(
+	  clk => clk40,
+	  rst => reset, 
+	  l1a => ccb_l1acc,
+	  l1a_match => ccb_l1acc,
+	  dcfeb_dv => dcfeb5_data_valid,
+    dcfeb_data => dcfeb5_data,
 		adc_mask => dcfeb5_adc_mask,
 		dcfeb_fsel => dcfeb5_fsel,
 		dcfeb_jtag_ir => dcfeb5_jtag_ir,
@@ -3178,11 +3218,6 @@ DCFEB5_V6_PM : DCFEB_V6
       WREN => dcfeb6_fifo_wr_en           -- Input write enable
    );
 
--- dcfeb6_data <= d(17 downto 0);
--- dcfeb6_data_valid <= d(18);
-dcfeb6_data <= (OTHERS => '0');
-dcfeb6_data_valid <= '0';
-
 dl_resync(7) <= dl_global_rst;
 
 dcfeb6_fifo_in_proc : process(fifo_rm_en,dcfeb6_data_valid,fifo_tm_en,fifo_tm_wr_en,fifo_rw_en,dcfeb6_data,fifo_out,fifo_in)
@@ -3190,7 +3225,7 @@ dcfeb6_fifo_in_proc : process(fifo_rm_en,dcfeb6_data_valid,fifo_tm_en,fifo_tm_wr
 begin
 --	fifo_wr_en(7) <= (dcfeb6_data_valid and fifo_rm_en(7)) or (fifo_tm_wr_en(7) and fifo_tm_en(7));
 	if (fifo_rm_en(7) = '1') then
-		dcfeb6_fifo_in <= dcfeb6_data;
+		dcfeb6_fifo_in <= "00" & dcfeb6_data;
 	elsif (fifo_rw_en(7) = '1') then
 		dcfeb6_fifo_in <= fifo_out;
 	else
@@ -3238,7 +3273,15 @@ b2v_dcfeb6_fifo : FIFO_SYNC_MACRO
    );
 
 DCFEB6_V6_PM : DCFEB_V6
+	GENERIC MAP(
+	  dcfeb_addr => "1110")
 	PORT MAP(
+	  clk => clk40,
+	  rst => reset, 
+	  l1a => ccb_l1acc,
+	  l1a_match => ccb_l1acc,
+	  dcfeb_dv => dcfeb6_data_valid,
+    dcfeb_data => dcfeb6_data,
 		adc_mask => dcfeb6_adc_mask,
 		dcfeb_fsel => dcfeb6_fsel,
 		dcfeb_jtag_ir => dcfeb6_jtag_ir,

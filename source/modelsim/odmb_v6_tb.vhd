@@ -548,7 +548,7 @@ end COMPONENT;
 
 -- clock and reset signals
 
-signal go : std_logic :='0';
+signal go, goevent : std_logic :='0';
 
 signal clk : std_logic :='0';
 signal rst : std_logic := '0';
@@ -845,7 +845,8 @@ begin
 
   reset <= '1' after 200 ns, '0' after 13000 ns;
  
-  go <= '1' after 16200 ns;
+  go <= '1' after 10 us;
+  goevent <= '1' after 200 us;
         
   qpll_clk40MHz_p <= not qpll_clk40MHz_p after 10 ns;
   qpll_clk40MHz_n <= not qpll_clk40MHz_n after 10 ns;
@@ -868,7 +869,7 @@ PMAP_file_handler_event : file_handler_event
    port map(
   
 	   clk => clk,
-     en => go,
+     en => goevent,
      l1a => l1a,
      lct => lct
   );

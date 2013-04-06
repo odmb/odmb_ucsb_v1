@@ -31,9 +31,12 @@ initial
 // Test of MBCJTAG
 //    infile=$fopen("C:\\ModelSim_Guido\\ODMB_FF_EMU\\test_mbcjtag.txt","r");
 //    outfile=$fopen("C:\\ModelSim_Guido\\ODMB_FF_EMU\\test_mbcjtag_out.txt","w");
-// Test of FIFOMON
-    infile=$fopen("${ODMB_FOLDER}\\commands\\test_dcfebjtag_v1b.txt","r");
-    outfile=$fopen("${ODMB_FOLDER}\\commands\\test_dcfebjtag_v1b_out.txt","w");
+// Test of DCFEBJTAG
+//    infile=$fopen("${ODMB_FOLDER}\\commands\\test_dcfebjtag_v1b.txt","r");
+//    outfile=$fopen("${ODMB_FOLDER}\\commands\\test_dcfebjtag_v1b_out.txt","w");
+// Test of CONFREGS
+    infile=$fopen("${ODMB_FOLDER}\\commands\\test_lct_l1a_conf.txt","r");
+    outfile=$fopen("${ODMB_FOLDER}\\commands\\test_lct_l1a_conf_out.txt","w");
     while (!$feof(infile))
       begin
         @(posedge clk) #10
@@ -70,6 +73,6 @@ initial
 
     $fclose(outfile);
     $fclose(infile);
-    $stop;
+//    $stop;
  end
 endmodule

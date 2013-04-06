@@ -11,8 +11,17 @@ use UNISIM.all;
 
 
 entity dcfeb_v6 is
+  generic (
+    dcfeb_addr : std_logic_vector(3 downto 0) := "1000"  -- DCFEB address
+    );  
 port
 	(
+	  clk: IN STD_LOGIC;
+	  rst: IN STD_LOGIC;
+	  l1a : IN STD_LOGIC;
+	  l1a_match : IN STD_LOGIC;
+	  dcfeb_dv : OUT STD_LOGIC;
+    dcfeb_data : OUT STD_LOGIC_VECTOR(15 downto 0);
     adc_mask: OUT STD_LOGIC_VECTOR(11 downto 0);
 	  dcfeb_fsel: OUT STD_LOGIC_VECTOR(32 downto 0);
 	  dcfeb_jtag_ir: OUT STD_LOGIC_VECTOR(9 downto 0);
@@ -28,6 +37,21 @@ end dcfeb_v6 ;
 
 ARCHITECTURE dcfeb_v6_arch of dcfeb_v6  is
 
+
+COMPONENT dcfeb_data_gen is
+   port(
+  
+   clk : in std_logic;
+   rst : in std_logic;
+   l1a : in std_logic;
+   l1a_match : in std_logic;
+   dcfeb_addr : in std_logic_vector(3 downto 0);
+   dcfeb_dv : out std_logic;
+   dcfeb_data : out std_logic_vector(15 downto 0)
+	
+	);
+
+end COMPONENT;
 
 COMPONENT tdo_mux
   port(
@@ -157,6 +181,20 @@ signal tdo4 : std_logic := '0';
 begin
 
 dcfeb_fsel <= fsel;
+
+PMAP_dcfeb_data_gen : dcfeb_data_gen
+
+   port map(
+  
+	 clk => clk,
+   rst => rst,
+   l1a => l1a,
+   l1a_match => l1a,
+   dcfeb_addr => dcfeb_addr,
+   dcfeb_dv => dcfeb_dv,
+   dcfeb_data => dcfeb_data
+	
+	);
 
 PMAP_BSCAN : BGB_BSCAN_emulator 
   port map (

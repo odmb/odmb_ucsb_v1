@@ -2,27 +2,3 @@
 0 XXXXXXXX
                                   rd_dcfeb_select=>(CMD=0x01024)
 1 0000xxX1
-                     wr_ir(jtag_user1)=>(CMD=0x0191C,DAT=0x03c2)
-0 XXXXXXXX
-                     wr_mon_ctrl(0x03)=>(CMD=0x03000,DAT=0x0003)
-0 XXXXXXXX
-                                      rd_mon_ctrl=>(CMD=0x03004)
-1 00000003
-                                      rd_mon_data=>(CMD=0x03008)
-1 00003c20
-         wr_dcfeb_dev_select(adc_mask)=>(CMD=0x0170C,DAT=0x000c)
-0 XXXXXXXX
-                     wr_mon_ctrl(0x02)=>(CMD=0x03000,DAT=0x0002)
-0 XXXXXXXX
-                                      rd_mon_ctrl=>(CMD=0x03004)
-1 00000002
-                                      rd_mon_data=>(CMD=0x03008)
-1 00000000
-                     wr_mon_ctrl(0x01)=>(CMD=0x03000,DAT=0x0001)
-0 XXXXXXXX
-                                      rd_mon_ctrl=>(CMD=0x03004)
-1 00000001
-                                      rd_mon_data=>(CMD=0x03008)
-1 00001000
-                              rd_dcfeb_dev_select=>(CMD=0x01714)
-1 00000000
