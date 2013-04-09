@@ -25,7 +25,8 @@ LIBRARY work;
 
 ENTITY ODMB_V6 IS
   generic (
-    NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
+    NFEB : integer range 1 to 7 := 7;  -- Number of DCFEBS, 7 in the final design
+    FIFO_SIZE : integer range 1 to 64 := 16  -- Number FIFO words in CAFIFO
     );  
 	PORT
 	(
@@ -388,6 +389,38 @@ ENTITY ODMB_V6 IS
 END ODMB_V6;
 
 ARCHITECTURE bdf_type OF ODMB_V6 IS 
+
+COMPONENT cafifo is
+   generic (
+    NFEB : integer range 1 to 7 := 5;  -- Number of DCFEBS, 7 in the final design
+    FIFO_SIZE : integer range 1 to 64 := 16  -- Number of CAFIFO words
+    );  
+   port(
+  
+   clk : in std_logic;
+   rst : in std_logic;
+
+   l1a : in std_logic;
+   l1a_match_in : in std_logic_vector(NFEB downto 1);
+   
+   dcfeb0_dv : in std_logic;
+   dcfeb0_data : in std_logic_vector(15 downto 0);
+   dcfeb1_dv : in std_logic;
+   dcfeb1_data : in std_logic_vector(15 downto 0);
+   dcfeb2_dv : in std_logic;
+   dcfeb2_data : in std_logic_vector(15 downto 0);
+   dcfeb3_dv : in std_logic;
+   dcfeb3_data : in std_logic_vector(15 downto 0);
+   dcfeb4_dv : in std_logic;
+   dcfeb4_data : in std_logic_vector(15 downto 0);
+   dcfeb5_dv : in std_logic;
+   dcfeb5_data : in std_logic_vector(15 downto 0);
+   dcfeb6_dv : in std_logic;
+   dcfeb6_data : in std_logic_vector(15 downto 0);
+
+   dcfeb_fifo_wren : out std_logic_vector(NFEB downto 1));
+
+end COMPONENT;
 
 COMPONENT fifo_wc_sel IS
   
@@ -2574,6 +2607,36 @@ begin
 	
 end process;
 
+-- CAFIFO
+
+PM_CAFIFO : cafifo
+
+   generic map (NFEB => NFEB, FIFO_SIZE => FIFO_SIZE)  
+
+   port map(
+  
+	 clk => clk40,
+	 rst => reset, 
+
+	 l1a => dcfeb_l1a,
+	 l1a_match_in => dcfeb_l1a_match,
+   
+   dcfeb0_dv => dcfeb0_data_valid,
+   dcfeb0_data => dcfeb0_data,
+   dcfeb1_dv => dcfeb1_data_valid,
+   dcfeb1_data => dcfeb1_data,
+   dcfeb2_dv => dcfeb2_data_valid,
+   dcfeb2_data => dcfeb2_data,
+   dcfeb3_dv => dcfeb3_data_valid,
+   dcfeb3_data => dcfeb3_data,
+   dcfeb4_dv => dcfeb4_data_valid,
+   dcfeb4_data => dcfeb4_data,
+   dcfeb5_dv => dcfeb5_data_valid,
+   dcfeb5_data => dcfeb5_data,
+   dcfeb6_dv => dcfeb6_data_valid,
+   dcfeb6_data => dcfeb6_data,
+
+   dcfeb_fifo_wren => open);
 
 -- DCFEB0
 
