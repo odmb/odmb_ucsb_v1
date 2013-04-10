@@ -27,8 +27,10 @@ entity cafifo is
    rst : in std_logic;
 
    l1a : in std_logic;
-   l1a_match_in : in std_logic_vector(NFEB downto 1);
+   l1a_match_in : in std_logic_vector(NFEB+2 downto 1);
    
+   alct_dv : in std_logic;
+   tmb_dv : in std_logic;
    dcfeb0_dv : in std_logic;
    dcfeb0_data : in std_logic_vector(15 downto 0);
    dcfeb1_dv : in std_logic;
@@ -44,7 +46,10 @@ entity cafifo is
    dcfeb6_dv : in std_logic;
    dcfeb6_data : in std_logic_vector(15 downto 0);
 
-   dcfeb_fifo_wren : out std_logic_vector(NFEB downto 1)
+   dcfeb_fifo_wren : out std_logic_vector(NFEB downto 1);
+   alct_fifo_wren : out std_logic;
+   tmb_fifo_wren : out std_logic
+   
        
 	);
 
@@ -54,11 +59,14 @@ end cafifo;
 
 architecture cafifo_architecture of cafifo is
 
+signal alct_l1a_dav, tmb_l1a_dav : std_logic;
 signal dcfeb_dv : std_logic_vector(NFEB downto 1);
 
 type rx_state_type is (RX_IDLE, RX_DW);
-type rx_state_array_type is array (NFEB downto 1) of rx_state_type;
+type rx_state_array_type is array (NFEB+2 downto 1) of rx_state_type;
 signal rx_next_state, rx_current_state: rx_state_array_type;
+signal alct_rx_next_state, alct_rx_current_state: rx_state_type;
+signal tmb_rx_next_state, tmb_rx_current_state: rx_state_type;
 
 signal dcfeb_l1a_dav : std_logic_vector(NFEB downto 1);
 
@@ -73,7 +81,7 @@ signal dcfeb_l1a_cnt : dcfeb_l1a_cnt_array_type;
 type l1a_cnt_array_type is array (FIFO_SIZE-1 downto 0) of std_logic_vector(11 downto 0);
 signal l1a_cnt : l1a_cnt_array_type;
 
-type l1a_array_type is array (FIFO_SIZE-1 downto 0) of std_logic_vector(NFEB downto 1);
+type l1a_array_type is array (FIFO_SIZE-1 downto 0) of std_logic_vector(NFEB+2 downto 1);
 signal l1a_match : l1a_array_type;
 signal l1a_dav : l1a_array_type;
 
@@ -165,6 +173,84 @@ begin
 
 end process;
 
+alct_rx_fsm_logic : process (alct_rx_current_state, alct_dv)
+	
+begin
+				
+	   case alct_rx_current_state is
+		
+		    when RX_IDLE =>
+			
+			     if (alct_dv = '1') then
+			       alct_l1a_dav <= '1';
+			       alct_fifo_wren <= '1';
+			       alct_rx_next_state <= RX_DW;
+			     else
+			       alct_l1a_dav <= '0';
+			       alct_fifo_wren <= '0';
+			       alct_rx_next_state <= RX_IDLE;
+			     end if;
+			
+		    when RX_DW =>
+			
+			     alct_l1a_dav <= '0';
+			     if (alct_dv = '1') then
+			       alct_fifo_wren <= '1';
+				     alct_rx_next_state <= RX_DW;
+			     else
+			       alct_fifo_wren <= '0';
+			       alct_rx_next_state <= RX_IDLE;
+			     end if;
+
+		    when others =>
+
+				   alct_l1a_dav <= '0';
+			     alct_fifo_wren <= '0';
+			     alct_rx_next_state <= RX_IDLE;
+				
+		 end case;
+
+end process;
+
+tmb_rx_fsm_logic : process (tmb_rx_current_state, tmb_dv)
+	
+begin
+				
+	   case tmb_rx_current_state is
+		
+		    when RX_IDLE =>
+			
+			     if (tmb_dv = '1') then
+			       tmb_l1a_dav <= '1';
+			       tmb_fifo_wren <= '1';
+			       tmb_rx_next_state <= RX_DW;
+			     else
+			       tmb_l1a_dav <= '0';
+			       tmb_fifo_wren <= '0';
+			       tmb_rx_next_state <= RX_IDLE;
+			     end if;
+			
+		    when RX_DW =>
+			
+			     tmb_l1a_dav <= '0';
+			     if (tmb_dv = '1') then
+			       tmb_fifo_wren <= '1';
+				     tmb_rx_next_state <= RX_DW;
+			     else
+			       tmb_fifo_wren <= '0';
+			       tmb_rx_next_state <= RX_IDLE;
+			     end if;
+
+		    when others =>
+
+				   tmb_l1a_dav <= '0';
+			     tmb_fifo_wren <= '0';
+			     tmb_rx_next_state <= RX_IDLE;
+				
+		 end case;
+
+end process;
+
 -- l1a Counter
 	
 l1a_counter: process (clk, l1a, rst)
@@ -233,6 +319,56 @@ begin
             l1a_dav(index)(dcfeb_index) <= '1';
          end if;
 	    end loop;
+	  end loop;
+	end if;
+
+end process;
+	
+alct_dv_fifo : process (l1a_cnt, dcfeb_l1a_cnt, alct_l1a_dav, rst, clk)
+variable filled : std_logic;
+begin
+  filled := '0';
+	if (rst = '1') then
+--	  for index in 0 to FIFO_SIZE-1 loop
+--      dcfeb_l1a_dav(index) <= (OTHERS => '0');
+--	  end loop;
+	elsif rising_edge(clk) and alct_l1a_dav='1' then
+	  for index in wr_addr_out+1 to FIFO_SIZE-1 loop      
+	       if (l1a_match(index)(9) = '1') and (filled = '0') then
+            l1a_dav(index)(9) <= '1';
+            filled := '1';
+         end if;
+	  end loop;
+	  for index in 1 to wr_addr_out-1 loop      
+	       if (l1a_match(index)(9) = '1') and (filled = '0') then
+            l1a_dav(index)(9) <= '1';
+            filled := '1';
+         end if;
+	  end loop;
+	end if;
+
+end process;
+	
+tmb_dv_fifo : process (l1a_cnt, dcfeb_l1a_cnt, tmb_l1a_dav, rst, clk)
+variable filled : std_logic;
+begin
+  filled := '0';
+	if (rst = '1') then
+--	  for index in 0 to FIFO_SIZE-1 loop
+--      dcfeb_l1a_dav(index) <= (OTHERS => '0');
+--	  end loop;
+	elsif rising_edge(clk) and tmb_l1a_dav='1' then
+	  for index in wr_addr_out+1 to FIFO_SIZE-1 loop      
+	       if (l1a_match(index)(8) = '1') and (filled = '0') then
+            l1a_dav(index)(8) <= '1';
+            filled := '1';
+         end if;
+	  end loop;
+	  for index in 1 to wr_addr_out-1 loop      
+	       if (l1a_match(index)(8) = '1') and (filled = '0') then
+            l1a_dav(index)(8) <= '1';
+            filled := '1';
+         end if;
 	  end loop;
 	end if;
 

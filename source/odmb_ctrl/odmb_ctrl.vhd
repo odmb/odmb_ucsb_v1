@@ -34,11 +34,13 @@ PORT 	(
 		ccb_clken : IN STD_LOGIC;										-- clken - from J3
 
 		rawlct : IN STD_LOGIC_VECTOR (NFEB downto 0);				-- rawlct(5 downto 0) - from J4
-		lctdav1 : IN STD_LOGIC;											-- lctdav1 - from J4
-		lctdav2 : IN STD_LOGIC;											-- lctdav2 - from J4
+		tmb_dav : IN STD_LOGIC;											-- previously lctdav1, from J4
+		alct_dav : IN STD_LOGIC;											-- previously lctdav2, from J4
 		lctrqst : OUT STD_LOGIC_VECTOR (2 downto 1);				-- lctrqst(2 downto 1) - to J4
 		rsvtd_in : IN STD_LOGIC_VECTOR(4 DOWNTO 0);				-- OK 	spare(2 DOWNTO 0) - to J4
 		rsvtd_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);			-- OK		spare(7 DOWNTO 3) - from J4
+		cafifo_push : OUT STD_LOGIC;  -- PUSH from TRGCNTRL to CAFIFO
+		cafifo_l1a_match : OUT STD_LOGIC_VECTOR(NFEB+2 downto 0); -- L1A_MATCH from TRGCNTRL to CAFIFO
 
 -- From GigaLinks
 
@@ -178,6 +180,8 @@ COMPONENT CONFREGS is  -- Used to be LOADTIME+SETFEBDLY+SETCALDLY in the old des
     FLOADKILL : in std_logic;           -- Generates KILLCFEB
 
     TDO         : out std_logic;
+    ALCT_PUSH_DLY    : out std_logic_vector(4 downto 0);
+    TMB_PUSH_DLY    : out std_logic_vector(4 downto 0);
     PUSH_DLY    : out std_logic_vector(4 downto 0);
     LCT_L1A_DLY : out std_logic_vector(5 downto 0);
     INJDLY      : out std_logic_vector(4 downto 0);
@@ -321,6 +325,10 @@ COMPONENT TRGCNTRL is
     CAL_L1A     : in std_logic;
     LCT_L1A_DLY : in std_logic_vector(5 downto 0);
     PUSH_DLY    : in std_logic_vector(4 downto 0);
+    ALCT_DAV    : in std_logic;
+    TMB_DAV     : in std_logic;
+    ALCT_PUSH_DLY : in std_logic_vector(4 downto 0);
+    TMB_PUSH_DLY : in std_logic_vector(4 downto 0);
 
     JTRGEN    : in std_logic_vector(3 downto 0);
     EAFEB     : in std_logic;
@@ -331,7 +339,7 @@ COMPONENT TRGCNTRL is
     DCFEB_L1A       : out std_logic;
     DCFEB_L1A_MATCH : out std_logic_vector(NFEB downto 1);
     FIFO_PUSH       : out std_logic;
-    FIFO_L1A_MATCH  : out std_logic_vector(NFEB downto 0);
+    FIFO_L1A_MATCH  : out std_logic_vector(NFEB+2 downto 0);
     LCT_ERR         : out std_logic
     );
 
@@ -468,7 +476,9 @@ signal  crateid : std_logic_vector(6 downto 0);     -- Instruction 15
 signal  callctdly : std_logic_vector(3 downto 0);    
 signal  calgdly : std_logic_vector(4 downto 0);
 signal  extdly : std_logic_vector(4 downto 0);    
-signal  injdly : std_logic_vector(4 downto 0);    
+signal  injdly : std_logic_vector(4 downto 0);   
+signal  alct_push_dly : std_logic_vector (4 downto 0);
+signal  tmb_push_dly : std_logic_vector (4 downto 0); 
 signal  push_dly : std_logic_vector (4 downto 0);
 signal  lct_l1a_dly : std_logic_vector (5 downto 0);
 
@@ -483,7 +493,7 @@ signal sw4_enl1rls : std_logic := '1';
 
 -- TRGCNTRL outputs
 signal FIFO_PUSH : std_logic;
-signal trg_fifo_l1a_match_in : std_logic_vector(NFEB downto 0);
+signal trg_fifo_l1a_match_in : std_logic_vector(NFEB+2 downto 0);
 
 -- TRGFIFO
 signal TRG_FIFO_FULL_B, TRG_FIFO_EMPTY_B, TRG_FIFO_PUSH, TRG_FIFO_POP, TRG_FIFO_ERR : std_logic;			
@@ -598,6 +608,8 @@ CONFREGS_PM : CONFREGS   -- Used to be LOADTIME+SETFEBDLY+SETCALDLY in the old d
     FLOADKILL   => instr(16),
                 
     TDO         => open,
+    ALCT_PUSH_DLY    => alct_push_dly,
+    TMB_PUSH_DLY    => tmb_push_dly,
     PUSH_DLY    => push_dly,
     LCT_L1A_DLY => lct_l1a_dly, 
     INJDLY      => injdly,
@@ -723,7 +735,11 @@ TRGCNTRL_PM : TRGCNTRL
     CAL_L1A         => cal_gtrg,
     LCT_L1A_DLY     => lct_l1a_dly, 
     PUSH_DLY        => push_dly,    -- Not used for now
-                    
+    ALCT_DAV    => alct_dav,
+    TMB_DAV     => tmb_dav,
+    ALCT_PUSH_DLY => alct_push_dly,
+    TMB_PUSH_DLY => tmb_push_dly,
+                
     JTRGEN          => jtrgen,
     EAFEB           => enacfeb,
     CMODE           => cal_mode,   
@@ -744,7 +760,7 @@ TRGFIFO_PM : TRGFIFO
     RST            => reset,
     
     PUSH           => trg_fifo_push,
-    FIFO_L1A_MATCH_IN   => trg_fifo_l1a_match_in,
+    FIFO_L1A_MATCH_IN   => trg_fifo_l1a_match_in(NFEB downto 0),
     POP            => trg_fifo_pop,
     BC0            => bc0, 
     BXRST          => bxrst,
@@ -756,6 +772,8 @@ TRGFIFO_PM : TRGFIFO
     FIFO_ERR       => trg_fifo_err
     );
 
+cafifo_push <= trg_fifo_push;
+cafifo_l1a_match <= trg_fifo_l1a_match_in;
 
 CCBCODE_PM : CCBCODE
 	port map(

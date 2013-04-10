@@ -21,12 +21,14 @@ entity CONFREGS is
     UPDATE : in std_logic;
     SHIFT  : in std_logic;
 
-    FLOADDLY  : in std_logic;           -- Generates PUSH_DLY & LCT_L1A_DLY
+    FLOADDLY  : in std_logic;           -- Generates PUSH_DLY & LCT_L1A_DLY & tMB_PUSH_DLY & ALCT_PUSH_DLY
     FLOADCDLY : in std_logic;           -- Generates INJDLY & EXTDLY & CALGDLY & CALLCTDLY
     FLOADID   : in std_logic;           -- Generates CRATEID
     FLOADKILL : in std_logic;           -- Generates KILLCFEB
 
     TDO         : out std_logic;
+    ALCT_PUSH_DLY : out std_logic_vector(4 downto 0);
+    TMB_PUSH_DLY  : out std_logic_vector(4 downto 0);
     PUSH_DLY    : out std_logic_vector(4 downto 0);
     LCT_L1A_DLY : out std_logic_vector(5 downto 0);
     INJDLY      : out std_logic_vector(4 downto 0);
@@ -42,8 +44,8 @@ end CONFREGS;
 architecture CONFREGS_Arch of CONFREGS is
 
   signal DLY_SHR_EN, DLY_DR_CLK, DLY_TDO    : std_logic;
-  signal DLY_SHR                            : std_logic_vector(12 downto 1);
-  signal DLY_DR                             : std_logic_vector(11 downto 1);
+  signal DLY_SHR                            : std_logic_vector(22 downto 1);
+  signal DLY_DR                             : std_logic_vector(21 downto 1);
   signal CDLY_SHR_EN, CDLY_DR_CLK, CDLY_TDO : std_logic;
   signal CDLY_SHR                           : std_logic_vector(20 downto 1);
   signal CDLY_DR                            : std_logic_vector(19 downto 1);
@@ -56,18 +58,20 @@ architecture CONFREGS_Arch of CONFREGS is
 
 begin  --Architecture
 
-  -- Generate PUSH_DLY / Generate LCT_L1A_DLY
+  -- Generate ALCT_PUSH_DLY / Generate TMB_PUSH_DLY / Generate PUSH_DLY / Generate LCT_L1A_DLY
   DLY_SHR_EN <= SHIFT and SEL2 and FLOADDLY;
   DLY_DR_CLK <= UPDATE and SEL2 and FLOADDLY;
-  DLY_SHR(12) <= BTDI;
+  DLY_SHR(22) <= BTDI;
   -- In the original design, at reset DAVDLY(14:10) = PUSH_DLY was 10110  
-  GEN_DLY_SHR : for I in 11 downto 1 generate
+  GEN_DLY_SHR : for I in 21 downto 1 generate
   begin
     FDPE_I : FDPE port map(DLY_SHR(I), DRCK, DLY_SHR_EN, DLY_SHR(I+1), RST);
     FDP_I  : FDP port map(DLY_DR(I), DLY_DR_CLK, DLY_SHR(I), RST);
   end generate GEN_DLY_SHR;
   LCT_L1A_DLY(5 downto 0) <= DLY_DR(6 downto 1);
   PUSH_DLY(4 downto 0)    <= DLY_DR(11 downto 7);
+  TMB_PUSH_DLY(4 downto 0)    <= DLY_DR(16 downto 12);
+  ALCT_PUSH_DLY(4 downto 0)    <= DLY_DR(21 downto 17);
   DLY_TDO                 <= DLY_SHR(1);
 
 

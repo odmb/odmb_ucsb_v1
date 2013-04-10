@@ -65,6 +65,8 @@ COMPONENT file_handler_event IS
      clk : in std_logic;
      en : in std_logic;
      l1a : out std_logic;
+     alct_dav : out std_logic;
+     tmb_dav : out std_logic;
      lct : out std_logic_vector(7 downto 0)
     );
 
@@ -563,6 +565,8 @@ signal SUPERFASTCLK : std_logic:= '0';
 -- signals from file_handler_event
 
 signal l1a : std_logic;
+signal alct_dav : std_logic;
+signal tmb_dav : std_logic;
 signal lct : std_logic_vector(NFEB downto 0);
 
 -- signals from dcfeb_data_gen
@@ -871,6 +875,8 @@ PMAP_file_handler_event : file_handler_event
 	   clk => clk,
      en => goevent,
      l1a => l1a,
+     alct_dav => alct_dav,
+     tmb_dav => tmb_dav,
      lct => lct
   );
 
@@ -1070,8 +1076,10 @@ PMAP_odmb_v6 : odmb_v6
 
 -- From/To J3/J4 t/fromo ODMB_CTRL
 
-		lctdav1 => lctdav1, -- in 
-		lctdav2 => lctdav2, -- in 
+--		lctdav1 => lctdav1, -- in 
+--		lctdav2 => lctdav2, -- in 
+		lctdav1 => tmb_dav, -- from file_handler_event
+		lctdav2 => alct_dav, -- from file_handler_event
 --		rsvtd : INOUT STD_LOGIC_VECTOR(7 DOWNTO 0);			
 		rsvtd_in => rsvtd_in, -- in
 		rsvtd_out => rsvtd_out, -- out

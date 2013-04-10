@@ -11,8 +11,10 @@
 ---------------------------------------------------------------------------------------------------
 
 library IEEE;
+library unisim;
 use IEEE.STD_LOGIC_UNSIGNED.all;
 use IEEE.STD_LOGIC_1164.all;
+use unisim.vcomponents.all;
 
 entity dcfeb_data_gen is
    port(
@@ -43,6 +45,7 @@ signal dw_cnt_en, dw_cnt_rst : std_logic;
 signal l1a_cnt_out : std_logic_vector(11 downto 0);
 signal dw_cnt_out : std_logic_vector(11 downto 0);
 constant dw_n : std_logic_vector(11 downto 0) := "000000001000";
+signal tx_start : std_logic;
 
 begin
   
@@ -84,7 +87,7 @@ begin
 		end if;              
 	end if; 
 
-	dw_cnt_out <= dw_cnt_data;
+	dw_cnt_out <= dw_cnt_data + 1;
 	
 end process;
 
@@ -101,7 +104,9 @@ begin
 
 end process;
 
-fsm_logic : process (l1a_match, l1a_cnt_out, dw_cnt_out, current_state)
+SRL16_TX_START : SRL16 port map(tx_start, '1', '1', '1', '1', CLK, l1a_match);
+
+fsm_logic : process (tx_start, l1a_cnt_out, dw_cnt_out, current_state)
 	
 begin
 				
@@ -113,7 +118,7 @@ begin
       dcfeb_dv <= '0';	
       dw_cnt_en <= '0';
 			dw_cnt_rst <= '1';
-			if (l1a_match = '1') then
+			if (tx_start = '1') then
 				next_state <= TX_HEADER;
 			else
 				next_state <= IDLE;
