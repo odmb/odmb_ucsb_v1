@@ -1279,6 +1279,29 @@ signal	por_reg : STD_LOGIC_VECTOR (31 downto 0);
 signal	mbc_leds : STD_LOGIC_VECTOR (5 downto 0);
 
 signal   select_diagnostic : integer := 0;
+
+signal   dcfeb_fifo_wr_en : std_logic_vector(NFEB downto 1) := (OTHERS => '0');
+signal   dcfeb_fifo_rd_en : std_logic_vector(NFEB downto 1) := (OTHERS => '0');
+
+signal dcfeb_data_valid : std_logic_vector(NFEB downto 1);
+
+type dcfeb_data_type is array (NFEB downto 1) of std_logic_vector(15 downto 0);
+signal dcfeb_data : dcfeb_data_type;
+
+type dcfeb_fifo_data_type is array (NFEB downto 1) of std_logic_vector(15 downto 0);
+signal dcfeb_fifo_in : dcfeb_fifo_data_type;
+signal dcfeb_fifo_out : dcfeb_fifo_data_type;
+
+type dcfeb_fifo_cnt_type is array (NFEB downto 1) of std_logic_vector(9 downto 0);
+signal dcfeb_fifo_wr_cnt : dcfeb_fifo_cnt_type;
+signal dcfeb_fifo_rd_cnt : dcfeb_fifo_cnt_type;
+
+signal dcfeb_fifo_empty : std_logic_vector(NFEB downto 1);
+signal dcfeb_fifo_aempty : std_logic_vector(NFEB downto 1);
+signal dcfeb_fifo_afull : std_logic_vector(NFEB downto 1);
+signal dcfeb_fifo_full : std_logic_vector(NFEB downto 1);
+
+
 BEGIN 
 
 Select_TestPoints : process(diagout_lvdbmon, diagout_cfebjtag, qpll_clk40MHz)
@@ -2621,22 +2644,55 @@ PM_CAFIFO : cafifo
 	 l1a => dcfeb_l1a,
 	 l1a_match_in => dcfeb_l1a_match,
    
-   dcfeb0_dv => dcfeb0_data_valid,
-   dcfeb0_data => dcfeb0_data,
-   dcfeb1_dv => dcfeb1_data_valid,
-   dcfeb1_data => dcfeb1_data,
-   dcfeb2_dv => dcfeb2_data_valid,
-   dcfeb2_data => dcfeb2_data,
-   dcfeb3_dv => dcfeb3_data_valid,
-   dcfeb3_data => dcfeb3_data,
-   dcfeb4_dv => dcfeb4_data_valid,
-   dcfeb4_data => dcfeb4_data,
-   dcfeb5_dv => dcfeb5_data_valid,
-   dcfeb5_data => dcfeb5_data,
-   dcfeb6_dv => dcfeb6_data_valid,
-   dcfeb6_data => dcfeb6_data,
+   dcfeb0_dv => dcfeb_data_valid(1),
+   dcfeb0_data => dcfeb_data(1),
+   dcfeb1_dv => dcfeb_data_valid(2),
+   dcfeb1_data => dcfeb_data(2),
+   dcfeb2_dv => dcfeb_data_valid(3),
+   dcfeb2_data => dcfeb_data(3),
+   dcfeb3_dv => dcfeb_data_valid(4),
+   dcfeb3_data => dcfeb_data(4),
+   dcfeb4_dv => dcfeb_data_valid(5),
+   dcfeb4_data => dcfeb_data(5),
+   dcfeb5_dv => dcfeb_data_valid(6),
+   dcfeb5_data => dcfeb_data(6),
+   dcfeb6_dv => dcfeb_data_valid(7),
+   dcfeb6_data => dcfeb_data(7),
 
-   dcfeb_fifo_wren => open);
+   dcfeb_fifo_wren => dcfeb_fifo_wr_en);
+
+   
+GEN_DCFEB_FIFO : for I in NFEB downto 1 generate
+  begin
+    dcfeb_fifo_in(I) <= dcfeb_data(I);
+    DCFEB_FIFO : FIFO_DUALCLOCK_MACRO
+    generic map (
+      DEVICE => "VIRTEX6",            		-- Target Device: "VIRTEX5", "VIRTEX6" 
+      ALMOST_FULL_OFFSET => X"0080",  		-- Sets almost full threshold
+      ALMOST_EMPTY_OFFSET => X"0080", 		-- Sets the almost empty threshold
+      DATA_WIDTH => 16,   						        -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
+      FIFO_SIZE => "18Kb",            		-- Target BRAM, "18Kb" or "36Kb" 
+      FIRST_WORD_FALL_THROUGH => FALSE) -- Sets the FIFO FWFT to TRUE or FALSE
+
+    port map (
+      ALMOSTEMPTY => dcfeb_fifo_aempty(I),    -- Output almost empty 
+      ALMOSTFULL => dcfeb_fifo_afull(I),      -- Output almost full
+      DO => dcfeb_fifo_out(I),        		      -- Output data
+      EMPTY => dcfeb_fifo_empty(I),           -- Output empty
+      FULL => dcfeb_fifo_full(I),             -- Output full
+      RDCOUNT => dcfeb_fifo_rd_cnt(I),        -- Output read count
+      RDERR => open,               			        -- Output read error
+      WRCOUNT => dcfeb_fifo_wr_cnt(I),        -- Output write count
+      WRERR => open,               			        -- Output write error
+      DI => dcfeb_fifo_in(I),                 -- Input data
+      RDCLK => clk40,                         -- Input read clock
+      RDEN => dcfeb_fifo_rd_en(I),            -- Input read enable
+      RST => reset,                   		      -- Input reset
+      WRCLK => clk40,                         -- Input write clock
+      WREN => dcfeb_fifo_wr_en(I)             -- Input write enable
+   );
+
+  end generate GEN_DCFEB_FIFO;
 
 -- DCFEB0
 
@@ -2736,8 +2792,8 @@ DCFEB0_V6_PM : DCFEB_V6
 	  rst => reset, 
 	  l1a => dcfeb_l1a,
 	  l1a_match => dcfeb_l1a_match(1),
-	  dcfeb_dv => dcfeb0_data_valid,
-    dcfeb_data => dcfeb0_data,
+	  dcfeb_dv => dcfeb_data_valid(1),
+    dcfeb_data => dcfeb_data(1),
 		adc_mask => dcfeb0_adc_mask,
 		dcfeb_fsel => dcfeb0_fsel,
 		dcfeb_jtag_ir => dcfeb0_jtag_ir,
@@ -2847,8 +2903,8 @@ DCFEB1_V6_PM : DCFEB_V6
 	  rst => reset, 
 	  l1a => dcfeb_l1a,
 	  l1a_match => dcfeb_l1a_match(2),
-	  dcfeb_dv => dcfeb1_data_valid,
-    dcfeb_data => dcfeb1_data,
+	  dcfeb_dv => dcfeb_data_valid(2),
+    dcfeb_data => dcfeb_data(2),
 		adc_mask => dcfeb1_adc_mask,
 		dcfeb_fsel => dcfeb1_fsel,
 		dcfeb_jtag_ir => dcfeb1_jtag_ir,
@@ -2957,8 +3013,8 @@ DCFEB2_V6_PM : DCFEB_V6
 	  rst => reset, 
 	  l1a => dcfeb_l1a,
 	  l1a_match => dcfeb_l1a_match(3),
-	  dcfeb_dv => dcfeb2_data_valid,
-    dcfeb_data => dcfeb2_data,
+	  dcfeb_dv => dcfeb_data_valid(3),
+    dcfeb_data => dcfeb_data(3),
 		adc_mask => dcfeb2_adc_mask,
 		dcfeb_fsel => dcfeb2_fsel,
 		dcfeb_jtag_ir => dcfeb2_jtag_ir,
@@ -3067,8 +3123,8 @@ DCFEB3_V6_PM : DCFEB_V6
 	  rst => reset, 
 	  l1a => dcfeb_l1a,
 	  l1a_match => dcfeb_l1a_match(4),
-	  dcfeb_dv => dcfeb3_data_valid,
-    dcfeb_data => dcfeb3_data,
+	  dcfeb_dv => dcfeb_data_valid(4),
+    dcfeb_data => dcfeb_data(4),
 		adc_mask => dcfeb3_adc_mask,
 		dcfeb_fsel => dcfeb3_fsel,
 		dcfeb_jtag_ir => dcfeb3_jtag_ir,
@@ -3154,8 +3210,8 @@ DCFEB4_V6_PM : DCFEB_V6
 	  rst => reset, 
 	  l1a => dcfeb_l1a,
 	  l1a_match => dcfeb_l1a_match(5),
-	  dcfeb_dv => dcfeb4_data_valid,
-    dcfeb_data => dcfeb4_data,
+	  dcfeb_dv => dcfeb_data_valid(5),
+    dcfeb_data => dcfeb_data(5),
 		adc_mask => dcfeb4_adc_mask,
 		dcfeb_fsel => dcfeb4_fsel,
 		dcfeb_jtag_ir => dcfeb4_jtag_ir,
@@ -3241,8 +3297,8 @@ DCFEB5_V6_PM : DCFEB_V6
 	  rst => reset, 
 	  l1a => dcfeb_l1a,
 	  l1a_match => dcfeb_l1a_match(6),
-	  dcfeb_dv => dcfeb5_data_valid,
-    dcfeb_data => dcfeb5_data,
+	  dcfeb_dv => dcfeb_data_valid(6),
+    dcfeb_data => dcfeb_data(6),
 		adc_mask => dcfeb5_adc_mask,
 		dcfeb_fsel => dcfeb5_fsel,
 		dcfeb_jtag_ir => dcfeb5_jtag_ir,
@@ -3343,8 +3399,8 @@ DCFEB6_V6_PM : DCFEB_V6
 	  rst => reset, 
 	  l1a => dcfeb_l1a,
 	  l1a_match => dcfeb_l1a_match(7),
-	  dcfeb_dv => dcfeb6_data_valid,
-    dcfeb_data => dcfeb6_data,
+	  dcfeb_dv => dcfeb_data_valid(7),
+    dcfeb_data => dcfeb_data(7),
 		adc_mask => dcfeb6_adc_mask,
 		dcfeb_fsel => dcfeb6_fsel,
 		dcfeb_jtag_ir => dcfeb6_jtag_ir,

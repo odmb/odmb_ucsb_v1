@@ -189,7 +189,7 @@ PMAP_dcfeb_data_gen : dcfeb_data_gen
 	 clk => clk,
    rst => rst,
    l1a => l1a,
-   l1a_match => l1a,
+   l1a_match => l1a_match,
    dcfeb_addr => dcfeb_addr,
    dcfeb_dv => dcfeb_dv,
    dcfeb_data => dcfeb_data

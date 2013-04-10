@@ -145,7 +145,7 @@ begin
 		    when RX_DW =>
 			
 			     dcfeb_l1a_dav(dcfeb_index) <= '0';
-			     if (dcfeb0_dv = '1') then
+			     if (dcfeb_dv(dcfeb_index) = '1') then
 			       dcfeb_fifo_wren(dcfeb_index) <= '1';
 				     rx_next_state(dcfeb_index) <= RX_DW;
 			     else
