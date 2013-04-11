@@ -63,8 +63,13 @@ entity CONTROL is
     OEOVLP  : out std_logic;
 
 -- FROM SW1
-    GIGAEN : in std_logic
-
+    GIGAEN : in std_logic;
+    
+-- FROM CAFIFO
+    cafifo_l1a_dav : in std_logic_vector(NFEB+2 downto 0);
+    cafifo_l1a_match : in std_logic_vector(NFEB+2 downto 0);
+    cafifo_l1a_cnt : in std_logic_vector(23 downto 0);
+    cafifo_bx_cnt : in std_logic_vector(11 downto 0)
     );
 end CONTROL;
 
@@ -156,10 +161,26 @@ architecture CONTROL_arch of CONTROL is
   signal NSTAT : std_logic_vector(40 downto 20);
   signal STATUS_Q : std_logic_vector(33 downto 27);
 
-begin
+  signal ver : std_logic_vector(1 downto 0) := "00";
+  signal l1a_dav_mismatch : std_logic := '0';
+  signal ovlp : std_logic_vector(5 downto 1) := "00000";
+  signal sync : std_logic_vector(3 downto 0) := "0000";
+  signal alct_to_end : std_logic := '0';
+  signal alct_to_start : std_logic := '0';
+  signal tmb_to_end : std_logic := '0';
+  signal tmb_to_start : std_logic := '0';
+  signal dcfeb_to_end : std_logic_vector(NFEB downto 1) := (OTHERS => '0');
+  signal dcfeb_to_start : std_logic_vector(NFEB downto 1) := (OTHERS => '0');
+  signal data_fifo_full : std_logic_vector(NFEB+2 downto 1) := (OTHERS => '0');
+  signal data_fifo_half : std_logic_vector(NFEB+2 downto 1) := (OTHERS => '0');
+  signal dmb_l1pipe : std_logic_vector(7 downto 0) := (OTHERS => '0');
+  signal GEMPTY_TMP : std_logic;
 
+begin
+  GEMPTY_TMP <= cafifo_l1a_dav(8) or cafifo_l1a_dav(9);
 --  Generate BUSY (page 1)
-  FDC(GEMPTY, CLKCMS, POP, GEMPTY_D(1));
+--  FDC(GEMPTY, CLKCMS, POP, GEMPTY_D(1));
+  FDC(GEMPTY_TMP, CLKCMS, POP, GEMPTY_D(1));
   FDCE(GEMPTY_D(1), CLK, GLRFD, POP, GEMPTY_D(2));
   FDC(GEMPTY_D(2), CLK, POP, GEMPTY_D(3));
   FDC(GEMPTY_D(3), CLK, POP, BUSY);
@@ -247,14 +268,24 @@ begin
   FENDAVERR <= or_reduce(FENDAV);
 
 -- Generate HDR_W (new, page 2)
-  HDR_W1 <= "100" & HEAD_D12 & L1CNT(11 downto 0);
-  HDR_W2 <= "100" & HEAD_D12 & L1CNT(23 downto 12);
-  HDR_W3 <= "100" & HEAD_D12 & FIFO_L1A_MATCH(0) & FIFO_L1A_MATCH(16 downto 11) & FIFO_L1A_MATCH(5 downto 1);
-  HDR_W4 <= "100" & HEAD_D12 & BXN(11 downto 0);
-  HDR_W5 <= "1010" & FIFO_L1A_MATCH(0) & FENDAVERR & FIFO_L1A_MATCH(16) & FENDAVERR & FIFO_L1A_MATCH(0) & FENDAVERR & FIFO_L1A_MATCH(16) & FIFO_L1A_MATCH(5 downto 1);
+--  HDR_W1 <= "100" & HEAD_D12 & L1CNT(11 downto 0);
+--  HDR_W2 <= "100" & HEAD_D12 & L1CNT(23 downto 12);
+--  HDR_W3 <= "100" & HEAD_D12 & FIFO_L1A_MATCH(0) & FIFO_L1A_MATCH(16 downto 11) & FIFO_L1A_MATCH(5 downto 1);
+--  HDR_W4 <= "100" & HEAD_D12 & BXN(11 downto 0);
+--  HDR_W5 <= "1010" & FIFO_L1A_MATCH(0) & FENDAVERR & FIFO_L1A_MATCH(16) & FENDAVERR & FIFO_L1A_MATCH(0) & FENDAVERR & FIFO_L1A_MATCH(16) & FIFO_L1A_MATCH(5 downto 1);
+--  HDR_W6 <= "1010" & DAQMBID(11 downto 0);
+--  HDR_W7 <= "1010" & FIFO_L1A_MATCH(10 downto 6) & BXN(6 downto 0);
+--  HDR_W8 <= "1010" & CFEBBX(3 downto 0) & L1CNT(7 downto 0);
+
+  HDR_W1 <= "100" & HEAD_D12 & cafifo_l1a_cnt(11 downto 0);
+  HDR_W2 <= "100" & HEAD_D12 & cafifo_l1a_cnt(23 downto 12);
+  HDR_W3 <= "100" & HEAD_D12 & cafifo_l1a_match(NFEB+2 downto NFEB+1) & ver & l1a_dav_mismatch & cafifo_l1a_match(NFEB downto 1);
+  HDR_W4 <= "100" & HEAD_D12 & cafifo_bx_cnt;
+  HDR_W5 <= "1010" & cafifo_l1a_match(NFEB+2 downto NFEB+1) & ver & l1a_dav_mismatch & cafifo_l1a_match(NFEB downto 1);
   HDR_W6 <= "1010" & DAQMBID(11 downto 0);
-  HDR_W7 <= "1010" & FIFO_L1A_MATCH(10 downto 6) & BXN(6 downto 0);
-  HDR_W8 <= "1010" & CFEBBX(3 downto 0) & L1CNT(7 downto 0);
+  HDR_W7 <= "1010" & cafifo_l1a_match(NFEB+2 downto NFEB+1) & ovlp & cafifo_bx_cnt(4 downto 0);
+  HDR_W8 <= "1010" & sync & ver & l1a_dav_mismatch & cafifo_l1a_cnt(4 downto 0);
+
 
 -- Multiplex HDR_W (new, page 2)
   DATA_HDR <= HDR_W1 when OEHDR(1)='1' else
@@ -269,11 +300,20 @@ begin
 
 
 -- Generate TAIL_W (new, page 2)
-  TAIL_W1 <= "1111" & BXN(3 downto 0) & L1CNT(7 downto 0);
-  TAIL_W2 <= "1111" & FIFO_L1A_MATCH(10 downto 6) & NSTAT(40 downto 34);
-  TAIL_W3 <= "1111" & STATUS(14 downto 7) & NSTAT(26 downto 25) & DAVNODATA(7 downto 6);
-  TAIL_W4 <= "1111" & DATANOEND(5 downto 1) & DATANOEND(7 downto 6) & DAVNODATA(5 downto 1);
-  TAIL_W5 <= "1110" & NSTAT(33 downto 27) & NSTAT(24 downto 20);
+--  TAIL_W1 <= "1111" & BXN(3 downto 0) & L1CNT(7 downto 0);
+--  TAIL_W2 <= "1111" & FIFO_L1A_MATCH(10 downto 6) & NSTAT(40 downto 34);
+--  TAIL_W3 <= "1111" & STATUS(14 downto 7) & NSTAT(26 downto 25) & DAVNODATA(7 downto 6);
+--  TAIL_W4 <= "1111" & DATANOEND(5 downto 1) & DATANOEND(7 downto 6) & DAVNODATA(5 downto 1);
+--  TAIL_W5 <= "1110" & NSTAT(33 downto 27) & NSTAT(24 downto 20);
+--  TAIL_W6 <= "1110" & DAQMBID(11 downto 0);
+--  TAIL_W7 <= "1110" & REG_CRC(22) & REG_CRC(10 downto 0);
+--  TAIL_W8 <= "1110" & REG_CRC(23) & REG_CRC(21 downto 11);
+
+  TAIL_W1 <= "1111" & alct_to_end & cafifo_bx_cnt(4 downto 0) & cafifo_l1a_cnt(5 downto 0);
+  TAIL_W2 <= "1111" & ovlp & dcfeb_to_end;
+  TAIL_W3 <= "1111" & data_fifo_full(3 downto 1) & tmb_to_start & dmb_l1pipe;
+  TAIL_W4 <= "1111" & alct_to_start & dcfeb_to_start & data_fifo_full(7 downto 4);
+  TAIL_W5 <= "1110" & data_fifo_full(NFEB+2 downto NFEB+1) & data_fifo_half(NFEB+2 downto NFEB+1) & tmb_to_end & data_fifo_half(NFEB downto 1);
   TAIL_W6 <= "1110" & DAQMBID(11 downto 0);
 --  TAIL_W7 <= "1110" & REG_CRC(22) & REG_CRC(10 downto 0);
 --  TAIL_W8 <= "1110" & REG_CRC(23) & REG_CRC(21 downto 11);
