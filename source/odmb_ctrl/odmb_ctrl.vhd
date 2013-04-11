@@ -34,12 +34,12 @@ entity ODMB_CTRL is
     ccb_l1rls  : out std_logic;         -- l1rls - to J3
     ccb_clken  : in  std_logic;         -- clken - from J3
 
-    rawlct           : in  std_logic_vector (NFEB downto 0);  -- rawlct(5 downto 0) - from J4
-    tmb_dav          : in  std_logic;   -- previously lctdav1, from J4
-    alct_dav         : in  std_logic;   -- previously lctdav2, from J4
-    lctrqst          : out std_logic_vector (2 downto 1);  -- lctrqst(2 downto 1) - to J4
-    rsvtd_in         : in  std_logic_vector(4 downto 0);  -- OK   spare(2 DOWNTO 0) - to J4
-    rsvtd_out        : out std_logic_vector(2 downto 0);  -- OK           spare(7 DOWNTO 3) - from J4
+    rawlct    : in  std_logic_vector (NFEB downto 0);  -- rawlct(5 downto 0) - from J4
+    tmb_dav   : in  std_logic;          -- previously lctdav1, from J4
+    alct_dav  : in  std_logic;          -- previously lctdav2, from J4
+    lctrqst   : out std_logic_vector (2 downto 1);  -- lctrqst(2 downto 1) - to J4
+    rsvtd_in  : in  std_logic_vector(4 downto 0);  -- OK   spare(2 DOWNTO 0) - to J4
+    rsvtd_out : out std_logic_vector(2 downto 0);  -- OK           spare(7 DOWNTO 3) - from J4
 
 -- From GigaLinks
 
@@ -81,7 +81,7 @@ entity ODMB_CTRL is
     tmb_fifo_wr_en : out std_logic;
     tmb_fifo_rd_en : out std_logic;
 
-    cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 0);  -- L1A_MATCH from TRGCNTRL to CAFIFO sent to generate Data
+    cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 0);  -- L1A_MATCH from TRGCNTRL to CAFIFO sent to generate Data  
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
     alct_dv     : in std_logic;
@@ -384,11 +384,13 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
       clk : in std_logic;
       rst : in std_logic;
 
-    BC0         : in  std_logic;
-    BXRST       : in  std_logic;
-    
+      BC0   : in std_logic;
+      BXRST : in std_logic;
+
       l1a          : in std_logic;
       l1a_match_in : in std_logic_vector(NFEB downto 1);
+
+      pop : in std_logic;
 
       alct_dv     : in std_logic;
       tmb_dv      : in std_logic;
@@ -409,32 +411,15 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
 
       dcfeb_fifo_wren : out std_logic_vector(NFEB downto 1);
       alct_fifo_wren  : out std_logic;
-      tmb_fifo_wren   : out std_logic);
+      tmb_fifo_wren   : out std_logic;
 
-  end component;
-
-  component TRGFIFO is
-    generic (
-      NFEB : integer range 1 to 7 := 5  -- Number of DCFEBS, 7 in the final design
-      );  
-    port (
-      CLK               : in std_logic;
-      RST               : in std_logic;
-      PUSH              : in std_logic;
-      POP               : in std_logic;
-      BC0               : in std_logic;
-      BXRST             : in std_logic;
-      FIFO_L1A_MATCH_IN : in std_logic_vector(NFEB downto 0);
-
-      FIFO_L1A_MATCH_OUT : out std_logic_vector(NFEB downto 0);
-      FIFO_BX_CNT_OUT    : out std_logic_vector(15 downto 0);
-      FIFO_FULL_B        : out std_logic;
-      FIFO_EMPTY_B       : out std_logic;
-      FIFO_ERR           : out std_logic
+      cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 1);
+      cafifo_l1a_cnt   : out std_logic_vector(23 downto 0);
+      cafifo_l1a_dav   : out std_logic_vector(NFEB+2 downto 1);
+      cafifo_bx_cnt    : out std_logic_vector(11 downto 0)
       );
 
   end component;
-
 
   component LOADFIFO is
     
@@ -560,15 +545,22 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
   signal sw4_enl1rls : std_logic := '1';
 
 -- TRGCNTRL outputs
-  signal FIFO_PUSH             : std_logic;
+  signal FIFO_PUSH           : std_logic;
   signal cafifo_l1a_match_in : std_logic_vector(NFEB+2 downto 0);
-  signal cafifo_push           : std_logic;  -- PUSH from TRGCNTRL to CAFIFO
+  signal cafifo_push         : std_logic;  -- PUSH from TRGCNTRL to CAFIFO
   --signal cafifo_l1a_match_inner      : std_logic_vector(NFEB+2 downto 0);  -- L1A_MATCH from TRGCNTRL to CAFIFO
 
+-- CAFIFO outputs
+  signal cafifo_l1a_match_out : std_logic_vector(NFEB+2 downto 1);
+  signal cafifo_l1a_cnt_out   : std_logic_vector(23 downto 0);
+  signal cafifo_l1a_dav_out   : std_logic_vector(NFEB+2 downto 1);
+  signal cafifo_bx_cnt_out    : std_logic_vector(11 downto 0);
+
+-- CONTROL outputs
+  signal cafifo_pop : std_logic := '0';
+
 -- TRGFIFO
-  signal TRG_FIFO_FULL_B, TRG_FIFO_EMPTY_B, TRG_FIFO_PUSH, TRG_FIFO_POP, TRG_FIFO_ERR : std_logic;
-  signal cafifo_l1a_match_OUT                                                       : std_logic_vector(NFEB downto 0);
-  signal TRG_FIFO_BX_CNT_OUT                                                          : std_logic_vector(15 downto 0);
+--  signal TRG_FIFO_FULL_B, TRG_FIFO_EMPTY_B, TRG_FIFO_PUSH, TRG_FIFO_POP, TRG_FIFO_ERR : std_logic;
 
 -- RANDOMTRG outputs
   signal rndmgtrg, rndmpls, selran : std_logic;
@@ -818,7 +810,7 @@ begin
 
       DCFEB_L1A       => dcfeb_l1a,
       DCFEB_L1A_MATCH => dcfeb_l1a_match,
-      FIFO_PUSH       => trg_fifo_push,
+      FIFO_PUSH       => cafifo_push,
       FIFO_L1A_MATCH  => cafifo_l1a_match_in,
       LCT_ERR         => lct_err
       );
@@ -832,13 +824,15 @@ begin
       clk => clk40,
       rst => reset,
 
-      BC0               => bc0,
-      BXRST             => reset, -- SHOULD BE bxrst,
+      BC0   => bc0,
+      BXRST => reset,                   -- SHOULD BE bxrst,
 
 --       l1a => dcfeb_l1a,
       l1a          => cafifo_push,
 --       l1a_match_in => dcfeb_l1a_match,
       l1a_match_in => cafifo_l1a_match_in(NFEB+2 downto 1),
+
+      pop => cafifo_pop,
 
       alct_dv     => alct_dv,
       tmb_dv      => tmb_dv,
@@ -859,30 +853,15 @@ begin
 
       dcfeb_fifo_wren => dcfeb_fifo_wr_en,
       alct_fifo_wren  => alct_fifo_wr_en,
-      tmb_fifo_wren   => tmb_fifo_wr_en
+      tmb_fifo_wren   => tmb_fifo_wr_en,
+
+      cafifo_l1a_match => cafifo_l1a_match_out,
+      cafifo_l1a_cnt   => cafifo_l1a_cnt_out,
+      cafifo_l1a_dav   => cafifo_l1a_dav_out,
+      cafifo_bx_cnt    => cafifo_bx_cnt_out
 
       );
 
-  TRGFIFO_PM : TRGFIFO
-    generic map (NFEB => NFEB)
-    port map (
-      CLK => clk40,
-      RST => reset,
-
-      PUSH              => trg_fifo_push,
-      FIFO_L1A_MATCH_IN => cafifo_l1a_match_in(NFEB downto 0),
-      POP               => trg_fifo_pop,
-      BC0               => bc0,
-      BXRST             => bxrst,
-
-      FIFO_L1A_MATCH_OUT => cafifo_l1a_match_out,
-      FIFO_BX_CNT_OUT    => trg_fifo_bx_cnt_out,
-      FIFO_FULL_B        => trg_fifo_full_b,
-      FIFO_EMPTY_B       => trg_fifo_empty_b,
-      FIFO_ERR           => trg_fifo_err
-      );
-
-  cafifo_push      <= trg_fifo_push;
   cafifo_l1a_match <= cafifo_l1a_match_in;
 
   CCBCODE_PM : CCBCODE

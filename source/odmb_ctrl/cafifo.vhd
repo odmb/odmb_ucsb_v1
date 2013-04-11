@@ -18,12 +18,14 @@ entity cafifo is
 
     clk : in std_logic;
     rst : in std_logic;
-    
-    BC0         : in  std_logic;
-    BXRST       : in  std_logic;
+
+    BC0   : in std_logic;
+    BXRST : in std_logic;
 
     l1a          : in std_logic;
     l1a_match_in : in std_logic_vector(NFEB+2 downto 1);
+
+    pop : in std_logic;
 
     alct_dv     : in std_logic;
     tmb_dv      : in std_logic;
@@ -44,9 +46,12 @@ entity cafifo is
 
     dcfeb_fifo_wren : out std_logic_vector(NFEB downto 1);
     alct_fifo_wren  : out std_logic;
-    tmb_fifo_wren   : out std_logic
+    tmb_fifo_wren   : out std_logic;
 
-
+    cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 1);
+    cafifo_l1a_cnt   : out std_logic_vector(23 downto 0);
+    cafifo_l1a_dav   : out std_logic_vector(NFEB+2 downto 1);
+    cafifo_bx_cnt    : out std_logic_vector(11 downto 0)
     );
 
 end cafifo;
@@ -71,7 +76,7 @@ architecture cafifo_architecture of cafifo is
   signal next_state, current_state : state_type;
 
   type dcfeb_l1a_cnt_array_type is array (NFEB downto 1) of std_logic_vector(11 downto 0);
-  signal dcfeb_l1a_cnt : dcfeb_l1a_cnt_array_type;
+  signal dcfeb_l1a_cnt     : dcfeb_l1a_cnt_array_type;
   signal reg_dcfeb_l1a_cnt : dcfeb_l1a_cnt_array_type;
 
   type ext_dcfeb_l1a_cnt_array_type is array (NFEB downto 1) of std_logic_vector(23 downto 0);
@@ -94,7 +99,7 @@ architecture cafifo_architecture of cafifo is
   signal l1a_cnt_wren, l1a_match_wren : std_logic;
   signal wr_addr_en, rd_addr_en       : std_logic;
 -- signal wr_addr_out, rd_addr_out : std_logic_vector(3 downto 0);
-  signal wr_addr_out, rd_addr_out     : integer;
+  signal wr_addr_out, rd_addr_out     : integer := 0;
 
   signal wren, rden  : std_logic;
   signal empty, full : std_logic;
@@ -110,18 +115,18 @@ architecture cafifo_architecture of cafifo is
   signal tmb_fifo_wr_en, tmb_fifo_rd_en   : std_logic;
   signal tmb_fifo_wr_cnt, tmb_fifo_rd_cnt : std_logic_vector(8 downto 0);
   signal tmb_fifo_in, tmb_fifo_out        : std_logic_vector(23 downto 0);
+
+  signal LOGICH                                                           : std_logic := '1';
+  signal BX_CNT_CLR, BX_CNT_A_TC, BX_CNT_B_TC, BX_CNT_A_CEO, BX_CNT_B_CEO : std_logic;
+  signal BX_CNT_OUT, BX_CNT_INNER                                         : std_logic_vector(15 downto 0);
+  signal BX_ORBIT, BX_CNT_RST, BX_CNT_RST_RST                             : std_logic;
   
-  signal LOGICH : std_logic := '1';
-  signal BX_CNT_CLR, BX_CNT_A_TC, BX_CNT_B_TC, BX_CNT_A_CEO, BX_CNT_B_CEO: std_logic;
-  signal BX_CNT_OUT, BX_CNT_INNER : std_logic_vector(15 downto 0);
-  signal BX_ORBIT, BX_CNT_RST, BX_CNT_RST_RST : std_logic;
- 
 
   
 begin
 
   -- Generate BX_CNT (page 5 TRGFIFO)
-  BX_CNT_CLR          <= BC0 or BXRST or BX_CNT_RST;
+  BX_CNT_CLR              <= BC0 or BXRST or BX_CNT_RST;
   BX_CNT_A : CB16CE port map(BX_CNT_A_CEO, BX_CNT_INNER, BX_CNT_A_TC, CLK, LOGICH, BX_CNT_CLR);
   BX_CNT_B : CB4CE port map(BX_CNT_B_CEO, BX_CNT_OUT(12), BX_CNT_OUT(13), BX_CNT_OUT(14), BX_CNT_OUT(15), BX_CNT_B_TC, CLK, LOGICH, RST);
   BX_CNT_OUT(11 downto 0) <= BX_CNT_INNER(11 downto 0);
@@ -153,7 +158,7 @@ begin
   dcfeb_l1a_cnt(6) <= dcfeb5_data(11 downto 0) when (dcfeb5_dv = '1') else (others => '0');
   dcfeb_l1a_cnt(7) <= dcfeb6_data(11 downto 0) when (dcfeb6_dv = '1') else (others => '0');
 
-l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
+  l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
 
   begin
     for index_dcfeb in 1 to NFEB loop
@@ -162,14 +167,14 @@ l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
       elsif rising_edge(clk) then
         reg_dcfeb_l1a_cnt(index_dcfeb) <= dcfeb_l1a_cnt(index_dcfeb);
       end if;
-    ext_dcfeb_l1a_cnt(index_dcfeb) <= reg_dcfeb_l1a_cnt(index_dcfeb) & dcfeb_l1a_cnt(index_dcfeb);
+      ext_dcfeb_l1a_cnt(index_dcfeb) <= reg_dcfeb_l1a_cnt(index_dcfeb) & dcfeb_l1a_cnt(index_dcfeb);
     end loop;
- 
+    
   end process;
 
 
   wren <= l1a;
-  rden <= '0';
+  rden <= pop;
 
 -- RX FSMs 
 
@@ -197,7 +202,7 @@ l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
         when RX_IDLE =>
           
           dcfeb_fifo_wren(dcfeb_index) <= '0';
-          dcfeb_l1a_dav(dcfeb_index) <= '0';
+          dcfeb_l1a_dav(dcfeb_index)   <= '0';
           if (dcfeb_dv(dcfeb_index) = '1') then
             rx_next_state(dcfeb_index) <= RX_HEADER;
           else
@@ -207,8 +212,8 @@ l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
         when RX_HEADER =>
           
           dcfeb_fifo_wren(dcfeb_index) <= '0';
-          dcfeb_l1a_dav(dcfeb_index) <= '1';
-          rx_next_state(dcfeb_index) <= RX_DW;
+          dcfeb_l1a_dav(dcfeb_index)   <= '1';
+          rx_next_state(dcfeb_index)   <= RX_DW;
           
         when RX_DW =>
           
@@ -348,6 +353,8 @@ l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
 
   end process;
 
+  cafifo_l1a_cnt <= l1a_cnt(rd_addr_out);
+
   bx_cnt_fifo : process (l1a_cnt_wren, wr_addr_out, wr_addr_en, rd_addr_en, rst, clk)
 
   begin
@@ -356,12 +363,14 @@ l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
         bx_cnt(index) <= (others => '0');
       end loop;
     elsif rising_edge(clk) then
-      if (l1a_cnt_wren = '1') then -- mfs: I think we only need 1 wren, also for l1a_match
+      if (l1a_cnt_wren = '1') then  -- mfs: I think we only need 1 wren, also for l1a_match
         bx_cnt(wr_addr_out) <= bx_cnt_out;
       end if;
     end if;
 
   end process;
+
+  cafifo_bx_cnt <= bx_cnt(rd_addr_out)(11 downto 0);
 
   l1a_match_fifo : process (l1a_match_wren, wr_addr_out, wr_addr_en, rd_addr_en, rst, clk)
 
@@ -377,6 +386,8 @@ l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
     end if;
 
   end process;
+
+  cafifo_l1a_match <= l1a_match(rd_addr_out);
 
   l1a_dav_fifo : process (l1a_cnt, ext_dcfeb_l1a_cnt, dcfeb_l1a_dav, rst, clk)
 
@@ -398,6 +409,8 @@ l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
     end if;
 
   end process;
+
+  cafifo_l1a_dav(NFEB downto 1) <= l1a_dav(rd_addr_out)(NFEB downto 1);
 
   alct_reg : process (alct_l1a_dav, rst, clk)
 
@@ -454,6 +467,8 @@ l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
     end if;
 
   end process;
+
+  cafifo_l1a_dav(NFEB+2) <= l1a_dav_b9_gm(rd_addr_out);
 
   alct_dv_fifo : process (l1a_cnt, dcfeb_l1a_cnt, alct_l1a_dav, rst, clk)
     variable filled : std_logic;
@@ -536,6 +551,8 @@ l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
 
   end process;
 
+  cafifo_l1a_dav(NFEB+1) <= l1a_dav_b8_gm(rd_addr_out);
+
   tmb_dv_fifo : process (l1a_cnt, dcfeb_l1a_cnt, tmb_l1a_dav, rst, clk)
     variable filled : std_logic;
   begin
@@ -566,7 +583,7 @@ l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
   addr_counter : process (clk, wr_addr_en, rd_addr_en, rst)
 
 --variable addr_rd_data, addr_wr_data : std_logic_vector(3 downto 0);
-    variable addr_rd_data, addr_wr_data : integer;
+    variable addr_rd_data, addr_wr_data : integer := 0;
 
   begin
 
