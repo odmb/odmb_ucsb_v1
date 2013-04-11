@@ -37,12 +37,12 @@ end dcfeb_data_gen;
 
 architecture dcfeb_data_gen_architecture of dcfeb_data_gen is
 
-type state_type is (IDLE, TX_HEADER, TX_DATA);
+type state_type is (IDLE, TX_HEADER1, TX_HEADER2, TX_DATA);
     
 signal next_state, current_state: state_type;
 
 signal dw_cnt_en, dw_cnt_rst : std_logic;
-signal l1a_cnt_out : std_logic_vector(11 downto 0);
+signal l1a_cnt_out : std_logic_vector(23 downto 0);
 signal dw_cnt_out : std_logic_vector(11 downto 0);
 constant dw_n : std_logic_vector(11 downto 0) := "000000001000";
 signal tx_start : std_logic;
@@ -53,7 +53,7 @@ begin
 	
 l1a_cnt: process (clk, l1a)
 
-variable l1a_cnt_data : std_logic_vector(11 downto 0);
+variable l1a_cnt_data : std_logic_vector(23 downto 0);
 
 begin
 
@@ -119,14 +119,22 @@ begin
       dw_cnt_en <= '0';
 			dw_cnt_rst <= '1';
 			if (tx_start = '1') then
-				next_state <= TX_HEADER;
+				next_state <= TX_HEADER1;
 			else
 				next_state <= IDLE;
 			end if;
 			
-		when TX_HEADER =>
+		when TX_HEADER1 =>
 			
-      dcfeb_data <= dcfeb_addr & l1a_cnt_out;			
+      dcfeb_data <= dcfeb_addr & l1a_cnt_out(23 downto 12);			
+      dcfeb_dv <= '1';	
+      dw_cnt_en <= '0';
+			dw_cnt_rst <= '0';
+			next_state <= TX_HEADER2;
+			
+		when TX_HEADER2 =>
+			
+      dcfeb_data <= dcfeb_addr & l1a_cnt_out(11 downto 0);			
       dcfeb_dv <= '1';	
       dw_cnt_en <= '0';
 			dw_cnt_rst <= '0';

@@ -384,6 +384,9 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
       clk : in std_logic;
       rst : in std_logic;
 
+    BC0         : in  std_logic;
+    BXRST       : in  std_logic;
+    
       l1a          : in std_logic;
       l1a_match_in : in std_logic_vector(NFEB downto 1);
 
@@ -828,6 +831,9 @@ begin
 
       clk => clk40,
       rst => reset,
+
+      BC0               => bc0,
+      BXRST             => reset, -- SHOULD BE bxrst,
 
 --       l1a => dcfeb_l1a,
       l1a          => cafifo_push,
