@@ -12,7 +12,7 @@ use work.Latches_Flipflops.all;
 
 entity CONTROL is
   generic (
-    NFEB : integer range 1 to 7 := 5  -- Number of DCFEBS, 7 in the final design
+    NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
     );  
   port (
 
@@ -27,35 +27,33 @@ entity CONTROL is
 
 
 -- from TRGFIFO
-    BXN     : in std_logic_vector(11 downto 0);
-    GEMPTY  : in std_logic;
-    CFEBBX  : in std_logic_vector(3 downto 0);
-    FIFO_L1A_MATCH  : in std_logic_vector(NFEB+2 downto 0);
-    DAVENBL : in std_logic_vector(5 downto 1);
-    FIFO_POP : out std_logic;
+--    BXN     : in std_logic_vector(11 downto 0);
+--    GEMPTY  : in std_logic;
+--    CFEBBX  : in std_logic_vector(3 downto 0);
+--    FIFO_L1A_MATCH  : in std_logic_vector(NFEB+2 downto 0);
+--    DAVENBL : in std_logic_vector(5 downto 1);
 
 -- to GigaBit Link
     DOUT : out std_logic_vector(15 downto 0);
     DAV  : out std_logic;
 
 -- to FIFOs
-    OEFIFO_B  : out std_logic_vector(7 downto 1);
-    RENFIFO_B : out std_logic_vector(7 downto 1);
-    OEFFMON_B  : out std_logic_vector(7 downto 1);
-    RENFFMON_B : out std_logic_vector(7 downto 1);
+    OEFIFO_B  : out std_logic_vector(NFEB+2 downto 1);
+    RENFIFO_B : out std_logic_vector(NFEB+2 downto 1);
+    OEFFMON_B  : out std_logic_vector(NFEB+2 downto 1);
+    RENFFMON_B : out std_logic_vector(NFEB+2 downto 1);
 
 -- from FIFOs
-    FFOR_B : in std_logic_vector(7 downto 1);
+    FFOR_B : in std_logic_vector(NFEB+2 downto 1);
     DATAIN  : in std_logic_vector(15 downto 0);
     DATAIN_LAST : in std_logic;
 
 -- From CONFREGS
---    KILLINPUT        : in std_logic_vector(NFEB+2 downto 1);
-    KILLINPUT        : in std_logic_vector(2 downto 0);    
+    KILLINPUT : in std_logic_vector(NFEB+2 downto 1);
 
 -- From JTAGCOM
     SETLOOPBACK : in std_logic;
-    JOEF        : in std_logic_vector(7 downto 0);
+    JOEF        : in std_logic_vector(NFEB+2 downto 1);
 
 -- to ???
     DAQMBID : in std_logic_vector(11 downto 0); -- From CRATEID in SETFEBDLY, and GA
@@ -64,10 +62,16 @@ entity CONTROL is
 
 -- FROM SW1
     GIGAEN : in std_logic;
+
+-- TO CAFIFO
+    FIFO_POP : out std_logic;
+    
+-- TO DDUFIFO
+    EOF : out std_logic;
     
 -- FROM CAFIFO
-    cafifo_l1a_dav : in std_logic_vector(NFEB+2 downto 0);
-    cafifo_l1a_match : in std_logic_vector(NFEB+2 downto 0);
+    cafifo_l1a_dav : in std_logic_vector(NFEB+2 downto 1);
+    cafifo_l1a_match : in std_logic_vector(NFEB+2 downto 1);
     cafifo_l1a_cnt : in std_logic_vector(23 downto 0);
     cafifo_bx_cnt : in std_logic_vector(11 downto 0)
     );
@@ -121,31 +125,33 @@ architecture CONTROL_arch of CONTROL is
   signal L1CNT_RST, L1CNT_CEO_L, L1CNT_TC_L, L1CNT_CEO_H, L1CNT_TC_H : std_logic;
   signal L1CNT : std_logic_vector(23 downto 0);
   
-  signal RDY_CE, RDY, FIFORDY : std_logic_vector(7 downto 1);
+  signal RDY_CE, RDY, FIFORDY : std_logic_vector(NFEB+2 downto 1);
   
-  signal P_AND_FIFORDY : std_logic_vector(7 downto 1);
-  signal DISDAV, DISDAV_D : std_logic;
+  signal P_AND_FIFORDY : std_logic_vector(NFEB+2 downto 1);
+  signal DISDAV, DISDAV_D, DISDAV_DD : std_logic;
   
   signal LOOPBACK_Q, LOOPBACK_Q_B : std_logic;
   
 -- PAGE 4
-  signal R, R_RST : std_logic_vector(7 downto 1);
-  signal P : std_logic_vector(7 downto 1);
-  signal OE : std_logic_vector(7 downto 1);
-  signal DOEALL, OEALL, OEALL_D, OEDATA, OEDATA_D, POPLAST : std_logic;
+  signal R, R_RST : std_logic_vector(NFEB+2 downto 1);
+  signal P : std_logic_vector(NFEB+2 downto 1);
+  signal OE : std_logic_vector(NFEB+2 downto 1);
+  signal DOEALL, OEALL, OEALL_D, OEDATA, OEDATA_D, OEDATA_DD, POPLAST : std_logic;
   signal JRDFF, JRDFF_D : std_logic;
-  
+  signal EODATA, DATAON : std_logic;
+    
 -- PAGE 5
-  signal DONE_VEC, OE_Q : std_logic_vector(7 downto 1);
-  signal OOE, RENFIFO_B_D : std_logic_vector(7 downto 1);
-  signal OEFIFO_B_D, OEFIFO_B_PRE : std_logic_vector(7 downto 1);
+  signal DONE_VEC, OE_Q : std_logic_vector(NFEB+2 downto 1);
+  signal OOE, RENFIFO_B_D : std_logic_vector(NFEB+2 downto 1);
+  signal OEFIFO_B_D, OEFIFO_B_PRE : std_logic_vector(NFEB+2 downto 1);
 
 -- PAGE 6
   signal DATA_A, DATA_B, DATA_C, DATA_D : std_logic_vector(15 downto 0);
-  signal DONE, LAST, LAST_RST : std_logic;
+  signal DONE, LAST_RST : std_logic;
+  signal LAST : std_logic := '0';
 
 -- PAGE 7
-  signal DATANOEND, DAVNODATA, DAVNODATA_D, ERRORD : std_logic_vector(7 downto 1);
+  signal DATANOEND, DAVNODATA, DAVNODATA_D, ERRORD : std_logic_vector(NFEB+2 downto 1);
   signal NOEND_RST, NOEND_CEO, NOEND_TC, RSTCNT : std_logic;
   signal NOEND : std_logic_vector(15 downto 0);
   signal CRC, REG_CRC : std_logic_vector(23 downto 0);
@@ -154,10 +160,10 @@ architecture CONTROL_arch of CONTROL is
   signal TAIL78, DTAIL78, DTAIL7, DTAIL8 : std_logic;
     
 -- PAGE 8
-  signal JREF : std_logic_vector(7 downto 1);
+  signal JREF : std_logic_vector(NFEB+2 downto 1);
 
 -- PAGE 10
-  signal KILL : std_logic_vector(7 downto 1);
+  signal KILL : std_logic_vector(NFEB+2 downto 1);
   signal NSTAT : std_logic_vector(40 downto 20);
   signal STATUS_Q : std_logic_vector(33 downto 27);
 
@@ -175,9 +181,16 @@ architecture CONTROL_arch of CONTROL is
   signal data_fifo_half : std_logic_vector(NFEB+2 downto 1) := (OTHERS => '0');
   signal dmb_l1pipe : std_logic_vector(7 downto 0) := (OTHERS => '0');
   signal GEMPTY_TMP : std_logic;
+  signal DATAIN_LAST_TMP : std_logic;
 
 begin
+  
+  DAV <= 'L';
+  
   GEMPTY_TMP <= cafifo_l1a_dav(8) or cafifo_l1a_dav(9);
+  
+  DATAIN_LAST_TMP <= '1' when DATAIN(11 downto 0) = "000000001000" else '0';
+  
 --  Generate BUSY (page 1)
 --  FDC(GEMPTY, CLKCMS, POP, GEMPTY_D(1));
   FDC(GEMPTY_TMP, CLKCMS, POP, GEMPTY_D(1));
@@ -206,12 +219,17 @@ begin
 
 -- Generate OKDATA / Generate DODAT (page 1)
   TAIL_RST <= RST or TAIL(1);
-  DDCNT_EN_RST <= RST or OKDATA;
+  DDCNT_EN_RST <= RST or OKDATA; -- modified!
+--  DDCNT_EN_RST <= RST or EODATA;
   FDCE(BUSY, CLK, OEHDR(8), TAIL_RST, DDCNT_EN(0));
   FDC(LOGICH, DDCNT_EN(0), DDCNT_EN_RST, DDCNT_EN(1));
   CB16CE(CLK, DDCNT_EN(1), TAIL_RST, DDCNT, DDCNT, DDCNT_CEO, DDCNT_TC);
-  OKDATA <= DDCNT(8) and DDCNT(7) and DDCNT(6);
+--  OKDATA <= DDCNT(8) and DDCNT(7) and DDCNT(6); -- modified!
+  OKDATA <= '1' when DDCNT(2 downto 0) = "100" else '0'; -- modified by G&M
+--  DATAON <= not (DDCNT(8) and DDCNT(7) and DDCNT(6)); -- modified!
   FDC(OKDATA, CLK, TAIL(1), DODAT);
+--  EODATA <= not DATAON; -- modified!
+--  FDC(DATAON, CLK, TAIL(1), DODAT); -- modified!
   
 -- Generate TAIL (page 1)
   STARTTAIL_CE <= '1' when (BUSY='1' and (R(NFEB+2 downto 1) = ZERO9)) else '0';
@@ -238,7 +256,7 @@ begin
   
 -- Generate POP (page 1)
   FDC(TAIL(8), CLK, POP, TAILDONE);
-  L1ONLY <= '1' when (OEHDR(4)='1' and FIFO_L1A_MATCH(NFEB+2 downto 0) = ZERO10) else '0';
+  L1ONLY <= '1' when (OEHDR(4)='1' and cafifo_l1a_match = ZERO9) else '0';
   STPOP <= TAILDONE or L1ONLY;
   FDC(LOGICH, STPOP, POP, POP_D(1));
   FDC(POP_D(1), CLK, RST, POP_D(2));
@@ -260,11 +278,11 @@ begin
   FDC(OEHDTL_D, CLK, RST, OEHDTL);   
 
 -- Generate HEAD_D12 (page 2)
-  HEAD_D12 <= or_reduce(FIFO_L1A_MATCH);
+  HEAD_D12 <= or_reduce(cafifo_l1a_match);
 
 -- Generate FENDAVERR (page 2)
 --  FENDAV <= not KILLINPUT(NFEB+2 downto 1) and FIFO_L1A_MATCH(NFEB+2 downto 1);
-  FENDAV <= not KILL(NFEB+2 downto 1) and FIFO_L1A_MATCH(NFEB+2 downto 1);
+  FENDAV <= not KILL and cafifo_l1a_match;
   FENDAVERR <= or_reduce(FENDAV);
 
 -- Generate HDR_W (new, page 2)
@@ -340,7 +358,7 @@ begin
 
 -- Generate RDY (page 3)
   RDY_CE <= not FIFORDY;
-  GEN_RDY : for K in 1 to 7 generate
+  GEN_RDY : for K in 1 to NFEB+2 generate
   begin
     FD_1(FFOR_B(K), CLK, FIFORDY(K));
     FDCE(DODAT, CLK, RDY_CE(K), POP, RDY(K));
@@ -348,41 +366,57 @@ begin
   
 -- Generate DISDAV (page 3)
   P_AND_FIFORDY <= P and FIFORDY;
-  DISDAV_D <= (P_AND_FIFORDY(1) or P_AND_FIFORDY(2) or P_AND_FIFORDY(3) or P_AND_FIFORDY(4) or P_AND_FIFORDY(5) or P_AND_FIFORDY(6) or P_AND_FIFORDY(7));
-  FD(DISDAV_D, CLK, DISDAV);
+--  DISDAV_D <= (P_AND_FIFORDY(1) or P_AND_FIFORDY(2) or P_AND_FIFORDY(3) or P_AND_FIFORDY(4) or P_AND_FIFORDY(5) or P_AND_FIFORDY(6) or P_AND_FIFORDY(7));
+  DISDAV_D <= or_reduce(P_AND_FIFORDY);
+-- One extra clock cycle to align DAV with DOUT
+--  FD(DISDAV_D, CLK, DISDAV);
+  FD(DISDAV_D, CLK, DISDAV_DD);
+  FD(DISDAV_DD, CLK, DISDAV);
   
   -- Generate LOOPBACK (page 3)
   LOOPBACK_Q_B <= not LOOPBACK_Q;
   FDC(LOOPBACK_Q_B, SETLOOPBACK, RST, LOOPBACK_Q);
   LOOPBACK <= LOOPBACK_Q and not BUSY;
 
-
 -- Generate R (page 4)
   R_RST <= DONE_VEC or ERRORD;   
-  GEN_R : for K in 1 to 7 generate
+  GEN_R : for K in 1 to NFEB+2 generate
   begin
-    FDC(FIFO_L1A_MATCH(K), BUSY, R_RST(K), R(K));
+    FDC(cafifo_l1a_match(K), BUSY, R_RST(K), R(K));
   end generate GEN_R;
   
 -- Generate P (page 4, LUT)
-  P(1) <= '1' when (R(7 downto 6)="00" and R(1)='1' and DODAT='1') else '0';
-  P(2) <= '1' when (R(7 downto 6)="00" and R(2 downto 1)="10" and DODAT='1') else '0';
-  P(3) <= '1' when (R(7 downto 6)="00" and R(3 downto 1)="100" and DODAT='1') else '0';
-  P(4) <= '1' when (R(7 downto 6)="00" and R(4 downto 1)="1000" and DODAT='1') else '0';
-  P(5) <= '1' when (R(7 downto 6)="00" and R(5 downto 1)="10000" and DODAT='1') else '0';
-  P(6) <= '1' when (R(7 downto 6)="01" and DODAT='1') else '0';
-  P(7) <= '1' when (R(7)='1' and DODAT='1') else '0';
+--  P(1) <= '1' when (R(7 downto 6)="00" and R(1)='1' and DODAT='1') else '0';
+--  P(2) <= '1' when (R(7 downto 6)="00" and R(2 downto 1)="10" and DODAT='1') else '0';
+--  P(3) <= '1' when (R(7 downto 6)="00" and R(3 downto 1)="100" and DODAT='1') else '0';
+--  P(4) <= '1' when (R(7 downto 6)="00" and R(4 downto 1)="1000" and DODAT='1') else '0';
+--  P(5) <= '1' when (R(7 downto 6)="00" and R(5 downto 1)="10000" and DODAT='1') else '0';
+--  P(6) <= '1' when (R(7 downto 6)="01" and DODAT='1') else '0';
+--  P(7) <= '1' when (R(7)='1' and DODAT='1') else '0';
+  P(1) <= '1' when (R(9 downto 8)="00" and R(1)='1' and DODAT='1') else '0';
+  P(2) <= '1' when (R(9 downto 8)="00" and R(2 downto 1)="10" and DODAT='1') else '0';
+  P(3) <= '1' when (R(9 downto 8)="00" and R(3 downto 1)="100" and DODAT='1') else '0';
+  P(4) <= '1' when (R(9 downto 8)="00" and R(4 downto 1)="1000" and DODAT='1') else '0';
+  P(5) <= '1' when (R(9 downto 8)="00" and R(5 downto 1)="10000" and DODAT='1') else '0';
+  P(6) <= '1' when (R(9 downto 8)="00" and R(6 downto 1)="100000" and DODAT='1') else '0';
+  P(7) <= '1' when (R(9 downto 8)="00" and R(7 downto 1)="1000000" and DODAT='1') else '0';
+  P(8) <= '1' when (R(9 downto 8)="01" and DODAT='1') else '0';
+  P(9) <= '1' when (R(9)='1' and DODAT='1') else '0';
 
 -- Generate OE (page 4)
   OE <= P and RDY;
 
 -- Generate OEALL / Generate DOEALL / Generate OEDATA (page 4)
-  OEALL_D <= OE(1) or OE(2) or OE(3) or OE(4) or OE(5) or OE(6) or OE(7);
+--  OEALL_D <= OE(1) or OE(2) or OE(3) or OE(4) or OE(5) or OE(6) or OE(7);
+  OEALL_D <= or_reduce(OE);
   POPLAST <= POP or LAST;
   FDC(OEALL_D, CLK, POPLAST, OEALL);
   FDC(OEALL, CLK, POP, OEDATA_D);
   FDC(OEALL, CLK, POPLAST, DOEALL);
-  FDC(OEDATA_D, CLK, POP, OEDATA);
+-- One extra clock cycle to align DAV with DOUT
+--  FDC(OEDATA_D, CLK, POP, OEDATA);
+  FDC(OEDATA_D, CLK, POP, OEDATA_DD); 
+  FDC(OEDATA_DD, CLK, POP, OEDATA);
   
 -- Generate JRDFF (page 4)
   FDC(LOGICH, RDFFNXT, JRDFF, JRDFF_D);
@@ -390,7 +424,7 @@ begin
   
   
 -- Generate DONE_VEC (page 5)
-  GEN_DONE_VEC: for K in 1 to 7 generate
+  GEN_DONE_VEC: for K in 1 to NFEB+2 generate
   begin
     FDC(OE(K), DONE, POP, OE_Q(K));
     DONE_VEC(K) <= POP or OE_Q(K);
@@ -398,23 +432,27 @@ begin
 
 
 -- Generate RENFIFO_B (page 5)
-  GEN_RENFIFO_B: for K in 1 to 7 generate
+  GEN_RENFIFO_B: for K in 1 to NFEB+2 generate
   begin
     FDC(OE(K), CLK, DONE_VEC(K), OOE(K));
     RENFIFO_B_D(K) <= '0' when (JREF(K)='1' or (OOE(K)='1' and LAST='0')) else '1';
     FDP(RENFIFO_B_D(K), CLK, POP, RENFIFO_B(K));
+--    FDC(OE(K), CLK, DONE_VEC(K), OOE(K));
+--    RENFIFO_B(K) <= '0' when (JREF(K)='1' or (OOE(K)='1' and LAST='0')) else '1';
+----    FDP(RENFIFO_B_D(K), CLK, POP, RENFIFO_B(K));
   end generate GEN_RENFIFO_B;
 
 
 -- Generate OEFIFO_B (page 5)
-  GEN_OENFIFO_B: for K in 1 to 7 generate
+  GEN_OENFIFO_B: for K in 1 to NFEB+2 generate
   begin
     OEFIFO_B_D(K) <= '0' when (JOEF(K)='1' or OOE(K)='1') else '1';
     OEFIFO_B_PRE(K) <= POP or DONE_VEC(K);
     FDP_1(OEFIFO_B_D(K), CLK, OEFIFO_B_PRE(K), OEFIFO_B(K));
+--    OEFIFO_B_D(K) <= '0' when (JOEF(K)='1' or OE(K)='1') else '1';
+--    OEFIFO_B_PRE(K) <= POP or DONE_VEC(K);
+--    FDP_1(OEFIFO_B_D(K), CLK, OEFIFO_B_PRE(K), OEFIFO_B(K));
   end generate GEN_OENFIFO_B;
-
-
 
   -- Generate DOUT (page 6)
   GEN_DOUT : for K in 0 to 15 generate
@@ -429,7 +467,8 @@ begin
   DATA_D <= DATA_CRC when (DTAIL78='1') else DATA_C;
 
 -- Generate DONE / Generate LAST (new, page 6)
-  FDCE_1(DATAIN_LAST, CLK, DOEALL, LAST_RST, LAST);
+--  FDCE_1(DATAIN_LAST, CLK, DOEALL, LAST_RST, LAST);
+  FDCE_1(DATAIN_LAST_TMP, CLK, DOEALL, LAST_RST, LAST);
   FD(LAST, CLK, DONE);
   FD_1(LAST, CLK, LAST_RST);
 
@@ -437,7 +476,7 @@ begin
   
 -- Generate DAVNODATA / Generate DATANOEND / Generate ERRORD (page 7)
   DAVNODATA_D <= R and FIFORDY;
-  GEN_ERRORD : for K in 1 to 7 generate
+  GEN_ERRORD : for K in 1 to NFEB+2 generate
   begin
     FDC(DAVNODATA_D(K), DODAT, POP, DAVNODATA(K));
     FDCE(OE(K), CLKCMS, RSTCNT, POP, DATANOEND(K));
@@ -490,9 +529,11 @@ begin
                   '0';
   DATA_CRC(15 downto 12) <= (others => '0');
 
+-- End Of Frame to DDUFIFO
+  FD(DTAIL8, CLK, EOF);
   
 -- Generate JREF (page 8)
-  GEN_JREF : for K in 0 to 7 generate
+  GEN_JREF : for K in 1 to NFEB+2 generate
   begin
     FDE(JRDFF, CLK, JOEF(K), JREF(K));
   end generate GEN_JREF;
@@ -500,13 +541,14 @@ begin
 
 -- Generate KILL signals (page 10)
 --  KILL <= KILLINPUT;
-  KILL(1) <= '1' when (KILLINPUT(2 downto 0)="001") else '0'; -- KILLALCT
-  KILL(2) <= '1' when (KILLINPUT(2 downto 0)="010") else '0'; -- KILLTMB
-  KILL(3) <= '1' when (KILLINPUT(2 downto 0)="011") else '0'; -- KILLCFEB1
-  KILL(4) <= '1' when (KILLINPUT(2 downto 0)="100") else '0'; -- KILLCFEB2
-  KILL(5) <= '1' when (KILLINPUT(2 downto 0)="101") else '0'; -- KILLCFEB3
-  KILL(6) <= '1' when (KILLINPUT(2 downto 0)="110") else '0'; -- KILLCFEB4
-  KILL(7) <= '1' when (KILLINPUT(2 downto 0)="111") else '0'; -- KILLCFEB5
+--  KILL(1) <= '1' when (KILLINPUT(2 downto 0)="001") else '0'; -- KILLALCT
+--  KILL(2) <= '1' when (KILLINPUT(2 downto 0)="010") else '0'; -- KILLTMB
+--  KILL(3) <= '1' when (KILLINPUT(2 downto 0)="011") else '0'; -- KILLCFEB1
+--  KILL(4) <= '1' when (KILLINPUT(2 downto 0)="100") else '0'; -- KILLCFEB2
+--  KILL(5) <= '1' when (KILLINPUT(2 downto 0)="101") else '0'; -- KILLCFEB3
+--  KILL(6) <= '1' when (KILLINPUT(2 downto 0)="110") else '0'; -- KILLCFEB4
+--  KILL(7) <= '1' when (KILLINPUT(2 downto 0)="111") else '0'; -- KILLCFEB5
+  KILL <= KILLINPUT;
 
 -- Generate NSTAT(40 downto 34) - Half full KILL logic (page 10)
   NSTAT(40) <= KILL(1) or STATUS(40);

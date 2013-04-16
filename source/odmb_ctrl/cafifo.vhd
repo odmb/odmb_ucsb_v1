@@ -37,7 +37,7 @@ entity cafifo is
     dcfeb2_data : in std_logic_vector(15 downto 0);
     dcfeb3_dv   : in std_logic;
     dcfeb3_data : in std_logic_vector(15 downto 0);
-    dcfeb4_dv   : in std_logic;
+    dcfeb4_dv   : in std_logic; 
     dcfeb4_data : in std_logic_vector(15 downto 0);
     dcfeb5_dv   : in std_logic;
     dcfeb5_data : in std_logic_vector(15 downto 0);

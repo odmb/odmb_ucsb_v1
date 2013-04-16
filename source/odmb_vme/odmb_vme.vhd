@@ -91,8 +91,8 @@ PORT 	(
 		fifo_rm_en : OUT STD_LOGIC_VECTOR (9 downto 1);	
 		fifo_tm_en : OUT STD_LOGIC_VECTOR (9 downto 1);	
  
-		fifo_in : OUT STD_LOGIC_VECTOR (17 downto 0);			
-		fifo_out : IN STD_LOGIC_VECTOR (17 downto 0);	
+		fifo_in : OUT STD_LOGIC_VECTOR (15 downto 0);			
+		fifo_out : IN STD_LOGIC_VECTOR (15 downto 0);	
 
 -- To/From DCFEB ADCs and DACs
 
@@ -630,7 +630,7 @@ fifo_rw_en <= "000000000";
 fifo_rm_en <= "000000000";	
 fifo_tm_en <= "000000000";		
 
-fifo_in <= "000000000000000000";				
+fifo_in <= (others => '0');				
 
 -- To/From DCFEB ADCs and DACs
 

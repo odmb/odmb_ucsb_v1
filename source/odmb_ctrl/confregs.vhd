@@ -24,7 +24,7 @@ entity CONFREGS is
     FLOADDLY  : in std_logic;           -- Generates PUSH_DLY & LCT_L1A_DLY & tMB_PUSH_DLY & ALCT_PUSH_DLY
     FLOADCDLY : in std_logic;           -- Generates INJDLY & EXTDLY & CALGDLY & CALLCTDLY
     FLOADID   : in std_logic;           -- Generates CRATEID
-    FLOADKILL : in std_logic;           -- Generates KILLCFEB
+    FLOADKILL : in std_logic;           -- Generates KILL
 
     TDO         : out std_logic;
     ALCT_PUSH_DLY : out std_logic_vector(4 downto 0);
@@ -35,7 +35,7 @@ entity CONFREGS is
     EXTDLY      : out std_logic_vector(4 downto 0);
     CALGDLY     : out std_logic_vector(4 downto 0);
     CALLCTDLY   : out std_logic_vector(3 downto 0);
-    KILLCFEB    : out std_logic_vector(NFEB downto 1);
+    KILL    : out std_logic_vector(NFEB+2 downto 1);
     CRATEID     : out std_logic_vector(6 downto 0)
     );
 
@@ -53,8 +53,8 @@ architecture CONFREGS_Arch of CONFREGS is
   signal ID_SHR                             : std_logic_vector(8 downto 1);
   signal ID_DR                              : std_logic_vector(7 downto 1);
   signal KILL_SHR_EN, KILL_DR_CLK, KILL_TDO : std_logic;
-  signal KILL_SHR                           : std_logic_vector(NFEB+1 downto 1);
-  signal KILL_DR                            : std_logic_vector(NFEB downto 1);
+  signal KILL_SHR                           : std_logic_vector(NFEB+3 downto 1);
+  signal KILL_DR                            : std_logic_vector(NFEB+2 downto 1);
 
 begin  --Architecture
 
@@ -106,16 +106,16 @@ begin  --Architecture
   ID_TDO              <= ID_SHR(1);
 
 
-  -- Generate KILLCFEB
+  -- Generate KILL
   KILL_SHR_EN <= SHIFT and SEL2 and FLOADKILL;
   KILL_DR_CLK <= UPDATE and SEL2 and FLOADKILL;
-  KILL_SHR(NFEB+1) <= BTDI;
-  GEN_KILL_SHR : for I in NFEB downto 1 generate
+  KILL_SHR(NFEB+3) <= BTDI;
+  GEN_KILL_SHR : for I in NFEB+2 downto 1 generate
   begin
     FDCE_I : FDCE port map(KILL_SHR(I), DRCK, KILL_SHR_EN, RST, KILL_SHR(I+1));
     FDC_I  : FDC port map(KILL_DR(I), KILL_DR_CLK, RST, KILL_SHR(I));
   end generate GEN_KILL_SHR;
-  KILLCFEB(NFEB downto 1) <= KILL_DR(NFEB downto 1);
+  KILL(NFEB+2 downto 1) <= KILL_DR(NFEB+2 downto 1);
   KILL_TDO                <= KILL_SHR(1);
 
   TDO <= DLY_TDO when FLOADDLY = '1' else
