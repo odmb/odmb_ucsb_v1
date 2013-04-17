@@ -144,6 +144,7 @@ architecture CONTROL_arch of CONTROL is
   signal DONE_VEC, OE_Q : std_logic_vector(NFEB+2 downto 1);
   signal OOE, RENFIFO_B_D : std_logic_vector(NFEB+2 downto 1);
   signal OEFIFO_B_D, OEFIFO_B_PRE : std_logic_vector(NFEB+2 downto 1);
+  signal OEFIFO_B_D_D, OEFIFO_B_D_D_D : std_logic_vector(NFEB+2 downto 1);
 
 -- PAGE 6
   signal DATA_A, DATA_B, DATA_C, DATA_D : std_logic_vector(15 downto 0);
@@ -189,7 +190,7 @@ begin
   
   GEMPTY_TMP <= cafifo_l1a_dav(8) or cafifo_l1a_dav(9);
   
-  DATAIN_LAST_TMP <= '1' when DATAIN(11 downto 0) = "000000001000" else '0';
+  DATAIN_LAST_TMP <= '1' when (DATAIN(11 downto 0) = "000000001000") else '0';
   
 --  Generate BUSY (page 1)
 --  FDC(GEMPTY, CLKCMS, POP, GEMPTY_D(1));
@@ -446,9 +447,13 @@ begin
 -- Generate OEFIFO_B (page 5)
   GEN_OENFIFO_B: for K in 1 to NFEB+2 generate
   begin
-    OEFIFO_B_D(K) <= '0' when (JOEF(K)='1' or OOE(K)='1') else '1';
+--    OEFIFO_B_D(K) <= '0' when (JOEF(K)='1' or OOE(K)='1') else '1'; -- In original design
+    OEFIFO_B_D_D_D(K) <= '0' when (JOEF(K)='1' or OOE(K)='1') else '1'; -- Delayed 1.5 clock cycles to fix problem with last
     OEFIFO_B_PRE(K) <= POP or DONE_VEC(K);
-    FDP_1(OEFIFO_B_D(K), CLK, OEFIFO_B_PRE(K), OEFIFO_B(K));
+--    FDP_1(OEFIFO_B_D(K), CLK, OEFIFO_B_PRE(K), OEFIFO_B(K));  -- In original design 
+    FDP_1(OEFIFO_B_D_D_D(K), CLK, OEFIFO_B_PRE(K), OEFIFO_B_D_D(K));  -- Delayed 1.5 clock cycles to fix problem with last
+    FDP_1(OEFIFO_B_D_D(K), CLK, OEFIFO_B_PRE(K), OEFIFO_B_D(K));  -- Delayed 1.5 clock cycles to fix problem with last
+    FDP(OEFIFO_B_D(K), CLK, OEFIFO_B_PRE(K), OEFIFO_B(K));      --- Delayed 1.5 clock cycles to fix problem with last
 --    OEFIFO_B_D(K) <= '0' when (JOEF(K)='1' or OE(K)='1') else '1';
 --    OEFIFO_B_PRE(K) <= POP or DONE_VEC(K);
 --    FDP_1(OEFIFO_B_D(K), CLK, OEFIFO_B_PRE(K), OEFIFO_B(K));
