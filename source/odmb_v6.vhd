@@ -455,6 +455,38 @@ architecture bdf_type of ODMB_V6 is
 
   end component;
 
+  component daq_optical_out is
+    generic (
+      USE_CHIPSCOPE : integer := 1;
+      SIM_SPEEDUP   : integer := 1
+      );
+    port (
+      DAQ_TX_VIO_CNTRL     : inout std_logic_vector(35 downto 0);  --Chip Scope Pro control signals for virtual I/O
+      DAQ_TX_LA_CNTRL      : inout std_logic_vector(35 downto 0);  --Chip Scope Pro control signals for logic analyzer
+      RST                  : in    std_logic;
+      -- External signals
+      DAQ_RX_N             : in    std_logic;  -- GTX receive data in - signal
+      DAQ_RX_P             : in    std_logic;  -- GTX receive data in + signal
+      DAQ_TDIS             : out   std_logic;  -- optical transceiver transmit disable signal
+      DAQ_TX_N             : out   std_logic;  -- GTX transmit data out - signal
+      DAQ_TX_P             : out   std_logic;  -- GTX transmit data out + signal
+      -- Reference clocks ideally straight from the IBUFDS_GTXE1 output 
+      DAQ_TX_125REFCLK     : in    std_logic;  -- 125 MHz for 1 GbE
+      DAQ_TX_125REFCLK_DV2 : in    std_logic;  -- 62.5 MHz user clock for 1 GbE
+      DAQ_TX_160REFCLK     : in    std_logic;  -- 160 MHz for  2.56 GbE
+      -- Internal signals
+      L1A_MATCH            : in    std_logic;  -- Currently only for logic analyzer input
+      TXD                  : in    std_logic_vector(15 downto 0);  -- Data to be transmitted
+      TXD_VLD              : in    std_logic;  -- Flag for valid data; initiates data transfer
+      JDAQ_RATE            : in    std_logic;  -- requested DAQ rate from JTAG interface
+      RATE_1_25            : out   std_logic;  -- Flag to indicate 1.25 Gbps line rate operation
+      RATE_3_2             : out   std_logic;  -- Flag to indicate 3.2 Gbps line rate operation
+      TX_ACK               : out   std_logic;  -- Handshake signal indicates preamble has been sent, data flow should start
+      DAQ_DATA_CLK         : out   std_logic  -- Clock that should be used for passing data and controls to this module    
+      );
+  end component;
+
+
   component dmb_receiver
     port(
       RST              : in  std_logic;
@@ -843,6 +875,12 @@ architecture bdf_type of ODMB_V6 is
       orx2_sq_en  : out std_logic
       );
   end component;
+  
+-- Global signals
+  signal LOGICL : std_logic := '0';
+  signal LOGICH : std_logic := '1';
+  signal LOGIC36L : std_logic_vector(35 downto 0) := (others => '0');
+  signal LOGIC36H : std_logic_vector(35 downto 0) := (others => '1');
 
 -- Test Signals From/To J3
 
@@ -966,6 +1004,10 @@ architecture bdf_type of ODMB_V6 is
 
 
 -- DCFEB0 FF_EMU_EMU I/O Signals
+
+  signal dcfeb0_data_p, dcfeb0_data_n : std_logic;
+  signal dcfeb0_daq_tdis, dcfeb0_rate_1_25, dcfeb0_rate_3_2, dcfeb0_tx_ack, dcfeb0_daq_data_clk : std_logic;
+
 
   signal dcfeb0_tx_dat, dcfeb0_rx_dat, dcfeb0_clk_en, dcfeb0_rec_clk : std_logic;
 
@@ -2688,6 +2730,32 @@ begin
       tdi           => dl_jtag_tdi,
       rtn_shft_en   => dl_rtn_shft_en(1),
       tdo           => dl_jtag_tdo(1));
+
+  DCFEB0_TX_PM : daq_optical_out
+    generic map(
+      USE_CHIPSCOPE => 0,
+      SIM_SPEEDUP   => 0
+      )
+    port map(
+      DAQ_TX_VIO_CNTRL     => LOGIC36L,
+      DAQ_TX_LA_CNTRL      => LOGIC36L,
+      RST                  => reset,
+      DAQ_RX_N             => LOGICL,
+      DAQ_RX_P             => LOGICH,
+      DAQ_TDIS             => dcfeb0_daq_tdis ,
+      DAQ_TX_N             => dcfeb0_data_n,
+      DAQ_TX_P             => dcfeb0_data_p,
+      DAQ_TX_125REFCLK     => LOGICL, -- daq_tx_125refclk,
+      DAQ_TX_125REFCLK_DV2 => LOGICL, -- daq_tx_125refclk_dv2,
+      DAQ_TX_160REFCLK     => clk80,
+      L1A_MATCH            => LOGICL,
+      TXD                  => dcfeb_data(1),
+      TXD_VLD              => dcfeb_data_valid(1), 
+      JDAQ_RATE            => LOGICH, -- '0' selects clock: 125 MHz (1.25 Gb), '1' selects 160 MHz (3.2 Gb)
+      RATE_1_25            => dcfeb0_rate_1_25,
+      RATE_3_2             => dcfeb0_rate_3_2,
+      TX_ACK               => dcfeb0_tx_ack,
+      DAQ_DATA_CLK         => dcfeb0_daq_data_clk);
 
 -- DCFEB1
 

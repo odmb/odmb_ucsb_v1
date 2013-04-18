@@ -1,0 +1,17 @@
+======================================================================
+=                                                                    =
+=  ODMB_UCSB_V1: Official software for the ODMB.V1                   =
+=                                                                    =
+=  AUTHORS: Guido Magazzu, Frank Golf, Manuel Franco Sevilla         =
+=                                                                    =
+======================================================================
+
+V00-06: 17 April 2013, Manuel
+--------------------------------
+Made all the paths relative.
+Added daq_optical_out (optical TX) to the top.
+
+V00-05: 17 April 2013, Manuel
+--------------------------------
+After delaying the output enable for the data FIFOs by 1.5 clock cycles, 
+DDU packets are continuously written to the DDU FIFOs.

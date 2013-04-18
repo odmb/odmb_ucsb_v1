@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module file_handler(clk, start, vme_cmd_reg, vme_dat_reg_in, vme_dat_reg_out, vme_cmd_rd, vme_dat_wr);
 
 input wire clk;
@@ -35,8 +36,8 @@ initial
 //    infile=$fopen("${ODMB_FOLDER}\\commands\\test_dcfebjtag_v1b.txt","r");
 //    outfile=$fopen("${ODMB_FOLDER}\\commands\\test_dcfebjtag_v1b_out.txt","w");
 // Test of CONFREGS
-    infile=$fopen("${ODMB_FOLDER}\\commands\\test_lct_l1a_conf.txt","r");
-    outfile=$fopen("${ODMB_FOLDER}\\commands\\test_lct_l1a_conf_out.txt","w");
+    infile=$fopen("commands\\test_lct_l1a_conf.txt","r");
+    outfile=$fopen("commands\\test_lct_l1a_conf_out.txt","w");
     while (!$feof(infile))
       begin
         @(posedge clk) #10

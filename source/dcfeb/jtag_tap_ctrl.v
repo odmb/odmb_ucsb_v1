@@ -1,4 +1,4 @@
-
+`timescale 1ns / 1ps
 // Created by fizzim.pl version 4.41 on 2012:09:14 at 21:52:49 (www.fizzim.com)
 
 module JTAG_TAP_ctrl (

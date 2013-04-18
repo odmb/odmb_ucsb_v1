@@ -1,3 +1,4 @@
+`timescale 1ns / 1ps
 module file_handler_event(clk, en, l1a, alct_dav, tmb_dav, lct);
 
 input wire clk;
@@ -54,7 +55,7 @@ always @(posedge clk) #1
 
 initial #1
   begin
-    infile=$fopen("${ODMB_FOLDER}\\commands\\test_l1a_lct.txt","r");
+    infile=$fopen("commands\\test_lct_l1a.txt","r");
     r = $fscanf(infile,"%h %b %b %b %b\n",ts_in,l1a_in,alct_dav_in,tmb_dav_in,lct_in);
     while (!$feof(infile))
       begin

@@ -2,27 +2,28 @@ m255
 K3
 13
 cModel Technology
-d${ODMB_FOLDER}
+d
 Eacc16
 Z0 w1365110630
 Z1 DPx4 ieee 18 std_logic_unsigned 0 22 RYmj;=TK`k=k>D@Cz`zoB3
 Z2 DPx4 ieee 15 std_logic_arith 0 22 4`Y?g_lkdn;7UL9IiJck01
-Z3 DPx3 std 6 textio 0 22 G^o2zK;Vh4eVdKTVo98653
+Z3 DPx3 std 6 textio 0 22 5>J:;AW>W0[[dW0I6EN1Q0
 Z4 DPx4 ieee 14 std_logic_1164 0 22 5=aWaoGZSMWIcH0i^f`XF1
-Z5 dC:\Users\gmagazzu\Documents\Firmware\odmb_ucsb_v1
-Z6 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/package_hdlmacro.vhd
-Z7 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/package_hdlmacro.vhd
+Z5 dC:\Users\odmb\Documents\LocalFW\odmb_ucsb_v1_soft
+Z6 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/package_hdlmacro.vhd
+Z7 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/package_hdlmacro.vhd
 l0
 L3619
 VRHEJC3@cnJn2oLb0@7HYG0
-Z8 OE;C;10.0;49
+Z8 OL;C;10.1c;51
 32
-Z9 !s108 1366137682.794000
-Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/package_hdlmacro.vhd|
-Z11 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/package_hdlmacro.vhd|
+Z9 !s108 1366243396.732000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/package_hdlmacro.vhd|
+Z11 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/package_hdlmacro.vhd|
 Z12 o-work work -2002 -explicit
 Z13 tExplicit 1
 !s100 n[ZoKKfLVE_cRF3KeKdzo3
+!i10b 1
 Aacc16_v
 R1
 R2
@@ -40,6 +41,7 @@ R11
 R12
 R13
 !s100 zBVDcfVd2_7O7K<[MAL983
+!i10b 1
 Eacc4
 Z14 w1365110630
 R1
@@ -60,6 +62,7 @@ R11
 R12
 R13
 !s100 ?S9kE3VNE6Bh>;:Pgh=lA3
+!i10b 1
 Aacc4_v
 R1
 R2
@@ -77,6 +80,7 @@ R11
 R12
 R13
 !s100 f2k0XV3M8PJZTcYPPGD0]0
+!i10b 1
 Eacc8
 R14
 R1
@@ -97,6 +101,7 @@ R11
 R12
 R13
 !s100 ohPbEVeJTAao;?kY?AEnC0
+!i10b 1
 Aacc8_v
 R1
 R2
@@ -114,6 +119,7 @@ R11
 R12
 R13
 !s100 a?nDKPJY8XJVdDCUYY^ab2
+!i10b 1
 Eadd16
 R14
 R1
@@ -134,6 +140,7 @@ R11
 R12
 R13
 !s100 ::GDEzDRYLX[b89VcC:WL2
+!i10b 1
 Aadd16_v
 R1
 R2
@@ -151,6 +158,7 @@ R11
 R12
 R13
 !s100 Gng]=LLV2VJmA[]@Am[043
+!i10b 1
 Eadd4
 R14
 R1
@@ -171,6 +179,7 @@ R11
 R12
 R13
 !s100 O`22Inl7Xl_`iQE`nJonf3
+!i10b 1
 Aadd4_v
 R1
 R2
@@ -188,6 +197,7 @@ R11
 R12
 R13
 !s100 MhK_c=faL?WNAL<K`6NkC1
+!i10b 1
 Eadd8
 R14
 R1
@@ -208,6 +218,7 @@ R11
 R12
 R13
 !s100 b;AiB33<V2z8;aBdD@^QP0
+!i10b 1
 Aadd8_v
 R1
 R2
@@ -225,6 +236,7 @@ R11
 R12
 R13
 !s100 ?2=D=6UTzJ3lcYencgWNa2
+!i10b 1
 Eadsu16
 R14
 R1
@@ -245,6 +257,7 @@ R11
 R12
 R13
 !s100 3i3^dYz@L6lW2LjN^Ni8f0
+!i10b 1
 Aadsu16_v
 R1
 R2
@@ -262,6 +275,7 @@ R11
 R12
 R13
 !s100 ORJMe;463eK?@JAn[9k<73
+!i10b 1
 Eadsu4
 R14
 R1
@@ -282,6 +296,7 @@ R11
 R12
 R13
 !s100 nToX1:?Y4DR`82bji8P7G3
+!i10b 1
 Aadsu4_v
 R1
 R2
@@ -299,6 +314,7 @@ R11
 R12
 R13
 !s100 `E;KBPnM7SM[;lB:@N:FT1
+!i10b 1
 Eadsu8
 R14
 R1
@@ -319,6 +335,7 @@ R11
 R12
 R13
 !s100 N9C[I18F1Ro:;HLNSin:L0
+!i10b 1
 Aadsu8_v
 R1
 R2
@@ -336,27 +353,29 @@ R11
 R12
 R13
 !s100 S7>5ECkLz8?PKWZf8gV7Y3
+!i10b 1
 Ealct_tmb_data_gen
-Z15 w1365636848
+Z15 w1365636850
 Z16 DPx6 unisim 11 vcomponents 0 22 LK09mUb@M8hI;WiEWHFbY1
 R2
 R3
 R4
 R1
 R5
-Z17 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/alct_tmb_data_gen.vhd
-Z18 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/alct_tmb_data_gen.vhd
+Z17 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/alct_tmb_data_gen.vhd
+Z18 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/alct_tmb_data_gen.vhd
 l0
 L19
 V8Ud5]>gP0X]=_0f[coFON1
 R8
 32
-Z19 !s108 1366137701.468000
-Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/alct_tmb_data_gen.vhd|
-Z21 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/alct_tmb_data_gen.vhd|
+Z19 !s108 1366243404.602000
+Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/alct_tmb_data_gen.vhd|
+Z21 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/alct_tmb_data_gen.vhd|
 R12
 R13
 !s100 =CA=DbSjc6KmE`AzE6N`_2
+!i10b 1
 Aalct_tmb_data_gen_architecture
 R16
 R2
@@ -375,6 +394,7 @@ R21
 R12
 R13
 !s100 =`6j?kPBA=W1kLXmHZYGC3
+!i10b 1
 Eand12
 R14
 R3
@@ -393,6 +413,7 @@ R11
 R12
 R13
 !s100 Ne7Qn?lAfBV7@YFcP>96;1
+!i10b 1
 Aand12_v
 R3
 R4
@@ -408,6 +429,7 @@ R11
 R12
 R13
 !s100 G1f=d2aN?Lb:S3UnSJ`d91
+!i10b 1
 Eand16
 R14
 R3
@@ -426,6 +448,7 @@ R11
 R12
 R13
 !s100 io8RLV[Ho9:N_ZdOM?hT51
+!i10b 1
 Aand16_v
 R3
 R4
@@ -441,6 +464,7 @@ R11
 R12
 R13
 !s100 XeJTnKIfX28];USYjoBg>3
+!i10b 1
 Eand6
 R14
 R3
@@ -459,6 +483,7 @@ R11
 R12
 R13
 !s100 [;M?UVz6R?KnM_goFYifX1
+!i10b 1
 Aand6_v
 R3
 R4
@@ -474,6 +499,7 @@ R11
 R12
 R13
 !s100 zZ]hc18>4B7e?NAL:<2d]0
+!i10b 1
 Eand7
 R14
 R3
@@ -492,6 +518,7 @@ R11
 R12
 R13
 !s100 MadNWj;aL^b18X[NUM5992
+!i10b 1
 Aand7_v
 R3
 R4
@@ -507,6 +534,7 @@ R11
 R12
 R13
 !s100 5IO1NOHAzRaU8dM1@>^bU2
+!i10b 1
 Eand8
 R14
 R3
@@ -525,6 +553,7 @@ R11
 R12
 R13
 !s100 o>Zizf0F4AFKRBQ>GLK_]2
+!i10b 1
 Aand8_v
 R3
 R4
@@ -540,6 +569,7 @@ R11
 R12
 R13
 !s100 =ok5Yc@JJ?D41;E3En60C1
+!i10b 1
 Eand9
 R14
 R3
@@ -558,6 +588,7 @@ R11
 R12
 R13
 !s100 JYDV2jHeC`X_:VPL4U6fH1
+!i10b 1
 Aand9_v
 R3
 R4
@@ -573,25 +604,27 @@ R11
 R12
 R13
 !s100 CoTdKR`cKP3?SR51fH6950
+!i10b 1
 Ebgb_bscan_emulator
 R14
 R16
 R3
 R4
 R5
-Z22 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/bgb_scan_emulator.vhd
-Z23 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/bgb_scan_emulator.vhd
+Z22 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/bgb_scan_emulator.vhd
+Z23 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/bgb_scan_emulator.vhd
 l0
 L14
 V7a_NIob02Xin;X5Ij1SaM3
 R8
 32
-Z24 !s108 1366137697.536000
-Z25 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/bgb_scan_emulator.vhd|
-Z26 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/bgb_scan_emulator.vhd|
+Z24 !s108 1366243402.482000
+Z25 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/bgb_scan_emulator.vhd|
+Z26 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/bgb_scan_emulator.vhd|
 R12
 R13
 !s100 iC4Ml;dB><mhf8nKDLZhk2
+!i10b 1
 Abgb_bscan_emulator_arch
 R16
 R3
@@ -608,6 +641,7 @@ R26
 R12
 R13
 !s100 [8eghdVA?ZNjH^:Um:[bo3
+!i10b 1
 Ebrlshft4
 R14
 R3
@@ -626,6 +660,7 @@ R11
 R12
 R13
 !s100 zD8B:dggD?Z@=jRf:h8lB1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -641,6 +676,7 @@ R11
 R12
 R13
 !s100 ;e`d7MCOeTB5Mle2FG=ZJ3
+!i10b 1
 Ebrlshft8
 R14
 R3
@@ -659,6 +695,7 @@ R11
 R12
 R13
 !s100 GS@?iRY@G5X;]ZI_<Bla`3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -674,6 +711,7 @@ R11
 R12
 R13
 !s100 MFQPglI3h]VT_7IDUO6NT1
+!i10b 1
 Ebufe16
 R14
 R3
@@ -692,6 +730,7 @@ R11
 R12
 R13
 !s100 A4e5aQG68AAnhLj0@2<zi1
+!i10b 1
 Abufe16_v
 R3
 R4
@@ -707,6 +746,7 @@ R11
 R12
 R13
 !s100 PZeRL8@lCHCTiXfU5i9zk2
+!i10b 1
 Ebufe4
 R14
 R3
@@ -725,6 +765,7 @@ R11
 R12
 R13
 !s100 z]o]ihNC1e<mfh;YU]oH33
+!i10b 1
 Abufe4_v
 R3
 R4
@@ -740,6 +781,7 @@ R11
 R12
 R13
 !s100 [T0h98<nC17K1SjYPmkaC3
+!i10b 1
 Ebufe8
 R14
 R3
@@ -758,6 +800,7 @@ R11
 R12
 R13
 !s100 ^BbgnlhY?E140LHQhZWc?1
+!i10b 1
 Abufe8_v
 R3
 R4
@@ -773,6 +816,7 @@ R11
 R12
 R13
 !s100 :[n8WV4I0ZdkeCDXQEoVN1
+!i10b 1
 Ebufgce
 R14
 R3
@@ -791,6 +835,7 @@ R11
 R12
 R13
 !s100 >jNjSUZ^16Y]c3Y2jM]mb0
+!i10b 1
 Abufgce_v
 R3
 R4
@@ -806,6 +851,7 @@ R11
 R12
 R13
 !s100 HN3bB3fHT2Wion9;TKflS1
+!i10b 1
 Ebufgce_1
 R14
 R3
@@ -824,6 +870,7 @@ R11
 R12
 R13
 !s100 @0mhz=f4hEZTbLPlC04bL3
+!i10b 1
 Abufgce_1_v
 R3
 R4
@@ -839,6 +886,7 @@ R11
 R12
 R13
 !s100 PCTgO42:W94f;]jD>j9lR3
+!i10b 1
 Ebuft16
 R14
 R3
@@ -857,6 +905,7 @@ R11
 R12
 R13
 !s100 Z:Co@z`nOna^ZlVIizm]N1
+!i10b 1
 Abuft16_v
 R3
 R4
@@ -872,6 +921,7 @@ R11
 R12
 R13
 !s100 OGem8H?LW0H7L<Y>>mbC=2
+!i10b 1
 Ebuft4
 R14
 R3
@@ -890,6 +940,7 @@ R11
 R12
 R13
 !s100 zcO001KOC3:=gT>1Fkef@3
+!i10b 1
 Abuft4_v
 R3
 R4
@@ -905,6 +956,7 @@ R11
 R12
 R13
 !s100 _NKi`@Wz_k_BG@<JNKh0H0
+!i10b 1
 Ebuft8
 R14
 R3
@@ -923,6 +975,7 @@ R11
 R12
 R13
 !s100 >db2;Hj6b6nn<bVGn1h<g2
+!i10b 1
 Abuft8_v
 R3
 R4
@@ -938,8 +991,9 @@ R11
 R12
 R13
 !s100 hkDYjaXaRX3Vo_9CYWjUe0
+!i10b 1
 Ecafifo
-Z27 w1365792577
+Z27 w1365792578
 Z28 DPx4 work 8 hdlmacro 0 22 NR1oezWEK2dQm5WBaIRV80
 Z29 DPx8 unimacro 11 vcomponents 0 22 >N9ETzig:kSg:fTAGz^H42
 R16
@@ -948,19 +1002,20 @@ R3
 R4
 R1
 R5
-Z30 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/cafifo.vhd
-Z31 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/cafifo.vhd
+Z30 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/cafifo.vhd
+Z31 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/cafifo.vhd
 l0
 L12
 VJAUnLgH?4fB>V=LC[;UFA2
 R8
 32
-Z32 !s108 1366137700.937000
-Z33 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/cafifo.vhd|
-Z34 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/cafifo.vhd|
+Z32 !s108 1366243404.272000
+Z33 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/cafifo.vhd|
+Z34 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/cafifo.vhd|
 R12
 R13
 !s100 F5Cl0lQ35K9Xb:?];Jz^51
+!i10b 1
 Acafifo_architecture
 R28
 R29
@@ -981,6 +1036,7 @@ R34
 R12
 R13
 !s100 HlVL?X6FOfL;bmA[aioVn3
+!i10b 1
 Ecalibtrg
 Z35 w1365110632
 R2
@@ -989,19 +1045,20 @@ R3
 R4
 Z36 DPx4 work 17 latches_flipflops 0 22 ?KAki>7A61XbG9IA1L1XF2
 R5
-Z37 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/calibtrg.vhd
-Z38 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/calibtrg.vhd
+Z37 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/calibtrg.vhd
+Z38 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/calibtrg.vhd
 l0
 L10
 V[m3_LAf[PdBJdHnLeFzTZ0
 R8
 32
-Z39 !s108 1366137679.175000
-Z40 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/calibtrg.vhd|
-Z41 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/calibtrg.vhd|
+Z39 !s108 1366243395.102000
+Z40 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/calibtrg.vhd|
+Z41 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/calibtrg.vhd|
 R12
 R13
 !s100 Dn>E?dV8A^cjFdPc2lQAY1
+!i10b 1
 Acalibtrg_arch
 R2
 R1
@@ -1020,28 +1077,30 @@ R41
 R12
 R13
 !s100 I@jh[05Z>LV_ORGWCc7O01
+!i10b 1
 Ecaltrigcon
 R35
-Z42 DPx8 synopsys 10 attributes 0 22 Fb?eGzjff51Ud2l4[U_732
-Z43 DPx4 ieee 14 std_logic_misc 0 22 10=1C[Hafn:kggH?^M@3X2
+Z42 DPx8 synopsys 10 attributes 0 22 J^T`lPA_8_J<l8kQiVE]>2
+Z43 DPx4 ieee 14 std_logic_misc 0 22 >dU:RInm^_6_mBJ^<6QGY2
 R29
 R3
 R4
 R16
 R5
-Z44 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/caltrigcon.vhd
-Z45 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/caltrigcon.vhd
+Z44 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/caltrigcon.vhd
+Z45 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/caltrigcon.vhd
 l0
 L10
 VE0k<P`U8=mmk8l_]R9g_d1
 R8
 32
-Z46 !s108 1366137696.600000
-Z47 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/caltrigcon.vhd|
-Z48 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/caltrigcon.vhd|
+Z46 !s108 1366243402.242000
+Z47 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/caltrigcon.vhd|
+Z48 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/caltrigcon.vhd|
 R12
 R13
 !s100 Dk[RzXML>aEEK=[G>OT]d3
+!i10b 1
 Acaltrigcon_arch
 R42
 R43
@@ -1061,6 +1120,7 @@ R48
 R12
 R13
 !s100 b0Ad@^Q[M;A36z9F2=_RR0
+!i10b 1
 Ecb16ce
 R14
 R1
@@ -1081,6 +1141,7 @@ R11
 R12
 R13
 !s100 hG4c<]WS9k;0?>N6R6zYi2
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1098,6 +1159,7 @@ R11
 R12
 R13
 !s100 lFhAQ3ZSaaH=b@c_lAGEd0
+!i10b 1
 Ecb16cle
 R14
 R1
@@ -1118,6 +1180,7 @@ R11
 R12
 R13
 !s100 RE1YGU9oi:?lV`SocQS`<3
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1135,6 +1198,7 @@ R11
 R12
 R13
 !s100 >z>D[>f6lAKOf?R[F:1GE0
+!i10b 1
 Ecb16cled
 R14
 R1
@@ -1155,6 +1219,7 @@ R11
 R12
 R13
 !s100 5;NIH8e`G?HJR9<HgRb=k2
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1172,6 +1237,7 @@ R11
 R12
 R13
 !s100 83T;VS[V]lIe^oD556_>b3
+!i10b 1
 Ecb16re
 R14
 R1
@@ -1192,6 +1258,7 @@ R11
 R12
 R13
 !s100 [ZB@W[jET@Pe?Q]2YK^gj1
+!i10b 1
 Acb16re_v
 R1
 R2
@@ -1209,6 +1276,7 @@ R11
 R12
 R13
 !s100 @[lZmKhQ^7cY0laDZ5L6[2
+!i10b 1
 Ecb2ce
 R14
 R1
@@ -1229,6 +1297,7 @@ R11
 R12
 R13
 !s100 E=^=9[Da4dLzXgLgeBE8;0
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1246,6 +1315,7 @@ R11
 R12
 R13
 !s100 k0>UchlBnRKlb]YU>VIKO1
+!i10b 1
 Ecb2cle
 R14
 R1
@@ -1266,6 +1336,7 @@ R11
 R12
 R13
 !s100 UVn4^S09mM=Gm4?Q3_VPd0
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1283,6 +1354,7 @@ R11
 R12
 R13
 !s100 29VX8UKjkKcg6E6b[:MFh0
+!i10b 1
 Ecb2cled
 R14
 R1
@@ -1303,6 +1375,7 @@ R11
 R12
 R13
 !s100 MG]SGZ1_jL;0LVCG6>DO21
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1320,6 +1393,7 @@ R11
 R12
 R13
 !s100 mo8PgGCe6:SCg8k5HDQz52
+!i10b 1
 Ecb2re
 R14
 R1
@@ -1340,6 +1414,7 @@ R11
 R12
 R13
 !s100 Qa]AkVmn2EKfiN0<HUie=0
+!i10b 1
 Acb2re_v
 R1
 R2
@@ -1357,6 +1432,7 @@ R11
 R12
 R13
 !s100 5;HYG;G<IAOA20A[`9Lh?1
+!i10b 1
 Ecb4ce
 R14
 R1
@@ -1377,6 +1453,7 @@ R11
 R12
 R13
 !s100 PmDakiQeWb=D8j=8kg5LW0
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1394,6 +1471,7 @@ R11
 R12
 R13
 !s100 FHzCD[XLY`mSe_I918PTM1
+!i10b 1
 Ecb4cle
 R14
 R1
@@ -1414,6 +1492,7 @@ R11
 R12
 R13
 !s100 3DU:ReT6^9@>0INGZ[VHZ0
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1431,6 +1510,7 @@ R11
 R12
 R13
 !s100 Gf[M>JcH;VG7zFDJC401F0
+!i10b 1
 Ecb4cled
 R14
 R1
@@ -1451,6 +1531,7 @@ R11
 R12
 R13
 !s100 h6BV>W^ZI71oZOYSlR`^o3
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1468,6 +1549,7 @@ R11
 R12
 R13
 !s100 J[:H92zFdnQG8Q=B_]j7e3
+!i10b 1
 Ecb4re
 R14
 R1
@@ -1488,6 +1570,7 @@ R11
 R12
 R13
 !s100 S0eNKm[ZS?SQ<EOQ^X5XB0
+!i10b 1
 Acb4re_v
 R1
 R2
@@ -1505,6 +1588,7 @@ R11
 R12
 R13
 !s100 6X[hH:]gE7a_f7JZzE0Ib1
+!i10b 1
 Ecb8ce
 R14
 R1
@@ -1525,6 +1609,7 @@ R11
 R12
 R13
 !s100 E]e1F3H^?diLjKzco^I2l3
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1542,6 +1627,7 @@ R11
 R12
 R13
 !s100 kSMgjNA5m0B:AM9Yj:0T42
+!i10b 1
 Ecb8cle
 R14
 R1
@@ -1562,6 +1648,7 @@ R11
 R12
 R13
 !s100 `IZcnHLB_R@^MGddL7jfY0
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1579,6 +1666,7 @@ R11
 R12
 R13
 !s100 5Z=3cP>k4b=lkSOL<oDmf1
+!i10b 1
 Ecb8cled
 R14
 R1
@@ -1599,6 +1687,7 @@ R11
 R12
 R13
 !s100 AoLez:oXXn:6Ef8mW8TGR0
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1616,6 +1705,7 @@ R11
 R12
 R13
 !s100 <NQAUnNojN1E03UWGK2Pn3
+!i10b 1
 Ecb8re
 R14
 R1
@@ -1636,6 +1726,7 @@ R11
 R12
 R13
 !s100 4<DK[m5HRN?COCR>YEe3j3
+!i10b 1
 Acb8re_v
 R1
 R2
@@ -1653,6 +1744,7 @@ R11
 R12
 R13
 !s100 ?`hf5:S;kC[WMZ;8[BR:^3
+!i10b 1
 Ecc16ce
 R14
 R1
@@ -1673,6 +1765,7 @@ R11
 R12
 R13
 !s100 n[YYJzk@8ed`2KMZMimV10
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1690,6 +1783,7 @@ R11
 R12
 R13
 !s100 5D:a]NboRmbTYiL::S7E[1
+!i10b 1
 Ecc16cle
 R14
 R1
@@ -1710,6 +1804,7 @@ R11
 R12
 R13
 !s100 >hF=z3P:nBD>QY?A=>iBM0
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1727,6 +1822,7 @@ R11
 R12
 R13
 !s100 mJO7kkJzmQB5i`CNn8TfN2
+!i10b 1
 Ecc16cled
 R14
 R1
@@ -1747,6 +1843,7 @@ R11
 R12
 R13
 !s100 W3Ma7`8jXigT6OKlH76gi0
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1764,6 +1861,7 @@ R11
 R12
 R13
 !s100 :?fGceD78NZ]057a;CNbE1
+!i10b 1
 Ecc16re
 R14
 R1
@@ -1784,6 +1882,7 @@ R11
 R12
 R13
 !s100 Fm;^ahW>?hW0U^f?=n[L@1
+!i10b 1
 Acc16re_v
 R1
 R2
@@ -1801,6 +1900,7 @@ R11
 R12
 R13
 !s100 CG><^K5^HOm;mjH_=JHD80
+!i10b 1
 Ecc8ce
 R14
 R1
@@ -1821,6 +1921,7 @@ R11
 R12
 R13
 !s100 5^HAGQiAk_L2VWlGj:f9N0
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1838,6 +1939,7 @@ R11
 R12
 R13
 !s100 T60b7]n_a:3F^Kg>`91ST1
+!i10b 1
 Ecc8cle
 R14
 R1
@@ -1858,6 +1960,7 @@ R11
 R12
 R13
 !s100 e1`>NSDjfCYni[hza`]7?2
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1875,6 +1978,7 @@ R11
 R12
 R13
 !s100 Be2HXJCmHDJiRd5kaIWm^2
+!i10b 1
 Ecc8cled
 R14
 R1
@@ -1895,6 +1999,7 @@ R11
 R12
 R13
 !s100 ZlTfMZ4]TOG@=HkOWWG6[1
+!i10b 1
 Abehavioral
 R1
 R2
@@ -1912,6 +2017,7 @@ R11
 R12
 R13
 !s100 9U57UkYEnzzmJn[oM>iL_1
+!i10b 1
 Ecc8re
 R14
 R1
@@ -1932,6 +2038,7 @@ R11
 R12
 R13
 !s100 1Tb[X`8P4^Abi[6PMGCDB2
+!i10b 1
 Acc8re_v
 R1
 R2
@@ -1949,6 +2056,7 @@ R11
 R12
 R13
 !s100 73CnQ:AL9l1`iSGPRWc3O3
+!i10b 1
 Eccbcode
 R35
 R2
@@ -1957,19 +2065,20 @@ R36
 R3
 R4
 R5
-Z49 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/ccbcode.vhd
-Z50 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/ccbcode.vhd
+Z49 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/ccbcode.vhd
+Z50 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/ccbcode.vhd
 l0
 L11
 V=`zI>gXF^iTE55@<aWgS01
 R8
 32
-Z51 !s108 1366137679.300000
-Z52 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/ccbcode.vhd|
-Z53 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/ccbcode.vhd|
+Z51 !s108 1366243395.172000
+Z52 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/ccbcode.vhd|
+Z53 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/ccbcode.vhd|
 R12
 R13
 !s100 SD3W6O3WzEfPfEh_JdW0C3
+!i10b 1
 Accbcode_arch
 R2
 R1
@@ -1988,6 +2097,7 @@ R53
 R12
 R13
 !s100 l7LU]n99d;NYR9il[EfOW0
+!i10b 1
 Ecd4ce
 R14
 R1
@@ -2008,6 +2118,7 @@ R11
 R12
 R13
 !s100 Yg=do0SPA?DAB:`H^1LPn3
+!i10b 1
 Abehavioral
 R1
 R2
@@ -2025,6 +2136,7 @@ R11
 R12
 R13
 !s100 jo<@iTS@mQ>zgDJDi6fOm0
+!i10b 1
 Ecd4cle
 R14
 R1
@@ -2045,6 +2157,7 @@ R11
 R12
 R13
 !s100 a1`NPV=STd>2DG3mCVe;?2
+!i10b 1
 Abehavioral
 R1
 R2
@@ -2062,6 +2175,7 @@ R11
 R12
 R13
 !s100 V8Qo;[1@5OoZ>c6BBFJX21
+!i10b 1
 Ecd4re
 R14
 R1
@@ -2082,6 +2196,7 @@ R11
 R12
 R13
 !s100 7?[7LOjZk@TTNhEgL098`0
+!i10b 1
 Acd4re_v
 R1
 R2
@@ -2099,6 +2214,7 @@ R11
 R12
 R13
 !s100 TgeUa0H@C??L;08h[BazE1
+!i10b 1
 Ecd4rle
 R14
 R1
@@ -2119,6 +2235,7 @@ R11
 R12
 R13
 !s100 V_manZf<Y^Kk<oQhX1m6l0
+!i10b 1
 Acd4rle_v
 R1
 R2
@@ -2136,6 +2253,7 @@ R11
 R12
 R13
 !s100 HdeVPn2Ib05<^USbAzM0]1
+!i10b 1
 Ecfebjtag
 Z54 w1365110634
 R2
@@ -2144,19 +2262,20 @@ R3
 R4
 R36
 R5
-Z55 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/cfebjtag.vhd
-Z56 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/cfebjtag.vhd
+Z55 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/cfebjtag.vhd
+Z56 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/cfebjtag.vhd
 l0
 L6
 VFP[R6DWZIE7fb<Va<VRHJ1
 R8
 32
-Z57 !s108 1366137678.146000
-Z58 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/cfebjtag.vhd|
-Z59 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/cfebjtag.vhd|
+Z57 !s108 1366243394.562000
+Z58 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/cfebjtag.vhd|
+Z59 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/cfebjtag.vhd|
 R12
 R13
 !s100 HQG<4Ucn<UHQKhkAhJGGi0
+!i10b 1
 Acfebjtag_arch
 R2
 R1
@@ -2175,6 +2294,7 @@ R59
 R12
 R13
 !s100 zWa_^HGZJ1Z`NgH0D_mKA2
+!i10b 1
 Ecj4ce
 R14
 R3
@@ -2193,6 +2313,7 @@ R11
 R12
 R13
 !s100 `MJ^QDG8k<<mZkcWS7YWa2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -2208,6 +2329,7 @@ R11
 R12
 R13
 !s100 GAIL<cBokSSZQd^>@cXKS1
+!i10b 1
 Ecj4re
 R14
 R3
@@ -2226,6 +2348,7 @@ R11
 R12
 R13
 !s100 0NWR@IF0ln0E4gRP[ETPE0
+!i10b 1
 Acj4re_v
 R3
 R4
@@ -2241,6 +2364,7 @@ R11
 R12
 R13
 !s100 29K26b=hQ@Gg7on[l^TYl0
+!i10b 1
 Ecj5ce
 R14
 R3
@@ -2259,6 +2383,7 @@ R11
 R12
 R13
 !s100 Tln<c_3fa_TJkPPj^>lKC3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -2274,6 +2399,7 @@ R11
 R12
 R13
 !s100 eaUn`gXeHh6[A6[Od]Ugg3
+!i10b 1
 Ecj5re
 R14
 R3
@@ -2292,6 +2418,7 @@ R11
 R12
 R13
 !s100 9LM3Q]j;@aZWK;df=d;^f0
+!i10b 1
 Acj5re_v
 R3
 R4
@@ -2307,6 +2434,7 @@ R11
 R12
 R13
 !s100 Z8MNVdjP::zRh;5SJAb622
+!i10b 1
 Ecj8ce
 R14
 R3
@@ -2325,6 +2453,7 @@ R11
 R12
 R13
 !s100 QecG99lT5:L`]2>EF4:ii1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -2340,6 +2469,7 @@ R11
 R12
 R13
 !s100 H=Y5PZhRMi9F<YY[BlL`33
+!i10b 1
 Ecj8re
 R14
 R3
@@ -2358,6 +2488,7 @@ R11
 R12
 R13
 !s100 I2eMoo6S:bPaIcCMOfof23
+!i10b 1
 Acj8re_v
 R3
 R4
@@ -2373,27 +2504,47 @@ R11
 R12
 R13
 !s100 ATShlHd=EYY[TFgMF?@z`1
+!i10b 1
+vclk_div_reset
+V90k:oK=n;bPWbdQNY:[GG0
+r1
+31
+IYA`GXRB0jDlbaaF2RYlZo1
+R5
+w1366240245
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/clk_div_reset.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/clk_div_reset.v
+L0 3
+Z60 OL;L;10.1c;51
+Z61 o-work work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+!s100 i7HQ4[0Jg82=WUWULI4>Y3
+!s108 1366243392.252000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/clk_div_reset.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/clk_div_reset.v|
+!s85 0
+!i10b 1
 Ecommand_module
-Z60 w1365110635
+Z62 w1365110636
 R2
 R1
 R3
 R4
 R36
 R5
-Z61 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/command.vhd
-Z62 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/command.vhd
+Z63 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/command.vhd
+Z64 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/command.vhd
 l0
 L6
 VdEXQ0UoDY4lkG;<;24JA]1
 R8
 32
-Z63 !s108 1366137699.455000
-Z64 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/command.vhd|
-Z65 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/command.vhd|
+Z65 !s108 1366243403.462000
+Z66 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/command.vhd|
+Z67 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/command.vhd|
 R12
 R13
 !s100 dz5^I^zgMRZQ_jc3e_2i13
+!i10b 1
 Acommand_module_arch
 R2
 R1
@@ -2406,12 +2557,13 @@ l73
 L39
 V@=;:N<6bhjZ_MH@g7jJbl2
 R8
-R63
-R64
 R65
+R66
+R67
 R12
 R13
 !s100 3miRhYR9_bUPX0ADl^0K=3
+!i10b 1
 Ecomp16
 R14
 R3
@@ -2430,6 +2582,7 @@ R11
 R12
 R13
 !s100 61eNUe=J25]DTaXnH@A321
+!i10b 1
 Acomp16_v
 R3
 R4
@@ -2445,6 +2598,7 @@ R11
 R12
 R13
 !s100 Y5a4>9bQbX?N?O70G;37m2
+!i10b 1
 Ecomp2
 R14
 R3
@@ -2463,6 +2617,7 @@ R11
 R12
 R13
 !s100 @R]T8Cn8[g>S0@l[Hl7Rf0
+!i10b 1
 Acomp2_v
 R3
 R4
@@ -2478,6 +2633,7 @@ R11
 R12
 R13
 !s100 Zi]8zV2@;52Bm=>NLXEBJ0
+!i10b 1
 Ecomp4
 R14
 R3
@@ -2496,6 +2652,7 @@ R11
 R12
 R13
 !s100 bJbdZmV8DRDYek7m6L4aR1
+!i10b 1
 Acomp4_v
 R3
 R4
@@ -2511,6 +2668,7 @@ R11
 R12
 R13
 !s100 gL7MYFX25^zBHO5KOa3`B0
+!i10b 1
 Ecomp8
 R14
 R3
@@ -2529,6 +2687,7 @@ R11
 R12
 R13
 !s100 A9:894`7m3cePT=_fCQOa2
+!i10b 1
 Acomp8_v
 R3
 R4
@@ -2544,6 +2703,7 @@ R11
 R12
 R13
 !s100 mGizjd<0gCeN>;jQ224351
+!i10b 1
 Ecompm16
 R14
 R2
@@ -2564,6 +2724,7 @@ R11
 R12
 R13
 !s100 UZ;5IcS7G`?>5V`zQTSNK3
+!i10b 1
 Acompm16_v
 R2
 R1
@@ -2581,6 +2742,7 @@ R11
 R12
 R13
 !s100 Id:F7<j9Y=zoPGzG3PVN13
+!i10b 1
 Ecompm2
 R14
 R2
@@ -2601,6 +2763,7 @@ R11
 R12
 R13
 !s100 _gPj7oW5PI;fJMgFoMjl`3
+!i10b 1
 Acompm2_v
 R2
 R1
@@ -2618,6 +2781,7 @@ R11
 R12
 R13
 !s100 j2>;^adO:[P`T]@fld7bz2
+!i10b 1
 Ecompm4
 R14
 R2
@@ -2638,6 +2802,7 @@ R11
 R12
 R13
 !s100 9z?X9dlBXknj1aKGZ`e9L2
+!i10b 1
 Acompm4_v
 R2
 R1
@@ -2655,6 +2820,7 @@ R11
 R12
 R13
 !s100 >O98?W[8c:eBaKeUhJ?M<1
+!i10b 1
 Ecompm8
 R14
 R2
@@ -2675,6 +2841,7 @@ R11
 R12
 R13
 !s100 LN?YkV2_1b9[mHV8hzK@B0
+!i10b 1
 Acompm8_v
 R2
 R1
@@ -2692,6 +2859,7 @@ R11
 R12
 R13
 !s100 eeYG:>3Y_]WGSibQ@PBIo1
+!i10b 1
 Ecompmc16
 R14
 R2
@@ -2712,6 +2880,7 @@ R11
 R12
 R13
 !s100 o6i2R;@E4I:PC77=^2WnY3
+!i10b 1
 Acompmc16_v
 R2
 R1
@@ -2729,6 +2898,7 @@ R11
 R12
 R13
 !s100 1dTkOHYJ0Jn@0:H7_XT2>3
+!i10b 1
 Ecompmc8
 R14
 R2
@@ -2749,6 +2919,7 @@ R11
 R12
 R13
 !s100 J28G90Mc`zmI<7:B>ViWT0
+!i10b 1
 Acompmc8_v
 R2
 R1
@@ -2766,6 +2937,7 @@ R11
 R12
 R13
 !s100 c@IeF:=V<gF[VkhdhE^:92
+!i10b 1
 Econflogic
 R35
 R1
@@ -2777,19 +2949,20 @@ R3
 R4
 R16
 R5
-Z66 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/conflogic.vhd
-Z67 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/conflogic.vhd
+Z68 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/conflogic.vhd
+Z69 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/conflogic.vhd
 l0
 L12
 Vkj8_cZUD8oLhdi8m7TdKQ0
 R8
 32
-Z68 !s108 1366137699.580000
-Z69 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/conflogic.vhd|
-Z70 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/conflogic.vhd|
+Z70 !s108 1366243403.542000
+Z71 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/conflogic.vhd|
+Z72 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/conflogic.vhd|
 R12
 R13
 !s100 6QC3o=FlZSY?MkWOLG@CS2
+!i10b 1
 Aconflogic_arch
 R1
 R2
@@ -2805,33 +2978,35 @@ l42
 L33
 VFBcl?ECVmQgOcMkeo=7P>2
 R8
-R68
-R69
 R70
+R71
+R72
 R12
 R13
 !s100 `^AoQ8MVd=U;Je^cg?]oY2
+!i10b 1
 Econfregs
-Z71 w1365785884
+Z73 w1365785886
 R42
 R43
 R3
 R4
 R16
 R5
-Z72 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/confregs.vhd
-Z73 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/confregs.vhd
+Z74 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/confregs.vhd
+Z75 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/confregs.vhd
 l0
 L11
 VY0?c8XeK_5z@iKmQ6Qz7z0
 R8
 32
-Z74 !s108 1366137679.425000
-Z75 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/confregs.vhd|
-Z76 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/confregs.vhd|
+Z76 !s108 1366243395.272000
+Z77 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/confregs.vhd|
+Z78 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/confregs.vhd|
 R12
 R13
 !s100 1f3?[<AcU:Y=z9OPa8Fnl1
+!i10b 1
 Aconfregs_arch
 R42
 R43
@@ -2844,14 +3019,15 @@ l59
 L44
 VmSU:=ccF<:RzJ=93[_]hd3
 R8
-R74
-R75
 R76
+R77
+R78
 R12
 R13
 !s100 IPMkg1PYQ6iMLn;cA[hTN2
+!i10b 1
 Econtrol
-Z77 w1366216892
+Z79 w1366216894
 R2
 R1
 R36
@@ -2860,19 +3036,20 @@ R43
 R3
 R4
 R5
-Z78 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/control.vhd
-Z79 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/control.vhd
+Z80 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/control.vhd
+Z81 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/control.vhd
 l0
 L13
 Vz54A68fH=bCYTiERk=WgJ1
 R8
 32
-Z80 !s108 1366216899.773000
-Z81 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/control.vhd|
-Z82 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/control.vhd|
+Z82 !s108 1366243395.502000
+Z83 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/control.vhd|
+Z84 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/control.vhd|
 R12
 R13
 !s100 [M01z:G>AeYInk`HJ;ZnZ3
+!i10b 1
 Acontrol_arch
 R2
 R1
@@ -2887,12 +3064,13 @@ l187
 L80
 V52mbaIe0Y`PkZ7PoY^23z3
 R8
-R80
-R81
 R82
+R83
+R84
 R12
 R13
 !s100 XjH>[9?jccVEcFBd_OTe>1
+!i10b 1
 Ecr16ce
 R14
 R1
@@ -2913,6 +3091,7 @@ R11
 R12
 R13
 !s100 G[ozW]S_gXdhWl=k@A^UA2
+!i10b 1
 Abehavioral
 R1
 R2
@@ -2930,6 +3109,7 @@ R11
 R12
 R13
 !s100 B_i:GaYee@LZHoRVlO@d[1
+!i10b 1
 Ecr8ce
 R14
 R1
@@ -2950,6 +3130,7 @@ R11
 R12
 R13
 !s100 9Sc3eeW6jUEKB3Ni9@^X40
+!i10b 1
 Abehavioral
 R1
 R2
@@ -2967,6 +3148,25 @@ R11
 R12
 R13
 !s100 Mz:S;En4Y6h64>aWAi8M60
+!i10b 1
+vcrc_gen
+VFhBk^aMGSJ^TBbc5LH95n2
+r1
+31
+Ie2aCTJTz8hi=jBIP46YNn3
+R5
+w1366240252
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/crc_gen.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/crc_gen.v
+L0 26
+R60
+R61
+!s100 FVgzQ8_C2<bU9Uo_3[mB[0
+!s108 1366243392.312000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/crc_gen.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/crc_gen.v|
+!s85 0
+!i10b 1
 Ed2_4e
 R14
 R3
@@ -2985,6 +3185,7 @@ R11
 R12
 R13
 !s100 T4jGbk`AV^XUX]5H?ZQcC1
+!i10b 1
 Ad2_4e_v
 R3
 R4
@@ -3000,6 +3201,7 @@ R11
 R12
 R13
 !s100 Qm0^<AD[LZbK6Z:TdR]k>1
+!i10b 1
 Ed3_8e
 R14
 R3
@@ -3018,6 +3220,7 @@ R11
 R12
 R13
 !s100 IX=m1DM@2WfnZk_iNUoFR3
+!i10b 1
 Ad3_8e_v
 R3
 R4
@@ -3033,6 +3236,7 @@ R11
 R12
 R13
 !s100 Y?BH2PdAPImH_XBmVY0<L0
+!i10b 1
 Ed4_16e
 R14
 R3
@@ -3051,6 +3255,7 @@ R11
 R12
 R13
 !s100 g3;bojOi@azAjTXM9n[XJ0
+!i10b 1
 Ad4_16e_v
 R3
 R4
@@ -3066,27 +3271,140 @@ R11
 R12
 R13
 !s100 jfV3IM_TCjCnZ8^O=@[@G3
+!i10b 1
+vDAQ_GTX_dual_rate_custom
+V^S=`?j_jN<0Sb;8bKeFm93
+r1
+31
+I[I^<FkQegPaR_S0@DQE[D1
+R5
+w1366240268
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_gtx_dual_rate_custom.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_gtx_dual_rate_custom.v
+L0 69
+R60
+R61
+n@d@a@q_@g@t@x_dual_rate_custom
+!s100 7THCgMl[UdLYG3dk_]Vji3
+!s108 1366243392.402000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_gtx_dual_rate_custom.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_gtx_dual_rate_custom.v|
+!s85 0
+!i10b 1
+vDAQ_GTX_dual_rate_custom_GTX
+VhD82>bIR_B[:Sz3LbN2mA2
+r1
+31
+I7oMCZc`]QI=LjEoUbRzV:0
+R5
+w1366240274
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_gtx_dual_rate_custom_gtx.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_gtx_dual_rate_custom_gtx.v
+L0 69
+R60
+R61
+n@d@a@q_@g@t@x_dual_rate_custom_@g@t@x
+!s100 ?`05dmZ7LHag3U2k?PCLl3
+!s108 1366243392.472000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_gtx_dual_rate_custom_gtx.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_gtx_dual_rate_custom_gtx.v|
+!s85 0
+!i10b 1
+vdaq_optical_out
+I3X<djH06ok4g[E?b32<[Z2
+V]>g7nmQVMP5W;4>B=D1cz3
+R5
+w1366243776
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_optical_out.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_optical_out.v
+L0 2
+R60
+r1
+31
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_optical_out.v|
+R61
+!i10b 1
+!s100 HVkC:b]801^8eP6CS_2am0
+!s85 0
+!s108 1366243781.662000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/daq_optical_out.v|
+vDAQ_Rate_Sel_FSM
+VD:N0@hcDMoTE<^MUC4e=X0
+r1
+31
+I?Y8:Zo7LTX8lGYZ<f6XZN1
+R5
+w1366240282
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/fizzim/DAQ_Rate_Sel_FSM.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/fizzim/DAQ_Rate_Sel_FSM.v
+L0 4
+R60
+R61
+n@d@a@q_@rate_@sel_@f@s@m
+!s100 S@5X3:]X>WEHENOh7C;?;0
+!s108 1366243392.652000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/fizzim/DAQ_Rate_Sel_FSM.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/fizzim/DAQ_Rate_Sel_FSM.v|
+!s85 0
+!i10b 1
+vdaq_tx_la
+ICj^`LmDgF9^6]5D<[TZ^g0
+VK`o4SP:BaO=g:03@f2[4i1
+R5
+w1366240294
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/ipcore_dir/daq_tx_la.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/ipcore_dir/daq_tx_la.v
+L0 36
+R60
+r1
+31
+R61
+!s108 1366243392.822000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/ipcore_dir/daq_tx_la.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/ipcore_dir/daq_tx_la.v|
+!s100 fC:P5PL]D0eX`c`XCH:PH0
+!i10b 1
+!s85 0
+vdaq_tx_vio
+IlehGfP;Ae_K5olT<VQl;B3
+Vhzd4=9?jN:Z2n03^2Am7W1
+R5
+Z85 w1366240306
+Z86 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/ipcore_dir/daq_tx_vio.v
+Z87 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/ipcore_dir/daq_tx_vio.v
+L0 36
+R60
+r1
+31
+Z88 !s108 1366243393.312000
+Z89 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/ipcore_dir/daq_tx_vio.v|
+Z90 !s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/ipcore_dir/daq_tx_vio.v|
+R61
+!s100 VECd@kZXV?2B^lCRMCnNV3
+!i10b 1
+!s85 0
 Edcfeb_data_gen
-Z83 w1365714774
+Z91 w1365714776
 R16
 R2
 R3
 R4
 R1
 R5
-Z84 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/dcfeb_data_gen.vhd
-Z85 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/dcfeb_data_gen.vhd
+Z92 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/dcfeb_data_gen.vhd
+Z93 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/dcfeb_data_gen.vhd
 l0
 L19
 VBM1P0jAH=G3@8YV2Kn@Bk2
 R8
 32
-Z86 !s108 1366137700.469000
-Z87 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/dcfeb_data_gen.vhd|
-Z88 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/dcfeb_data_gen.vhd|
+Z94 !s108 1366243404.012000
+Z95 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/dcfeb_data_gen.vhd|
+Z96 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/dcfeb_data_gen.vhd|
 R12
 R13
 !s100 ENW2FNMm;]gLKFDJGjKRL1
+!i10b 1
 Adcfeb_data_gen_architecture
 R16
 R2
@@ -3099,14 +3417,15 @@ l50
 L38
 Vz?bDMlEHVmX?]ekPaiXTQ1
 R8
-R86
-R87
-R88
+R94
+R95
+R96
 R12
 R13
 !s100 EV9RX[UTD@D?KbS[XK7OI2
+!i10b 1
 Edcfeb_v6
-Z89 w1365568586
+Z97 w1365568588
 R16
 R2
 R1
@@ -3114,19 +3433,20 @@ R3
 R4
 R36
 R5
-Z90 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/dcfeb_v6.vhd
-Z91 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/dcfeb_v6.vhd
+Z98 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/dcfeb_v6.vhd
+Z99 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/dcfeb_v6.vhd
 l0
 L13
 V89Vm^nD_mII^jJ[V]Wg>53
 R8
 32
-Z92 !s108 1366137698.129000
-Z93 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/dcfeb_v6.vhd|
-Z94 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/dcfeb_v6.vhd|
+Z100 !s108 1366243402.712000
+Z101 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/dcfeb_v6.vhd|
+Z102 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/dcfeb_v6.vhd|
 R12
 R13
 !s100 cO:3We`@nQzhKP5I=IT5<2
+!i10b 1
 Adcfeb_v6_arch
 R16
 R2
@@ -3140,14 +3460,15 @@ l181
 L38
 VYM0N@QEEL85CI2IUiQC;O0
 R8
-R92
-R93
-R94
+R100
+R101
+R102
 R12
 R13
 !s100 EAilEO1]D>c64?c3`ZBYn3
+!i10b 1
 Eddufifo
-Z95 w1366140856
+Z103 w1366140858
 R28
 R29
 R16
@@ -3156,19 +3477,20 @@ R3
 R4
 R1
 R5
-Z96 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/ddufifo.vhd
-Z97 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/ddufifo.vhd
+Z104 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/ddufifo.vhd
+Z105 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/ddufifo.vhd
 l0
 L12
 VenN1K8_A[f;UVlVFiHDQn0
 R8
 32
-Z98 !s108 1366140872.144000
-Z99 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/ddufifo.vhd|
-Z100 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/ddufifo.vhd|
+Z106 !s108 1366243404.872000
+Z107 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/ddufifo.vhd|
+Z108 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/ddufifo.vhd|
 R12
 R13
 !s100 ]ZIM0>KQFd:6OAV=TFC@a1
+!i10b 1
 Addufifo_architecture
 R28
 R29
@@ -3183,12 +3505,13 @@ l48
 L32
 VMEz2^6od063VYD2Wf1<Sm3
 R8
-R98
-R99
-R100
+R106
+R107
+R108
 R12
 R13
 !s100 Rg`dlZlRU=zWdIIO<KZ`l0
+!i10b 1
 Edec_cc16
 R14
 R3
@@ -3207,6 +3530,7 @@ R11
 R12
 R13
 !s100 C6ZML1Pho@gd^k5le;ABP3
+!i10b 1
 Adec_cc16_v
 R3
 R4
@@ -3222,6 +3546,7 @@ R11
 R12
 R13
 !s100 7DFX?L6WCB6mY?ZZ>:M>W2
+!i10b 1
 Edec_cc4
 R14
 R3
@@ -3240,6 +3565,7 @@ R11
 R12
 R13
 !s100 ?8K0H?4Ym75M=dXkX_g3n0
+!i10b 1
 Adec_cc4_v
 R3
 R4
@@ -3255,6 +3581,7 @@ R11
 R12
 R13
 !s100 g]6aSiE8BRh:FSTY40I2Q1
+!i10b 1
 Edec_cc8
 R14
 R3
@@ -3273,6 +3600,7 @@ R11
 R12
 R13
 !s100 QE>laUnCFMfb5=J2L^cAY0
+!i10b 1
 Adec_cc8_v
 R3
 R4
@@ -3288,6 +3616,7 @@ R11
 R12
 R13
 !s100 Lcc;?FEoLNjDL30DI>I4z3
+!i10b 1
 Edecode16
 R14
 R3
@@ -3306,6 +3635,7 @@ R11
 R12
 R13
 !s100 gl?@LiT[XFoMV@jgaZEHM2
+!i10b 1
 Adecode16_v
 R3
 R4
@@ -3321,6 +3651,7 @@ R11
 R12
 R13
 !s100 [1gjP]gcQ@D_TUm;og>791
+!i10b 1
 Edecode32
 R14
 R3
@@ -3339,6 +3670,7 @@ R11
 R12
 R13
 !s100 i53b:k:QHl[ingL0UmDER1
+!i10b 1
 Adecode32_v
 R3
 R4
@@ -3354,6 +3686,7 @@ R11
 R12
 R13
 !s100 DnfWJF`Q3JDRK^I<4@E;?2
+!i10b 1
 Edecode4
 R14
 R3
@@ -3372,6 +3705,7 @@ R11
 R12
 R13
 !s100 F]b=NNGVa<2gFo>6AO=kT1
+!i10b 1
 Adecode4_v
 R3
 R4
@@ -3387,6 +3721,7 @@ R11
 R12
 R13
 !s100 T66WHjFfElO3Lnnl9fZUc2
+!i10b 1
 Edecode64
 R14
 R3
@@ -3405,6 +3740,7 @@ R11
 R12
 R13
 !s100 CCjE0@cgAbm@SFSKbYXZR3
+!i10b 1
 Adecode64_v
 R3
 R4
@@ -3420,6 +3756,7 @@ R11
 R12
 R13
 !s100 :P6=HX_6Q;?9CVHhDKQJa2
+!i10b 1
 Edecode8
 R14
 R3
@@ -3438,6 +3775,7 @@ R11
 R12
 R13
 !s100 mnT3O8NYHdgf[4GN;:`0k3
+!i10b 1
 Adecode8_v
 R3
 R4
@@ -3453,6 +3791,7 @@ R11
 R12
 R13
 !s100 fX^Iz4NkUlCmU_F<>8DKJ3
+!i10b 1
 Edmb_fifo
 R14
 R1
@@ -3462,19 +3801,20 @@ R3
 R4
 R16
 R5
-Z101 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_fifo.vhd
-Z102 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_fifo.vhd
+Z109 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_fifo.vhd
+Z110 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_fifo.vhd
 l0
 L13
 V_[iKoAe6G5deDVU<mzjML3
 R8
 32
-Z103 !s108 1366137695.914000
-Z104 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_fifo.vhd|
-Z105 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_fifo.vhd|
+Z111 !s108 1366243401.932000
+Z112 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_fifo.vhd|
+Z113 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_fifo.vhd|
 R12
 R13
 !s100 [?2dX@eokKf58==FSY`U02
+!i10b 1
 Admb_fifo_arch
 R1
 R2
@@ -3485,15 +3825,16 @@ R16
 DEx4 work 8 dmb_fifo 0 22 _[iKoAe6G5deDVU<mzjML3
 l35
 L28
-V9dkA_S`_5CcFcfDQcf_K:2
+VSoWAjMLf8[Q7>SEBX7?:I0
 R8
 32
-R103
-R104
-R105
+R111
+R112
+R113
 R12
 R13
-!s100 z2ekjl_CTL<K[6m^jU_jS0
+!s100 X5<93c`2:5H?N:c>86iOO2
+!i10b 1
 Efd16ce
 R14
 R3
@@ -3512,6 +3853,7 @@ R11
 R12
 R13
 !s100 >LPa:jSU3fKUCO7K=G`I_0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -3527,6 +3869,7 @@ R11
 R12
 R13
 !s100 W3<cGh^1_mlgjDb]MDDjl3
+!i10b 1
 Efd16re
 R14
 R3
@@ -3545,6 +3888,7 @@ R11
 R12
 R13
 !s100 8SRf8e1Gz[]Ihbo=OSahI2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -3560,6 +3904,7 @@ R11
 R12
 R13
 !s100 omS[2[VF?biWD8<Fnf0FF2
+!i10b 1
 Efd4ce
 R14
 R3
@@ -3578,6 +3923,7 @@ R11
 R12
 R13
 !s100 LKi`jWd3hHZY=Q<6N3Idg2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -3593,6 +3939,7 @@ R11
 R12
 R13
 !s100 j[J6IIDGHfCciEO_fS=7[1
+!i10b 1
 Efd4re
 R14
 R3
@@ -3611,6 +3958,7 @@ R11
 R12
 R13
 !s100 M:@eJE[30@?`R]giEO46^2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -3626,6 +3974,7 @@ R11
 R12
 R13
 !s100 n00g@oX1AeVV^BLHfQ3323
+!i10b 1
 Efd8ce
 R14
 R3
@@ -3644,6 +3993,7 @@ R11
 R12
 R13
 !s100 DgkV<k?zBV@TfNm0MmmbU3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -3659,6 +4009,7 @@ R11
 R12
 R13
 !s100 6jZZQENcW:E@BOdRnIiQS2
+!i10b 1
 Efd8re
 R14
 R3
@@ -3677,6 +4028,7 @@ R11
 R12
 R13
 !s100 1o`>D_EYN5C1i`i7;3MQS0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -3692,26 +4044,28 @@ R11
 R12
 R13
 !s100 OFDC<44_0cY24k`3fnd?a3
+!i10b 1
 Efifo_outdata_sel
-Z106 w1365110629
+R14
 R2
 R3
 R4
 R1
 R5
-Z107 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_outdata_sel.vhd
-Z108 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_outdata_sel.vhd
+Z114 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_outdata_sel.vhd
+Z115 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_outdata_sel.vhd
 l0
 L8
 V<nP^BDDIQPOI:U7c3fL^M0
 R8
 32
-Z109 !s108 1366137693.808000
-Z110 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_outdata_sel.vhd|
-Z111 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_outdata_sel.vhd|
+Z116 !s108 1366243401.552000
+Z117 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_outdata_sel.vhd|
+Z118 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_outdata_sel.vhd|
 R12
 R13
 !s100 IS2kLjZ<zXHN@LDaNg9I]0
+!i10b 1
 Afifo_outdata_sel_architecture
 R2
 R3
@@ -3723,32 +4077,34 @@ l31
 L29
 VOFW0OTE2IH;Ymc^WWSmi43
 R8
-R109
-R110
-R111
+R116
+R117
+R118
 R12
 R13
 !s100 [95C3l5X8I7PI_`f3ShB73
+!i10b 1
 Efifo_rc_sel
-R106
+R14
 R2
 R3
 R4
 R1
 R5
-Z112 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_rc_sel.vhd
-Z113 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_rc_sel.vhd
+Z119 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_rc_sel.vhd
+Z120 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_rc_sel.vhd
 l0
 L8
 VjB_<9]0R3HeTY:SbGl?890
 R8
 32
-Z114 !s108 1366137693.948000
-Z115 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_rc_sel.vhd|
-Z116 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_rc_sel.vhd|
+Z121 !s108 1366243401.622000
+Z122 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_rc_sel.vhd|
+Z123 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_rc_sel.vhd|
 R12
 R13
 !s100 ]IIGROcY<?JN]EZeBVo7i2
+!i10b 1
 Afifo_rc_sel_architecture
 R2
 R3
@@ -3760,32 +4116,34 @@ l31
 L29
 V>Tz7z38dh;NKXZOmzb^je0
 R8
-R114
-R115
-R116
+R121
+R122
+R123
 R12
 R13
 !s100 =fn9JCETSc47V@DaGHlQb1
+!i10b 1
 Efifo_wc_sel
-R106
+R14
 R2
 R3
 R4
 R1
 R5
-Z117 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_wc_sel.vhd
-Z118 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_wc_sel.vhd
+Z124 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_wc_sel.vhd
+Z125 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_wc_sel.vhd
 l0
 L8
 V=2oz92;z2bfMS>obV41QZ3
 R8
 32
-Z119 !s108 1366137695.477000
-Z120 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_wc_sel.vhd|
-Z121 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/fifo_wc_sel.vhd|
+Z126 !s108 1366243401.682000
+Z127 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_wc_sel.vhd|
+Z128 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/fifo_wc_sel.vhd|
 R12
 R13
 !s100 46GAZX<AYG];<L<DM=KmR1
+!i10b 1
 Afifo_wc_sel_architecture
 R2
 R3
@@ -3797,33 +4155,35 @@ l31
 L29
 VW5mV3R3F;B_4eW2dUa=;?3
 R8
-R119
-R120
-R121
+R126
+R127
+R128
 R12
 R13
 !s100 lVem>nz?R?YL27iP3iHhh2
+!i10b 1
 Efifomon
-R60
+R62
 R2
 R1
 R3
 R4
 R36
 R5
-Z122 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/fifomon.vhd
-Z123 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/fifomon.vhd
+Z129 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/fifomon.vhd
+Z130 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/fifomon.vhd
 l0
 L6
 VQn2hn3^?m_j8g;A>C<7CY3
 R8
 32
-Z124 !s108 1366137678.317000
-Z125 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/fifomon.vhd|
-Z126 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/fifomon.vhd|
+Z131 !s108 1366243394.672000
+Z132 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/fifomon.vhd|
+Z133 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/fifomon.vhd|
 R12
 R13
 !s100 OB<2AA:ZC6;[e0K3^V8CM0
+!i10b 1
 Afifomon_arch
 R2
 R1
@@ -3836,48 +4196,49 @@ l58
 L34
 VnQD:X]N@9GVAI[ZBb7BPN3
 R8
-R124
-R125
-R126
+R131
+R132
+R133
 R12
 R13
 !s100 9omm[zR]4JOn66??FOO1L2
+!i10b 1
 vfile_handler
 VE<``f=_Qa@YiTb<WY6obg1
 r1
 31
-Ihdi8MUIDAabf[WA=6^4a12
+IJ90aTlXGL5A2GODfZWgV31
 R5
-w1365215198
-8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler.v
-FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler.v
-L0 1
-Z127 OE;L;10.0;49
-Z128 !s102 -nocovercells
-Z129 o-work work -nocovercells -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF
+w1366243536
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/file_handler.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/file_handler.v
+L0 2
+R60
+R61
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/file_handler.v|
+!s100 <CoahgZO1Dh5E`>UzF5M[3
+!s108 1366243552.162000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/file_handler.v|
 !s85 0
-!s100 8Pb5]Q0In6QS2QFj^L<]H1
-!s90 -reportprogress|300|-work|work|-vopt|-nocovercells|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler.v|
-!s108 1366137676.820000
-!s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler.v|
+!i10b 1
 vfile_handler_event
 V8Kz[aL4EOK`kgD2B6e^?]0
 r1
 31
-IfOL:obLj97ohM7V`>I[2F0
+IQT<d^cnT5k<Uz:5zEVakZ3
 R5
-w1365622463
-8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler_event.v
-FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler_event.v
-L0 1
-R127
-R128
-R129
+w1366243548
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/file_handler_event.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/file_handler_event.v
+L0 2
+R60
+R61
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/file_handler_event.v|
+!s100 180GcJ^64NLla01SSQ`H70
+!s108 1366243552.222000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/file_handler_event.v|
 !s85 0
-!s100 @Y@PcnSj]jYVPClU;[GoU2
-!s90 -reportprogress|300|-work|work|-vopt|-nocovercells|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler_event.v|
-!s108 1366137676.929000
-!s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler_event.v|
+!i10b 1
 Efjkc
 R14
 R3
@@ -3896,6 +4257,7 @@ R11
 R12
 R13
 !s100 =<A][F=EEIzSQl2DZ_P9b3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -3911,6 +4273,7 @@ R11
 R12
 R13
 !s100 JVdz<joNo7SH:5H8G>VCI1
+!i10b 1
 Efjkce
 R14
 R3
@@ -3929,6 +4292,7 @@ R11
 R12
 R13
 !s100 ;H<ZO@?:Sk09KAGk_D>3o1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -3944,6 +4308,7 @@ R11
 R12
 R13
 !s100 ?G;W6I;PC<_D?9g7MXcRX0
+!i10b 1
 Efjkp
 R14
 R3
@@ -3962,6 +4327,7 @@ R11
 R12
 R13
 !s100 0SmFo:5g7fcn_D?<=z`500
+!i10b 1
 Abehavioral
 R3
 R4
@@ -3977,6 +4343,7 @@ R11
 R12
 R13
 !s100 i[O5lGPSIh4^PnIY^9SYS3
+!i10b 1
 Efjkpe
 R14
 R3
@@ -3995,6 +4362,7 @@ R11
 R12
 R13
 !s100 Z_Y39SbGPYiIfU8G?_?bN1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4010,6 +4378,7 @@ R11
 R12
 R13
 !s100 bMeGOIJme1dTLd:SQ[n6S0
+!i10b 1
 Efjkrse
 R14
 R3
@@ -4028,6 +4397,7 @@ R11
 R12
 R13
 !s100 [jmifMiTaRN<<e^^?CjOK0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4043,6 +4413,7 @@ R11
 R12
 R13
 !s100 29R]X[5TfKifh]M5BocJk1
+!i10b 1
 Efjksre
 R14
 R3
@@ -4061,6 +4432,7 @@ R11
 R12
 R13
 !s100 :6>J^W4]4JH0Ljh]ohhBO1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4076,6 +4448,26 @@ R11
 R12
 R13
 !s100 SGP=8PS_oAZ@Fo37X[fmN2
+!i10b 1
+vFrame_Proc_FSM
+V^H`jaaJo567oGc>LG]ISk0
+r1
+31
+If??[dC?o4?1=kVW>JH@TP1
+R5
+w1366240288
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/fizzim/Frame_Proc_FSM.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/fizzim/Frame_Proc_FSM.v
+L0 4
+R60
+R61
+n@frame_@proc_@f@s@m
+!s100 0S]1JC>SMEC[TMmZi2JQe2
+!s108 1366243392.722000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/fizzim/Frame_Proc_FSM.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/daq_optical_out/fizzim/Frame_Proc_FSM.v|
+!s85 0
+!i10b 1
 Eftc
 R14
 R3
@@ -4094,6 +4486,7 @@ R11
 R12
 R13
 !s100 =zDQRi^N38RCi0g@UDUOf1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4109,6 +4502,7 @@ R11
 R12
 R13
 !s100 ]gn1VDzeklzzPM5e^=Z7U0
+!i10b 1
 Eftce
 R14
 R3
@@ -4127,6 +4521,7 @@ R11
 R12
 R13
 !s100 W<6i`C23H0m@kDaQ76T=e2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4142,6 +4537,7 @@ R11
 R12
 R13
 !s100 m7iYc_5YL4D8Bz7S>?bea3
+!i10b 1
 Eftcle
 R14
 R3
@@ -4160,6 +4556,7 @@ R11
 R12
 R13
 !s100 Sz>NFIKhmSM>MN<Th3O@43
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4175,6 +4572,7 @@ R11
 R12
 R13
 !s100 HkI8A[2aD@;KjnQbTeXX82
+!i10b 1
 Eftclex
 R14
 R3
@@ -4193,6 +4591,7 @@ R11
 R12
 R13
 !s100 @dHi[zY]b=lVFBHidXfcF2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4208,6 +4607,7 @@ R11
 R12
 R13
 !s100 20CCnUiT0H0M>:WHYB@j]2
+!i10b 1
 Eftp
 R14
 R3
@@ -4226,6 +4626,7 @@ R11
 R12
 R13
 !s100 1ngAXLa9d@WYiP[m9bkP>3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4241,6 +4642,7 @@ R11
 R12
 R13
 !s100 ]i>J6_0JR]ozk5Ll1O[YG1
+!i10b 1
 Eftpe
 R14
 R3
@@ -4259,6 +4661,7 @@ R11
 R12
 R13
 !s100 H>?660mX`WMYn6blMRHVb1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4274,6 +4677,7 @@ R11
 R12
 R13
 !s100 jjocB4zI2EGInNRf3dneL1
+!i10b 1
 Eftple
 R14
 R3
@@ -4292,6 +4696,7 @@ R11
 R12
 R13
 !s100 ]6@Bc8=mzYY4dhinboPOb1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4307,6 +4712,7 @@ R11
 R12
 R13
 !s100 2dRm=nHYaNbG`DQSmGFd`2
+!i10b 1
 Eftrse
 R14
 R3
@@ -4325,6 +4731,7 @@ R11
 R12
 R13
 !s100 k>Jgdji5HF6ej4]_i4`@D2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4340,6 +4747,7 @@ R11
 R12
 R13
 !s100 zCG[>IV<kLL71`f_C_Una1
+!i10b 1
 Eftrsle
 R14
 R3
@@ -4358,6 +4766,7 @@ R11
 R12
 R13
 !s100 <5J2bCaoIJ3]D4J]?;?MP1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4373,6 +4782,7 @@ R11
 R12
 R13
 !s100 J8HmjLoF8[b6^nCRKh0mg2
+!i10b 1
 Eftsre
 R14
 R3
@@ -4391,6 +4801,7 @@ R11
 R12
 R13
 !s100 M<MoG<8lCY@U2LgUnE9Ua0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4406,6 +4817,7 @@ R11
 R12
 R13
 !s100 E:o@5R2<[91GYbDe;K42h2
+!i10b 1
 Eftsrle
 R14
 R3
@@ -4424,6 +4836,7 @@ R11
 R12
 R13
 !s100 EzSXaBnmO?>@Kal_HH`TU1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4439,6 +4852,25 @@ R11
 R12
 R13
 !s100 CKDDcg>;B:;W_::a_J4N41
+!i10b 1
+vglbl
+I?NOiKPmejfWBc1bd8GI8Q3
+VM[9mS]S:KA1i4VeCMX35[3
+R5
+R85
+R86
+R87
+L0 2046
+R60
+r1
+31
+R88
+R89
+R90
+R61
+!s100 nC]26@l>GVWA@4D:=gdCV3
+!i10b 1
+!s85 0
 Phdlmacro
 R1
 R2
@@ -4459,6 +4891,7 @@ R11
 R12
 R13
 !s100 ALKTzTWD`^EBbXHlVSWJD2
+!i10b 1
 Eibuf16
 R14
 R3
@@ -4477,6 +4910,7 @@ R11
 R12
 R13
 !s100 Yk_26LkA[m5VDKPUJz:fZ3
+!i10b 1
 Aibuf16_v
 R3
 R4
@@ -4492,6 +4926,7 @@ R11
 R12
 R13
 !s100 SbLa4T[IdB6Ql;<IkNlZ<0
+!i10b 1
 Eibuf4
 R14
 R3
@@ -4510,6 +4945,7 @@ R11
 R12
 R13
 !s100 Nz8CiffBDTM>19iFWNR`A3
+!i10b 1
 Aibuf4_v
 R3
 R4
@@ -4525,6 +4961,7 @@ R11
 R12
 R13
 !s100 z^l4ALlDf]Gz_9BefI=]F1
+!i10b 1
 Eibuf8
 R14
 R3
@@ -4543,6 +4980,7 @@ R11
 R12
 R13
 !s100 ]_A6Jch^UcIK7Ld]`[PD00
+!i10b 1
 Aibuf8_v
 R3
 R4
@@ -4558,6 +4996,7 @@ R11
 R12
 R13
 !s100 B<nf]SSK_cnN;?2S[ViYh3
+!i10b 1
 Eifd
 R14
 R3
@@ -4576,6 +5015,7 @@ R11
 R12
 R13
 !s100 neb:HaD@`bFHN]f6Z<e=O0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4591,6 +5031,7 @@ R11
 R12
 R13
 !s100 Lo^b^[gZ8T21zfbf`3@?D3
+!i10b 1
 Eifd16
 R14
 R3
@@ -4609,6 +5050,7 @@ R11
 R12
 R13
 !s100 lm4J82jW3:ZHgQn9NfXgN0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4624,6 +5066,7 @@ R11
 R12
 R13
 !s100 6=;7fNb0g8X>mfaJ0IDW@1
+!i10b 1
 Eifd4
 R14
 R3
@@ -4642,6 +5085,7 @@ R11
 R12
 R13
 !s100 ]hA9zPi3_Zm6Nf@c6kk172
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4657,6 +5101,7 @@ R11
 R12
 R13
 !s100 =B74C<z28LPdjoH`oz4`V1
+!i10b 1
 Eifd8
 R14
 R3
@@ -4675,6 +5120,7 @@ R11
 R12
 R13
 !s100 onb;iTPoLad0hQfI1BOL_3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4690,6 +5136,7 @@ R11
 R12
 R13
 !s100 K;lR@^5?o:j8AOE=l9TQO2
+!i10b 1
 Eifd_1
 R14
 R3
@@ -4708,6 +5155,7 @@ R11
 R12
 R13
 !s100 MY5T6aJEm]CKdW_@KRkSY1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4723,6 +5171,7 @@ R11
 R12
 R13
 !s100 LmfX:kfX67G3mXX?RP6I`0
+!i10b 1
 Eifdi
 R14
 R3
@@ -4741,6 +5190,7 @@ R11
 R12
 R13
 !s100 jI7ZLXdTW4hz;gf4nDNm]2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4756,6 +5206,7 @@ R11
 R12
 R13
 !s100 XYQaMad81YQfggEfI`B2R3
+!i10b 1
 Eifdi_1
 R14
 R3
@@ -4774,6 +5225,7 @@ R11
 R12
 R13
 !s100 J4_GYB`XAnEQC5H[m@@Xh1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4789,6 +5241,7 @@ R11
 R12
 R13
 !s100 9E<dzPSKcUCQe:6[2f:;A0
+!i10b 1
 Eifdx
 R14
 R3
@@ -4807,6 +5260,7 @@ R11
 R12
 R13
 !s100 MfIU6MKBaDQUN[FbBN5;21
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4822,6 +5276,7 @@ R11
 R12
 R13
 !s100 ^_5SN`0Mh8^jnS`[1kaQV0
+!i10b 1
 Eifdx16
 R14
 R3
@@ -4840,6 +5295,7 @@ R11
 R12
 R13
 !s100 K::[30H]3LVELH?:JmHfG2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4855,6 +5311,7 @@ R11
 R12
 R13
 !s100 KG@Q]dAPkag>?TDW5iT0U2
+!i10b 1
 Eifdx4
 R14
 R3
@@ -4873,6 +5330,7 @@ R11
 R12
 R13
 !s100 W6LVm8VOo3G2b7:hPAcCM2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4888,6 +5346,7 @@ R11
 R12
 R13
 !s100 =b4[TEJA=M:iQg:R0e:z@2
+!i10b 1
 Eifdx8
 R14
 R3
@@ -4906,6 +5365,7 @@ R11
 R12
 R13
 !s100 @[HhOC^7>jbbA<Y?fYml`2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4921,6 +5381,7 @@ R11
 R12
 R13
 !s100 Xo@d`d4=l@J=O<fYMKVVX3
+!i10b 1
 Eifdx_1
 R14
 R3
@@ -4939,6 +5400,7 @@ R11
 R12
 R13
 !s100 C3RVP`R;i18FHoD:V3_913
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4954,6 +5416,7 @@ R11
 R12
 R13
 !s100 Qd_Uo1<ee=<1hnXUcGEY>2
+!i10b 1
 Eifdxi
 R14
 R3
@@ -4972,6 +5435,7 @@ R11
 R12
 R13
 !s100 SVz7XH1Ccz@T6c[4WKb@?1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -4987,6 +5451,7 @@ R11
 R12
 R13
 !s100 i42[@m?nOnB?l;iNNdMD40
+!i10b 1
 Eifdxi_1
 R14
 R3
@@ -5005,6 +5470,7 @@ R11
 R12
 R13
 !s100 ]96z25JRmal4LeTXCNTCm1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5020,6 +5486,7 @@ R11
 R12
 R13
 !s100 b`CddB]K00h`QmGFdR0^`2
+!i10b 1
 Eild
 R14
 R3
@@ -5038,6 +5505,7 @@ R11
 R12
 R13
 !s100 LY`kHJ;Y>1hXO2ZO^_U<k2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5053,6 +5521,7 @@ R11
 R12
 R13
 !s100 SITRjf?BSffRiHI@Mi6RD0
+!i10b 1
 Eild16
 R14
 R3
@@ -5071,6 +5540,7 @@ R11
 R12
 R13
 !s100 ?`HGae55g5NOnF0z=LNTj2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5086,6 +5556,7 @@ R11
 R12
 R13
 !s100 aA0]E^X=ToL_dBN?7QiMc0
+!i10b 1
 Eild4
 R14
 R3
@@ -5104,6 +5575,7 @@ R11
 R12
 R13
 !s100 @7]9OEaj2R^B20I8zmJY=3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5119,6 +5591,7 @@ R11
 R12
 R13
 !s100 iY6_h7??X6_cPQfC=gC_22
+!i10b 1
 Eild8
 R14
 R3
@@ -5137,6 +5610,7 @@ R11
 R12
 R13
 !s100 foK8[_;00o0]i5hSkc^f;3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5152,6 +5626,7 @@ R11
 R12
 R13
 !s100 4jjkVAGj<g@boIG6LA8Dk0
+!i10b 1
 Eild_1
 R14
 R3
@@ -5170,6 +5645,7 @@ R11
 R12
 R13
 !s100 cQSNXRDWnPBCj>3h=Si>z3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5185,6 +5661,7 @@ R11
 R12
 R13
 !s100 _]6>Fe]kh28Dc5^n6Sh`L1
+!i10b 1
 Eildi
 R14
 R3
@@ -5203,6 +5680,7 @@ R11
 R12
 R13
 !s100 97QYPGYWXB3fNP6f0M<DB2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5218,6 +5696,7 @@ R11
 R12
 R13
 !s100 hhQ:hHU;ne_j=W?lFb3``1
+!i10b 1
 Eildi_1
 R14
 R3
@@ -5236,6 +5715,7 @@ R11
 R12
 R13
 !s100 eDmZeYZ475A`<6TzE0B:73
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5251,6 +5731,7 @@ R11
 R12
 R13
 !s100 ?h`eLIM4N3>AaIkknAbe>2
+!i10b 1
 Eildx
 R14
 R3
@@ -5269,6 +5750,7 @@ R11
 R12
 R13
 !s100 X<Aag50a1?Vn7ch;^;9UP2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5284,6 +5766,7 @@ R11
 R12
 R13
 !s100 F:1TT9UYdDP@IC=F]U>kD0
+!i10b 1
 Eildx16
 R14
 R3
@@ -5302,6 +5785,7 @@ R11
 R12
 R13
 !s100 5VlOEC@Mgk;KP[D5e`@:G3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5317,6 +5801,7 @@ R11
 R12
 R13
 !s100 iNQ<7X6V>1FF>Ik7GVZfm3
+!i10b 1
 Eildx4
 R14
 R3
@@ -5335,6 +5820,7 @@ R11
 R12
 R13
 !s100 OO;:jNeFM861l5ZUo^:Wh3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5350,6 +5836,7 @@ R11
 R12
 R13
 !s100 47O2QB9HM18HbJkK4z[Db1
+!i10b 1
 Eildx8
 R14
 R3
@@ -5368,6 +5855,7 @@ R11
 R12
 R13
 !s100 dVYH7n4j9d48Me^Kfd[6a1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5383,6 +5871,7 @@ R11
 R12
 R13
 !s100 IDn1YO3<HT6A298:k]GXA2
+!i10b 1
 Eildx_1
 R14
 R3
@@ -5401,6 +5890,7 @@ R11
 R12
 R13
 !s100 2if>IiA9cLc3VT:8:o?E71
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5416,6 +5906,7 @@ R11
 R12
 R13
 !s100 _eYBn:=6e;[IoV][O;_2z3
+!i10b 1
 Eildxi
 R14
 R3
@@ -5434,6 +5925,7 @@ R11
 R12
 R13
 !s100 PG_iWA9iB[:Y8:RJbWHHc3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5449,6 +5941,7 @@ R11
 R12
 R13
 !s100 HbChJIKS@JUhbN^3gFc]Y0
+!i10b 1
 Eildxi_1
 R14
 R3
@@ -5467,6 +5960,7 @@ R11
 R12
 R13
 !s100 WNZc<57JkMbFTM>59f5692
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5482,45 +5976,47 @@ R11
 R12
 R13
 !s100 XKORc[o3B1eYkdF70:LZk2
+!i10b 1
 vinstr_dcd
 VAW05a4NN@QBiB7Ci=eM852
 r1
 31
-I5c1bUXLidjMVBR^`f5dSG3
+I:]c_J=A6_::kN>Q05M3Jz3
 R5
-Z130 w1365110631
-8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/instr_dcd.v
-FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/instr_dcd.v
+R35
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/instr_dcd.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/instr_dcd.v
 L0 55
-R127
-R128
-R129
+R60
+R61
+!s100 iMXb=zM?c2jL3_c<H]^=^0
+!s108 1366243391.832000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/instr_dcd.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/instr_dcd.v|
 !s85 0
-!s100 nhWFjg]U[;T8Lo:PUOEUL0
-!s90 -reportprogress|300|-work|work|-vopt|-nocovercells|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/instr_dcd.v|
-!s108 1366137675.852000
-!s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/instr_dcd.v|
+!i10b 1
 Einstrgdc
-Z131 w1365110633
-Z132 DPx4 ieee 11 numeric_std 0 22 k7B<7GmYYYmX;0X]XHFD10
+R54
+Z134 DPx4 ieee 11 numeric_std 0 22 O3PF8EB`?j9=z7KT`fn941
 R3
 R4
 R5
-Z133 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd
-Z134 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd
+Z135 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/instrgdc.vhd
+Z136 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/instrgdc.vhd
 l0
 L6
 VSSak82hdbi3dkY7IH>1Aa1
 R8
 32
-Z135 !s108 1366137680.096000
-Z136 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd|
-Z137 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd|
+Z137 !s108 1366243395.592000
+Z138 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/instrgdc.vhd|
+Z139 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/instrgdc.vhd|
 R12
 R13
 !s100 ;kCXd;:mlb0mZ@W;hTV`U2
+!i10b 1
 Ainstrgdc_arch
-R132
+R134
 R3
 R4
 DEx4 work 8 instrgdc 0 22 SSak82hdbi3dkY7IH>1Aa1
@@ -5529,12 +6025,13 @@ l26
 L20
 V>TUJb5?ZXPIfMMhinX0LT1
 R8
-R135
-R136
 R137
+R138
+R139
 R12
 R13
 !s100 kznNnQDC`eDZGkbz_LIlC2
+!i10b 1
 Einv16
 R14
 R3
@@ -5553,6 +6050,7 @@ R11
 R12
 R13
 !s100 ;3W=Z_N042T3?CR52BgMX3
+!i10b 1
 Ainv16_v
 R3
 R4
@@ -5568,6 +6066,7 @@ R11
 R12
 R13
 !s100 <KIOnSVT<__T4;1D>CNhS3
+!i10b 1
 Einv4
 R14
 R3
@@ -5586,6 +6085,7 @@ R11
 R12
 R13
 !s100 nNck<[ihc>VMY>1E3S=7h1
+!i10b 1
 Ainv4_v
 R3
 R4
@@ -5601,6 +6101,7 @@ R11
 R12
 R13
 !s100 X2j3ImAAQ;@hE_R]e7gfb3
+!i10b 1
 Einv8
 R14
 R3
@@ -5619,6 +6120,7 @@ R11
 R12
 R13
 !s100 DVSLSWVfEfU:Q3nnBV=@42
+!i10b 1
 Ainv8_v
 R3
 R4
@@ -5634,48 +6136,50 @@ R11
 R12
 R13
 !s100 XfDD8L>[TF>F[SUBU?dSJ1
+!i10b 1
 vJTAG_TAP_ctrl
 VBn;Xf`_m`=OZbhARa6OQO0
 r1
 31
-IzP2CzJ9@?K9hSAa3[KS4R1
+I;:2gai8[IPoPAmPEJ7VKz3
 R5
-R130
-8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/jtag_tap_ctrl.v
-FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/jtag_tap_ctrl.v
+w1366240354
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/jtag_tap_ctrl.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/jtag_tap_ctrl.v
 L0 4
-R127
-R128
-R129
+R60
+R61
 n@j@t@a@g_@t@a@p_ctrl
+!s100 VEf<BP63cMEVGO7YEgXaH1
+!s108 1366243391.892000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/jtag_tap_ctrl.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/jtag_tap_ctrl.v|
 !s85 0
-!s100 GQmefD3Q@1]6jIOY:0aTl0
-!s90 -reportprogress|300|-work|work|-vopt|-nocovercells|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/jtag_tap_ctrl.v|
-!s108 1366137675.962000
-!s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/jtag_tap_ctrl.v|
+!i10b 1
 Platches_flipflops
 R2
 R1
 R3
 R4
-R60
+R62
 R5
-Z138 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd
-Z139 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd
+Z140 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/package_latches_flipflops.vhd
+Z141 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/package_latches_flipflops.vhd
 l0
 L7
 V?KAki>7A61XbG9IA1L1XF2
 R8
 32
 b1
-Z140 !s108 1366137677.054000
-Z141 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd|
-Z142 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd|
+Z142 !s108 1366243393.952000
+Z143 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/package_latches_flipflops.vhd|
+Z144 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/package_latches_flipflops.vhd|
 R12
 R13
 !s100 h1aMlQg4zfiA15ieAZcED2
+!i10b 1
 Bbody
-DBx4 work 17 latches_flipflops 0 22 ?KAki>7A61XbG9IA1L1XF2
+R36
 R2
 R1
 R3
@@ -5685,32 +6189,34 @@ l0
 L300
 Vz@mXnbW<GSHl^1NcZQ_Rz2
 R8
-R140
-R141
 R142
+R143
+R144
 R12
 R13
 nbody
 !s100 YjFf70UB2TZMEPf@N[Aoo3
+!i10b 1
 Elctdly
-R131
+R54
 R16
 R3
 R4
 R5
-Z143 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd
-Z144 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd
+Z145 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/lctdly.vhd
+Z146 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/lctdly.vhd
 l0
 L10
 VgBV5@oRGnVP?<RAe@J=`X3
 R8
 32
-Z145 !s108 1366137680.283000
-Z146 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd|
-Z147 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd|
+Z147 !s108 1366243395.662000
+Z148 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/lctdly.vhd|
+Z149 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/lctdly.vhd|
 R12
 R13
 !s100 O6WK2cQI>]QA@O578Wob]3
+!i10b 1
 Alctdly_arch
 R16
 R3
@@ -5721,12 +6227,13 @@ l27
 L21
 VfL^J1iD=0ZCHKWk@]oS6m2
 R8
-R145
-R146
 R147
+R148
+R149
 R12
 R13
 !s100 UlLmKHI21TQYIdIbDe7Zb1
+!i10b 1
 Eld16
 R14
 R3
@@ -5745,6 +6252,7 @@ R11
 R12
 R13
 !s100 EUf96V6XO4QSf2^97ja=51
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5760,6 +6268,7 @@ R11
 R12
 R13
 !s100 YZOInfo7mT`X?:ND67oSf2
+!i10b 1
 Eld16ce
 R14
 R3
@@ -5778,6 +6287,7 @@ R11
 R12
 R13
 !s100 oL1czMC4HojMUU@^NBfQE0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5793,6 +6303,7 @@ R11
 R12
 R13
 !s100 5g9T3O8J=TF;;59][_:Nl3
+!i10b 1
 Eld4
 R14
 R3
@@ -5811,6 +6322,7 @@ R11
 R12
 R13
 !s100 Ond=U0S`9Y62AaARcKb^o3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5826,6 +6338,7 @@ R11
 R12
 R13
 !s100 dPFXbfNS7E;_F5[=M`73@0
+!i10b 1
 Eld4ce
 R14
 R3
@@ -5844,6 +6357,7 @@ R11
 R12
 R13
 !s100 0<FFUhmCZP@OKeb=mML6R2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5859,6 +6373,7 @@ R11
 R12
 R13
 !s100 3k7b2QSa;3S<G:3G3fIC41
+!i10b 1
 Eld8
 R14
 R3
@@ -5877,6 +6392,7 @@ R11
 R12
 R13
 !s100 N914kHcYMS9bSOXfWcUX]1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5892,6 +6408,7 @@ R11
 R12
 R13
 !s100 VaLE2?QlT<54?XzYz1mgf3
+!i10b 1
 Eld8ce
 R14
 R3
@@ -5910,6 +6427,7 @@ R11
 R12
 R13
 !s100 =a>1IOISc>?VEf:Yn1IMm0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -5925,27 +6443,29 @@ R11
 R12
 R13
 !s100 ccA>kdG<G3?;iKO=Wo0=E2
+!i10b 1
 Eloadcfeb
-R131
+R54
 R42
 R43
 R3
 R4
 R16
 R5
-Z148 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd
-Z149 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd
+Z150 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/loadcfeb.vhd
+Z151 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/loadcfeb.vhd
 l0
 L8
 VfPG]m;b4lE>Y[ol4@6k<f1
 R8
 32
-Z150 !s108 1366137681.125000
-Z151 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd|
-Z152 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd|
+Z152 !s108 1366243395.902000
+Z153 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/loadcfeb.vhd|
+Z154 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/loadcfeb.vhd|
 R12
 R13
 !s100 `YTSbQm7_7kClb9gV[IK=0
+!i10b 1
 Aloadcfeb_arch
 R42
 R43
@@ -5958,31 +6478,33 @@ l39
 L32
 VEc<Tl42cLeRN3MnmilQcT1
 R8
-R150
-R151
 R152
+R153
+R154
 R12
 R13
 !s100 ][<RoOGC]MbZ?BDBW?nm60
+!i10b 1
 Eloadfifo
-Z153 w1365786762
+Z155 w1365786764
 R3
 R4
 R16
 R5
-Z154 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd
-Z155 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd
+Z156 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/loadfifo.vhd
+Z157 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/loadfifo.vhd
 l0
 L7
 V9HH4<gJhQb8F_d`5a;AnD2
 R8
 32
-Z156 !s108 1366137681.624000
-Z157 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd|
-Z158 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd|
+Z158 !s108 1366243396.142000
+Z159 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/loadfifo.vhd|
+Z160 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/loadfifo.vhd|
 R12
 R13
 !s100 lj6<g4CdXB<7]]z5fK@z30
+!i10b 1
 Aloadfifo_arch
 R3
 R4
@@ -5993,33 +6515,35 @@ l38
 L25
 VVebS1iIZAoTb`VHh1ViSY1
 R8
-R156
-R157
 R158
+R159
+R160
 R12
 R13
 !s100 X>eBRW@eglN1U5icQBSJ;1
+!i10b 1
 Elvdbmon
-R60
+R62
 R2
 R1
 R3
 R4
 R36
 R5
-Z159 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd
-Z160 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd
+Z161 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/lvdbmon.vhd
+Z162 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/lvdbmon.vhd
 l0
 L6
 VgF>9TXbT3YZZnM8IM4FnX0
 R8
 32
-Z161 !s108 1366137678.504000
-Z162 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd|
-Z163 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd|
+Z163 !s108 1366243394.792000
+Z164 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/lvdbmon.vhd|
+Z165 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/lvdbmon.vhd|
 R12
 R13
 !s100 kk_8hDaOhP0knGOkYS?g@3
+!i10b 1
 Alvdbmon_arch
 R2
 R1
@@ -6032,32 +6556,34 @@ l63
 L38
 V[5AM3B=mWHnoUK>1f30a60
 R8
-R161
-R162
 R163
+R164
+R165
 R12
 R13
 !s100 m8X_d`198K]3]C4d=X5ae2
+!i10b 1
 Elvmb_adc
-R106
+R14
 R2
 R3
 R4
 R1
 R5
-Z164 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd
-Z165 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd
+Z166 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/lvmb_adc.vhd
+Z167 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/lvmb_adc.vhd
 l0
 L8
 VFWeI50ffERcDF>l=>fT192
 R8
 32
-Z166 !s108 1366137695.602000
-Z167 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd|
-Z168 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd|
+Z168 !s108 1366243401.782000
+Z169 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/lvmb_adc.vhd|
+Z170 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/lvmb_adc.vhd|
 R12
 R13
 !s100 M4gIK7Ti1zX=994nJzBzf2
+!i10b 1
 Alvmb_adc_architecture
 R2
 R3
@@ -6069,30 +6595,31 @@ l52
 L25
 VT]=3dT]fg^o==<0`Di5iT2
 R8
-R166
-R167
 R168
+R169
+R170
 R12
 R13
 !s100 P?Rmc8ScL20a2D`_E?hoQ2
+!i10b 1
 vlvmb_adc_sdo_mux
 V`f[F>m=7MV?A[=^dPL`0h0
 r1
 31
-IPJF[YJK]ZBRI@z6oRW8Ck2
+IAoE[I3=dQQO900lk0N7cV0
 R5
-R106
-8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc_sdo_mux.v
-FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc_sdo_mux.v
+R14
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/lvmb_adc_sdo_mux.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/lvmb_adc_sdo_mux.v
 L0 3
-R127
-R128
-R129
+R60
+R61
+!s100 emaP5?;iSoXojOVJk5zQD1
+!s108 1366243391.722000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/lvmb_adc_sdo_mux.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/lvmb_adc_sdo_mux.v|
 !s85 0
-!s100 ]H0ceajhI;[:Z1`HdYgcj1
-!s90 -reportprogress|300|-work|work|-vopt|-nocovercells|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc_sdo_mux.v|
-!s108 1366137675.400000
-!s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc_sdo_mux.v|
+!i10b 1
 Em16_1e
 R14
 R3
@@ -6111,6 +6638,7 @@ R11
 R12
 R13
 !s100 Ibk^gn;_cCiLBT:g>F[GS2
+!i10b 1
 Am16_1e_v
 R3
 R4
@@ -6126,6 +6654,7 @@ R11
 R12
 R13
 !s100 Jg6jCIZ1g2c3ag=bQ5iAB3
+!i10b 1
 Em2_1
 R14
 R3
@@ -6144,6 +6673,7 @@ R11
 R12
 R13
 !s100 4jOP=o<i2DjOeWBR`W0Xb1
+!i10b 1
 Am2_1_v
 R3
 R4
@@ -6159,6 +6689,7 @@ R11
 R12
 R13
 !s100 G:omh1<FJ:OP2[fkb`On=1
+!i10b 1
 Em2_1b1
 R14
 R3
@@ -6177,6 +6708,7 @@ R11
 R12
 R13
 !s100 eQ:k>C=]miS;3<QQ=Cmif1
+!i10b 1
 Am2_1b1_v
 R3
 R4
@@ -6192,6 +6724,7 @@ R11
 R12
 R13
 !s100 GJRMaWTi9LBNbH3N2EcJQ3
+!i10b 1
 Em2_1b2
 R14
 R3
@@ -6210,6 +6743,7 @@ R11
 R12
 R13
 !s100 FJ;Ufi8`61Ca>;fe?oZm]3
+!i10b 1
 Am2_1b2_v
 R3
 R4
@@ -6225,6 +6759,7 @@ R11
 R12
 R13
 !s100 nADlKbgVAek_1;JZPdQo<3
+!i10b 1
 Em2_1e
 R14
 R3
@@ -6243,6 +6778,7 @@ R11
 R12
 R13
 !s100 U34j3T6`NMGmekh]S=T7@3
+!i10b 1
 Am2_1e_v
 R3
 R4
@@ -6258,6 +6794,7 @@ R11
 R12
 R13
 !s100 Od=05bMM6SJ1Th6oFI1Z;0
+!i10b 1
 Em4_1e
 R14
 R3
@@ -6276,6 +6813,7 @@ R11
 R12
 R13
 !s100 I]WdS@Wk2_oh`7dofL`PK3
+!i10b 1
 Am4_1e_v
 R3
 R4
@@ -6291,6 +6829,7 @@ R11
 R12
 R13
 !s100 F`1j3S4fmVH[?^6;R]k>F2
+!i10b 1
 Em8_1e
 R14
 R3
@@ -6309,6 +6848,7 @@ R11
 R12
 R13
 !s100 NmzoZDiBUOl770F@[WS8M2
+!i10b 1
 Am8_1e_v
 R3
 R4
@@ -6324,27 +6864,29 @@ R11
 R12
 R13
 !s100 ==?G7j4hIi_HQ9EAeVchD0
+!i10b 1
 Embcjtag
-R60
+R62
 R2
 R1
 R3
 R4
 R36
 R5
-Z169 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd
-Z170 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd
+Z171 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/mbcjtag.vhd
+Z172 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/mbcjtag.vhd
 l0
 L6
 V]G4MGL5Ce^7nb7:J5?WQh2
 R8
 32
-Z171 !s108 1366137678.707000
-Z172 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd|
-Z173 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd|
+Z173 !s108 1366243394.862000
+Z174 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/mbcjtag.vhd|
+Z175 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/mbcjtag.vhd|
 R12
 R13
 !s100 iR0J^G5b5bC]e370``_XG0
+!i10b 1
 Ambcjtag_arch
 R2
 R1
@@ -6357,32 +6899,34 @@ l93
 L30
 V4NLgzLi479EVed3izk3<[3
 R8
-R171
-R172
 R173
+R174
+R175
 R12
 R13
 !s100 iM[aY4RzP<mgO]7ljfmIS0
+!i10b 1
 Emode_pb_sel
-R106
+R14
 R2
 R3
 R4
 R1
 R5
-Z174 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd
-Z175 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd
+Z176 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/mode_pb_sel.vhd
+Z177 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/mode_pb_sel.vhd
 l0
 L8
 V>BO5HZJPZB^;>WSiMml1J2
 R8
 32
-Z176 !s108 1366137695.742000
-Z177 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd|
-Z178 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd|
+Z178 !s108 1366243401.852000
+Z179 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/mode_pb_sel.vhd|
+Z180 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/mode_pb_sel.vhd|
 R12
 R13
 !s100 K@6ZzWQFggknKzJJVzHl10
+!i10b 1
 Amode_pb_sel_architecture
 R2
 R3
@@ -6394,12 +6938,13 @@ l29
 L26
 V?l3QLhM0h5jogEQ`zKkkG1
 R8
-R176
-R177
 R178
+R179
+R180
 R12
 R13
 !s100 H1@?BfJZCkY5L?]:CIMk82
+!i10b 1
 Enand12
 R14
 R3
@@ -6418,6 +6963,7 @@ R11
 R12
 R13
 !s100 oX=fQ1E>Zb@8n3iX[K4[E2
+!i10b 1
 Anand12_v
 R3
 R4
@@ -6433,6 +6979,7 @@ R11
 R12
 R13
 !s100 GmD?o4?0ZTFmNhnjDXIfb2
+!i10b 1
 Enand16
 R14
 R3
@@ -6451,6 +6998,7 @@ R11
 R12
 R13
 !s100 OK]jd0]lJXjkOZbaGA^TT1
+!i10b 1
 Anand16_v
 R3
 R4
@@ -6466,6 +7014,7 @@ R11
 R12
 R13
 !s100 ijG:MVmWePfRV4IR19T=_3
+!i10b 1
 Enand6
 R14
 R3
@@ -6484,6 +7033,7 @@ R11
 R12
 R13
 !s100 Vhm`F10?KB8D^UDIQ2Nz30
+!i10b 1
 Anand6_v
 R3
 R4
@@ -6499,6 +7049,7 @@ R11
 R12
 R13
 !s100 1Hl0P=GCzzC1RmY1]Y]cQ0
+!i10b 1
 Enand7
 R14
 R3
@@ -6517,6 +7068,7 @@ R11
 R12
 R13
 !s100 EmJ:;jiETGI?Aj60_REmN3
+!i10b 1
 Anand7_v
 R3
 R4
@@ -6532,6 +7084,7 @@ R11
 R12
 R13
 !s100 `CCE0Zz=kDT;<noj64QSA2
+!i10b 1
 Enand8
 R14
 R3
@@ -6550,6 +7103,7 @@ R11
 R12
 R13
 !s100 FQNd]LW24IQ2TMd]44@6<2
+!i10b 1
 Anand8_v
 R3
 R4
@@ -6565,6 +7119,7 @@ R11
 R12
 R13
 !s100 d4l<<Tgb?1f^eKlK;c2]63
+!i10b 1
 Enand9
 R14
 R3
@@ -6583,6 +7138,7 @@ R11
 R12
 R13
 !s100 IPV14_2Gz@6hnEl:nEG4F2
+!i10b 1
 Anand9_v
 R3
 R4
@@ -6598,6 +7154,7 @@ R11
 R12
 R13
 !s100 G<j=GE`HkPabXmg3:1k5W1
+!i10b 1
 Enor12
 R14
 R3
@@ -6616,6 +7173,7 @@ R11
 R12
 R13
 !s100 :dCLiCQLK0mQ0;b`3A_6j3
+!i10b 1
 Anor12_v
 R3
 R4
@@ -6631,6 +7189,7 @@ R11
 R12
 R13
 !s100 k3;N5iX4_n:B:k;NA0m<?3
+!i10b 1
 Enor16
 R14
 R3
@@ -6649,6 +7208,7 @@ R11
 R12
 R13
 !s100 DPgl]e[aa2BzLL9co[QZe1
+!i10b 1
 Anor16_v
 R3
 R4
@@ -6664,6 +7224,7 @@ R11
 R12
 R13
 !s100 mBLCJgTfBl<G?^:9Sj11T1
+!i10b 1
 Enor6
 R14
 R3
@@ -6682,6 +7243,7 @@ R11
 R12
 R13
 !s100 XlB;L6QBo6B@>MTVgh]873
+!i10b 1
 Anor6_v
 R3
 R4
@@ -6697,6 +7259,7 @@ R11
 R12
 R13
 !s100 :oiJhl6L[9FzcP>8CeV5j0
+!i10b 1
 Enor7
 R14
 R3
@@ -6715,6 +7278,7 @@ R11
 R12
 R13
 !s100 AZme[=ZDB1Gh0cjQD<L5Z3
+!i10b 1
 Anor7_v
 R3
 R4
@@ -6730,6 +7294,7 @@ R11
 R12
 R13
 !s100 WU_g@4<WJOPgfKVfHaP<A3
+!i10b 1
 Enor8
 R14
 R3
@@ -6748,6 +7313,7 @@ R11
 R12
 R13
 !s100 cH_4B^fM1C=@cbWHWii:91
+!i10b 1
 Anor8_v
 R3
 R4
@@ -6763,6 +7329,7 @@ R11
 R12
 R13
 !s100 6bniKJoj?HhDDoM>ck^i_3
+!i10b 1
 Enor9
 R14
 R3
@@ -6781,6 +7348,7 @@ R11
 R12
 R13
 !s100 ]C2O1T;dKNQXSlX>KMVA:1
+!i10b 1
 Anor9_v
 R3
 R4
@@ -6796,6 +7364,7 @@ R11
 R12
 R13
 !s100 hP[0B5n=H2D]HIR`zkegJ2
+!i10b 1
 Eobuf16
 R14
 R3
@@ -6814,6 +7383,7 @@ R11
 R12
 R13
 !s100 7]O^U5^IDnaiTMk3P]?8a3
+!i10b 1
 Aobuf16_v
 R3
 R4
@@ -6829,6 +7399,7 @@ R11
 R12
 R13
 !s100 D@UZF?X@=N6i8SES2;1TS2
+!i10b 1
 Eobuf4
 R14
 R3
@@ -6847,6 +7418,7 @@ R11
 R12
 R13
 !s100 @gP^V`c[NU4f@;<GTh_?>3
+!i10b 1
 Aobuf4_v
 R3
 R4
@@ -6862,6 +7434,7 @@ R11
 R12
 R13
 !s100 1>22a<b@dU>jae8b@Na5K0
+!i10b 1
 Eobuf8
 R14
 R3
@@ -6880,6 +7453,7 @@ R11
 R12
 R13
 !s100 6A4D08k]G2X<Yz^^A65J61
+!i10b 1
 Aobuf8_v
 R3
 R4
@@ -6895,6 +7469,7 @@ R11
 R12
 R13
 !s100 @:1Ln3D`m[RC@_CPNkRS41
+!i10b 1
 Eobufe
 R14
 R3
@@ -6913,6 +7488,7 @@ R11
 R12
 R13
 !s100 Hh[IE1KY7[;oQZnFDaF@M1
+!i10b 1
 Aobufe_v
 R3
 R4
@@ -6928,6 +7504,7 @@ R11
 R12
 R13
 !s100 H8WRnU<]0GBCVV;[EbW4j0
+!i10b 1
 Eobufe16
 R14
 R3
@@ -6946,6 +7523,7 @@ R11
 R12
 R13
 !s100 IjAf8l8C7P=G619=TzKJ91
+!i10b 1
 Aobufe16_v
 R3
 R4
@@ -6961,6 +7539,7 @@ R11
 R12
 R13
 !s100 aIKG_LH6VP8N8K2^a0FkS0
+!i10b 1
 Eobufe4
 R14
 R3
@@ -6979,6 +7558,7 @@ R11
 R12
 R13
 !s100 ME7RL:LmD0V5^]l4mj<9N1
+!i10b 1
 Aobufe4_v
 R3
 R4
@@ -6994,6 +7574,7 @@ R11
 R12
 R13
 !s100 8i71_6SLQFJedBozLJJm;0
+!i10b 1
 Eobufe8
 R14
 R3
@@ -7012,6 +7593,7 @@ R11
 R12
 R13
 !s100 ]G`TSX@moT;DUhah426oP2
+!i10b 1
 Aobufe8_v
 R3
 R4
@@ -7027,6 +7609,7 @@ R11
 R12
 R13
 !s100 YZ?0LLfWMgRIS;CJ1[fKm0
+!i10b 1
 Eobuft16
 R14
 R3
@@ -7045,6 +7628,7 @@ R11
 R12
 R13
 !s100 29GQd>ZdAE6MLJLLei?oK3
+!i10b 1
 Aobuft16_v
 R3
 R4
@@ -7060,6 +7644,7 @@ R11
 R12
 R13
 !s100 H?b26R10XE9Zn=Ke=PViW1
+!i10b 1
 Eobuft4
 R14
 R3
@@ -7078,6 +7663,7 @@ R11
 R12
 R13
 !s100 h9]gCKI=]aaKJ5?^aEI3e0
+!i10b 1
 Aobuft4_v
 R3
 R4
@@ -7093,6 +7679,7 @@ R11
 R12
 R13
 !s100 z2A36^h^cOW0n`DN<8<eH1
+!i10b 1
 Eobuft8
 R14
 R3
@@ -7111,6 +7698,7 @@ R11
 R12
 R13
 !s100 fD:cz7I]^?RGJ]AAjKWa61
+!i10b 1
 Aobuft8_v
 R3
 R4
@@ -7126,27 +7714,29 @@ R11
 R12
 R13
 !s100 o1C8QB@mzoR;6az@VgPA[1
+!i10b 1
 Eodmb_ctrl
-Z179 w1366140974
+Z181 w1366140976
 R2
 R1
 R3
 R4
 R36
 R5
-Z180 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd
-Z181 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd
+Z182 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/odmb_ctrl.vhd
+Z183 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/odmb_ctrl.vhd
 l0
 L11
 Vob5O]@zLA`E`@Z[1Q_ek90
 R8
 32
-Z182 !s108 1366140974.963000
-Z183 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd|
-Z184 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd|
+Z184 !s108 1366243396.412000
+Z185 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/odmb_ctrl.vhd|
+Z186 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/odmb_ctrl.vhd|
 R12
 R13
 !s100 _<;`X?3J3d8WOlZmk6QMi0
+!i10b 1
 Aodmb_ctrl_arch
 R2
 R1
@@ -7159,14 +7749,15 @@ l701
 L136
 V<2:R@hY:QF8g;`UO0IYXZ1
 R8
-R182
-R183
 R184
+R185
+R186
 R12
 R13
 !s100 kzinQ]ZM1RQOo1eX<k>;O3
+!i10b 1
 Eodmb_v6
-Z185 w1366137669
+Z187 w1366243706
 R29
 R16
 R1
@@ -7174,19 +7765,20 @@ R2
 R3
 R4
 R5
-Z186 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd
-Z187 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd
+Z188 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_v6.vhd
+Z189 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_v6.vhd
 l0
 L26
 V1Z0A]MY`KnJ^@QS8Z[e<80
+!s100 =HN^VdUEOM;U5G9ljih2Z3
 R8
 32
-Z188 !s108 1366137693.262000
-Z189 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd|
-Z190 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd|
+!i10b 1
+Z190 !s108 1366243784.982000
+Z191 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_v6.vhd|
+Z192 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_v6.vhd|
 R12
 R13
-!s100 =HN^VdUEOM;U5G9ljih2Z3
 Abdf_type
 R29
 R16
@@ -7194,49 +7786,51 @@ R1
 R2
 R3
 R4
-DEx4 work 7 odmb_v6 0 22 1Z0A]MY`KnJ^@QS8Z[e<80
-32
-l1305
+Z193 DEx4 work 7 odmb_v6 0 22 1Z0A]MY`KnJ^@QS8Z[e<80
+l1347
 L389
-VajcS@03c?UB9h]A:kkMeb0
+V^J>K<L_78LH60?mef8DR=2
+!s100 IQW>ePXfdWi806<eQLAaO3
 R8
-R188
-R189
+32
+!i10b 1
 R190
+R191
+R192
 R12
 R13
-!s100 ozDG27Do_>:WbMRTgIl991
 Eodmb_v6_tb
-Z191 w1365622691
+Z194 w1365622692
 R16
 R29
 R2
 R1
 R36
-R132
+R134
 R3
 R4
 R5
-Z192 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd
-Z193 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd
+Z195 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/odmb_v6_tb.vhd
+Z196 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/odmb_v6_tb.vhd
 l0
 L36
 VhMTgG4^QZjgPFF9<m>Ge^0
 R8
 32
-Z194 !s108 1366137698.566000
-Z195 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd|
-Z196 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd|
+Z197 !s108 1366243402.982000
+Z198 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/odmb_v6_tb.vhd|
+Z199 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/odmb_v6_tb.vhd|
 R12
 R13
 !s100 bd[b1:4AL@7WzFN3KZmT70
+!i10b 1
 Aodmb_v6_tb_arch
 R16
 R29
 R2
 R1
 R36
-R132
+R134
 R3
 R4
 DEx4 work 10 odmb_v6_tb 0 22 hMTgG4^QZjgPFF9<m>Ge^0
@@ -7245,32 +7839,34 @@ l848
 L46
 VfN?A[2WkkgN>BGNZGC4H71
 R8
-R194
-R195
-R196
+R197
+R198
+R199
 R12
 R13
 !s100 zN4jf2RNRBX>MnVnnOAWc2
+!i10b 1
 Eodmb_vme
-Z197 w1365791713
+Z200 w1365791714
 R1
 R2
 R3
 R4
 R5
-Z198 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd
-Z199 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd
+Z201 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/odmb_vme.vhd
+Z202 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/odmb_vme.vhd
 l0
 L6
 Vc9==_nd1JbLd;^=WECTkB3
 R8
 32
-Z200 !s108 1366137679.019000
-Z201 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd|
-Z202 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd|
+Z203 !s108 1366243395.022000
+Z204 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/odmb_vme.vhd|
+Z205 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/odmb_vme.vhd|
 R12
 R13
 !s100 lNP^_bD06PA9JIgIIFKM]3
+!i10b 1
 Aodmb_vme_architecture
 R1
 R2
@@ -7282,12 +7878,13 @@ l407
 L164
 VX>G^b_3h9Vl6mcak>NO6O2
 R8
-R200
-R201
-R202
+R203
+R204
+R205
 R12
 R13
 !s100 :4DH50W7P;o<HK0b`M_<L2
+!i10b 1
 Eofd
 R14
 R3
@@ -7306,6 +7903,7 @@ R11
 R12
 R13
 !s100 8MQQ3fEbK`OUSeF[glKZ@3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7321,6 +7919,7 @@ R11
 R12
 R13
 !s100 B>Vb[?aVgl_dPhl]J>Tne1
+!i10b 1
 Eofd16
 R14
 R3
@@ -7339,6 +7938,7 @@ R11
 R12
 R13
 !s100 9kZd4DOHI^=A]7fl]dMG92
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7354,6 +7954,7 @@ R11
 R12
 R13
 !s100 57YgjeW5=<Hm]55TDjfKT1
+!i10b 1
 Eofd4
 R14
 R3
@@ -7372,6 +7973,7 @@ R11
 R12
 R13
 !s100 J:XO_CYc?;M`:[N4EKzU>3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7387,6 +7989,7 @@ R11
 R12
 R13
 !s100 YMi9H7GK]^[W@BJV=KbJA0
+!i10b 1
 Eofd8
 R14
 R3
@@ -7405,6 +8008,7 @@ R11
 R12
 R13
 !s100 AbjMUZzJTo7QGGA=UnS=>3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7420,6 +8024,7 @@ R11
 R12
 R13
 !s100 _@NR5Mz8Q3?d=SHXY>FFe2
+!i10b 1
 Eofd_1
 R14
 R3
@@ -7438,6 +8043,7 @@ R11
 R12
 R13
 !s100 3AlPh8G?i759F^aiRP`Io0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7453,6 +8059,7 @@ R11
 R12
 R13
 !s100 `8KHo>ILo_3OFRDB9H3Ld3
+!i10b 1
 Eofde
 R14
 R3
@@ -7471,6 +8078,7 @@ R11
 R12
 R13
 !s100 Nd]f>6:QQk3iPEcNlKRHS0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7486,6 +8094,7 @@ R11
 R12
 R13
 !s100 dMRiR9bH_M?m4FQg<STaE2
+!i10b 1
 Eofde16
 R14
 R3
@@ -7504,6 +8113,7 @@ R11
 R12
 R13
 !s100 @k:Y[Ln3MScM6_5nW:dE52
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7519,6 +8129,7 @@ R11
 R12
 R13
 !s100 L<H^3XMSPDDQNRfan=;>j0
+!i10b 1
 Eofde4
 R14
 R3
@@ -7537,6 +8148,7 @@ R11
 R12
 R13
 !s100 `A9PSEU@T6X=eF<3SV:=h1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7552,6 +8164,7 @@ R11
 R12
 R13
 !s100 z4NF`E3c1zP=n6YLX?2;K1
+!i10b 1
 Eofde8
 R14
 R3
@@ -7570,6 +8183,7 @@ R11
 R12
 R13
 !s100 hkk<_^ENe>GB`cGWQ`TM_3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7585,6 +8199,7 @@ R11
 R12
 R13
 !s100 Jmk2=gIb`<XM_gh=>bBJi0
+!i10b 1
 Eofde_1
 R14
 R3
@@ -7603,6 +8218,7 @@ R11
 R12
 R13
 !s100 _[If5U:J@0?G7a5N_jmC60
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7618,6 +8234,7 @@ R11
 R12
 R13
 !s100 jPlYRf>AT1Mi5f=40N0G80
+!i10b 1
 Eofdi
 R14
 R3
@@ -7636,6 +8253,7 @@ R11
 R12
 R13
 !s100 zogXBleYLC0>CbdlDOWJ62
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7651,6 +8269,7 @@ R11
 R12
 R13
 !s100 dRlb9QMALaM4DlX7ISm^42
+!i10b 1
 Eofdi_1
 R14
 R3
@@ -7669,6 +8288,7 @@ R11
 R12
 R13
 !s100 DJUj^Gk`[h;QhYfC=W=fM1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7684,6 +8304,7 @@ R11
 R12
 R13
 !s100 g5YLXRciCW]Sb7l]0M9EW3
+!i10b 1
 Eofdt
 R14
 R3
@@ -7702,6 +8323,7 @@ R11
 R12
 R13
 !s100 J;X[L>7djJbVndjOmQM?c0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7717,6 +8339,7 @@ R11
 R12
 R13
 !s100 ?DX<IZdPNBlbi_0Hol_Y`0
+!i10b 1
 Eofdt16
 R14
 R3
@@ -7735,6 +8358,7 @@ R11
 R12
 R13
 !s100 :KbkA^SIdQB>oleWV4RDQ0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7750,6 +8374,7 @@ R11
 R12
 R13
 !s100 eAzM4<XI5`iIXT]>:oPW`1
+!i10b 1
 Eofdt4
 R14
 R3
@@ -7768,6 +8393,7 @@ R11
 R12
 R13
 !s100 z<kX_]1ZC4_KdQB173Y383
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7783,6 +8409,7 @@ R11
 R12
 R13
 !s100 R=?M7X9a;5?W5FFM9^Rh41
+!i10b 1
 Eofdt8
 R14
 R3
@@ -7801,6 +8428,7 @@ R11
 R12
 R13
 !s100 0Q]1Ve2_`V^zNjR3P5<Pl1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7816,6 +8444,7 @@ R11
 R12
 R13
 !s100 jP<m^BOQ_=T8]fSkHOc0i3
+!i10b 1
 Eofdt_1
 R14
 R3
@@ -7834,6 +8463,7 @@ R11
 R12
 R13
 !s100 6=o>1@52lY`ffBQY2Q10l3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7849,6 +8479,7 @@ R11
 R12
 R13
 !s100 Mkk2dF]2nEHJVf>2@;nWi3
+!i10b 1
 Eofdx
 R14
 R3
@@ -7867,6 +8498,7 @@ R11
 R12
 R13
 !s100 :1gem8AKKNDZXZMkH5HT[1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7882,6 +8514,7 @@ R11
 R12
 R13
 !s100 b@l23KdNXe02oPTkEXhJL2
+!i10b 1
 Eofdx16
 R14
 R3
@@ -7900,6 +8533,7 @@ R11
 R12
 R13
 !s100 :LU8?BCj=VDg^7f;[NF`F2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7915,6 +8549,7 @@ R11
 R12
 R13
 !s100 a?1XakKdLM0Z@bGFillC62
+!i10b 1
 Eofdx4
 R14
 R3
@@ -7933,6 +8568,7 @@ R11
 R12
 R13
 !s100 NnbHAUh^6hQl:^k@lcXl@0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7948,6 +8584,7 @@ R11
 R12
 R13
 !s100 3MaQo=WzN4`7XPdhj@LgX1
+!i10b 1
 Eofdx8
 R14
 R3
@@ -7966,6 +8603,7 @@ R11
 R12
 R13
 !s100 PL>Xk2az@bh`2DQB=DkL]3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -7981,6 +8619,7 @@ R11
 R12
 R13
 !s100 ];MJ<1<R8[e5j<@GRdh=?1
+!i10b 1
 Eofdx_1
 R14
 R3
@@ -7999,6 +8638,7 @@ R11
 R12
 R13
 !s100 @fW81f1GX<<lP@>bkeK063
+!i10b 1
 Abehavioral
 R3
 R4
@@ -8014,6 +8654,7 @@ R11
 R12
 R13
 !s100 KidkbGK[ZE32PP>=60nj[2
+!i10b 1
 Eofdxi
 R14
 R3
@@ -8032,6 +8673,7 @@ R11
 R12
 R13
 !s100 8n6i47neG;zQn:F[DcmXY1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -8047,6 +8689,7 @@ R11
 R12
 R13
 !s100 Dc>44M2W861OeaO4fL]VH3
+!i10b 1
 Eofdxi_1
 R14
 R3
@@ -8065,6 +8708,7 @@ R11
 R12
 R13
 !s100 TWCe9B=<?dAa8YA]:C@la1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -8080,6 +8724,7 @@ R11
 R12
 R13
 !s100 Gl6H4Da<a>g=aJ_J?3^<[3
+!i10b 1
 Eor12
 R14
 R3
@@ -8098,6 +8743,7 @@ R11
 R12
 R13
 !s100 XMMJZe8l:H0ek[l2IJ_GA0
+!i10b 1
 Aor12_v
 R3
 R4
@@ -8113,6 +8759,7 @@ R11
 R12
 R13
 !s100 4U>SgFNG>12Y=4TIkKjo43
+!i10b 1
 Eor16
 R14
 R3
@@ -8131,6 +8778,7 @@ R11
 R12
 R13
 !s100 1N8H7;[LJf5YFC2WMAISP3
+!i10b 1
 Aor16_v
 R3
 R4
@@ -8146,6 +8794,7 @@ R11
 R12
 R13
 !s100 5NQaPDLX>gA2l:FZ>@:j]2
+!i10b 1
 Eor6
 R14
 R3
@@ -8164,6 +8813,7 @@ R11
 R12
 R13
 !s100 MY?<7BN=l4:TN<J_]<Z<m0
+!i10b 1
 Aor6_v
 R3
 R4
@@ -8179,6 +8829,7 @@ R11
 R12
 R13
 !s100 GBKHfe4^>kK6Bh0_z[CCE3
+!i10b 1
 Eor7
 R14
 R3
@@ -8197,6 +8848,7 @@ R11
 R12
 R13
 !s100 eJ4OOWHZ4LV7595<fT:DB1
+!i10b 1
 Aor7_v
 R3
 R4
@@ -8212,6 +8864,7 @@ R11
 R12
 R13
 !s100 G5Salkc2afUFL?P?k@RcO0
+!i10b 1
 Eor8
 R14
 R3
@@ -8230,6 +8883,7 @@ R11
 R12
 R13
 !s100 ZXQ`fKck`@zzYHi3RO81c2
+!i10b 1
 Aor8_v
 R3
 R4
@@ -8245,6 +8899,7 @@ R11
 R12
 R13
 !s100 X9N?9DB];kBmcWM;X[iUc3
+!i10b 1
 Eor9
 R14
 R3
@@ -8263,6 +8918,7 @@ R11
 R12
 R13
 !s100 JQ3]5F@?eLYehf8l:;=WO2
+!i10b 1
 Aor9_v
 R3
 R4
@@ -8278,6 +8934,7 @@ R11
 R12
 R13
 !s100 9UhdfkIe6^LLVDCPhnKNa3
+!i10b 1
 Eot_mgr
 R14
 R1
@@ -8285,19 +8942,20 @@ R2
 R3
 R4
 R5
-Z203 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd
-Z204 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd
+Z206 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/ot_mgr.vhd
+Z207 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/ot_mgr.vhd
 l0
 L6
 V4;8[EICTB`j:O0^g2[F1R3
 R8
 32
-Z205 !s108 1366137696.444000
-Z206 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd|
-Z207 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd|
+Z208 !s108 1366243402.172000
+Z209 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/ot_mgr.vhd|
+Z210 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/ot_mgr.vhd|
 R12
 R13
 !s100 =J3m6VSMTiGBNMIj752Qa2
+!i10b 1
 Aom_architecture
 R1
 R2
@@ -8309,30 +8967,31 @@ l31
 L29
 V1=1<ZGH5AZB`6KF1>W]5`1
 R8
-R205
-R206
-R207
+R208
+R209
+R210
 R12
 R13
 !s100 5LM68=<BXb>_ES0DXCYUL1
+!i10b 1
 vpon_reg
 VSkn<UmGE293TS]OXI4>:R0
 r1
 31
-I:Be04GCKTzP1Rz9Di]YAH2
+I[i0KG]][<lhDQ2;8@d7Ug1
 R5
-R14
-8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/pon_reg.v
-FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/pon_reg.v
-L0 1
-R127
-R128
-R129
+w1366240543
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/pon_reg.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/pon_reg.v
+L0 2
+R60
+R61
+!s100 GgJLO;hSU@JU^ILz;6JnY2
+!s108 1366243391.772000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/pon_reg.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/pon_reg.v|
 !s85 0
-!s100 6]`>ZUb^]nCCK?6POL?BF2
-!s90 -reportprogress|300|-work|work|-vopt|-nocovercells|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/pon_reg.v|
-!s108 1366137675.509000
-!s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/pon_reg.v|
+!i10b 1
 Eram16x2d
 R14
 R1
@@ -8353,6 +9012,7 @@ R11
 R12
 R13
 !s100 A`^C1N>HPY:z<9n;^^mli3
+!i10b 1
 Aram16x2d_v
 R1
 R2
@@ -8370,6 +9030,7 @@ R11
 R12
 R13
 !s100 R2mggoiMBTUThnhFQBh[h3
+!i10b 1
 Eram16x4d
 R14
 R1
@@ -8390,6 +9051,7 @@ R11
 R12
 R13
 !s100 ]85C@n;Yf25OY=QaYB5@i1
+!i10b 1
 Aram16x4d_v
 R1
 R2
@@ -8407,6 +9069,7 @@ R11
 R12
 R13
 !s100 8hWD7BFg6i0Q1Kn8EY]P22
+!i10b 1
 Eram16x8d
 R14
 R1
@@ -8427,6 +9090,7 @@ R11
 R12
 R13
 !s100 jKe2kPkfd[ClTi8;2JEST3
+!i10b 1
 Aram16x8d_v
 R1
 R2
@@ -8444,6 +9108,7 @@ R11
 R12
 R13
 !s100 ALcEKJ8H=lVR6haF1l^P40
+!i10b 1
 Erandomtrg
 R54
 R1
@@ -8455,19 +9120,20 @@ R3
 R4
 R16
 R5
-Z208 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd
-Z209 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd
+Z211 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/randomtrg.vhd
+Z212 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/randomtrg.vhd
 l0
 L9
 V9_24>`QOV1m6::2[=2Im[1
 R8
 32
-Z210 !s108 1366137700.048000
-Z211 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd|
-Z212 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd|
+Z213 !s108 1366243403.772000
+Z214 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/randomtrg.vhd|
+Z215 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/randomtrg.vhd|
 R12
 R13
 !s100 9BjUCo?HKM6Gj6?Zb[M[I2
+!i10b 1
 Arandomtrg_arch
 R1
 R2
@@ -8483,12 +9149,13 @@ l106
 L38
 V0OV<6Nh94L06Lz:D5dhQA1
 R8
-R210
-R211
-R212
+R213
+R214
+R215
 R12
 R13
 !s100 bNzPf@S5YDU^V]=B^<`Jh2
+!i10b 1
 Esop3
 R14
 R3
@@ -8507,6 +9174,7 @@ R11
 R12
 R13
 !s100 Jj3P6z<GSbF1UfNYV^iLe2
+!i10b 1
 Asop3_v
 R3
 R4
@@ -8522,6 +9190,7 @@ R11
 R12
 R13
 !s100 O:nWS@?[lZ`@C`Fa`4QMD0
+!i10b 1
 Esop3b1a
 R14
 R3
@@ -8540,6 +9209,7 @@ R11
 R12
 R13
 !s100 6iQZ8eaYT7dP8`Wa=XR3N0
+!i10b 1
 Asop3b1a_v
 R3
 R4
@@ -8555,6 +9225,7 @@ R11
 R12
 R13
 !s100 @;3dgD33TE>;U[@kQ6a?Z1
+!i10b 1
 Esop3b1b
 R14
 R3
@@ -8573,6 +9244,7 @@ R11
 R12
 R13
 !s100 <MQND1kRgo]Xaac1f04Tc2
+!i10b 1
 Asop3b1b_v
 R3
 R4
@@ -8588,6 +9260,7 @@ R11
 R12
 R13
 !s100 :QQFY9[Pk=00i;e4LUaam3
+!i10b 1
 Esop3b2a
 R14
 R3
@@ -8606,6 +9279,7 @@ R11
 R12
 R13
 !s100 oX1b^V^Al4FlBE3z7Qh^S2
+!i10b 1
 Asop3b2a_v
 R3
 R4
@@ -8621,6 +9295,7 @@ R11
 R12
 R13
 !s100 oC35Q29EZJ>g3keQ1]2ZS3
+!i10b 1
 Esop3b2b
 R14
 R3
@@ -8639,6 +9314,7 @@ R11
 R12
 R13
 !s100 H;hg0co_:W=>ElUOV`NDF2
+!i10b 1
 Asop3b2b_v
 R3
 R4
@@ -8654,6 +9330,7 @@ R11
 R12
 R13
 !s100 9N4O?0MeN7h?4;b`[LSGc2
+!i10b 1
 Esop3b3
 R14
 R3
@@ -8672,6 +9349,7 @@ R11
 R12
 R13
 !s100 md>>=_IMJg:cHR;MLbbPe1
+!i10b 1
 Asop3b3_v
 R3
 R4
@@ -8687,6 +9365,7 @@ R11
 R12
 R13
 !s100 hIAzVBGn2HNOTzP1@zO_`1
+!i10b 1
 Esop4
 R14
 R3
@@ -8705,6 +9384,7 @@ R11
 R12
 R13
 !s100 JHVNT0cL4Efznm:AViZeY1
+!i10b 1
 Asop4_v
 R3
 R4
@@ -8720,6 +9400,7 @@ R11
 R12
 R13
 !s100 zOd?acBo5GYUWf24UlhLj3
+!i10b 1
 Esop4b1
 R14
 R3
@@ -8738,6 +9419,7 @@ R11
 R12
 R13
 !s100 C=X79Gbj2:1nF>U3fdP`H1
+!i10b 1
 Asop4b1_v
 R3
 R4
@@ -8753,6 +9435,7 @@ R11
 R12
 R13
 !s100 P>W]1f32;jQ6CD9SXMT950
+!i10b 1
 Esop4b2a
 R14
 R3
@@ -8771,6 +9454,7 @@ R11
 R12
 R13
 !s100 N:RmojWz]FL=BAaeJR7UE2
+!i10b 1
 Asop4b2a_v
 R3
 R4
@@ -8786,6 +9470,7 @@ R11
 R12
 R13
 !s100 b]0A9:aS8c=cWi^?^^J]g0
+!i10b 1
 Esop4b2b
 R14
 R3
@@ -8804,6 +9489,7 @@ R11
 R12
 R13
 !s100 ?QE_jk@1c@nh4Hefb3RYf2
+!i10b 1
 Asop4b2b_v
 R3
 R4
@@ -8819,6 +9505,7 @@ R11
 R12
 R13
 !s100 [7YH:_9^2Zg1R_j3oMXO`0
+!i10b 1
 Esop4b3
 R14
 R3
@@ -8837,6 +9524,7 @@ R11
 R12
 R13
 !s100 7T7F8^D?=m3^nDcdb70Ve2
+!i10b 1
 Asop4b3_v
 R3
 R4
@@ -8852,6 +9540,7 @@ R11
 R12
 R13
 !s100 MH`zoeN_e2;V5mzc75XhJ1
+!i10b 1
 Esop4b4
 R14
 R3
@@ -8870,6 +9559,7 @@ R11
 R12
 R13
 !s100 J?NZ9CLR9089M3n[?HCgX2
+!i10b 1
 Asop4b4_v
 R3
 R4
@@ -8885,6 +9575,7 @@ R11
 R12
 R13
 !s100 Dj`]dZFSAYlhQKkV`O92V1
+!i10b 1
 Esr16ce
 R14
 R3
@@ -8903,6 +9594,7 @@ R11
 R12
 R13
 !s100 dTK4;UX[GQN489XG9UzMj3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -8918,6 +9610,7 @@ R11
 R12
 R13
 !s100 5]?=9ng5hl;TjBBaoDzDJ1
+!i10b 1
 Esr16cle
 R14
 R3
@@ -8936,6 +9629,7 @@ R11
 R12
 R13
 !s100 ?R`Z_Kl6dn7z@R5Jk;J`22
+!i10b 1
 Abehavioral
 R3
 R4
@@ -8951,6 +9645,7 @@ R11
 R12
 R13
 !s100 maS^V>A3gK<f_7A]GO4Bd3
+!i10b 1
 Esr16cled
 R14
 R3
@@ -8969,6 +9664,7 @@ R11
 R12
 R13
 !s100 2QCkG@Y7mR:n^V:Wdl77I0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -8984,6 +9680,7 @@ R11
 R12
 R13
 !s100 hUV35CCdGaYf3lR5gz5=52
+!i10b 1
 Esr16re
 R14
 R3
@@ -9002,6 +9699,7 @@ R11
 R12
 R13
 !s100 Z2g1oV9kn<1P<4LS?QX<i1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9017,6 +9715,7 @@ R11
 R12
 R13
 !s100 @@[gnl_TG8PD:9@?08J382
+!i10b 1
 Esr16rle
 R14
 R3
@@ -9035,6 +9734,7 @@ R11
 R12
 R13
 !s100 >l?h>PnoHSOfB3gNLMF[82
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9050,6 +9750,7 @@ R11
 R12
 R13
 !s100 CocQRjK5J>BkfVZS3M6kY1
+!i10b 1
 Esr16rled
 R14
 R3
@@ -9068,6 +9769,7 @@ R11
 R12
 R13
 !s100 @S9VOQVjA4H1a1odk8^]G2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9083,6 +9785,7 @@ R11
 R12
 R13
 !s100 kO=@Ta`ea80dcGeof?KVX0
+!i10b 1
 Esr4ce
 R14
 R3
@@ -9101,6 +9804,7 @@ R11
 R12
 R13
 !s100 =TD3eK0AXlS`Oo9WzDzQ;3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9116,6 +9820,7 @@ R11
 R12
 R13
 !s100 n@U5iWM95=HbWH`om`ffG0
+!i10b 1
 Esr4cle
 R14
 R3
@@ -9134,6 +9839,7 @@ R11
 R12
 R13
 !s100 @XBE4WKJJX7=B:De[^WNl1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9149,6 +9855,7 @@ R11
 R12
 R13
 !s100 8;`TGI4:S8g1e<5MK@kjJ0
+!i10b 1
 Esr4cled
 R14
 R3
@@ -9167,6 +9874,7 @@ R11
 R12
 R13
 !s100 4X?2Aj^b9@CjI?jZKDQET3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9182,6 +9890,7 @@ R11
 R12
 R13
 !s100 TM@IzY:jHSei4PYiXeF982
+!i10b 1
 Esr4re
 R14
 R3
@@ -9200,6 +9909,7 @@ R11
 R12
 R13
 !s100 4]Y[gY393jC7P3WdfEJPl0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9215,6 +9925,7 @@ R11
 R12
 R13
 !s100 hI?D4g:W2C2Toe?2<0[hX0
+!i10b 1
 Esr4rle
 R14
 R3
@@ -9233,6 +9944,7 @@ R11
 R12
 R13
 !s100 g43;cGdoI55E<EblzM9On3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9248,6 +9960,7 @@ R11
 R12
 R13
 !s100 hJYR6Vg1kf9e^`^V^z5BT2
+!i10b 1
 Esr4rled
 R14
 R3
@@ -9266,6 +9979,7 @@ R11
 R12
 R13
 !s100 Y:zfn8NJnlfbNNMV=8iof2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9281,6 +9995,7 @@ R11
 R12
 R13
 !s100 b7BAb=EB_NU6clO?`?h6d2
+!i10b 1
 Esr8ce
 R14
 R3
@@ -9299,6 +10014,7 @@ R11
 R12
 R13
 !s100 4C_4:LS^2][ko1ig:]G5L3
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9314,6 +10030,7 @@ R11
 R12
 R13
 !s100 e@KW4`7[j:6Daga@AXMfD3
+!i10b 1
 Esr8cle
 R14
 R3
@@ -9332,6 +10049,7 @@ R11
 R12
 R13
 !s100 ^:1=TV8B2U9XHRPRCV3kP2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9347,6 +10065,7 @@ R11
 R12
 R13
 !s100 64AmeGJ2Q3d1ozLo;Q7i20
+!i10b 1
 Esr8cled
 R14
 R3
@@ -9365,6 +10084,7 @@ R11
 R12
 R13
 !s100 f7dmjI`FL=HfbYOdOBCD01
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9380,6 +10100,7 @@ R11
 R12
 R13
 !s100 HCIB>Vk4b2`5XHL2ozTmK1
+!i10b 1
 Esr8re
 R14
 R3
@@ -9398,6 +10119,7 @@ R11
 R12
 R13
 !s100 >:_BPm6DEPhI6^Cb9cnYV2
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9413,6 +10135,7 @@ R11
 R12
 R13
 !s100 P`gWBiM3lLlXBWZ_S5C_]3
+!i10b 1
 Esr8rle
 R14
 R3
@@ -9431,6 +10154,7 @@ R11
 R12
 R13
 !s100 D<GTe<fRJa`zo`nJA?Ao[1
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9446,6 +10170,7 @@ R11
 R12
 R13
 !s100 0Qa?JD?BH5m]CL=DVG0HV2
+!i10b 1
 Esr8rled
 R14
 R3
@@ -9464,6 +10189,7 @@ R11
 R12
 R13
 !s100 1V[]>hLem0XA=>Z0:Jkke0
+!i10b 1
 Abehavioral
 R3
 R4
@@ -9479,24 +10205,25 @@ R11
 R12
 R13
 !s100 Uim5e?Cg^`:J66K:Wa6BA3
+!i10b 1
 vtdo_mux
 VRYX2MPUNSj<Q1X0d<WfTA2
 r1
 31
-I]U8A9n86ZjhOfH6A[WabY0
+Ig46>b^lcmk6]bX[13<2XX3
 R5
-R130
-8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/tdo_mux.v
-FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/tdo_mux.v
+R35
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/tdo_mux.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/tdo_mux.v
 L0 55
-R127
-R128
-R129
+R60
+R61
+!s100 W48kIg;=96=>^c52mF>d?3
+!s108 1366243391.952000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/tdo_mux.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/tdo_mux.v|
 !s85 0
-!s100 N6dmlYmNGPoM:SfI[zAO90
-!s90 -reportprogress|300|-work|work|-vopt|-nocovercells|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/tdo_mux.v|
-!s108 1366137676.086000
-!s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/tdo_mux.v|
+!i10b 1
 Etest_controller
 R35
 R2
@@ -9504,19 +10231,20 @@ R3
 R4
 R1
 R5
-Z213 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd
-Z214 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd
+Z216 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/test_controller.vhd
+Z217 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/test_controller.vhd
 l0
 L18
 VO7OT=gL=2]U5zcR5L0ehL1
 R8
 32
-Z215 !s108 1366137699.081000
-Z216 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd|
-Z217 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd|
+Z218 !s108 1366243403.302000
+Z219 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/test_controller.vhd|
+Z220 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/test_controller.vhd|
 R12
 R13
 !s100 ]ZoFHeL9e2izYndVY9i]l2
+!i10b 1
 Atest_ctrl_architecture
 R2
 R3
@@ -9528,33 +10256,35 @@ l79
 L66
 V5o1FUamhXz4=m0Vlzf2K^0
 R8
-R215
-R216
-R217
+R218
+R219
+R220
 R12
 R13
 !s100 NR0V<n1W4z?`2WSF_jM`a1
+!i10b 1
 Etrgcntrl
-Z218 w1365629740
+Z221 w1365629742
 R42
 R43
 R3
 R4
 R16
 R5
-Z219 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd
-Z220 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd
+Z222 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/trgcntrl.vhd
+Z223 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/trgcntrl.vhd
 l0
 L11
 VAfg4oFD71;bYM7b[kMP2S3
 R8
 32
-Z221 !s108 1366137677.194000
-Z222 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd|
-Z223 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd|
+Z224 !s108 1366243394.102000
+Z225 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/trgcntrl.vhd|
+Z226 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/trgcntrl.vhd|
 R12
 R13
 !s100 A8W`R2Ta3dEPP4VaidF9e3
+!i10b 1
 Atrgcntrl_arch
 R42
 R43
@@ -9567,34 +10297,35 @@ l63
 L43
 VZNOVj:[<Hb@iz4FRQJ]Oh1
 R8
-R221
-R222
-R223
+R224
+R225
+R226
 R12
 R13
 !s100 >G;C8R3kfbnHa4_3TU5J02
+!i10b 1
 Etrgfifo
 R54
 R1
 R2
 R28
-R42
-R43
+Z227 DPx8 synopsys 10 attributes 0 22 Fb?eGzjff51Ud2l4[U_732
+Z228 DPx4 ieee 14 std_logic_misc 0 22 10=1C[Hafn:kggH?^M@3X2
 R16
-R3
+Z229 DPx3 std 6 textio 0 22 G^o2zK;Vh4eVdKTVo98653
 R4
 R29
-R5
-Z224 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgfifo.vhd
-Z225 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgfifo.vhd
+d
+Z230 8source/odmb_ctrl/trgfifo.vhd
+Z231 Fsource/odmb_ctrl/trgfifo.vhd
 l0
 L11
 VFU;P<jD_2GTg^<j:BklJB1
-R8
+Z232 OE;C;10.0;49
 32
-Z226 !s108 1365634948.714000
-Z227 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgfifo.vhd|
-Z228 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgfifo.vhd|
+Z233 !s108 1365634948.714000
+Z234 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|source/odmb_ctrl/trgfifo.vhd|
+Z235 !s107 source/odmb_ctrl/trgfifo.vhd|
 R12
 R13
 !s100 >Rl^4lGfN:lK@f^X5>N]m0
@@ -9602,10 +10333,10 @@ Atrgfifo_arch
 R1
 R2
 R28
-R42
-R43
+R227
+R228
 R16
-R3
+R229
 R4
 R29
 DEx4 work 7 trgfifo 0 22 FU;P<jD_2GTg^<j:BklJB1
@@ -9613,10 +10344,10 @@ DEx4 work 7 trgfifo 0 22 FU;P<jD_2GTg^<j:BklJB1
 l46
 L33
 VN@2CcnGD8E^n=FK6l?=g`3
-R8
-R226
-R227
-R228
+R232
+R233
+R234
+R235
 R12
 R13
 !s100 JR16`=;nocf::>@36R]<V0
@@ -9628,19 +10359,20 @@ R3
 R4
 R16
 R5
-Z229 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd
-Z230 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd
+Z236 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/trgsel.vhd
+Z237 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/trgsel.vhd
 l0
 L8
 VZf_gn7mVBIcACA<;_CzmA3
 R8
 32
-Z231 !s108 1366137682.342000
-Z232 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd|
-Z233 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd|
+Z238 !s108 1366243396.502000
+Z239 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/trgsel.vhd|
+Z240 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_ctrl/trgsel.vhd|
 R12
 R13
 !s100 ^McY4HdhIWF8;;NRkL[@_3
+!i10b 1
 Atrgsel_arch
 R42
 R43
@@ -9653,48 +10385,49 @@ l32
 L26
 Vm15S]>zZgQD2NHLg8?@;P0
 R8
-R231
-R232
-R233
+R238
+R239
+R240
 R12
 R13
 !s100 YkCD:H1S0020mGfU6?78M0
+!i10b 1
 vuser_cap_reg
 VeWgdJ@5;o;b3RK]9X5=X02
 r1
 31
-I:5LN6g>GY6D0NoX9A:o=03
+INYUf@OcmX<EPRRdV6f65S0
 R5
-R130
-8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/user_cap_reg.v
-FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/user_cap_reg.v
+R35
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/user_cap_reg.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/user_cap_reg.v
 L0 25
-R127
-R128
-R129
+R60
+R61
+!s100 GITPLXg`OffI@1`3m6j>_2
+!s108 1366243392.012000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/user_cap_reg.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/user_cap_reg.v|
 !s85 0
-!s100 M9dX[Z>CBjG`l3LDU=4V81
-!s90 -reportprogress|300|-work|work|-vopt|-nocovercells|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/user_cap_reg.v|
-!s108 1366137676.196000
-!s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/user_cap_reg.v|
+!i10b 1
 vuser_wr_reg
 V@B=9LRJ<TJ@O<TTSm9SYD1
 r1
 31
-Ii8kAZkl_FLPKaUC_7WHl=0
+IYniUFkmh81Q35Mk3G@`AX1
 R5
-R130
-8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/usr_wr_reg.v
-FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/usr_wr_reg.v
+R35
+8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/usr_wr_reg.v
+FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/usr_wr_reg.v
 L0 26
-R127
-R128
-R129
+R60
+R61
+!s100 6f=G;MKH`VngA4zMGB78o0
+!s108 1366243392.072000
+!s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/usr_wr_reg.v|
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/dcfeb/usr_wr_reg.v|
 !s85 0
-!s100 AWDgWKg2ERz8?nD[RM4zA2
-!s90 -reportprogress|300|-work|work|-vopt|-nocovercells|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/usr_wr_reg.v|
-!s108 1366137676.320000
-!s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/usr_wr_reg.v|
+!i10b 1
 Evme_master
 R35
 R2
@@ -9702,19 +10435,20 @@ R3
 R4
 R1
 R5
-Z234 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd
-Z235 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd
+Z241 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/vme_master.vhd
+Z242 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/vme_master.vhd
 l0
 L8
 VLXm2D@d[a1ReKC@@n[3U91
 R8
 32
-Z236 !s108 1366137699.252000
-Z237 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd|
-Z238 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd|
+Z243 !s108 1366243403.372000
+Z244 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/vme_master.vhd|
+Z245 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/modelsim/vme_master.vhd|
 R12
 R13
 !s100 mlHXfXZeCD<ofH9Q_WKFn2
+!i10b 1
 Avme_master_architecture
 R2
 R3
@@ -9726,32 +10460,34 @@ l73
 L52
 VnlI@m[7geI[=[HG_>>:EW3
 R8
-R236
-R237
-R238
+R243
+R244
+R245
 R12
 R13
 !s100 bHC9=^3Xi??6EJSdZFS_B1
+!i10b 1
 Evme_outdata_sel
-R60
+R62
 R2
 R3
 R4
 R1
 R5
-Z239 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd
-Z240 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd
+Z246 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/vme_outdata_sel.vhd
+Z247 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/vme_outdata_sel.vhd
 l0
 L8
 VzK]FZz2ZA566Xbz<Zoi=S1
 R8
 32
-Z241 !s108 1366137678.848000
-Z242 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd|
-Z243 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd|
+Z248 !s108 1366243394.932000
+Z249 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/vme_outdata_sel.vhd|
+Z250 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/vme_outdata_sel.vhd|
 R12
 R13
 !s100 J:^LQ4O7YZ8G>^>@geJXz1
+!i10b 1
 Avme_outdata_sel_architecture
 R2
 R3
@@ -9763,31 +10499,33 @@ l24
 L22
 VOzJgR3MSENT<7H0JTO:H]0
 R8
-R241
-R242
-R243
+R248
+R249
+R250
 R12
 R13
 !s100 [Bi3JX=RlBQM;X6kE:COX3
+!i10b 1
 Evmemon
-R60
+R62
 R3
 R4
 R16
 R5
-Z244 8C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd
-Z245 FC:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd
+Z251 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/vmemon.vhd
+Z252 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/vmemon.vhd
 l0
 L9
 VjHA15`K53i_a]HLY]_dcY2
 R8
 32
-Z246 !s108 1366137677.709000
-Z247 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd|
-Z248 !s107 C:/Users/gmagazzu/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd|
+Z253 !s108 1366243394.342000
+Z254 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/vmemon.vhd|
+Z255 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1_soft/source/odmb_vme/vmemon.vhd|
 R12
 R13
 !s100 `Rg6Jl02N9c6C=YP23VDI2
+!i10b 1
 Avmemon_arch
 R3
 R4
@@ -9798,12 +10536,13 @@ l42
 L31
 V]RUcn`VzgmUBEfzJXSzMd2
 R8
-R246
-R247
-R248
+R253
+R254
+R255
 R12
 R13
 !s100 <V`IiH1jCiODO[SV9OV^m0
+!i10b 1
 Exnor6
 R14
 R3
@@ -9822,6 +10561,7 @@ R11
 R12
 R13
 !s100 Ndab0mdXR^CN`W?dM31l>3
+!i10b 1
 Axnor6_v
 R3
 R4
@@ -9837,6 +10577,7 @@ R11
 R12
 R13
 !s100 JglaoW_=b^@Yi9zA[gZB`0
+!i10b 1
 Exnor7
 R14
 R3
@@ -9855,6 +10596,7 @@ R11
 R12
 R13
 !s100 zz66aH6HCbGjPGB?S06z:0
+!i10b 1
 Axnor7_v
 R3
 R4
@@ -9870,6 +10612,7 @@ R11
 R12
 R13
 !s100 ^4JH451P16^=0JaAGHLTc3
+!i10b 1
 Exnor8
 R14
 R3
@@ -9888,6 +10631,7 @@ R11
 R12
 R13
 !s100 >VeCTKL=Z]iN6liP1R;3I1
+!i10b 1
 Axnor8_v
 R3
 R4
@@ -9903,6 +10647,7 @@ R11
 R12
 R13
 !s100 X_l[lDeWF;<NKSjFAmPW81
+!i10b 1
 Exnor9
 R14
 R3
@@ -9921,6 +10666,7 @@ R11
 R12
 R13
 !s100 9o^zeM0JfnChLDI_E=SLL0
+!i10b 1
 Axnor9_v
 R3
 R4
@@ -9936,6 +10682,7 @@ R11
 R12
 R13
 !s100 2SWKAK=D9BdhDV:lTDWNz2
+!i10b 1
 Exor6
 R14
 R3
@@ -9954,6 +10701,7 @@ R11
 R12
 R13
 !s100 2S7d>i[OOS?YhAQ8hUV_f2
+!i10b 1
 Axor6_v
 R3
 R4
@@ -9969,6 +10717,7 @@ R11
 R12
 R13
 !s100 ?Vkg<hHZT^fmTLLACkn0D1
+!i10b 1
 Exor7
 R14
 R3
@@ -9987,6 +10736,7 @@ R11
 R12
 R13
 !s100 ZGQ8;>k[iFiHd6;3:MG090
+!i10b 1
 Axor7_v
 R3
 R4
@@ -10002,6 +10752,7 @@ R11
 R12
 R13
 !s100 zH0b[PHN<k^BTbTDZ:2gP0
+!i10b 1
 Exor8
 R14
 R3
@@ -10020,6 +10771,7 @@ R11
 R12
 R13
 !s100 kV4la1X=?WB4dEgd<@BO80
+!i10b 1
 Axor8_v
 R3
 R4
@@ -10035,6 +10787,7 @@ R11
 R12
 R13
 !s100 GX=U00d>m@mZ_j[1>0Bz>2
+!i10b 1
 Exor9
 R14
 R3
@@ -10053,6 +10806,7 @@ R11
 R12
 R13
 !s100 7m8P2d:`M[89b]BaYFz^]2
+!i10b 1
 Axor9_v
 R3
 R4
@@ -10068,3 +10822,4 @@ R11
 R12
 R13
 !s100 F8B3?KXeTW^o`^07C<ATh2
+!i10b 1
