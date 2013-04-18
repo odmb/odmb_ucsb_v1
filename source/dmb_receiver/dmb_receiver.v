@@ -43,6 +43,14 @@ module dmb_receiver #(
 	input ORX2_11_P,
 	input ORX2_12_N,
 	input ORX2_12_P,
+	output [15:0] DCFEB1_DATA,
+	output [15:0] DCFEB2_DATA,
+	output [15:0] DCFEB3_DATA,
+	output [15:0] DCFEB4_DATA,
+	output [15:0] DCFEB5_DATA,
+	output [15:0] DCFEB6_DATA,
+	output [15:0] DCFEB7_DATA,
+	output [7:1]  DCFEB_DATA_VALID,
 	// Internal signals
 	input FIFO_VME_MODE,
 	input [8:1] FIFO_SEL,
@@ -1204,6 +1212,9 @@ rx_frame_proc_la rx_frame_proc_1
 	.CRC_CHK_VLD(crc_chk_vld_ff[1])
 );
 
+assign DCFEB1_DATA = wdata_ff[1];
+assign DCFEB_DATA_VALID[1] = wd_vld_ff[1];
+
 rx_frame_proc rx_frame_proc_2
 (
 
@@ -1224,6 +1235,9 @@ rx_frame_proc rx_frame_proc_2
 	.GOOD_CRC(rx_good_crc_ff[2]),
 	.CRC_CHK_VLD(crc_chk_vld_ff[2])
 );
+
+assign DCFEB2_DATA = wdata_ff[2];
+assign DCFEB_DATA_VALID[2] = wd_vld_ff[2];
 
 rx_frame_proc rx_frame_proc_3
 (
@@ -1246,6 +1260,9 @@ rx_frame_proc rx_frame_proc_3
 	.CRC_CHK_VLD(crc_chk_vld_ff[3])
 );
 
+assign DCFEB3_DATA = wdata_ff[3];
+assign DCFEB_DATA_VALID[3] = wd_vld_ff[3];
+
 rx_frame_proc rx_frame_proc_4
 (
 
@@ -1266,6 +1283,9 @@ rx_frame_proc rx_frame_proc_4
 	.GOOD_CRC(rx_good_crc_ff[4]),
 	.CRC_CHK_VLD(crc_chk_vld_ff[4])
 );
+
+assign DCFEB4_DATA = wdata_ff[4];
+assign DCFEB_DATA_VALID[4] = wd_vld_ff[4];
 
 rx_frame_proc rx_frame_proc_5
 (
@@ -1288,6 +1308,9 @@ rx_frame_proc rx_frame_proc_5
 	.CRC_CHK_VLD(crc_chk_vld_ff[5])
 );
 
+assign DCFEB5_DATA = wdata_ff[5];
+assign DCFEB_DATA_VALID[5] = wd_vld_ff[5];
+
 rx_frame_proc rx_frame_proc_6
 (
 
@@ -1309,6 +1332,9 @@ rx_frame_proc rx_frame_proc_6
 	.CRC_CHK_VLD(crc_chk_vld_ff[6])
 );
 
+assign DCFEB6_DATA = wdata_ff[6];
+assign DCFEB_DATA_VALID[6] = wd_vld_ff[6];
+
 rx_frame_proc rx_frame_proc_7
 (
 
@@ -1329,6 +1355,9 @@ rx_frame_proc rx_frame_proc_7
 	.GOOD_CRC(rx_good_crc_ff[7]),
 	.CRC_CHK_VLD(crc_chk_vld_ff[7])
 );
+
+assign DCFEB7_DATA = wdata_ff[7];
+assign DCFEB_DATA_VALID[7] = wd_vld_ff[7];
 
    /////////////////////////////////////////////////////////////////
    // DATA_WIDTH | FIFO_SIZE | FIFO Depth | RDCOUNT/WRCOUNT Width //
