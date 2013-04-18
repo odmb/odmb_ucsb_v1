@@ -140,7 +140,8 @@
     assign tied_to_vcc_vec_i            = 64'hffffffffffffffff;
 
     assign gtx0_gtxtest_i          = {11'b10000000000,gtx0_gtxtest_bit1,1'b0};
-    assign gtx0_txreset_i          = gtx0_gtxtest_done || GTX0_TXRESET_IN;
+    // assign gtx0_txreset_i          = gtx0_gtxtest_done || GTX0_TXRESET_IN;
+    assign gtx0_txreset_i          =  GTX0_TXRESET_IN;  // UCSB: gtx0_gtxtest_done is not set, so we changed it
     assign GTX0_TXPLLLKDET_OUT     = gtx0_txplllkdet_i;
 
 //------------------------- GTX Instances  -------------------------------

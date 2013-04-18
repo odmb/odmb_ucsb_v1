@@ -77,7 +77,7 @@ module DAQ_Rate_Sel_FSM (
   // datapath sequential always block
   always @(posedge CLK or posedge RST) begin
     if (RST) begin
-      CDV_INIT <= 0;
+      CDV_INIT <= 1;
       CLK_SEL[2:0] <= 3'b001;
       CLR_CNT <= 0;
       INC_CNT <= 0;

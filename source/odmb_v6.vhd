@@ -486,26 +486,59 @@ architecture bdf_type of ODMB_V6 is
       );
   end component;
 
+  component dmb_receiver is
+    generic (
+      USE_2p56GbE : integer := 0;
+      SIM_SPEEDUP : integer := 0
+      );
+    port (
+      -- Chip Scope Pro Logic Analyzer control -- bgb
+      CSP_GTX_MAC_LA_CTRL : inout std_logic_vector(35 downto 0);
+      CSP_PKT_FRM_LA_CTRL : inout std_logic_vector(35 downto 0);
+      CSP_FIFO_LA_CTRL    : inout std_logic_vector(35 downto 0);
 
-  component dmb_receiver
-    port(
-      RST              : in  std_logic;
---      // External signals
-      DAQ_SIGDET       : in  std_logic;
-      DAQ_RX_N         : in  std_logic;
-      DAQ_RX_P         : in  std_logic;
-      DAQ_TDIS         : out std_logic;
-      DAQ_TX_N         : out std_logic;
-      DAQ_TX_P         : out std_logic;
---      // Internal signals
-      DAQ_RX_125REFCLK : in  std_logic;
-      DAQ_RX_160REFCLK : in  std_logic;
-      DAQ_RX_WDATA     : out std_logic_vector(15 downto 0);
-      DAQ_RXD_VLD      : out std_logic;
-      DAQ_SD           : out std_logic;
-      DAQ_DATA_CLK     : out std_logic
+      --External signals
+      RST       : in std_logic;
+      ORX2_01_N : in std_logic;
+      ORX2_01_P : in std_logic;
+      ORX2_02_N : in std_logic;
+      ORX2_02_P : in std_logic;
+      ORX2_03_N : in std_logic;
+      ORX2_03_P : in std_logic;
+      ORX2_04_N : in std_logic;
+      ORX2_04_P : in std_logic;
+      ORX2_05_N : in std_logic;
+      ORX2_05_P : in std_logic;
+      ORX2_06_N : in std_logic;
+      ORX2_06_P : in std_logic;
+      ORX2_07_N : in std_logic;
+      ORX2_07_P : in std_logic;
+      ORX2_08_N : in std_logic;
+      ORX2_08_P : in std_logic;
+      ORX2_09_N : in std_logic;
+      ORX2_09_P : in std_logic;
+      ORX2_10_N : in std_logic;
+      ORX2_10_P : in std_logic;
+      ORX2_11_N : in std_logic;
+      ORX2_11_P : in std_logic;
+      ORX2_12_N : in std_logic;
+      ORX2_12_P : in std_logic;
+
+      --Internal signals
+      FIFO_VME_MODE          : in  std_logic;
+      FIFO_SEL               : in  std_logic_vector(8 downto 1);
+      RD_EN_FF               : in  std_logic_vector(8 downto 1);
+      WR_EN_FF               : in  std_logic_vector(8 downto 1);
+      FF_DATA_IN             : in  std_logic_vector(15 downto 0);
+      FF_DATA_OUT            : out std_logic_vector(15 downto 0);
+      FF_WRD_CNT             : out std_logic_vector(11 downto 0);
+      FF_STATUS              : out std_logic_vector(15 downto 0);
+      DMBVME_CLK_S2          : in  std_logic;
+      DAQ_RX_125REFCLK       : in  std_logic;
+      DAQ_RX_160REFCLK_115_0 : in  std_logic
       );
   end component;
+
 
   component mode_pb_sel is
     port (
@@ -1001,6 +1034,19 @@ architecture bdf_type of ODMB_V6 is
   signal tkn_test_en, tkn_tx_enable, tkn_rx_enable : std_logic;
   signal test_tkn_tx                               : std_logic;
   signal tkn_error                                 : std_logic_vector(7 downto 1);
+
+  -- dmb_receiver
+  signal FIFO_VME_MODE   : std_logic := '0';
+  signal FIFO_SEL        : std_logic_vector(8 downto 1) := (others => '0');
+  signal RD_EN_FF        : std_logic_vector(8 downto 1) := (others => '0');
+  signal WR_EN_FF        : std_logic_vector(8 downto 1) := (others => '0');
+  signal FF_DATA_IN      : std_logic_vector(15 downto 0);
+  signal FF_DATA_OUT     : std_logic_vector(15 downto 0);
+  signal FF_WRD_CNT      : std_logic_vector(11 downto 0);
+  signal FF_STATUS       : std_logic_vector(15 downto 0);
+  signal DMBVME_CLK_S2   : std_logic := '0';
+  signal DAQ_RX_125REFCLK: std_logic := '0';
+
 
 
 -- DCFEB0 FF_EMU_EMU I/O Signals
@@ -2654,24 +2700,6 @@ begin
 
 -- DCFEB0
 
--- b2v_dcfeb0_gbrx : dmb_receiver
---   port map (
---   RST => reset,
-----    // External signals
---      DAQ_SIGDET => orx2_01_sd,
---      DAQ_RX_N => orx2_01_n,
---      DAQ_RX_P => orx2_01_p,
---      DAQ_TDIS => open,
---      DAQ_TX_N => open,
---      DAQ_TX_P => open,
-----    // Internal signals
---      DAQ_RX_125REFCLK => '0',
---      DAQ_RX_160REFCLK => cdc_clk(4),
---      DAQ_RX_WDATA => dcfeb0_gbrx_data(15 downto 0),
---      DAQ_RXD_VLD => dcfeb0_gbrx_data_valid,
---      DAQ_SD => open,
---      DAQ_DATA_CLK => dcfeb0_gbrx_data_clk
---  );
 
   dl_resync(1) <= dl_global_rst;
 
@@ -2734,7 +2762,7 @@ begin
   DCFEB0_TX_PM : daq_optical_out
     generic map(
       USE_CHIPSCOPE => 0,
-      SIM_SPEEDUP   => 0
+      SIM_SPEEDUP   => 1
       )
     port map(
       DAQ_TX_VIO_CNTRL     => LOGIC36L,
@@ -2759,25 +2787,6 @@ begin
 
 -- DCFEB1
 
-
---b2v_dcfeb1_gbrx : dmb_receiver
---   port map (
---   RST => reset,
-----    // External signals
---      DAQ_SIGDET => orx2_02_sd,
---      DAQ_RX_N => orx2_02_n,
---      DAQ_RX_P => orx2_02_p,
---      DAQ_TDIS => open,
---      DAQ_TX_N => open,
---      DAQ_TX_P => open,
-----    // Internal signals
---      DAQ_RX_125REFCLK => cdc_clk(3),
---      DAQ_RX_160REFCLK => cdc_clk(3),
---      DAQ_RX_WDATA => dcfeb1_gbrx_data(15 downto 0),
---      DAQ_RXD_VLD => dcfeb1_gbrx_data_valid,
---      DAQ_SD => open,
---      DAQ_DATA_CLK => dcfeb1_gbrx_data_clk
---  );
 
   dl_resync(2) <= dl_global_rst;
 
@@ -2840,24 +2849,6 @@ begin
 
 -- DCFEB2
 
--- b2v_dcfeb2_gbrx : dmb_receiver
---    port map (
---    RST => reset,
--- --   // External signals
---      DAQ_SIGDET => orx2_03_sd,
---      DAQ_RX_N => orx2_03_n,
---      DAQ_RX_P => orx2_03_p,
---      DAQ_TDIS => open,
---      DAQ_TX_N => open,
---      DAQ_TX_P => open,
--- --   // Internal signals
---      DAQ_RX_125REFCLK => cdc_clk(2),
---      DAQ_RX_160REFCLK => cdc_clk(2),
---      DAQ_RX_WDATA => dcfeb2_gbrx_data(15 downto 0),
---      DAQ_RXD_VLD => dcfeb2_gbrx_data_valid,
---      DAQ_SD => open,
---      DAQ_DATA_CLK => dcfeb2_gbrx_data_clk
---   );
 
   dl_resync(3) <= dl_global_rst;
 
@@ -2920,24 +2911,6 @@ begin
 
 -- DCFEB3
 
---      b2v_dcfeb3_gbrx : dmb_receiver
---         port map (
---         RST => reset,
---      --      // External signals
---              DAQ_SIGDET => orx2_04_sd,
---              DAQ_RX_N => orx2_04_n,
---              DAQ_RX_P => orx2_04_p,
---              DAQ_TDIS => open,
---              DAQ_TX_N => open,
---              DAQ_TX_P => open,
---      --      // Internal signals
---              DAQ_RX_125REFCLK => cdc_clk(3),
---              DAQ_RX_160REFCLK => cdc_clk(3),
---              DAQ_RX_WDATA => dcfeb3_gbrx_data(15 downto 0),
---              DAQ_RXD_VLD => dcfeb3_gbrx_data_valid,
---              DAQ_SD => open,
---              DAQ_DATA_CLK => dcfeb3_gbrx_data_clk
---        );
 
   dl_resync(4) <= dl_global_rst;
 
@@ -3414,5 +3387,58 @@ begin
       adc_ce           => int_lvmb_csb,
       sdo              => int_lvmb_sdout);
 
+
+
+  DMB_RX_PM : dmb_receiver
+    generic map (
+      USE_2p56GbE => 1,
+      SIM_SPEEDUP => 1
+      )
+    port map (
+      -- Chip Scope Pro Logic Analyzer control -- bgb
+      CSP_GTX_MAC_LA_CTRL => LOGIC36L ,
+      CSP_PKT_FRM_LA_CTRL => LOGIC36L ,
+      CSP_FIFO_LA_CTRL    => LOGIC36L ,
+
+      --External signals
+      RST       => reset ,
+      ORX2_01_N => dcfeb0_data_n,
+      ORX2_01_P => dcfeb0_data_p,
+      ORX2_02_N => orx2_02_n,
+      ORX2_02_P => orx2_02_p,
+      ORX2_03_N => orx2_03_n,
+      ORX2_03_P => orx2_03_p,
+      ORX2_04_N => orx2_04_n,
+      ORX2_04_P => orx2_04_p,
+      ORX2_05_N => orx2_05_n,
+      ORX2_05_P => orx2_05_p,
+      ORX2_06_N => orx2_06_n,
+      ORX2_06_P => orx2_06_p,
+      ORX2_07_N => orx2_07_n,
+      ORX2_07_P => orx2_07_p,
+      ORX2_08_N => orx2_08_n,
+      ORX2_08_P => orx2_08_p,
+      ORX2_09_N => orx2_09_n,
+      ORX2_09_P => orx2_09_p,
+      ORX2_10_N => orx2_10_n,
+      ORX2_10_P => orx2_10_p,
+      ORX2_11_N => orx2_11_n,
+      ORX2_11_P => orx2_11_p,
+      ORX2_12_N => orx2_12_n,
+      ORX2_12_P => orx2_12_p,
+
+      --Internal signals
+      FIFO_VME_MODE          => fifo_vme_mode ,
+      FIFO_SEL               => fifo_sel ,
+      RD_EN_FF               => rd_en_ff ,
+      WR_EN_FF               => wr_en_ff ,
+      FF_DATA_IN             => ff_data_in ,
+      FF_DATA_OUT            => ff_data_out ,
+      FF_WRD_CNT             => ff_wrd_cnt ,
+      FF_STATUS              => ff_status ,
+      DMBVME_CLK_S2          => dmbvme_clk_s2 ,
+      DAQ_RX_125REFCLK       => daq_rx_125refclk ,
+      DAQ_RX_160REFCLK_115_0 => clk
+      );
 
 end bdf_type;
