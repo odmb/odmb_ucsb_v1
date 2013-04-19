@@ -17,7 +17,7 @@ use IEEE.std_logic_arith.all;
 use IEEE.std_logic_unsigned.all;
 library UNISIM;
 use UNISIM.vcomponents.all;
-use UNISIM.VPKG.all;
+--use UNISIM.VPKG.all;
 library UNIMACRO;
 use UNIMACRO.vcomponents.all;
 library work;
@@ -582,7 +582,7 @@ architecture bdf_type of ODMB_V6 is
       dcfeb_fifo_wr_en : out std_logic_vector(NFEB downto 1);
       alct_fifo_wr_en  : out std_logic;
       tmb_fifo_wr_en   : out std_logic;
-      cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 0);  -- L1A_MATCH from TRGCNTRL to CAFIFO sent to generate Data  
+      cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 1);  -- L1A_MATCH from TRGCNTRL to CAFIFO sent to generate Data  
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
       alct_dv     : in std_logic;
@@ -1442,10 +1442,10 @@ begin
 
 -- From ORX2
 
-  GEN_ORX2 : for I in 12 downto 1 generate  
-  begin
-    orx2_buf : IBUFDS port map (I => orx2_p(I), IB => orx2_n(I), O => orx2(I));
-  end generate GEN_ORX2;
+--  GEN_ORX2 : for I in 12 downto 1 generate  
+--  begin
+--    orx2_buf : IBUFDS port map (I => orx2_p(I), IB => orx2_n(I), O => orx2(I));
+--  end generate GEN_ORX2;
 
 
 -- From QPLL

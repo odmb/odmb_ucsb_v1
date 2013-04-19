@@ -105,12 +105,12 @@ reg bad_crc;
 wire [127:0] csp_pkt_frm_la_data;
 wire [7:0]  csp_pkt_frm_la_trig;
 
-	csp_pkt_frm_la csp_pkt_frm_la_i (
-		 .CONTROL(CSP_PKT_FRM_LA_CTRL),
-		 .CLK(CLK),
-		 .DATA(csp_pkt_frm_la_data), // IN BUS [127:0]
-		 .TRIG0(csp_pkt_frm_la_trig) // IN BUS [7:0]
-	);
+//	csp_pkt_frm_la csp_pkt_frm_la_i (
+//		 .CONTROL(CSP_PKT_FRM_LA_CTRL),
+//		 .CLK(CLK),
+//		 .DATA(csp_pkt_frm_la_data), // IN BUS [127:0]
+//		 .TRIG0(csp_pkt_frm_la_trig) // IN BUS [7:0]
+//	);
 	
 
 // LA Trigger [7:0]

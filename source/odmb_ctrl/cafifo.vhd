@@ -470,31 +470,6 @@ begin
 
   cafifo_l1a_dav(NFEB+2) <= l1a_dav_b9_gm(rd_addr_out);
 
-  alct_dv_fifo : process (l1a_cnt, dcfeb_l1a_cnt, alct_l1a_dav, rst, clk)
-    variable filled : std_logic;
-  begin
-    filled := '0';
-    if (rst = '1') then
-      for index in 0 to FIFO_SIZE-1 loop
-        l1a_dav_b9(index) <= '0';
-      end loop;
-    elsif rising_edge(clk) and alct_l1a_dav = '1' then
-      for index in wr_addr_out+1 to FIFO_SIZE-1 loop
-        if (l1a_match(index)(9) = '1') and (filled = '0') then
-          l1a_dav_b9(index) <= '1';
-          filled            := '1';
-        end if;
-      end loop;
-      for index in 1 to wr_addr_out-1 loop
-        if (l1a_match(index)(9) = '1') and (filled = '0') then
-          l1a_dav_b9(index) <= '1';
-          filled            := '1';
-        end if;
-      end loop;
-    end if;
-
-  end process;
-
   tmb_reg : process (tmb_l1a_dav, rst, clk)
 
   begin
@@ -552,31 +527,6 @@ begin
   end process;
 
   cafifo_l1a_dav(NFEB+1) <= l1a_dav_b8_gm(rd_addr_out);
-
-  tmb_dv_fifo : process (l1a_cnt, dcfeb_l1a_cnt, tmb_l1a_dav, rst, clk)
-    variable filled : std_logic;
-  begin
-    filled := '0';
-    if (rst = '1') then
-      for index in 0 to FIFO_SIZE-1 loop
-        l1a_dav_b8(index) <= '0';
-      end loop;
-    elsif rising_edge(clk) and tmb_l1a_dav = '1' then
-      for index in wr_addr_out+1 to FIFO_SIZE-1 loop
-        if (l1a_match(index)(8) = '1') and (filled = '0') then
-          l1a_dav_b8(index) <= '1';
-          filled            := '1';
-        end if;
-      end loop;
-      for index in 1 to wr_addr_out-1 loop
-        if (l1a_match(index)(8) = '1') and (filled = '0') then
-          l1a_dav_b8(index) <= '1';
-          filled            := '1';
-        end if;
-      end loop;
-    end if;
-
-  end process;
 
 -- Address Counters
 

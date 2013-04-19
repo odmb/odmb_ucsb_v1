@@ -187,7 +187,7 @@ architecture CONTROL_arch of CONTROL is
 
 begin
   
-  DAV <= 'L';
+--  DAV <= 'L';
   
   GEMPTY_TMP <= cafifo_l1a_dav(8) or cafifo_l1a_dav(9);
   

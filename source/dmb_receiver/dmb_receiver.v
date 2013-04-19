@@ -131,13 +131,13 @@ wire [71:0] csp_gtx_mac_la_data;
 wire [7:0]  csp_gtx_mac_la_trig;
 wire [15:0]  csp_gtx_mac_la_trig1;
 
-	csp_gtx_mac_la csp_gtx_mac_la_i (
-		 .CONTROL(CSP_GTX_MAC_LA_CTRL),
-		 .CLK(clk_ds_i),
-		 .DATA(csp_gtx_mac_la_data), // IN BUS [71:0]
-		 .TRIG0(csp_gtx_mac_la_trig), // IN BUS [7:0]
-		 .TRIG1(csp_gtx_mac_la_trig1) // IN BUS [7:0]
-	);
+//	csp_gtx_mac_la csp_gtx_mac_la_i (
+//		 .CONTROL(CSP_GTX_MAC_LA_CTRL),
+//		 .CLK(clk_ds_i),
+//		 .DATA(csp_gtx_mac_la_data), // IN BUS [71:0]
+//		 .TRIG0(csp_gtx_mac_la_trig), // IN BUS [7:0]
+//		 .TRIG1(csp_gtx_mac_la_trig1) // IN BUS [7:0]
+//	);
 	
 // LA Trigger [7:0]
 	assign csp_gtx_mac_la_trig[0]      = reset_i;
@@ -191,12 +191,12 @@ wire [15:0]  csp_gtx_mac_la_trig1;
 wire [127:0] fifo_la_data;
 wire [7:0]  fifo_la_trig;
 
-	csp_fifo_la csp_fifo_la_i(
-		.CONTROL(CSP_FIFO_LA_CTRL),
-		.CLK(fifo_wr_ck),
-		.DATA(fifo_la_data),
-		.TRIG0(fifo_la_trig)
-	);
+//	csp_fifo_la csp_fifo_la_i(
+//		.CONTROL(CSP_FIFO_LA_CTRL),
+//		.CLK(fifo_wr_ck),
+//		.DATA(fifo_la_data),
+//		.TRIG0(fifo_la_trig)
+//	);
 	 
 // trigger assignments (8 bits)
 	assign fifo_la_trig[0] =  wrt_en_ff[1];

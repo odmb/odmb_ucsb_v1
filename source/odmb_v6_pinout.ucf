@@ -578,24 +578,34 @@ NET  "pon_en"  			LOC = "A23"  	| IOSTANDARD = LVCMOS25; # ok (out)
 
 # Bank 32
 
-NET  "otx2_01_p"  		LOC = "AJ17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_01_n"  		LOC = "AJ16"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_02_p"  		LOC = "AK18"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_02_n"  		LOC = "AK17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_03_p"  		LOC = "AP16"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_03_n"  		LOC = "AP15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_04_p"  		LOC = "AE18"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_04_n"  		LOC = "AF18"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[1]"  		LOC = "AJ17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[1]"  		LOC = "AJ16"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[2]"  		LOC = "AK18"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[2]"  		LOC = "AK17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[3]"  		LOC = "AP16"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[3]"  		LOC = "AP15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[4]"  		LOC = "AE18"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[4]"  		LOC = "AF18"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[5]"  		LOC = "AN17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[5]"  		LOC = "AP17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[6]"  		LOC = "AM17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[6]"  		LOC = "AM16"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[7]"  		LOC = "AJ15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[7]"  		LOC = "AH15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[8]"  		LOC = "AG15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[8]"  		LOC = "AF15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[9]"  		LOC = "AD17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[9]"  		LOC = "AE17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[10]"  		LOC = "AK14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[10]"  		LOC = "AJ14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[11]"  		LOC = "AL15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[11]"  		LOC = "AL14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_p[12]"  		LOC = "AN15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
+NET  "otx2_n[12]"  		LOC = "AM15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
 
 # NOT CONNECTED			LOC = "AG16"  	| IOSTANDARD = LVCMOS25;  # ok                        
 # NOT CONNECTED			LOC = "AF16"  	| IOSTANDARD = LVCMOS25;  # ok                        
 
-NET  "otx2_05_p"  		LOC = "AN17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_05_n"  		LOC = "AP17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_06_p"  		LOC = "AM17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_06_n"  		LOC = "AM16"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_07_p"  		LOC = "AJ15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_07_n"  		LOC = "AH15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
 
 # NOT CONNECTED			LOC = "AH17"  	| IOSTANDARD = LVCMOS25;  # ok                        
 # NOT CONNECTED			LOC = "AG17"  	| IOSTANDARD = LVCMOS25;  # ok                       
@@ -608,44 +618,44 @@ NET  "otx2_07_n"  		LOC = "AH15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; 
 # NOT CONNECTED			LOC = "AH18"  	| IOSTANDARD = LVCMOS25;  # ok                        
 # NOT CONNECTED			LOC = "AG18"  	| IOSTANDARD = LVCMOS25;  # ok                        
 
-NET  "otx2_08_p"  		LOC = "AG15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_08_n"  		LOC = "AF15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
 
 # NOT CONNECTED			LOC = "AJ19"  	| IOSTANDARD = LVCMOS25;  # ok                        
 # NOT CONNECTED			LOC = "AH19"  	| IOSTANDARD = LVCMOS25;  # ok                        
 
-NET  "otx2_09_p"  		LOC = "AD17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_09_n"  		LOC = "AE17"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_10_p"  		LOC = "AK14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_10_n"  		LOC = "AJ14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_11_p"  		LOC = "AL15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_11_n"  		LOC = "AL14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_12_p"  		LOC = "AN15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
-NET  "otx2_12_n"  		LOC = "AM15"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out)
 
 # NOT CONNECTED			LOC = "AL16"  	| IOSTANDARD = LVCMOS25;  # ok                        
 # NOT CONNECTED			LOC = "AK16"  	| IOSTANDARD = LVCMOS25;  # ok                        
 
 # Bank 33
 
-NET  "otx1_01_p"  		LOC = "AE13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_01_n"  		LOC = "AE12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_02_p"  		LOC = "AG12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_02_n"  		LOC = "AH12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_03_p"  		LOC = "AK13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_03_n"  		LOC = "AL13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_04_p"  		LOC = "AD14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_04_n"  		LOC = "AC14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
 
 # NOT CONNECTED			LOC = "AF11"  	| IOSTANDARD = LVCMOS25;  # ok                         
 # NOT CONNECTED			LOC = "AE11"  	| IOSTANDARD = LVCMOS25;  # ok                         
 
-NET  "otx1_05_p"  		LOC = "AH13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_05_n"  		LOC = "AH14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_06_p"  		LOC = "AK12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_06_n"  		LOC = "AJ12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_07_p"  		LOC = "AL11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_07_n"  		LOC = "AM11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[1]"  		LOC = "AE13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[1]"  		LOC = "AE12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[2]"  		LOC = "AG12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[2]"  		LOC = "AH12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[3]"  		LOC = "AK13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[3]"  		LOC = "AL13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[4]"  		LOC = "AD14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[4]"  		LOC = "AC14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[5]"  		LOC = "AH13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[5]"  		LOC = "AH14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[6]"  		LOC = "AK12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[6]"  		LOC = "AJ12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[7]"  		LOC = "AL11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[7]"  		LOC = "AM11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[8]"  		LOC = "AM10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[8]"  		LOC = "AL10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[9]"  		LOC = "AG11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[9]"  		LOC = "AG10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[10]"  		LOC = "AJ11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[10]"  		LOC = "AK11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[11]"  		LOC = "AM12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[11]"  		LOC = "AN12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_p[12]"  		LOC = "AN13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
+NET  "otx1_n[12]"  		LOC = "AM13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
 
 # NOT CONNECTED			LOC = "AC13"  	| IOSTANDARD = LVCMOS25;   # ok                        
 # NOT CONNECTED			LOC = "AC12"  	| IOSTANDARD = LVCMOS25;   # ok                        
@@ -660,20 +670,10 @@ NET  "otx2_tx_dis"  		LOC = "AJ10"  	| IOSTANDARD = LVCMOS25;  # ok (out)
 NET  "otx1_tx_en"			LOC = "AP12"  	| IOSTANDARD = LVCMOS25;  # ok (out)                      
 NET  "otx2_tx_en"			LOC = "AH10"  	| IOSTANDARD = LVCMOS25;  # ok (out)                         
 
-NET  "otx1_08_p"  		LOC = "AM10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_08_n"  		LOC = "AL10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
 
 # NOT CONNECTED			LOC = "AE14"  	| IOSTANDARD = LVCMOS25;  # ok                         
 # NOT CONNECTED			LOC = "AF14"  	| IOSTANDARD = LVCMOS25;  # ok                        
 
-NET  "otx1_09_p"  		LOC = "AG11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_09_n"  		LOC = "AG10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_10_p"  		LOC = "AJ11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_10_n"  		LOC = "AK11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_11_p"  		LOC = "AM12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_11_n"  		LOC = "AN12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_12_p"  		LOC = "AN13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
-NET  "otx1_12_n"  		LOC = "AM13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok (out) 
 
 # NOT CONNECTED			LOC = "H17"  	| IOSTANDARD = LVCMOS25;  # ok                        
 # NOT CONNECTED			LOC = "G11"  	| IOSTANDARD = LVCMOS25;  # ok                         
@@ -738,46 +738,46 @@ NET  "orx2_sd"  			LOC = "A11"  	| IOSTANDARD = LVCMOS25;  # ok
 NET  "orx2_rx_en"  		LOC = "C12"  	| IOSTANDARD = LVCMOS25;  # ok (out)
 NET  "orx2_sq_en"  		LOC = "B11"  	| IOSTANDARD = LVCMOS25;  # ok (out)
 
-NET  "orx1_01_p"  			LOC = "K11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_01_n"  			LOC = "L11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_02_p"  			LOC = "H10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_02_n"  			LOC = "G10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_03_p"  			LOC = "D11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_03_n"  			LOC = "E11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_04_p"  			LOC = "J11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_04_n"  			LOC = "J10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_p[1]"  			LOC = "K11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[1]"  			LOC = "L11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_p[2]"  			LOC = "H10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[2]"  			LOC = "G10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_p[3]"  			LOC = "D11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[3]"  			LOC = "E11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_p[4]"  			LOC = "J11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[4]"  			LOC = "J10"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_p[5]"  			LOC = "M12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[5]"  			LOC = "M11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_p[6]"  			LOC = "L13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[6]"  			LOC = "M13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_p[7]"  			LOC = "G12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[7]"  			LOC = "H13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok1
+NET  "orx1_p[8]"  			LOC = "H12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[8]"  			LOC = "J12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_p[9]"  			LOC = "K13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[9]"  			LOC = "K12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_p[10]"  			LOC = "F14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[10]"  			LOC = "E14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_p[11]"  			LOC = "B12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[11]"  			LOC = "B13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_p[12]"  			LOC = "D12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
+NET  "orx1_n[12]"  			LOC = "E12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
 
 # NOT CONNECTED			LOC = "K14"  	| IOSTANDARD = LVCMOS25;  # ok                        
 # NOT CONNECTED			LOC = "J14"  	| IOSTANDARD = LVCMOS25;  # ok                        
 
-NET  "orx1_05_p"  			LOC = "M12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_05_n"  			LOC = "M11"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_06_p"  			LOC = "L13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_06_n"  			LOC = "M13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
 
 # NOT CONNECTED			LOC = "G13"  	| IOSTANDARD = LVCMOS25;  # ok                        
 # NOT CONNECTED			LOC = "H14"  	| IOSTANDARD = LVCMOS25;  # ok                        
 
-NET  "orx1_07_p"  			LOC = "G12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_07_n"  			LOC = "H13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok1
 
 # NOT CONNECTED			LOC = "AD12"  	| IOSTANDARD = LVCMOS25;  # ok                        
 # NOT CONNECTED			LOC = "AD11"  	| IOSTANDARD = LVCMOS25;  # ok                       
 
-NET  "orx1_08_p"  			LOC = "H12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_08_n"  			LOC = "J12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
 
 # NOT CONNECTED			LOC = "F11"  	| IOSTANDARD = LVCMOS25;  # ok                        
 # NOT CONNECTED			LOC = "K17"  	| IOSTANDARD = LVCMOS25;  # ok                        
 
-NET  "orx1_09_p"  			LOC = "K13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_09_n"  			LOC = "K12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_10_p"  			LOC = "F14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_10_n"  			LOC = "E14"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_11_p"  			LOC = "B12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_11_n"  			LOC = "B13"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_12_p"  			LOC = "D12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
-NET  "orx1_12_n"  			LOC = "E12"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE; # ok
 
 # Bank 36
 
@@ -878,73 +878,73 @@ NET  "tclk_n"  			LOC = "AB5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# o
 
 # Bank 114
 
+NET  "orx2_n[1]"  		LOC = "W4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[1]"  		LOC = "W3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_n[2]"  		LOC = "R4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[2]"  		LOC = "R3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_n[3]"  		LOC = "N4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[3]"  		LOC = "N3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_n[4]"  		LOC = "U4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[4]"  		LOC = "U3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_n[5]"  		LOC = "AA4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[5]"  		LOC = "AA3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_n[6]"  		LOC = "B6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[6]"  		LOC = "B5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_n[7]"  		LOC = "G4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[7]"  		LOC = "G3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_n[8]"  		LOC = "E4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[8]"  		LOC = "E3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_n[9]"  		LOC = "D6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[9]"  		LOC = "D5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_n[10]"  		LOC = "K6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[10]"  		LOC = "K5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_n[11]"  		LOC = "L4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[11]"  		LOC = "L3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_n[12]"  		LOC = "J4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
+NET  "orx2_p[12]"  		LOC = "J3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "P2"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                         
-NET  "orx2_02_n"  		LOC = "R4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "P1"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_02_p"  		LOC = "R3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "T2"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_04_n"  		LOC = "U4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "T1"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
 # map NET  "cdc_clk_3_p"  		LOC = "T6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # map NET  "cdc_clk_3_n"  		LOC = "T5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
-NET  "orx2_04_p"  		LOC = "U3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # map NET  "cdc_clk_4_p"  		LOC = "V6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # map NET  "cdc_clk_4_n"  		LOC = "V5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "V2"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_01_n"  		LOC = "W4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "V1"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                     
-NET  "orx2_01_p"  		LOC = "W3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "Y2"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_05_n"  		LOC = "AA4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "Y1"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_05_p"  		LOC = "AA3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 
 # Bank 115
 
 # NOT CONNECTED			LOC = "F2"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                         
-NET  "orx2_12_n"  		LOC = "J4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "F1"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_12_p"  		LOC = "J3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "H2"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_10_n"  		LOC = "K6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "H1"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
 # map NET  "cdc_clk_6_p"  		LOC = "M6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # map NET  "cdc_clk_6_n"  		LOC = "M5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
-NET  "orx2_10_p"  		LOC = "K5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "AP7"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
 # NOT CONNECTED			LOC = "AN7"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
 # map NET  "cdc_clk_2_p"  		LOC = "P6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # map NET  "cdc_clk_2_n"  		LOC = "P5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "K2"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_11_n"  		LOC = "L4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "K1"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                     
-NET  "orx2_11_p"  		LOC = "L3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "M2"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_03_n"  		LOC = "N4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "M1"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_03_p"  		LOC = "N3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 
 # Bank 116
 
 # NOT CONNECTED			LOC = "A4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                         
-NET  "orx2_06_n"  		LOC = "B6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "A3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok             
-NET  "orx2_06_p"  		LOC = "B5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "B2"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_09_n"  		LOC = "D6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "B1"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
 # map NET  NET  "cdc_clk_5_p"  		LOC = "F6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # map NET  NET  "cdc_clk_5_n"  		LOC = "F5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
-NET  "orx2_09_p"  		LOC = "D5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # map NET  NET  "cdc_clk_7_p"  		LOC = "H6"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # map NET  NET  "cdc_clk_7_n"  		LOC = "H5"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "C4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_08_n"  		LOC = "E4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "C3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                     
-NET  "orx2_08_p"  		LOC = "E3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "D2"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_07_n"  		LOC = "G4"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 # NOT CONNECTED			LOC = "D1"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok                    
-NET  "orx2_07_p"  		LOC = "G3"  	| IOSTANDARD = LVDS_25 		| DIFF_TERM = TRUE;	# ok
 
 

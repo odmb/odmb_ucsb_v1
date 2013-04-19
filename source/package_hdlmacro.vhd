@@ -8252,8 +8252,8 @@ port (
     C  : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end IFDI_1;
 
@@ -8288,8 +8288,8 @@ port (
     C  : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end IFDI;
 
@@ -8324,8 +8324,8 @@ port (
     C  : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end IFD;
 
@@ -8393,8 +8393,8 @@ port (
     CE : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end IFDX_1;
 
@@ -8501,8 +8501,8 @@ port (
     CE : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end IFDXI_1;
 
@@ -8540,8 +8540,8 @@ port (
     CE : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end IFDXI;
 
@@ -8579,8 +8579,8 @@ port (
     CE : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end IFDX;
 
@@ -8643,8 +8643,8 @@ port (
     D  : in STD_LOGIC;
     G  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end ILD_1;
 
@@ -8742,8 +8742,8 @@ port (
     D  : in STD_LOGIC;
     G  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end ILDI_1;
 
@@ -8778,8 +8778,8 @@ port (
     D  : in STD_LOGIC;
     G  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end ILDI;
 
@@ -8813,8 +8813,8 @@ port (
     D  : in STD_LOGIC;
     G  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end ILD;
 
@@ -8878,8 +8878,8 @@ port (
     G  : in STD_LOGIC;
     GE : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end ILDX_1;
 
@@ -8980,8 +8980,8 @@ port (
     G  : in STD_LOGIC;
     GE : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end ILDXI_1;
 
@@ -9017,8 +9017,8 @@ port (
     G  : in STD_LOGIC;
     GE : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end ILDXI;
 
@@ -9054,8 +9054,8 @@ port (
     G  : in STD_LOGIC;
     GE : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end ILDX;
 
@@ -10271,8 +10271,8 @@ port (
     C  : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end OFD_1;
 
@@ -10400,8 +10400,8 @@ port (
     D  : in STD_LOGIC;
     E  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of O : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of O : signal is "True";	
 
 end OFDE_1;
 
@@ -10503,8 +10503,8 @@ port (
     D  : in STD_LOGIC;
     E  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of O : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of O : signal is "True";	
 
 end OFDE;
 
@@ -10538,8 +10538,8 @@ port (
     C  : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end OFDI_1;
 
@@ -10574,8 +10574,8 @@ port (
     C  : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end OFDI;
 
@@ -10640,8 +10640,8 @@ port (
     D  : in STD_LOGIC;
     T  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of O : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of O : signal is "True";	
 
 end OFDT_1;
 
@@ -10743,8 +10743,8 @@ port (
     D  : in STD_LOGIC;
     T  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of O : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of O : signal is "True";	
 
 end OFDT;
 
@@ -10778,8 +10778,8 @@ port (
     C  : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end OFD;
 
@@ -10844,8 +10844,8 @@ port (
     CE : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end OFDX_1;
 
@@ -10952,8 +10952,8 @@ port (
     CE : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end OFDXI_1;
 
@@ -10991,8 +10991,8 @@ port (
     CE : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end OFDXI;
 
@@ -11030,8 +11030,8 @@ port (
     CE : in STD_LOGIC;
     D  : in STD_LOGIC
     );
-attribute IOB         : string ;
-attribute IOB of Q : signal is "True";	
+-- attribute IOB         : string ;
+-- attribute IOB of Q : signal is "True";	
 
 end OFDX;
 

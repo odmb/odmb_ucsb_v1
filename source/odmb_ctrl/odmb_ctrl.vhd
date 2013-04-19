@@ -462,7 +462,7 @@ component CONTROL is
       BXRST : in std_logic;
 
       l1a          : in std_logic;
-      l1a_match_in : in std_logic_vector(NFEB downto 1);
+      l1a_match_in : in std_logic_vector(NFEB+2 downto 1);
 
       pop : in std_logic;
 
@@ -1162,16 +1162,6 @@ DDUFIFO_PM : ddufifo
   lctrqst   <= "00";
   rsvtd_out <= "000";
 
--- From GigaLinks
-
---              gtx0_data <= "0000000000000000";                                                                                  
---              gtx0_data_valid <= '0';  
---              gtx1_data <= "0000000000000000";                                                                                          
---              gtx1_data_valid <= '0';                  
-  gtx0_data       <= grx0_data;
-  gtx0_data_valid <= grx0_data_valid;
-  gtx1_data       <= grx1_data;
-  gtx1_data_valid <= grx1_data_valid;
 
 -- From/To FIFOs
 
