@@ -378,31 +378,8 @@ COMPONENT odmb_v6 is
 
 -- To/From TX1 
 
-		otx1_01_p : OUT  STD_LOGIC;			-- OK	
-		otx1_01_n : OUT  STD_LOGIC;			-- OK	
-		otx1_02_p : OUT  STD_LOGIC;			-- OK	
-		otx1_02_n : OUT  STD_LOGIC;			-- OK	
-		otx1_03_p : OUT  STD_LOGIC;			-- OK	
-		otx1_03_n : OUT  STD_LOGIC;			-- OK	
-		otx1_04_p : OUT  STD_LOGIC;			-- OK	
-		otx1_04_n : OUT  STD_LOGIC;			-- OK	
-		otx1_05_p : OUT  STD_LOGIC;			-- OK	
-		otx1_05_n : OUT  STD_LOGIC;			-- OK	
-		otx1_06_p : OUT  STD_LOGIC;			-- OK	
-		otx1_06_n : OUT  STD_LOGIC;			-- OK	
-		otx1_07_p : OUT  STD_LOGIC;			-- OK	
-		otx1_07_n : OUT  STD_LOGIC;			-- OK	
-		otx1_08_p : OUT  STD_LOGIC;			-- OK	
-		otx1_08_n : OUT  STD_LOGIC;			-- OK
-		otx1_09_p : OUT  STD_LOGIC;			-- OK	
-		otx1_09_n : OUT  STD_LOGIC;			-- OK	
-		otx1_10_p : OUT  STD_LOGIC;			-- OK	
-		otx1_10_n : OUT  STD_LOGIC;			-- OK	
-		otx1_11_p : OUT  STD_LOGIC;			-- OK	
-		otx1_11_n : OUT  STD_LOGIC;			-- OK	
-		otx1_12_p : OUT  STD_LOGIC;			-- OK	
-		otx1_12_n : OUT  STD_LOGIC;			-- OK	
-
+		otx1_p : OUT  STD_LOGIC_VECTOR(12 downto 1);		
+		otx1_n : OUT  STD_LOGIC_VECTOR(12 downto 1);		
 		otx1_tx_en : OUT  STD_LOGIC;			-- OK
 		otx1_tx_dis : OUT  STD_LOGIC;			-- OK
 		otx1_reset : OUT  STD_LOGIC;			-- OK
@@ -410,31 +387,8 @@ COMPONENT odmb_v6 is
 		
 -- To/From TX2 
 
-		otx2_01_p : OUT  STD_LOGIC;			-- OK	
-		otx2_01_n : OUT  STD_LOGIC;			-- OK	
-		otx2_02_p : OUT  STD_LOGIC;			-- OK	
-		otx2_02_n : OUT  STD_LOGIC;			-- OK	
-		otx2_03_p : OUT  STD_LOGIC;			-- OK	
-		otx2_03_n : OUT  STD_LOGIC;			-- OK	
-		otx2_04_p : OUT  STD_LOGIC;			-- OK	
-		otx2_04_n : OUT  STD_LOGIC;			-- OK	
-		otx2_05_p : OUT  STD_LOGIC;			-- OK	
-		otx2_05_n : OUT  STD_LOGIC;			-- OK	
-		otx2_06_p : OUT  STD_LOGIC;			-- OK	
-		otx2_06_n : OUT  STD_LOGIC;			-- OK	
-		otx2_07_p : OUT  STD_LOGIC;			-- OK	
-		otx2_07_n : OUT  STD_LOGIC;			-- OK	
-		otx2_08_p : OUT  STD_LOGIC;			-- OK	
-		otx2_08_n : OUT  STD_LOGIC;			-- OK	
-		otx2_09_p : OUT  STD_LOGIC;			-- OK	
-		otx2_09_n : OUT  STD_LOGIC;			-- OK	
-		otx2_10_p : OUT  STD_LOGIC;			-- OK	
-		otx2_10_n : OUT  STD_LOGIC;			-- OK	
-		otx2_11_p : OUT  STD_LOGIC;			-- OK	
-		otx2_11_n : OUT  STD_LOGIC;			-- OK	
-		otx2_12_p : OUT  STD_LOGIC;			-- OK	
-		otx2_12_n : OUT  STD_LOGIC;			-- OK	
-
+		otx2_p : OUT  STD_LOGIC_VECTOR(12 downto 1);		
+		otx2_n : OUT  STD_LOGIC_VECTOR(12 downto 1);		
 		otx2_tx_en : OUT  STD_LOGIC;			-- OK	
 		otx2_tx_dis : OUT  STD_LOGIC;			-- OK	
 		otx2_reset : OUT  STD_LOGIC;			-- OK	
@@ -442,31 +396,8 @@ COMPONENT odmb_v6 is
 
 -- From/To RX1 
 
-		orx1_01_p : IN  STD_LOGIC;				-- OK		
-		orx1_01_n : IN  STD_LOGIC;				-- OK		
-		orx1_02_p : IN  STD_LOGIC;				-- OK	
-		orx1_02_n : IN  STD_LOGIC;				-- OK
-		orx1_03_p : IN  STD_LOGIC;				-- OK
-		orx1_03_n : IN  STD_LOGIC;				-- OK
-		orx1_04_p : IN  STD_LOGIC;				-- OK
-		orx1_04_n : IN  STD_LOGIC;				-- OK
-		orx1_05_p : IN  STD_LOGIC;				-- OK
-		orx1_05_n : IN  STD_LOGIC;				-- OK
-		orx1_06_p : IN  STD_LOGIC;				-- OK
-		orx1_06_n : IN  STD_LOGIC;				-- OK
-		orx1_07_p : IN  STD_LOGIC;				-- OK
-		orx1_07_n : IN  STD_LOGIC;				-- OK
-		orx1_08_p : IN  STD_LOGIC;				-- OK
-		orx1_08_n : IN  STD_LOGIC;				-- OK
-		orx1_09_p : IN  STD_LOGIC;				-- OK
-		orx1_09_n : IN  STD_LOGIC;				-- OK
-		orx1_10_p : IN  STD_LOGIC;				-- OK
-		orx1_10_n : IN  STD_LOGIC;				-- OK
-		orx1_11_p : IN  STD_LOGIC;				-- OK
-		orx1_11_n : IN  STD_LOGIC;				-- OK
-		orx1_12_p : IN  STD_LOGIC;				-- OK
-		orx1_12_n : IN  STD_LOGIC;				-- OK
-
+		orx1_p : IN  STD_LOGIC_VECTOR(12 downto 1);	
+		orx1_n : IN  STD_LOGIC_VECTOR(12 downto 1);	
 		orx1_rx_en : OUT  STD_LOGIC;			-- OK
 		orx1_en_sd : OUT  STD_LOGIC;			-- OK
 		orx1_sd : IN  STD_LOGIC;				-- OK
@@ -474,31 +405,8 @@ COMPONENT odmb_v6 is
 
 -- From/To RX2 
 
-		orx2_01_p : IN  STD_LOGIC;				-- OK		
-		orx2_01_n : IN  STD_LOGIC;				-- OK	
-		orx2_02_p : IN  STD_LOGIC;				-- OK	
-		orx2_02_n : IN  STD_LOGIC;				-- OK	
-		orx2_03_p : IN  STD_LOGIC;				-- OK	
-		orx2_03_n : IN  STD_LOGIC;				-- OK	
-		orx2_04_p : IN  STD_LOGIC;				-- OK	
-		orx2_04_n : IN  STD_LOGIC;				-- OK	
-		orx2_05_p : IN  STD_LOGIC;				-- OK	
-		orx2_05_n : IN  STD_LOGIC;				-- OK	
-		orx2_06_p : IN  STD_LOGIC;				-- OK	
-		orx2_06_n : IN  STD_LOGIC;				-- OK	
-		orx2_07_p : IN  STD_LOGIC;				-- OK	
-		orx2_07_n : IN  STD_LOGIC;				-- OK	
-		orx2_08_p : IN  STD_LOGIC;				-- OK	
-		orx2_08_n : IN  STD_LOGIC;				-- OK	
-		orx2_09_p : IN  STD_LOGIC;				-- OK	
-		orx2_09_n : IN  STD_LOGIC;				-- OK	
-		orx2_10_p : IN  STD_LOGIC;				-- OK	
-		orx2_10_n : IN  STD_LOGIC;				-- OK	
-		orx2_11_p : IN  STD_LOGIC;				-- OK	
-		orx2_11_n : IN  STD_LOGIC;				-- OK	
-		orx2_12_p : IN  STD_LOGIC;				-- OK	
-		orx2_12_n : IN  STD_LOGIC;				-- OK	
-
+		orx2_p : IN  STD_LOGIC_VECTOR(12 downto 1);	
+		orx2_n : IN  STD_LOGIC_VECTOR(12 downto 1);	
 		orx2_rx_en : OUT  STD_LOGIC;			-- OK	
 		orx2_en_sd : OUT  STD_LOGIC;			-- OK	
 		orx2_sd : IN  STD_LOGIC;				-- OK	
@@ -880,20 +788,20 @@ PMAP_file_handler_event : file_handler_event
      lct => lct
   );
 
-PMAP_dcfeb_data_gen : dcfeb_data_gen
-
-   port map(
-  
-	 clk => clk,
-   rst => rst,
-   l1a => l1a,
-   l1a_match => l1a,
-   dcfeb_addr => "1111",
-   dcfeb_dv => dcfeb_dv,
-   dcfeb_data => dcfeb_data
-	
-	);
-
+--PMAP_dcfeb_data_gen : dcfeb_data_gen
+--
+--   port map(
+--  
+--	 clk => clk,
+--   rst => rst,
+--   l1a => l1a,
+--   l1a_match => l1a,
+--   dcfeb_addr => "1111",
+--   dcfeb_dv => dcfeb_dv,
+--   dcfeb_data => dcfeb_data
+--	
+--	);
+--
 PMAP_file_handler : file_handler
 
    port map(
@@ -1209,131 +1117,39 @@ PMAP_odmb_v6 : odmb_v6
 
 -- To/From TX1 
 
-		otx1_01_p => otx1_p(1), -- out	
-		otx1_01_n => otx1_n(1), -- out	
-		otx1_02_p => otx1_p(2), -- out	
-		otx1_02_n => otx1_n(2), -- out	
-		otx1_03_p => otx1_p(3), -- out	
-		otx1_03_n => otx1_n(3), -- out	
-		otx1_04_p => otx1_p(4), -- out	
-		otx1_04_n => otx1_n(4), -- out	
-		otx1_05_p => otx1_p(5), -- out	
-		otx1_05_n => otx1_n(5), -- out	
-		otx1_06_p => otx1_p(6), -- out	
-		otx1_06_n => otx1_n(6), -- out	
-		otx1_07_p => otx1_p(7), -- out	
-		otx1_07_n => otx1_n(7), -- out	
-		otx1_08_p => otx1_p(8), -- out	
-		otx1_08_n => otx1_n(8), -- out	
-		otx1_09_p => otx1_p(9), -- out	
-		otx1_09_n => otx1_n(9), -- out	
-		otx1_10_p => otx1_p(10), -- out	
-		otx1_10_n => otx1_n(10), -- out	
-		otx1_11_p => otx1_p(11), -- out	
-		otx1_11_n => otx1_n(11), -- out	
-		otx1_12_p => otx1_p(12), -- out	
-		otx1_12_n => otx1_n(12), -- out	
-
-		otx1_tx_en => otx1_tx_en, -- out
+		otx1_p => otx1_p,           -- out	
+		otx1_n => otx1_n,           -- out	
+		otx1_tx_en => otx1_tx_en,   -- out
 		otx1_tx_dis => otx1_tx_dis, -- out
-		otx1_reset => otx1_reset, -- out
-		otx1_fault => otx1_fault, -- in
+		otx1_reset => otx1_reset,   -- out
+		otx1_fault => otx1_fault,   -- in
 		
 -- To/From TX2 
 
-		otx2_01_p => otx2_p(1), -- out	
-		otx2_01_n => otx2_n(1), -- out	
-		otx2_02_p => otx2_p(2), -- out	
-		otx2_02_n => otx2_n(2), -- out	
-		otx2_03_p => otx2_p(3), -- out	
-		otx2_03_n => otx2_n(3), -- out	
-		otx2_04_p => otx2_p(4), -- out	
-		otx2_04_n => otx2_n(4), -- out	
-		otx2_05_p => otx2_p(5), -- out	
-		otx2_05_n => otx2_n(5), -- out	
-		otx2_06_p => otx2_p(6), -- out	
-		otx2_06_n => otx2_n(6), -- out	
-		otx2_07_p => otx2_p(7), -- out	
-		otx2_07_n => otx2_n(7), -- out	
-		otx2_08_p => otx2_p(8), -- out	
-		otx2_08_n => otx2_n(8), -- out	
-		otx2_09_p => otx2_p(9), -- out	
-		otx2_09_n => otx2_n(9), -- out	
-		otx2_10_p => otx2_p(10), -- out	
-		otx2_10_n => otx2_n(10), -- out	
-		otx2_11_p => otx2_p(11), -- out	
-		otx2_11_n => otx2_n(11), -- out	
-		otx2_12_p => otx2_p(12), -- out	
-		otx2_12_n => otx2_n(12), -- out	
-
-		otx2_tx_en => otx2_tx_en, -- out
+		otx2_p => otx2_p,           -- out	
+		otx2_n => otx2_n,           -- out	
+		otx2_tx_en => otx2_tx_en,   -- out
 		otx2_tx_dis => otx2_tx_dis, -- out
-		otx2_reset => otx2_reset, -- out
-		otx2_fault => otx2_fault, -- in
+		otx2_reset => otx2_reset,   -- out
+		otx2_fault => otx2_fault,   -- in
 
 -- From/To RX1 
 
-		orx1_01_p => orx1_p(1), -- in	
-		orx1_01_n => orx1_n(1), -- in		
-		orx1_02_p => orx1_p(2), -- in	
-		orx1_02_n => orx1_n(2), -- in		
-		orx1_03_p => orx1_p(3), -- in	
-		orx1_03_n => orx1_n(3), -- in		
-		orx1_04_p => orx1_p(4), -- in	
-		orx1_04_n => orx1_n(4), -- in		
-		orx1_05_p => orx1_p(5), -- in	
-		orx1_05_n => orx1_n(5), -- in		
-		orx1_06_p => orx1_p(6), -- in	
-		orx1_06_n => orx1_n(6), -- in		
-		orx1_07_p => orx1_p(7), -- in	
-		orx1_07_n => orx1_n(7), -- in		
-		orx1_08_p => orx1_p(8), -- in	
-		orx1_08_n => orx1_n(8), -- in		
-		orx1_09_p => orx1_p(9), -- in	
-		orx1_09_n => orx1_n(9), -- in		
-		orx1_10_p => orx1_p(10), -- in	
-		orx1_10_n => orx1_n(10), -- in		
-		orx1_11_p => orx1_p(11), -- in	
-		orx1_11_n => orx1_n(11), -- in		
-		orx1_12_p => orx1_p(12), -- in	
-		orx1_12_n => orx1_n(12), -- in		
-
-		orx1_rx_en => orx1_rx_en, -- out
-		orx1_en_sd => orx1_en_sd, -- out
-		orx1_sd => orx1_sd, -- in
-		orx1_sq_en => orx1_sq_en, -- out
+		orx1_p => orx1_p,           -- in	
+		orx1_n => orx1_n,           -- in	
+		orx1_rx_en => orx1_rx_en,   -- out
+		orx1_en_sd => orx1_en_sd,   -- out
+		orx1_sd => orx1_sd,         -- in
+		orx1_sq_en => orx1_sq_en,   -- out
 
 -- From/To RX2 
 
-		orx2_01_p => orx2_p(1), -- in	
-		orx2_01_n => orx2_n(1), -- in		
-		orx2_02_p => orx2_p(2), -- in	
-		orx2_02_n => orx2_n(2), -- in		
-		orx2_03_p => orx2_p(3), -- in	
-		orx2_03_n => orx2_n(3), -- in		
-		orx2_04_p => orx2_p(4), -- in	
-		orx2_04_n => orx2_n(4), -- in		
-		orx2_05_p => orx2_p(5), -- in	
-		orx2_05_n => orx2_n(5), -- in		
-		orx2_06_p => orx2_p(6), -- in	
-		orx2_06_n => orx2_n(6), -- in		
-		orx2_07_p => orx2_p(7), -- in	
-		orx2_07_n => orx2_n(7), -- in		
-		orx2_08_p => orx2_p(8), -- in	
-		orx2_08_n => orx2_n(8), -- in		
-		orx2_09_p => orx2_p(9), -- in	
-		orx2_09_n => orx2_n(9), -- in		
-		orx2_10_p => orx2_p(10), -- in	
-		orx2_10_n => orx2_n(10), -- in		
-		orx2_11_p => orx2_p(11), -- in	
-		orx2_11_n => orx2_n(11), -- in		
-		orx2_12_p => orx2_p(12), -- in	
-		orx2_12_n => orx2_n(12), -- in		
-
-		orx2_rx_en => orx2_rx_en, -- out
-		orx2_en_sd => orx2_en_sd, -- out
-		orx2_sd => orx2_sd, -- in
-		orx2_sq_en => orx2_sq_en, -- out
+		orx2_p => orx2_p,           -- in	
+		orx2_n => orx2_n,           -- in	
+		orx2_rx_en => orx2_rx_en,   -- out
+		orx2_en_sd => orx2_en_sd,   -- out
+		orx2_sd => orx2_sd,         -- in
+		orx2_sq_en => orx2_sq_en,   -- out
 
 -- From/To OT1 (GigaBit Link)
 
@@ -1376,7 +1192,4 @@ PMAP_odmb_v6 : odmb_v6
 		done_in => done_in 
 	);
     
-
-  
-
 end ODMB_V6_TB_arch;

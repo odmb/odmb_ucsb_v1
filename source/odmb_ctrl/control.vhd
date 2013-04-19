@@ -103,6 +103,7 @@ architecture CONTROL_arch of CONTROL is
   signal DOTAIL : std_logic;
 
   signal DAV_D : std_logic;
+  signal DAV_D1,DAV_D2 : std_logic;
 
   signal POP_D : std_logic_vector(4 downto 1);
   signal TAILDONE, STPOP, L1ONLY, POP: std_logic;
@@ -253,8 +254,11 @@ begin
   
 -- Generate DAV (page 1)
   DAV_D <= (OEDATA or OEHDTL) and not DISDAV;
-  FDC(DAV_D, CLK, POP, DAV);
-  
+  FDC(DAV_D, CLK, POP, DAV_D1);
+-- first clock cycle with data valid = 1 removed
+  FDC(DAV_D1, CLK, POP, DAV_D2);
+  DAV <= DAV_D1 and DAV_D2;
+    
 -- Generate POP (page 1)
   FDC(TAIL(8), CLK, POP, TAILDONE);
   L1ONLY <= '1' when (OEHDR(4)='1' and cafifo_l1a_match = ZERO9) else '0';

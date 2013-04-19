@@ -17,9 +17,11 @@ entity dcfeb_v6 is
 port
 	(
 	  clk: IN STD_LOGIC;
+	  clk80: IN STD_LOGIC;
 	  rst: IN STD_LOGIC;
 	  l1a : IN STD_LOGIC;
 	  l1a_match : IN STD_LOGIC;
+	  tx_ack : IN STD_LOGIC;
 	  dcfeb_dv : OUT STD_LOGIC;
     dcfeb_data : OUT STD_LOGIC_VECTOR(15 downto 0);
     adc_mask: OUT STD_LOGIC_VECTOR(11 downto 0);
@@ -42,16 +44,18 @@ COMPONENT dcfeb_data_gen is
    port(
   
    clk : in std_logic;
+   clk80 : in std_logic;
    rst : in std_logic;
    l1a : in std_logic;
    l1a_match : in std_logic;
+   tx_ack : in std_logic;
    dcfeb_addr : in std_logic_vector(3 downto 0);
    dcfeb_dv : out std_logic;
    dcfeb_data : out std_logic_vector(15 downto 0)
 	
 	);
 
-end COMPONENT;
+end COMPONENT; 
 
 COMPONENT tdo_mux
   port(
@@ -187,9 +191,11 @@ PMAP_dcfeb_data_gen : dcfeb_data_gen
    port map(
   
 	 clk => clk,
+	 clk80 => clk80,
    rst => rst,
    l1a => l1a,
    l1a_match => l1a_match,
+   tx_ack => tx_ack,
    dcfeb_addr => dcfeb_addr,
    dcfeb_dv => dcfeb_dv,
    dcfeb_data => dcfeb_data

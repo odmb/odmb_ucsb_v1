@@ -20,9 +20,12 @@ entity dcfeb_data_gen is
    port(
   
    clk : in std_logic;
+   clk80 : in std_logic;
    rst : in std_logic;
    l1a : in std_logic;
    l1a_match : in std_logic;
+
+   tx_ack : in std_logic; 
 
    dcfeb_addr : in std_logic_vector(3 downto 0);
 
@@ -71,7 +74,7 @@ end process;
 
 -- dw_counter
 	
-dw_cnt: process (clk, dw_cnt_en, dw_cnt_rst)
+dw_cnt: process (clk80, dw_cnt_en, dw_cnt_rst)
 
 variable dw_cnt_data : std_logic_vector(11 downto 0);
 
@@ -79,7 +82,7 @@ begin
 
 	if (rst = '1') then
 		dw_cnt_data := (OTHERS => '0');
-	elsif (rising_edge(clk)) then
+	elsif (rising_edge(clk80)) then
     if (dw_cnt_rst = '1') then    
 			dw_cnt_data := (OTHERS => '0');
     elsif (dw_cnt_en = '1') then    
@@ -93,20 +96,20 @@ end process;
 
 -- FSM 
 	
-fsm_regs: process (next_state, rst, clk)
+SRL16_TX_START : SRL16 port map(tx_start, '1', '1', '1', '1', clk, l1a_match);
+
+fsm_regs: process (next_state, rst, clk80)
 
 begin
 	if (rst = '1') then
 		current_state <= IDLE;
-	elsif rising_edge(clk) then
+	elsif rising_edge(clk80) then
 		current_state <= next_state;	      	
 	end if;
 
 end process;
 
-SRL16_TX_START : SRL16 port map(tx_start, '1', '1', '1', '1', CLK, l1a_match);
-
-fsm_logic : process (tx_start, l1a_cnt_out, dw_cnt_out, current_state)
+fsm_logic : process (tx_ack, tx_start, l1a_cnt_out, dw_cnt_out, current_state)
 	
 begin
 				
@@ -130,7 +133,11 @@ begin
       dcfeb_dv <= '1';	
       dw_cnt_en <= '0';
 			dw_cnt_rst <= '0';
-			next_state <= TX_HEADER2;
+			if (tx_ack = '1') then
+				next_state <= TX_HEADER2;
+			else
+				next_state <= TX_HEADER1;
+			end if;
 			
 		when TX_HEADER2 =>
 			
