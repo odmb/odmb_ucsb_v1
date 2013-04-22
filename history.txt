@@ -6,6 +6,11 @@
 =                                                                    =
 ======================================================================
 
+V00-07: 22 April 2013, Manuel
+--------------------------------
+Synthesized the project in ISE, and added testctrl.vhd which stores
+the LCTs, L1As, and BX in FIFOs writeable and readable by VME.
+
 V00-06: 17 April 2013, Manuel
 --------------------------------
 Made all the paths relative.
