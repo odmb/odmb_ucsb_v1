@@ -36,8 +36,11 @@ initial
 //    infile=$fopen("${ODMB_FOLDER}\\commands\\test_dcfebjtag_v1b.txt","r");
 //    outfile=$fopen("${ODMB_FOLDER}\\commands\\test_dcfebjtag_v1b_out.txt","w");
 // Test of CONFREGS
-    infile=$fopen("commands\\test_lct_l1a_conf.txt","r");
-    outfile=$fopen("commands\\test_lct_l1a_conf_out.txt","w");
+//    infile=$fopen("commands\\test_lct_l1a_conf.txt","r");
+//    outfile=$fopen("commands\\test_lct_l1a_conf_out.txt","w");
+// Test of TESTCTRL
+    infile=$fopen("commands\\test_lct_l1a_run.txt","r");
+    outfile=$fopen("commands\\test_lct_l1a_run_out.txt","w");
     while (!$feof(infile))
       begin
         @(posedge clk) #10

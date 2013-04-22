@@ -786,7 +786,16 @@ architecture bdf_type of ODMB_V6 is
       tfifo_mode  : out std_logic;
 
       flf_ctrl : out std_logic_vector(15 downto 0);
-      flf_data : in  std_logic_vector(15 downto 0)
+      flf_data : in  std_logic_vector(15 downto 0);
+
+      tc_l1a : OUT std_logic;
+      tc_alct_dav : OUT std_logic;
+      tc_tmb_dav : OUT std_logic;
+      tc_lct : OUT std_logic_vector(NFEB downto 1);
+      ddu_data : IN std_logic_vector(15 downto 0);
+      ddu_data_valid : IN std_logic;
+      tc_run : OUT std_logic
+
 
       );
 
@@ -976,6 +985,7 @@ architecture bdf_type of ODMB_V6 is
   signal rx_dcfeb_data                                    : dcfeb_data_type;
   signal dcfeb_data                                       : dcfeb_data_type;
   signal orx_dcfeb_data_n, orx_dcfeb_data_p : std_logic_vector(12 downto 1);
+  signal orx2_buf_n, orx2_buf_p : std_logic_vector(12 downto 1);
   signal gen_dcfeb_data_p, rx_dcfeb_data_p : std_logic_vector(NFEB downto 1);
   signal gen_dcfeb_data_n, rx_dcfeb_data_n : std_logic_vector(NFEB downto 1);
   signal gen_dcfeb_data_valid                             : std_logic_vector(NFEB downto 1);
@@ -1204,6 +1214,14 @@ architecture bdf_type of ODMB_V6 is
   signal dcfeb_tx_ack       : std_logic_vector(NFEB downto 1);
   signal dcfeb_daq_data_clk : std_logic_vector(NFEB downto 1);
 
+  signal int_l1a, tc_l1a : std_logic;
+  signal int_alct_dav, tc_alct_dav : std_logic;
+  signal int_tmb_dav, tc_tmb_dav : std_logic;
+  signal int_lct, tc_lct : std_logic_vector(NFEB downto 0);
+  signal ddu_data : std_logic_vector(15 downto 0) := (others => '0');
+  signal ddu_data_valid : std_logic := '0';
+
+  signal tc_run : std_logic;
 
 begin
 
@@ -1435,10 +1453,12 @@ begin
 
 -- From ORX1
 
-  GEN_ORX1 : for I in 12 downto 1 generate  
-  begin
-    orx1_buf : IBUFDS port map (I => orx1_p(I), IB => orx1_n(I), O => orx1(I));
-  end generate GEN_ORX1;
+GEN_ORX2 : for I in 12 downto 1 generate  
+begin
+  orx2_ibuf_p : IBUF port map (O => orx2_buf_p(I), I => orx2_p(I));
+  orx2_ibuf_n : IBUF port map (O => orx2_buf_n(I), I => orx2_n(I));
+end generate GEN_ORX2;
+
 
 -- From ORX2
 
@@ -1446,7 +1466,6 @@ begin
 --  begin
 --    orx2_buf : IBUFDS port map (I => orx2_p(I), IB => orx2_n(I), O => orx2(I));
 --  end generate GEN_ORX2;
-
 
 -- From QPLL
 
@@ -1992,11 +2011,23 @@ begin
       tfifo_mode  => tfifo_mode,
 
       flf_ctrl => flf_ctrl,
-      flf_data => flf_data
+      flf_data => flf_data,
+
+      tc_l1a => tc_l1a,
+      tc_alct_dav => tc_alct_dav,
+      tc_tmb_dav => tc_tmb_dav,
+      tc_lct => tc_lct,
+      ddu_data => ddu_data,
+      ddu_data_valid => ddu_data_valid,
+      tc_run => tc_run
+
 
       );
 
-
+int_l1a <= tc_l1a when (tc_run = '1') else ccb_l1acc;
+int_alct_dav <= tc_alct_dav when (tc_run = '1') else lctdav2;
+int_tmb_dav <= tc_tmb_dav when (tc_run = '1') else lctdav1;
+int_lct <= tc_lct when (tc_run = '1') else rawlct;
 
 -- ODMB_CTRL FPGA
 
@@ -2019,14 +2050,21 @@ begin
       ccb_rsvi   => ccb_rsvi,           -- ccbrsv(14 downto 12) - to J3
       ccb_bx0    => ccb_bx0,            -- bx0 - from J3
       ccb_bxrst  => ccb_bxrst,          -- bxrst - from J3
-      ccb_l1acc  => ccb_l1acc,          -- l1acc - from J3
+--      ccb_l1acc  => ccb_l1acc,          -- l1acc - from J3
+-- from testctrl
+      ccb_l1acc  => int_l1a,          -- l1acc - from J3 
       ccb_l1arst => ccb_l1arst,         -- l1rst - from J3
       ccb_l1rls  => ccb_l1rls,          -- l1rls - to J3
       ccb_clken  => ccb_clken,          -- clken - from J3
 
-      rawlct    => rawlct,              -- rawlct(NFEB downto 0) - from J4
-      tmb_dav   => lctdav1,             -- lctdav1 - from J4
-      alct_dav  => lctdav2,             -- lctdav2 - from J4
+-- from testctrl
+--      rawlct    => rawlct,              -- rawlct(NFEB downto 0) - from J4
+      rawlct    => int_lct,              -- rawlct(NFEB downto 0) - from -- from testctrl
+--      tmb_dav   => lctdav1,             -- lctdav1 - from J4
+      tmb_dav   => int_tmb_dav,             -- lctdav1 - from J4
+-- from testctrl
+--      alct_dav  => lctdav2,             -- lctdav2 - from J4
+      alct_dav  => int_alct_dav,             -- lctdav2 - from J4
       lctrqst   => lctrqst,             -- lctrqst(2 downto 1) - to J4
       rsvtd_in  => rsvtd_in,            -- spare(7 DOWNTO 3) - to J4
 --              rsvtd_out => rsvtd_out(6 downto 3),                                                                                     -- spare(7 DOWNTO 3) - from J4
@@ -2577,8 +2615,8 @@ begin
       sdo              => int_lvmb_sdout);
 
 
-  orx_dcfeb_data_n <= orx2_n;
-  orx_dcfeb_data_p <= orx2_p;
+  orx_dcfeb_data_n <= orx2_buf_n;
+  orx_dcfeb_data_p <= orx2_buf_p;
 
   DMB_RX_PM : dmb_receiver
     generic map (
@@ -2608,16 +2646,16 @@ begin
       ORX2_06_P        => rx_dcfeb_data_p(6),
       ORX2_07_N        => rx_dcfeb_data_n(7),
       ORX2_07_P        => rx_dcfeb_data_p(7),
-      ORX2_08_N        => orx2_n(8),
-      ORX2_08_P        => orx2_p(8),
-      ORX2_09_N        => orx2_n(9),
-      ORX2_09_P        => orx2_p(9),
-      ORX2_10_N        => orx2_n(10),
-      ORX2_10_P        => orx2_p(10),
-      ORX2_11_N        => orx2_n(11),
-      ORX2_11_P        => orx2_p(11),
-      ORX2_12_N        => orx2_n(12),
-      ORX2_12_P        => orx2_p(12),
+      ORX2_08_N        => orx2_buf_n(8),
+      ORX2_08_P        => orx2_buf_p(8),
+      ORX2_09_N        => orx2_buf_n(9),
+      ORX2_09_P        => orx2_buf_p(9),
+      ORX2_10_N        => orx2_buf_n(10),
+      ORX2_10_P        => orx2_buf_p(10),
+      ORX2_11_N        => orx2_buf_n(11),
+      ORX2_11_P        => orx2_buf_p(11),
+      ORX2_12_N        => orx2_buf_n(12),
+      ORX2_12_P        => orx2_buf_p(12),
       DCFEB1_DATA      => rx_dcfeb_data(1),
       DCFEB2_DATA      => rx_dcfeb_data(2),
       DCFEB3_DATA      => rx_dcfeb_data(3),
@@ -2626,7 +2664,6 @@ begin
       DCFEB6_DATA      => rx_dcfeb_data(6),
       DCFEB7_DATA      => rx_dcfeb_data(7),
       DCFEB_DATA_VALID => rx_dcfeb_data_valid,
-
       --Internal signals
       FIFO_VME_MODE          => fifo_vme_mode,
       FIFO_SEL               => fifo_sel,

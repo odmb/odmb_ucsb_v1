@@ -758,7 +758,7 @@ begin
   reset <= '1' after 200 ns, '0' after 13000 ns;
  
   go <= '1' after 10 us;
-  goevent <= '1' after 200 us;
+  goevent <= '1' after 300 us;
         
   qpll_clk40MHz_p <= not qpll_clk40MHz_p after 10 ns;
   qpll_clk40MHz_n <= not qpll_clk40MHz_n after 10 ns;

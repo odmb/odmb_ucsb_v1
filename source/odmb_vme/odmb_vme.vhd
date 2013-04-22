@@ -4,7 +4,10 @@ USE IEEE.std_logic_arith.all;
 USE IEEE.std_logic_unsigned.all;
 
 ENTITY ODMB_VME IS
-PORT 	(
+  generic (
+    NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
+    );  
+ PORT 	(
 
 -- VME signals
 
@@ -142,7 +145,6 @@ PORT 	(
 
 -- From/To FIFOs
 
-
 		tfifo_data : IN std_logic_vector(15 downto 0);
 		tfifo_wc : IN std_logic_vector(9 downto 0);
 		tfifo_rc : IN std_logic_vector(9 downto 0);
@@ -153,7 +155,16 @@ PORT 	(
 		tfifo_mode : OUT std_logic;
 		
 		flf_ctrl : OUT std_logic_vector(15 downto 0);
-		flf_data : IN std_logic_vector(15 downto 0)
+		flf_data : IN std_logic_vector(15 downto 0);
+
+		tc_l1a : OUT std_logic;
+		tc_alct_dav : OUT std_logic;
+		tc_tmb_dav : OUT std_logic;
+		tc_lct : OUT std_logic_vector(NFEB downto 0);
+		ddu_data : IN std_logic_vector(15 downto 0);
+		ddu_data_valid : IN std_logic;
+		tc_run : OUT std_logic
+
 		
 
 );
@@ -189,6 +200,8 @@ signal outdata_vmemon  : std_logic_vector(15 downto 0);
 
 signal jtag_tck  : std_logic_vector(6 downto 0);
 
+signal outdata_testctrl : std_logic_vector(15 downto 0);
+
 COMPONENT VMEMON is
   
   port (
@@ -209,6 +222,36 @@ COMPONENT VMEMON is
     FLFDATA  : in std_logic_vector(15 downto 0)
  
  );
+end COMPONENT;
+
+COMPONENT TESTCTRL is
+    generic (
+      NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
+      );    
+  port (
+    CLK : in std_logic;
+    SLOWCLK : in std_logic;
+    RST : in std_logic;
+
+    DEVICE : in std_logic;
+    STROBE : in std_logic;
+    COMMAND : in std_logic_vector(9 downto 0);
+ 
+    INDATA : in std_logic_vector(15 downto 0);
+    OUTDATA : out std_logic_vector(15 downto 0);
+    
+    DTACK : out std_logic;
+ 
+    L1A : out std_logic;
+    ALCT_DAV : out std_logic;
+    TMB_DAV : out std_logic;
+    LCT : out std_logic_vector(NFEB downto 0);
+    DDU_DATA : in std_logic_vector(15 downto 0);
+    DDU_DATA_VALID :  in std_logic;
+    TC_RUN :  out std_logic
+    
+    );
+    
 end COMPONENT;
 
 COMPONENT FIFOMON is
@@ -366,6 +409,7 @@ COMPONENT vme_outdata_sel IS
 	(
 
 		device : IN STD_LOGIC_VECTOR(9 downto 0);
+		device0_outdata : IN STD_LOGIC_VECTOR(15 downto 0);
 		device1_outdata : IN STD_LOGIC_VECTOR(15 downto 0);
 		device2_outdata : IN STD_LOGIC_VECTOR(15 downto 0);
 		device3_outdata : IN STD_LOGIC_VECTOR(15 downto 0);
@@ -429,7 +473,7 @@ PORT MAP (
     FASTCLK => clk,
     SLOWCLK => clk_s2,
 
-	 GA => ext_vme_ga, -- gap = ga(5)
+	  GA => ext_vme_ga, -- gap = ga(5)
     ADR => vme_addr,
     AM => vme_am,
 
@@ -445,7 +489,7 @@ PORT MAP (
     TOVME_B => tovme_b,
     DOE_B => doe_b,
 
- 	 DEVICE => device,
+ 	  DEVICE => device,
     STROBE => strobe,
     COMMAND => cmd,
     ADRS => cmd_adrs,
@@ -458,6 +502,7 @@ VME_OUT_SEL_PM : vme_outdata_sel
   	port map (
 
 		device => device,
+		device0_outdata => outdata_testctrl,
 		device1_outdata => outdata_cfebjtag,
 		device2_outdata => outdata_mbcjtag,
 		device3_outdata => outdata_vmemon,
@@ -466,6 +511,8 @@ VME_OUT_SEL_PM : vme_outdata_sel
 		outdata => vme_data_out
 	);
 	
+-- Device 0 => TESTCTRL
+
 -- Device 1 => CFEBJTAG
 
 dl_jtag_tck <= jtag_tck;
@@ -579,6 +626,33 @@ FIFOMON_PM : FIFOMON
 
 
 );
+
+TESTCTRL_PM : TESTCTRL
+  generic map (NFEB => NFEB)
+ 	port map (
+
+    CLK => clk,
+    SLOWCLK => clk_s2,
+    RST => rst,
+
+    DEVICE => device(0),
+    STROBE => strobe,
+    COMMAND => cmd,
+
+    INDATA => vme_data_in,
+    OUTDATA => outdata_testctrl,
+    
+    DTACK => vme_dtack_b,
+ 
+    L1A => TC_L1A,
+    ALCT_DAV => TC_ALCT_DAV,
+    TMB_DAV => TC_TMB_DAV,
+    LCT => TC_LCT,
+    DDU_DATA => DDU_DATA,
+    DDU_DATA_VALID => DDU_DATA_VALID,
+    TC_RUN => TC_RUN
+   
+    );
 
 VMEMON_PM : VMEMON
  	port map (
