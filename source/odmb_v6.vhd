@@ -30,6 +30,8 @@ entity ODMB_V6 is
     );  
   port
     (
+      tc_run_out    : out   std_logic;  -- OK           NEW!
+
 
 -- From/To VME connector To/From MBV
 
@@ -2017,8 +2019,8 @@ end generate GEN_ORX2;
       tc_alct_dav => tc_alct_dav,
       tc_tmb_dav => tc_tmb_dav,
       tc_lct => tc_lct,
-      ddu_data => ddu_data,
-      ddu_data_valid => ddu_data_valid,
+      ddu_data => gtx0_data,
+      ddu_data_valid => gtx0_data_valid,
       tc_run => tc_run
 
 
@@ -2028,6 +2030,7 @@ int_l1a <= tc_l1a when (tc_run = '1') else ccb_l1acc;
 int_alct_dav <= tc_alct_dav when (tc_run = '1') else lctdav2;
 int_tmb_dav <= tc_tmb_dav when (tc_run = '1') else lctdav1;
 int_lct <= tc_lct when (tc_run = '1') else rawlct;
+tc_run_out <= tc_run;
 
 -- ODMB_CTRL FPGA
 

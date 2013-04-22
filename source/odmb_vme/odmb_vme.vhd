@@ -701,7 +701,7 @@ dac_sdain <= '0';
 fifo_wr_ck <= '0';
 fifo_wr_en <= "000000000";
 fifo_rw_en <= "000000000";
-fifo_rm_en <= "000000000";	
+fifo_rm_en <= (others => '1');	
 fifo_tm_en <= "000000000";		
 
 fifo_in <= (others => '0');				

@@ -188,6 +188,7 @@ end COMPONENT;
 COMPONENT odmb_v6 is
 	port
 	(
+      tc_run_out    : out   std_logic;  -- OK           NEW!
 
 -- From/To VME connector To/From MBV
 
@@ -758,7 +759,7 @@ begin
   reset <= '1' after 200 ns, '0' after 13000 ns;
  
   go <= '1' after 10 us;
-  goevent <= '1' after 300 us;
+  --goevent <= '1' after 300 us;
         
   qpll_clk40MHz_p <= not qpll_clk40MHz_p after 10 ns;
   qpll_clk40MHz_n <= not qpll_clk40MHz_n after 10 ns;
@@ -927,6 +928,7 @@ PMAP_pon_reg : pon_reg
 PMAP_odmb_v6 : odmb_v6
    port map(
 
+    tc_run_out => goevent,
 -- From/To VME connector To/From MBV
 
 		vme_data => data(15 downto 0), -- inout

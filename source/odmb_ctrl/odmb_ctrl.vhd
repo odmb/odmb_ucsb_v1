@@ -981,10 +981,15 @@ CONTROL_PM : CONTROL
     cafifo_bx_cnt => cafifo_bx_cnt_out
     );
     
-gtx0_data <= gtx_data;                                                                                      
-gtx0_data_valid <= gtx_data_valid; 
-gtx1_data <= gtx_data;                                                                                      
-gtx1_data_valid <= gtx_data_valid; 
+--gtx0_data <= gtx_data;                                                                                      
+--gtx0_data_valid <= gtx_data_valid; 
+--gtx1_data <= gtx_data;                                                                                      
+--gtx1_data_valid <= gtx_data_valid; 
+
+gtx0_data <= ddu_data;                                                                                      
+gtx0_data_valid <= ddu_data_valid; 
+gtx1_data <= ddu_data;                                                                                      
+gtx1_data_valid <= ddu_data_valid; 
 
 DDUFIFO_PM : ddufifo
 
