@@ -1094,6 +1094,8 @@ architecture bdf_type of ODMB_V6_V2 is
   signal ddu_data_valid            : std_logic                     := '0';
 
   signal tc_run : std_logic;
+  signal counter_clk : INTEGER := 0;
+	signal clk1 : STD_LOGIC := '0';
 
 --  signal odmb_hardrst_b : std_logic := '1';
 --  signal tph : std_logic_vector(46 downto 27) := (others => '0');
@@ -1229,8 +1231,9 @@ begin
 --led10_buf : OBUFT port map (O => leds(10), I => '0', T => pb(2));     
 --led11_buf : OBUFT port map (O => leds(11), I => '0', T => pb(3));     
 
-  leds(3 downto 0) <= mbc_leds(3 downto 0) when flf_ctrl(6) = '1' else
-                      flf_ctrl(3 downto 0);
+  leds(2 downto 0) <= mbc_leds(2 downto 0) when flf_ctrl(6) = '1' else
+                      flf_ctrl(2 downto 0);
+  leds(3) <= clk1;
   leds(4)  <= vme_berr_b;
   leds(5)  <= vme_sysfail_b;
   leds(6)  <= not int_vme_dtack_v6_b;
@@ -1330,6 +1333,22 @@ begin
 -- qpll_clk80MHz
   qpll_clk80MHz_buf : IBUFDS port map (I => qpll_clk80MHz_p, IB => qpll_clk80MHz_n, O => qpll_clk80MHz);
 
+
+Divide_Frequency : process(qpll_clk40MHz)
+	begin
+		if qpll_clk40MHz'event and qpll_clk40MHz='1' then
+			if counter_clk = 20000000 then
+				counter_clk <= 0;
+				if clk1='1' then 
+					clk1 <= '0';
+				else 
+					clk1 <= '1'; 
+				end if;
+			else
+				counter_clk <= counter_clk + 1;
+			end if;
+		end if;
+	end process Divide_Frequency;
 
 
 -- ------------------------------------------------------------------------------------------------- 

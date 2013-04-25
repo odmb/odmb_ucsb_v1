@@ -370,7 +370,8 @@ begin
     		tc_fifo_wr_ck(I) <= slowclk;
     		tc_fifo_rd_en(I) <= event_rd when (tc_run_inner = '1') else fifo_rd_en(I);
    		 tc_fifo_rd_ck(I) <= clk when (tc_run_inner = '1') else slowclk;
-    		tc_fifo_in(I) <= indata;
+    		--tc_fifo_in(I) <= indata;
+    		tc_fifo_in(I) <= FIFO_WR_DATA;
 
 end generate GEN_TC_FIFO_VALS;
 	tc_fifo_wr_en(3) <= ddu_data_valid when (tc_run_inner = '1') else fifo_wr_en(3);
