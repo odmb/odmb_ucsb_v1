@@ -194,6 +194,7 @@ entity ODMB_V6_V2 is
 -- From IC31 
 
       done_in : in std_logic
+		
       );
 end ODMB_V6_V2;
 
@@ -518,7 +519,12 @@ architecture bdf_type of ODMB_V6_V2 is
       test_ccbinj : in std_logic;
       test_ccbpls : in std_logic;
 
-      leds : out std_logic_vector(5 downto 0)
+      leds : out std_logic_vector(6 downto 0);
+
+	 ALCT_PUSH_DLY_OUT : out std_logic_vector(4 downto 0);
+      TMB_PUSH_DLY_OUT  : out std_logic_vector(4 downto 0);
+      PUSH_DLY_OUT      : out std_logic_vector(4 downto 0);
+      LCT_L1A_DLY_OUT   : out std_logic_vector(5 downto 0)
 
       );
 
@@ -680,7 +686,8 @@ architecture bdf_type of ODMB_V6_V2 is
       tc_lct         : out std_logic_vector(NFEB downto 0);
       ddu_data       : in  std_logic_vector(15 downto 0);
       ddu_data_valid : in  std_logic;
-      tc_run         : out std_logic
+      tc_run         : out std_logic;
+		ts_out : out std_logic_vector(31 downto 0)
 
 
       );
@@ -1034,7 +1041,7 @@ architecture bdf_type of ODMB_V6_V2 is
   signal b_orx_01_p, b_orx_01_n : std_logic;
 
   signal por_reg  : std_logic_vector (31 downto 0);
-  signal mbc_leds : std_logic_vector (5 downto 0);
+  signal mbc_leds : std_logic_vector (6 downto 0);
 
   signal select_diagnostic : integer := 0;
 
@@ -1096,6 +1103,14 @@ architecture bdf_type of ODMB_V6_V2 is
   signal tc_run : std_logic;
   signal counter_clk : INTEGER := 0;
 	signal clk1 : STD_LOGIC := '0';
+	signal ts_out : std_logic_vector(31 downto 0);
+
+-- from odmb_ctrl to flf_ctrl
+			 signal alct_push_dly_out : std_logic_vector(4 downto 0);
+      signal tmb_push_dly_out  : std_logic_vector(4 downto 0);
+      signal push_dly_out : std_logic_vector(4 downto 0);
+     signal lct_l1a_dly_out  : std_logic_vector(5 downto 0);
+
 
 --  signal odmb_hardrst_b : std_logic := '1';
 --  signal tph : std_logic_vector(46 downto 27) := (others => '0');
@@ -1171,7 +1186,8 @@ begin
       por_reg <= por_reg(30 downto 0) & '0';
     end if;
   end process;
-  reset <= por_reg(31);
+--  reset <= por_reg(31);
+  reset <= por_reg(31) or not pb(0);
 
 
   PULLUP_dtack_b : PULLUP
@@ -1247,47 +1263,57 @@ begin
 
   begin
     
-    case flf_ctrl(4 downto 0) is
+    case flf_ctrl(5 downto 0) is
 
-      when "00000" => flf_data <= "0000" & dcfeb_adc_mask(1);
-      when "00001" => flf_data <= dcfeb_fsel(1)(15 downto 0);
-      when "00010" => flf_data <= dcfeb_fsel(1)(31 downto 16);
-      when "00011" => flf_data <= "00" & dcfeb_jtag_ir(1) & "000" & dcfeb_fsel(1)(31);
+      when "000000" => flf_data <= "0000" & dcfeb_adc_mask(1);
+      when "000001" => flf_data <= dcfeb_fsel(1)(15 downto 0);
+      when "000010" => flf_data <= dcfeb_fsel(1)(31 downto 16);
+      when "000011" => flf_data <= "00" & dcfeb_jtag_ir(1) & "000" & dcfeb_fsel(1)(31);
 
-      when "00100" => flf_data <= "0000" & dcfeb_adc_mask(2);
-      when "00101" => flf_data <= dcfeb_fsel(2)(15 downto 0);
-      when "00110" => flf_data <= dcfeb_fsel(2)(31 downto 16);
-      when "00111" => flf_data <= "00" & dcfeb_jtag_ir(2) & "000" & dcfeb_fsel(2)(31);
+      when "000100" => flf_data <= "0000" & dcfeb_adc_mask(2);
+      when "000101" => flf_data <= dcfeb_fsel(2)(15 downto 0);
+      when "000110" => flf_data <= dcfeb_fsel(2)(31 downto 16);
+      when "000111" => flf_data <= "00" & dcfeb_jtag_ir(2) & "000" & dcfeb_fsel(2)(31);
 
-      when "01000" => flf_data <= "0000" & dcfeb_adc_mask(3);
-      when "01001" => flf_data <= dcfeb_fsel(3)(15 downto 0);
-      when "01010" => flf_data <= dcfeb_fsel(3)(31 downto 16);
-      when "01011" => flf_data <= "00" & dcfeb_jtag_ir(3) & "000" & dcfeb_fsel(3)(31);
+      when "001000" => flf_data <= "0000" & dcfeb_adc_mask(3);
+      when "001001" => flf_data <= dcfeb_fsel(3)(15 downto 0);
+      when "001010" => flf_data <= dcfeb_fsel(3)(31 downto 16);
+      when "001011" => flf_data <= "00" & dcfeb_jtag_ir(3) & "000" & dcfeb_fsel(3)(31);
 
-      when "01100" => flf_data <= "0000" & dcfeb_adc_mask(4);
-      when "01101" => flf_data <= dcfeb_fsel(4)(15 downto 0);
-      when "01110" => flf_data <= dcfeb_fsel(4)(31 downto 16);
-      when "01111" => flf_data <= "00" & dcfeb_jtag_ir(4) & "000" & dcfeb_fsel(4)(31);
+      when "001100" => flf_data <= "0000" & dcfeb_adc_mask(4);
+      when "001101" => flf_data <= dcfeb_fsel(4)(15 downto 0);
+      when "001110" => flf_data <= dcfeb_fsel(4)(31 downto 16);
+      when "001111" => flf_data <= "00" & dcfeb_jtag_ir(4) & "000" & dcfeb_fsel(4)(31);
 
-      when "10000" => flf_data <= "0000" & dcfeb_adc_mask(5);
-      when "10001" => flf_data <= dcfeb_fsel(5)(15 downto 0);
-      when "10010" => flf_data <= dcfeb_fsel(5)(31 downto 16);
-      when "10011" => flf_data <= "00" & dcfeb_jtag_ir(5) & "000" & dcfeb_fsel(5)(31);
+      when "010000" => flf_data <= "0000" & dcfeb_adc_mask(5);
+      when "010001" => flf_data <= dcfeb_fsel(5)(15 downto 0);
+      when "010010" => flf_data <= dcfeb_fsel(5)(31 downto 16);
+      when "010011" => flf_data <= "00" & dcfeb_jtag_ir(5) & "000" & dcfeb_fsel(5)(31);
 
-      when "10100" => flf_data <= "0000" & dcfeb_adc_mask(6);
-      when "10101" => flf_data <= dcfeb_fsel(6)(15 downto 0);
-      when "10110" => flf_data <= dcfeb_fsel(6)(31 downto 16);
-      when "10111" => flf_data <= "00" & dcfeb_jtag_ir(6) & "000" & dcfeb_fsel(6)(31);
+      when "010100" => flf_data <= "0000" & dcfeb_adc_mask(6);
+      when "010101" => flf_data <= dcfeb_fsel(6)(15 downto 0);
+      when "010110" => flf_data <= dcfeb_fsel(6)(31 downto 16);
+      when "010111" => flf_data <= "00" & dcfeb_jtag_ir(6) & "000" & dcfeb_fsel(6)(31);
 
-      when "11000" => flf_data <= "0000" & dcfeb_adc_mask(7);
-      when "11001" => flf_data <= dcfeb_fsel(7)(15 downto 0);
-      when "11010" => flf_data <= dcfeb_fsel(7)(31 downto 16);
-      when "11011" => flf_data <= "00" & dcfeb_jtag_ir(7) & "000" & dcfeb_fsel(7)(31);
+      when "011000" => flf_data <= "0000" & dcfeb_adc_mask(7);
+      when "011001" => flf_data <= dcfeb_fsel(7)(15 downto 0);
+      when "011010" => flf_data <= dcfeb_fsel(7)(31 downto 16);
+      when "011011" => flf_data <= "00" & dcfeb_jtag_ir(7) & "000" & dcfeb_fsel(7)(31);
 
-      when "11100" => flf_data <= mbc_fsel(16 downto 1);
-      when "11101" => flf_data <= mbc_fsel(32 downto 17);
-      when "11110" => flf_data <= '0' & mbc_fsel(47 downto 33);
-      when "11111" => flf_data <= "00" & mbc_jtag_ir(9 downto 0) & "0000";
+      when "011100" => flf_data <= mbc_fsel(16 downto 1);
+      when "011101" => flf_data <= mbc_fsel(32 downto 17);
+      when "011110" => flf_data <= '0' & mbc_fsel(47 downto 33);
+      when "011111" => flf_data <= "00" & mbc_jtag_ir(9 downto 0) & "0000";
+
+		when "100000" => flf_data <= ts_out(15 downto 0);
+		when "100001" => flf_data <= ts_out (31 downto 16);
+		
+		when "100010" => flf_data <=  "00000000000" & alct_push_dly_out;
+		when "100011" => flf_data <= "00000000000" & tmb_push_dly_out;
+		when "100100" => flf_data <= "00000000000" & push_dly_out;
+		when "110101" => flf_data <= "0000000000" & lct_l1a_dly_out;
+
+		when "110110" => flf_data <= "000000000" & mbc_leds; --crate_id
 
       when others => flf_data <= "0000000000000000";
     end case;
@@ -1658,8 +1684,8 @@ Divide_Frequency : process(qpll_clk40MHz)
       tc_lct         => tc_lct,
       ddu_data       => gtx0_data,
       ddu_data_valid => gtx0_data_valid,
-      tc_run         => tc_run
-
+      tc_run         => tc_run,
+		ts_out => ts_out
 
       );
 
@@ -1800,7 +1826,13 @@ Divide_Frequency : process(qpll_clk40MHz)
       test_ccbinj => flf_ctrl(15),
       test_ccbpls => flf_ctrl(14),
 
-      leds => mbc_leds
+      leds => mbc_leds,
+		
+			 ALCT_PUSH_DLY_OUT => alct_push_dly_out,
+      TMB_PUSH_DLY_OUT  => tmb_push_dly_out,
+      PUSH_DLY_OUT     => push_dly_out,
+      LCT_L1A_DLY_OUT   => lct_l1a_dly_out
+
 
       );
 
