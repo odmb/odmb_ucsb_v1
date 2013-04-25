@@ -18,6 +18,7 @@ entity CONFREGS is
     BTDI   : in std_logic;
     SEL2   : in std_logic;
     DRCK   : in std_logic;
+	 CLK40 : in std_logic;
     UPDATE : in std_logic;
     SHIFT  : in std_logic;
 
@@ -55,6 +56,7 @@ architecture CONFREGS_Arch of CONFREGS is
   signal KILL_SHR_EN, KILL_DR_CLK, KILL_TDO : std_logic;
   signal KILL_SHR                           : std_logic_vector(NFEB+3 downto 1);
   signal KILL_DR                            : std_logic_vector(NFEB+2 downto 1);
+	signal dly_drck : std_logic;
 
 begin  --Architecture
 
@@ -63,9 +65,10 @@ begin  --Architecture
   DLY_DR_CLK <= UPDATE and SEL2 and FLOADDLY;
   DLY_SHR(22) <= BTDI;
   -- In the original design, at reset DAVDLY(14:10) = PUSH_DLY was 10110  
+  FD_DRCK : FD port map(dly_drck, clk40, DRCK);
   GEN_DLY_SHR : for I in 21 downto 1 generate
   begin
-    FDPE_I : FDPE port map(DLY_SHR(I), DRCK, DLY_SHR_EN, DLY_SHR(I+1), RST);
+    FDPE_I : FDPE port map(DLY_SHR(I), dly_drck, DLY_SHR_EN, DLY_SHR(I+1), RST);
     FDP_I  : FDP port map(DLY_DR(I), DLY_DR_CLK, DLY_SHR(I), RST);
   end generate GEN_DLY_SHR;
   LCT_L1A_DLY(5 downto 0) <= DLY_DR(6 downto 1);
