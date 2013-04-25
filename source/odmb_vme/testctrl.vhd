@@ -31,8 +31,8 @@ entity TESTCTRL is
     LCT : out std_logic_vector(NFEB downto 0);
     DDU_DATA : in std_logic_vector(15 downto 0);
     DDU_DATA_VALID :  in std_logic;
-    TC_RUN :  out std_logic
-    
+    TC_RUN :  out std_logic;
+    TS_OUT : out std_logic_vector(31 downto 0)
     );
     
 end TESTCTRL;
@@ -41,7 +41,7 @@ architecture TESTCTRL_Arch of TESTCTRL is
 
   --Declaring internal signals
   signal CMDHIGH, WRITE_FIFO, READ_FIFO, WRITE_FSR, READ_FSR, READ_STR, READ_WRC, READ_RDC : std_logic;
-  signal FSR_vector : std_logic_vector(4 downto 0);
+  signal FSR_vector : std_logic_vector(6 downto 0);
   signal E_DTACK,D_DTACK : std_logic;
   signal D_DTACK_WRITE_FSR,E_DTACK_WRITE_FSR : std_logic;
   signal D_DTACK_READ_FSR,E_DTACK_READ_FSR : std_logic;
@@ -80,7 +80,8 @@ architecture TESTCTRL_Arch of TESTCTRL is
   signal tc_fifo_out : tc_fifo_in_type;
   signal tc_fifo_full, tc_fifo_afull, tc_fifo_aempty, tc_fifo_empty : std_logic_vector(3 downto 0);
   signal event_fifo_out : std_logic_vector(15 downto 0);
-
+  signal tc_fifo_rst : std_logic;
+	signal ts_cnt_rst : std_logic;
 -----------
 
 begin  --Architecture
@@ -150,10 +151,14 @@ begin  --Architecture
     FDCE(INDATA(2),STROBE,WRITE_FSR,RST,FSR_vector(2));
     FDCE(INDATA(3),STROBE,WRITE_FSR,RST,FSR_vector(3));
     FDCE(INDATA(4),STROBE,WRITE_FSR,RST,FSR_vector(4));
+    FDCE(INDATA(5),STROBE,WRITE_FSR,RST,FSR_vector(5));
+    FDCE(INDATA(6),STROBE,WRITE_FSR,RST,FSR_vector(6));
   end process;
   
   FIFO_SEL <= FSR_vector(3 downto 0);
   tc_run_inner <= FSR_vector(4);
+  ts_cnt_rst <= FSR_vector(5);
+  tc_fifo_rst <= rst or FSR_vector(6);
   tc_run <= tc_run_inner;
 
   CREATE_OUTDATA: process (STROBE,READ_FSR,READ_STR,READ_WRC,READ_RDC,READ_FIFO,FSR_vector,FIFO_STR, FIFO_WRC, FIFO_RDC, SLOWCLK,D_DTACK,E_DTACK)  --Also CREATE_DTACK
@@ -408,7 +413,7 @@ end generate GEN_TC_FIFO_VALS;
         DI          => tc_fifo_in(I),      -- Input data
         RDCLK       => tc_fifo_rd_ck(I),   -- Input read clock
         RDEN        => tc_fifo_rd_en(I),   -- Input read enable
-        RST         => rst,              -- Input reset
+        RST         => tc_fifo_rst,              -- Input reset
         WRCLK       => tc_fifo_wr_ck(I),   -- Input write clock
         WREN        => tc_fifo_wr_en(I)    -- Input write enable
         );
@@ -448,14 +453,14 @@ VARIABLE TS_CNT_DATA : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
 BEGIN
 
-	IF (RST = '1') THEN
+	IF (RST = '1' or ts_cnt_rst = '1') THEN
 		TS_CNT_DATA := (OTHERS => '0');
 	ELSIF (tc_run_inner = '1') AND (RISING_EDGE(CLK)) then
 		TS_CNT_DATA := std_logic_vector(unsigned(TS_CNT_DATA) + 1);
 	END IF;              
 	
 	TS_CNT_OUT <= TS_CNT_DATA;
-	
+	TS_OUT <= TS_CNT_DATA;	
 END PROCESS;
 
 TC_FIFO_CTRL: process (CLK,TS_FIFO_OUT,TS_CNT_OUT,EVENT_FIFO_OUT,tc_run_inner)
