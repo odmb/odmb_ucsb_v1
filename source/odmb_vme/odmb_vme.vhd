@@ -2,7 +2,6 @@ library ieee;
 use ieee.std_logic_1164.all;
 use IEEE.std_logic_arith.all;
 use IEEE.std_logic_unsigned.all;
-
 entity ODMB_VME is
   generic (
     NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
@@ -163,7 +162,8 @@ entity ODMB_VME is
     tc_lct         : out std_logic_vector(NFEB downto 0);
     ddu_data       : in  std_logic_vector(15 downto 0);
     ddu_data_valid : in  std_logic;
-    tc_run         : out std_logic
+    tc_run         : out std_logic;
+		ts_out : out std_logic_vector(31 downto 0)
 
 
 
@@ -248,8 +248,8 @@ architecture ODMB_VME_architecture of ODMB_VME is
       LCT            : out std_logic_vector(NFEB downto 0);
       DDU_DATA       : in  std_logic_vector(15 downto 0);
       DDU_DATA_VALID : in  std_logic;
-      TC_RUN         : out std_logic
-
+      TC_RUN         : out std_logic;
+		TS_OUT : out std_logic_vector(31 downto 0)
       );
 
   end component;
@@ -650,8 +650,8 @@ begin
       LCT            => TC_LCT,
       DDU_DATA       => DDU_DATA,
       DDU_DATA_VALID => DDU_DATA_VALID,
-      TC_RUN         => TC_RUN
-
+      TC_RUN         => TC_RUN,
+		TS_OUT => TS_OUT
       );
 
   VMEMON_PM : VMEMON
