@@ -1229,8 +1229,10 @@ begin
 --led10_buf : OBUFT port map (O => leds(10), I => '0', T => pb(2));     
 --led11_buf : OBUFT port map (O => leds(11), I => '0', T => pb(3));     
 
-  leds(5 downto 0) <= mbc_leds(5 downto 0) when flf_ctrl(6) = '1' else
-                      flf_ctrl(5 downto 0);
+  leds(3 downto 0) <= mbc_leds(3 downto 0) when flf_ctrl(6) = '1' else
+                      flf_ctrl(3 downto 0);
+  leds(4)  <= vme_berr_b;
+  leds(5)  <= vme_sysfail_b;
   leds(6)  <= not int_vme_dtack_v6_b;
   leds(7)  <= not pll1_locked;
   leds(8)  <= not qpll_locked;
