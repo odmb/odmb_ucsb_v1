@@ -128,7 +128,12 @@ entity ODMB_CTRL is
     test_ccbpls : in std_logic;
 
     lct_err : out std_logic;            -- To an LED in the original design
-    leds    : out std_logic_vector(5 downto 0));
+    leds    : out std_logic_vector(6 downto 0);
+	 ALCT_PUSH_DLY_OUT : out std_logic_vector(4 downto 0);
+      TMB_PUSH_DLY_OUT  : out std_logic_vector(4 downto 0);
+      PUSH_DLY_OUT      : out std_logic_vector(4 downto 0);
+      LCT_L1A_DLY_OUT   : out std_logic_vector(5 downto 0)
+	 );
 
 end ODMB_CTRL;
 
@@ -196,6 +201,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
       BTDI   : in std_logic;
       SEL2   : in std_logic;
       DRCK   : in std_logic;
+		clk40 : in std_logic;
       UPDATE : in std_logic;
       SHIFT  : in std_logic;
 
@@ -715,7 +721,7 @@ begin
   
   mbc_fsel <= instr;
 
-  leds(5 downto 0) <= crateid(5 downto 0);
+  leds <= crateid;
 
   JTAG_PM : BGB_BSCAN_emulator
     port map (
@@ -767,6 +773,7 @@ begin
 
       BTDI   => tdi,
       DRCK   => drck2,
+		clk40 => clk40,
       SEL2   => sel2,
       SHIFT  => shift2,
       UPDATE => update2,
@@ -990,6 +997,12 @@ gtx0_data <= ddu_data;
 gtx0_data_valid <= ddu_data_valid; 
 gtx1_data <= ddu_data;                                                                                      
 gtx1_data_valid <= ddu_data_valid; 
+
+	 ALCT_PUSH_DLY_OUT <= alct_push_dly;
+      TMB_PUSH_DLY_OUT  <= tmb_push_dly;
+      PUSH_DLY_OUT      <= push_dly;
+      LCT_L1A_DLY_OUT   <= lct_l1a_dly;
+
 
 DDUFIFO_PM : ddufifo
 
