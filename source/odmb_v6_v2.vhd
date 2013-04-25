@@ -57,7 +57,7 @@ entity ODMB_V6_V2 is
       vme_clk         : in    std_logic;
       vme_dtack_v6_b  : inout std_logic;
       vme_tovme       : out   std_logic;  -- not (tovme)
-      vme_doe         : out   std_logic;  -- not (doe*)
+      vme_doe_b         : out   std_logic;  
 
 -- From/To PPIB (connectors J3 and J4)
 
@@ -717,7 +717,7 @@ architecture bdf_type of ODMB_V6_V2 is
   signal vme_data_out : std_logic_vector (15 downto 0);
   signal vme_data_in  : std_logic_vector (15 downto 0);
   signal vme_tovme_b  : std_logic;
-  signal vme_doe_b    : std_logic;
+  signal vme_doe    : std_logic;
 
 
   signal vme_test_mode : std_logic;

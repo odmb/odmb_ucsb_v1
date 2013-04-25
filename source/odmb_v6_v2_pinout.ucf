@@ -474,6 +474,6 @@ NET: "tph[46]" LOC = "AH10" | IOSTANDARD = LVCMOS25; #STAT2   tp_20
 NET: "v6_tck" LOC = "AG21" | IOSTANDARD = LVCMOS25; #STAT2
 NET: "v6_tdi" LOC = "AF20" | IOSTANDARD = LVCMOS25; #STAT2
 NET: "v6_tms" LOC = "AG22" | IOSTANDARD = LVCMOS25; #STAT2
-#NET: "v6_vme_dir" LOC = "N33" | IOSTANDARD = LVCMOS25; #STAT2
-#NET: "v6_vme_oe_b" LOC = "N34" | IOSTANDARD = LVCMOS25; #STAT2
+NET: "vme_tovme" LOC = "N33" | IOSTANDARD = LVCMOS25; #STAT2
+NET: "vme_doe_b" LOC = "N34" | IOSTANDARD = LVCMOS25; #STAT2
 NET: "tc_run_out" LOC = "J15" | IOSTANDARD = LVCMOS25; #user added for port used in simulation so ise doesn't complain
