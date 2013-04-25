@@ -364,7 +364,7 @@ end process;
     
   end process;
 
-GEN_TC_FIFO_VALS :  for I in 3 downto 0 generate  -- (DDU_DATA,L1A/ALCT_DAV/TMB_DAV/LCT,TSH,TSL)
+GEN_TC_FIFO_VALS :  for I in 2 downto 0 generate  -- (DDU_DATA,L1A/ALCT_DAV/TMB_DAV/LCT,TSH,TSL)
 begin
     		tc_fifo_wr_en(I) <= fifo_wr_en(I);
     		tc_fifo_wr_ck(I) <= slowclk;

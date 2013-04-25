@@ -37,14 +37,14 @@ end alct_tmb_data_gen;
 
 architecture alct_tmb_data_gen_architecture of alct_tmb_data_gen is
 
-type state_type is (IDLE, TX_HEADER, TX_DATA);
+type state_type is (IDLE, TX_HEADER1, TX_HEADER2, TX_DATA);
     
 signal alct_next_state, alct_current_state: state_type;
 signal tmb_next_state, tmb_current_state: state_type;
 
 signal alct_dw_cnt_en, alct_dw_cnt_rst : std_logic;
 signal tmb_dw_cnt_en, tmb_dw_cnt_rst : std_logic;
-signal l1a_cnt_out : std_logic_vector(11 downto 0);
+signal l1a_cnt_out : std_logic_vector(23 downto 0);
 signal alct_dw_cnt_out : std_logic_vector(11 downto 0);
 signal tmb_dw_cnt_out : std_logic_vector(11 downto 0);
 constant dw_n : std_logic_vector(11 downto 0) := "000000001000";
@@ -56,7 +56,7 @@ begin
 	
 l1a_cnt: process (clk, l1a)
 
-variable l1a_cnt_data : std_logic_vector(11 downto 0);
+variable l1a_cnt_data : std_logic_vector(23 downto 0);
 
 begin
 
@@ -144,14 +144,22 @@ begin
       alct_dw_cnt_en <= '0';
 			alct_dw_cnt_rst <= '1';
 			if (alct_tx_start = '1') then
-				alct_next_state <= TX_HEADER;
+				alct_next_state <= TX_HEADER1;
 			else
 				alct_next_state <= IDLE;
 			end if;
 			
-		when TX_HEADER =>
+		when TX_HEADER1 =>
 			
-      alct_data <= "1111" & l1a_cnt_out;			
+      alct_data <= "0111" & l1a_cnt_out(23 downto 12);			
+      alct_dv <= '1';	
+      alct_dw_cnt_en <= '0';
+			alct_dw_cnt_rst <= '0';
+			alct_next_state <= TX_HEADER2;
+			
+		when TX_HEADER2 =>
+			
+      alct_data <= "0111" & l1a_cnt_out(11 downto 0);			
       alct_dv <= '1';	
       alct_dw_cnt_en <= '0';
 			alct_dw_cnt_rst <= '0';
@@ -159,7 +167,7 @@ begin
 			
 		when TX_DATA =>
 
-      alct_data <= "1111" & alct_dw_cnt_out;			
+      alct_data <= "0111" & alct_dw_cnt_out;			
       alct_dv <= '1';	
 			if (alct_dw_cnt_out = dw_n) then
         alct_dw_cnt_en <= '0';
@@ -196,14 +204,22 @@ begin
       tmb_dw_cnt_en <= '0';
 			tmb_dw_cnt_rst <= '1';
 			if (tmb_tx_start = '1') then
-				tmb_next_state <= TX_HEADER;
+				tmb_next_state <= TX_HEADER1;
 			else
 				tmb_next_state <= IDLE;
 			end if;
 			
-		when TX_HEADER =>
+		when TX_HEADER1 =>
 			
-      tmb_data <= "1110" & l1a_cnt_out;			
+      tmb_data <= "0110" & l1a_cnt_out(23 downto 12);			
+      tmb_dv <= '1';	
+      tmb_dw_cnt_en <= '0';
+			tmb_dw_cnt_rst <= '0';
+			tmb_next_state <= TX_HEADER2;
+			
+		when TX_HEADER2 =>
+			
+      tmb_data <= "0110" & l1a_cnt_out(11 downto 0);			
       tmb_dv <= '1';	
       tmb_dw_cnt_en <= '0';
 			tmb_dw_cnt_rst <= '0';
@@ -211,7 +227,7 @@ begin
 			
 		when TX_DATA =>
 
-      tmb_data <= "1110" & tmb_dw_cnt_out;			
+      tmb_data <= "0110" & tmb_dw_cnt_out;			
       tmb_dv <= '1';	
 			if (tmb_dw_cnt_out = dw_n) then
         tmb_dw_cnt_en <= '0';

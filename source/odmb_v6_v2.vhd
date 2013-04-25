@@ -3,10 +3,10 @@
 -- Engineer/Physicists: Guido Magazzu, Frank Golf, Manuel Franco Sevilla, David Nash
 --
 -- Create Date:     03/03/2013
--- Project Name:    ODMB_UCSB_V1
+-- Project Name:    ODMB_UCSB_V2
 -- Target Devices:  Virtex-6
 -- Tool versions:   ISE 12.3
--- Description:     Official firmware for the ODMB.V1
+-- Description:     Official firmware for the ODMB.V2
 --
 -- Revision 0.01 - File Created
 ----------------------------------------------------------------------------------
@@ -22,282 +22,182 @@ library UNIMACRO;
 use UNIMACRO.vcomponents.all;
 library work;
 --USE work.Latches_Flipflops.all;
+use ieee.std_logic_misc.all;
 
-
-entity ODMB_V6 is
+entity ODMB_V6_V2 is
   generic (
     NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
     );  
   port
     (
-      tc_run_out    : out   std_logic;  -- OK           NEW!
+      tc_run_out : out std_logic;       -- OK           NEW!
 
 
 -- From/To VME connector To/From MBV
 
-      vme_data        : inout std_logic_vector(15 downto 0);  -- OK           d(15 DOWNTO 0)
-      vme_addr        : in    std_logic_vector(23 downto 1);  -- OK           a(23 DOWNTO 1)
-      vme_am          : in    std_logic_vector(5 downto 0);  -- OK           am(6 DOWNTO 0)
-      vme_gap         : in    std_logic;  -- OK           gap = ga(5)
-      vme_ga          : in    std_logic_vector(4 downto 0);  -- OK           ga(4 DOWNTO 0)
-      vme_bg0         : in    std_logic;  -- OK           NEW!
-      vme_bg1         : in    std_logic;  -- OK           NEW!
-      vme_bg2         : in    std_logic;  -- OK           NEW!
-      vme_bg3         : in    std_logic;  -- OK           NEW!
-      vme_as_b        : in    std_logic;  -- OK           as*
-      vme_ds_b        : in    std_logic_vector(1 downto 0);  -- OK           ds1*,ds0*
-      vme_sysreset_b  : in    std_logic;  -- OK           sysreset*
-      vme_sysfail_b   : in    std_logic;  -- OK           sysfail*
-      vme_sysfail_out : out   std_logic;  -- OK           NEW!
-      vme_berr_b      : in    std_logic;  -- OK           berr*
-      vme_berr_out    : out   std_logic;  -- OK           NEW!
-      vme_iack_b      : in    std_logic;  -- OK           iack*
-      vme_lword_b     : in    std_logic;  -- OK           lword*
-      vme_write_b     : in    std_logic;  -- OK           write*
-      vme_clk         : in    std_logic;  -- OK           ???
-      vme_dtack_v6_b  : inout std_logic;  -- OK           dtack*
-      vme_tovme       : out   std_logic;  -- OK           not (tovme)
-      vme_doe         : out   std_logic;  -- OK           not (doe*)
+      vme_data        : inout std_logic_vector(15 downto 0);
+      vme_addr        : in    std_logic_vector(23 downto 1);
+      vme_am          : in    std_logic_vector(5 downto 0);
+      vme_gap         : in    std_logic;
+      vme_ga          : in    std_logic_vector(4 downto 0);
+      vme_bg0         : in    std_logic;
+      vme_bg1         : in    std_logic;
+      vme_bg2         : in    std_logic;
+      vme_bg3         : in    std_logic;
+      vme_as_b        : in    std_logic;
+      vme_ds_b        : in    std_logic_vector(1 downto 0);
+      vme_sysreset_b  : in    std_logic;
+      vme_sysfail_b   : in    std_logic;
+      vme_sysfail_out : out   std_logic;
+      vme_berr_b      : in    std_logic;
+      vme_berr_out    : out   std_logic;
+      vme_iack_b      : in    std_logic;
+      vme_lword_b     : in    std_logic;
+      vme_write_b     : in    std_logic;
+      vme_clk         : in    std_logic;
+      vme_dtack_v6_b  : inout std_logic;
+      vme_tovme       : out   std_logic;  -- not (tovme)
+      vme_doe         : out   std_logic;  -- not (doe*)
+
+-- From/To PPIB (connectors J3 and J4)
+
+      dcfeb_tck       : out std_logic_vector(NFEB downto 1);
+      dcfeb_tms       : out std_logic;
+      dcfeb_tdi       : out std_logic;
+      dcfeb_tdo       : in  std_logic_vector(NFEB downto 1);
+      dcfeb_bco       : out std_logic;
+      dcfeb_resync    : out std_logic;
+      dcfeb_reprog_b  : out std_logic;
+      dcfeb_reprgen_b : out std_logic;
+      dcfeb_injpls    : out std_logic;
+      dcfeb_extpls    : out std_logic;
+      dcfeb_l1a       : out std_logic;
+      dcfeb_l1a_match : out std_logic_vector(NFEB downto 1);
+      dcfeb_done      : in  std_logic_vector(NFEB downto 1);
+
+-- From/To ODMB_V6_V2 JTAG port (through IC34)
+
+      v6_tck : out std_logic;
+      v6_tms : out std_logic;
+      v6_tdi : out std_logic;
+      v6_tdo : in  std_logic;
 
 -- From/To J6 (J3) connector to ODMB_CTRL
 
-      ccb_cmd    : in  std_logic_vector(5 downto 0);  -- OK           ccbcmnd(5 DOWNTO 0)
-      ccb_cmd_s  : in  std_logic;       -- OK           ccbcmnd(6)
-      ccb_data   : in  std_logic_vector(7 downto 0);  -- OK           ccbdata(7 DOWNTO 0)
-      ccb_data_s : in  std_logic;       -- OK           ccbdata(8)
-      ccb_cal    : in  std_logic_vector(2 downto 0);  -- OK           ccbcal(14 DOWNTO 12)
-      ccb_crsv   : in  std_logic_vector(4 downto 0);  -- OK           nc (J3/B2), ccbrsv(3 DOWNTO 0) = crsv(3 DOWNTO 0)
-      ccb_drsv   : in  std_logic_vector(1 downto 0);  -- OK           ccbrsv(5 DOWNTO 4) = drsv(1 DOWNTO 0)
-      ccb_rsvo   : in  std_logic_vector(4 downto 0);  -- OK           nc (J3/A21), ccbsrv(10 DOWNTO 7) = rsvo(3 DOWNTO 0)
-      ccb_rsvi   : out std_logic_vector(2 downto 0);  -- OK           ccbsrv(14 DOWNTO 12)
-      ccb_bx0    : in  std_logic;       -- OK           bx0
-      ccb_bxrst  : in  std_logic;       -- OK           bxrst
-      ccb_l1arst : in  std_logic;       -- OK           l1arst
-      ccb_l1acc  : in  std_logic;       -- OK           l1acc
-      ccb_l1rls  : out std_logic;       -- OK           l1rls
-      ccb_clken  : in  std_logic;       -- OK           clkena
+      ccb_cmd      : in  std_logic_vector(5 downto 0);
+      ccb_cmd_s    : in  std_logic;
+      ccb_data     : in  std_logic_vector(7 downto 0);
+      ccb_data_s   : in  std_logic;
+      ccb_cal      : in  std_logic_vector(2 downto 0);
+      ccb_crsv     : in  std_logic_vector(4 downto 0);
+      ccb_drsv     : in  std_logic_vector(1 downto 0);
+      ccb_rsvo     : in  std_logic_vector(4 downto 0);
+      ccb_rsvi     : out std_logic_vector(2 downto 0);
+      ccb_bx0      : in  std_logic;
+      ccb_bxrst    : in  std_logic;
+      ccb_l1arst   : in  std_logic;
+      ccb_l1acc    : in  std_logic;
+      ccb_l1rls    : out std_logic;
+      ccb_clken    : in  std_logic;
+      ccb_evcntres : in  std_logic;
 
-      ccb_hardrst : in std_logic;       -- OK           
-      ccb_softrst : in std_logic;       -- OK           
+      ccb_hardrst : in std_logic;
+      ccb_softrst : in std_logic;
+
+      odmb_hardrst_b : out std_logic;
 
 -- From J6/J7 (J3/J4) to FIFOs
 
-      tmb      : in std_logic_vector(17 downto 0);  -- OK           f6di(17 DOWNTO 0)
-      alct     : in std_logic_vector(17 downto 0);  -- OK           f7di(17 DOWNTO 0)
-      rawlct   : in std_logic_vector(NFEB downto 0);  -- OK           ???
-      tmbffclk : in std_logic;          -- OK           tmbffclk
+      tmb      : in std_logic_vector(17 downto 0);
+      alct     : in std_logic_vector(17 downto 0);
+      rawlct   : in std_logic_vector(NFEB-1 downto 0);
+      tmbffclk : in std_logic;
 
 -- From/To J3/J4 t/fromo ODMB_CTRL
 
-      lctdav1   : in  std_logic;        -- OK           lctdav1
-      lctdav2   : in  std_logic;        -- OK           lctdav2
---              rsvtd : INOUT STD_LOGIC_VECTOR(7 DOWNTO 0);                     
-      rsvtd_in  : in  std_logic_vector(4 downto 0);  -- OK           rstvd(7 DOWNTO 4)
-      rsvtd_out : out std_logic_vector(2 downto 0);  -- OK           rstvd(2 DOWNTO 0)
-      lctrqst   : out std_logic_vector(2 downto 1);  -- OK           lctrqst(2 DOWNTO 1)
+      tmbdav    : in  std_logic;        --  lctdav1
+      alctdav   : in  std_logic;        --  lctdav2
+--    rsvtd : INOUT STD_LOGIC_VECTOR(7 DOWNTO 0);     
+      rsvtd_in  : in  std_logic_vector(4 downto 0);
+      rsvtd_out : out std_logic_vector(2 downto 0);
+      lctrqst   : out std_logic_vector(2 downto 1);
 
 -- From/To QPLL (From/To DAQMBV)
 
-      qpll_autorestart : out std_logic;  -- OK           NEW!
-      qpll_mode        : out std_logic;  -- OK           NEW!
-      qpll_extcontrol  : out std_logic;  -- OK           NEW!
-      qpll_reset       : out std_logic;  -- OK           NEW!
-      qpll_f0sel       : out std_logic_vector(3 downto 0);  -- OK           NEW!
-      qpll_locked      : in  std_logic;  -- OK           NEW!
-      qpll_error       : in  std_logic;  -- OK           NEW!
-
-      qpll_clk40MHz_p : in std_logic;   -- OK           NEW!
-      qpll_clk40MHz_n : in std_logic;   -- OK           NEW!
-      qpll_clk80MHz_p : in std_logic;   -- OK           NEW!
-      qpll_clk80MHz_n : in std_logic;   -- OK           NEW!
---              qpll_clk160MHz_p : IN STD_LOGIC;                                                        -- NEW!
---              qpll_clk160MHz_n : IN STD_LOGIC;                                                        -- NEW!
+      qpll_autorestart : out std_logic;
+      qpll_reset       : out std_logic;
+      qpll_f0sel       : out std_logic_vector(3 downto 0);
+      qpll_locked      : in  std_logic;
+      qpll_error       : in  std_logic;
+      qpll_clk40MHz_p  : in  std_logic;
+      qpll_clk40MHz_n  : in  std_logic;
+      qpll_clk80MHz_p  : in  std_logic;
+      qpll_clk80MHz_n  : in  std_logic;
+      qpll_clk160MHz_p : in  std_logic;
+      qpll_clk160MHz_n : in  std_logic;
 
 -- From/To LVMB (From/To DAQMBV and DAQMBC)
 
-      lvmb_pon   : out std_logic_vector(7 downto 0);  -- OK           pwon(6 DOWNTO 1)
-      pon_load   : out std_logic;       -- OK           loadpwon
-      pon_en     : out std_logic;       -- OK           pwon_en*
-      r_lvmb_pon : in  std_logic_vector(7 downto 0);  -- OK           multi(6 DOWNTO 1) (r_pwon(6 DOWNTO 1))
-      lvmb_csb   : out std_logic_vector(6 downto 0);  -- OK           multi(13 DOWNTO 7)
-      lvmb_sclk  : out std_logic;       -- OK           multi(14)
-      lvmb_sdin  : out std_logic;       -- OK           multi(15)
-      lvmb_sdout : in  std_logic;       -- OK           multi(16)
-
--- From/To ADC (From/To DAQMBV)
-
-      adc_sclk   : out std_logic;       -- OK           NEW!
-      adc_sdain  : out std_logic;       -- OK           NEW!
-      adc_sdaout : in  std_logic;       -- OK           NEW!
-      adc_cs     : out std_logic;       -- OK           NEW!
-
--- From/To DAC (From/To DAQMBV)
-
-      dac_sclk   : out std_logic;       -- OK           NEW!
-      dac_sdain  : out std_logic;       -- OK           NEW!
-      dac_sdaout : in  std_logic;       -- OK           NEW!
-      dac_cs     : out std_logic;       -- OK           NEW!
+      lvmb_pon   : out std_logic_vector(7 downto 0);
+      pon_load   : out std_logic;
+      pon_en_b   : out std_logic;
+      r_lvmb_pon : in  std_logic_vector(7 downto 0);
+      lvmb_csb   : out std_logic_vector(6 downto 0);
+      lvmb_sclk  : out std_logic;
+      lvmb_sdin  : out std_logic;
+      lvmb_sdout : in  std_logic;
 
 -- To LEDs
 
-      leds : out std_logic_vector(11 downto 0);  -- OK           NEW!    
-
--- To Frequency Divider FF
-
-      fd_pre : out std_logic;           -- OK           NEW!    
-      fd_clr : out std_logic;           -- OK           NEW!    
+      leds : out std_logic_vector(11 downto 0);
 
 -- From Push Buttons
 
-      pb : in std_logic_vector(3 downto 0);  -- OK
+      pb : in std_logic_vector(1 downto 0);
 
 -- From/To Test Connector for Single-Ended signals
 
---              d : INOUT STD_LOGIC_VECTOR(63 DOWNTO 0);        -- OK           
-      d : out std_logic_vector(63 downto 0);  -- OK           
+      d : out std_logic_vector(63 downto 0);
 
+-- From/To Test Points
 
--- From/To Test Connector J3 for LVDS signals
+      tph : out std_logic_vector(46 downto 27);
+      tpl : out std_logic_vector(23 downto 6);
 
-      gtx_0_p : in  std_logic;          -- OK                   
-      gtx_0_n : in  std_logic;          -- OK                   
-      grx_0_p : out std_logic;          -- OK (out)                     
-      grx_0_n : out std_logic;          -- OK (out)                     
+-- From/To RX 
 
-      ck_0_p : in  std_logic;           -- OK                   
-      ck_0_n : in  std_logic;           -- OK                   
-      ck_1_p : in  std_logic;           -- OK                   
-      ck_1_n : in  std_logic;           -- OK                   
-      tclk_p : in  std_logic;           -- OK                   
-      tclk_n : in  std_logic;           -- OK                   
-      rxb_p  : out std_logic;           -- OK                   
-      rxb_n  : out std_logic;           -- OK                   
-
-      tx_0_p  : out std_logic;          -- OK                   
-      tx_0_n  : out std_logic;          -- OK                   
-      tx_1_p  : out std_logic;          -- OK                   
-      tx_1_n  : out std_logic;          -- OK                   
-      tx_2_p  : out std_logic;          -- OK                   
-      tx_2_n  : out std_logic;          -- OK                   
-      tx_3_p  : out std_logic;          -- OK                   
-      tx_3_n  : out std_logic;          -- OK                   
-      tx_4_p  : out std_logic;          -- OK                   
-      tx_4_n  : out std_logic;          -- OK                   
-      tx_5_p  : out std_logic;          -- OK                   
-      tx_5_n  : out std_logic;          -- OK                   
-      tx_6_p  : out std_logic;          -- OK                   
-      tx_6_n  : out std_logic;          -- OK                   
-      tx_7_p  : out std_logic;          -- OK                   
-      tx_7_n  : out std_logic;          -- OK                   
-      tx_8_p  : out std_logic;          -- OK                   
-      tx_8_n  : out std_logic;          -- OK                   
-      tx_9_p  : out std_logic;          -- OK                   
-      tx_9_n  : out std_logic;          -- OK                   
-      tx_10_p : out std_logic;          -- OK                   
-      tx_10_n : out std_logic;          -- OK                   
-
-      rx_0_p  : in std_logic;           -- OK           
-      rx_0_n  : in std_logic;           -- OK                   
-      rx_1_p  : in std_logic;           -- OK                           
-      rx_1_n  : in std_logic;           -- OK                           
-      rx_2_p  : in std_logic;           -- OK                           
-      rx_2_n  : in std_logic;           -- OK                           
-      rx_3_p  : in std_logic;           -- OK                           
-      rx_3_n  : in std_logic;           -- OK                           
-      rx_4_p  : in std_logic;           -- OK                   
-      rx_4_n  : in std_logic;           -- OK                   
-      rx_5_p  : in std_logic;           -- OK                           
-      rx_5_n  : in std_logic;           -- OK                           
-      rx_6_p  : in std_logic;           -- OK                           
-      rx_6_n  : in std_logic;           -- OK                           
-      rx_7_p  : in std_logic;           -- OK                           
-      rx_7_n  : in std_logic;           -- OK                           
-      rx_8_p  : in std_logic;           -- OK                   
-      rx_8_n  : in std_logic;           -- OK                   
-      rx_9_p  : in std_logic;           -- OK                           
-      rx_9_n  : in std_logic;           -- OK                           
-      rx_10_p : in std_logic;           -- OK                           
-      rx_10_n : in std_logic;           -- OK                           
-
--- To/From TX1 
-
-      otx1_p : out std_logic_vector(12 downto 1);               
-      otx1_n : out std_logic_vector(12 downto 1);               
-      otx1_tx_en  : out std_logic;      
-      otx1_tx_dis : out std_logic;      
-      otx1_reset  : out std_logic;      
-      otx1_fault  : in  std_logic;      
-
--- To/From TX2 
-
-      otx2_p : out std_logic_vector(12 downto 1);               
-      otx2_n : out std_logic_vector(12 downto 1);               
-      otx2_tx_en  : out std_logic;         
-      otx2_tx_dis : out std_logic;         
-      otx2_reset  : out std_logic;        
-      otx2_fault  : in  std_logic;        
-
--- From/To RX1 
-
-      orx1_p : in std_logic_vector(12 downto 1);               
-      orx1_n : in std_logic_vector(12 downto 1);               
-      orx1_rx_en : out std_logic;       
-      orx1_en_sd : out std_logic;       
-      orx1_sd    : in  std_logic;       
-      orx1_sq_en : out std_logic;       
-
--- From/To RX2 
-
-      orx2_p : in std_logic_vector(12 downto 1);               
-      orx2_n : in std_logic_vector(12 downto 1);               
-      orx2_rx_en : out std_logic;          
-      orx2_en_sd : out std_logic;          
-      orx2_sd    : in  std_logic;        
-      orx2_sq_en : out std_logic;          
+      orx_p     : in  std_logic_vector(12 downto 1);
+      orx_n     : in  std_logic_vector(12 downto 1);
+      orx_rx_en : out std_logic;
+      orx_en_sd : out std_logic;
+      orx_sd    : in  std_logic;
+      orx_sq_en : out std_logic;
 
 -- From/To OT1 (GigaBit Link)
 
-      gl0_tx_p : out std_logic;         -- OK
-      gl0_tx_n : out std_logic;         -- OK
-      gl0_rx_p : in  std_logic;         -- OK
-      gl0_rx_n : in  std_logic;         -- OK
+      gl0_tx_p  : out std_logic;
+      gl0_tx_n  : out std_logic;
+      gl0_rx_p  : in  std_logic;
+      gl0_rx_n  : in  std_logic;
+      gl0_clk_p : in  std_logic;
+      gl0_clk_n : in  std_logic;
 
 -- From/To OT2 (GigaBit Link)
 
-      gl1_tx_p : out std_logic;         -- OK
-      gl1_tx_n : out std_logic;         -- OK
-      gl1_rx_p : in  std_logic;         -- OK
-      gl1_rx_n : in  std_logic;         -- OK
-
--- From IC7 (Clock Driver CDC)
-
-      cdc_clk_0_p : in std_logic;       -- OK
-      cdc_clk_0_n : in std_logic;       -- OK
-      cdc_clk_1_p : in std_logic;       -- OK
-      cdc_clk_1_n : in std_logic;       -- OK
-      cdc_clk_2_p : in std_logic;       -- OK
-      cdc_clk_2_n : in std_logic;       -- OK
-      cdc_clk_3_p : in std_logic;       -- OK
-      cdc_clk_3_n : in std_logic;       -- OK
-      cdc_clk_4_p : in std_logic;       -- OK
-      cdc_clk_4_n : in std_logic;       -- OK
-      cdc_clk_5_p : in std_logic;       -- OK
-      cdc_clk_5_n : in std_logic;       -- OK
-      cdc_clk_6_p : in std_logic;       -- OK
-      cdc_clk_6_n : in std_logic;       -- OK
-      cdc_clk_7_p : in std_logic;       -- OK
-      cdc_clk_7_n : in std_logic;       -- OK
+      gl1_tx_p  : out std_logic;
+      gl1_tx_n  : out std_logic;
+      gl1_rx_p  : in  std_logic;
+      gl1_rx_n  : in  std_logic;
+      gl1_clk_p : in  std_logic;
+      gl1_clk_n : in  std_logic;
 
 -- From IC31 
 
-      gl0_clk : in std_logic;           -- OK
-      gl1_clk : in std_logic;           -- OK
-
       done_in : in std_logic
       );
-end ODMB_V6;
+end ODMB_V6_V2;
 
-architecture bdf_type of ODMB_V6 is
+architecture bdf_type of ODMB_V6_V2 is
 
   component alct_tmb_data_gen is
     port(
@@ -410,30 +310,30 @@ architecture bdf_type of ODMB_V6 is
 
       --External signals
       RST              : in  std_logic;
-      ORX2_01_N        : in  std_logic;
-      ORX2_01_P        : in  std_logic;
-      ORX2_02_N        : in  std_logic;
-      ORX2_02_P        : in  std_logic;
-      ORX2_03_N        : in  std_logic;
-      ORX2_03_P        : in  std_logic;
-      ORX2_04_N        : in  std_logic;
-      ORX2_04_P        : in  std_logic;
-      ORX2_05_N        : in  std_logic;
-      ORX2_05_P        : in  std_logic;
-      ORX2_06_N        : in  std_logic;
-      ORX2_06_P        : in  std_logic;
-      ORX2_07_N        : in  std_logic;
-      ORX2_07_P        : in  std_logic;
-      ORX2_08_N        : in  std_logic;
-      ORX2_08_P        : in  std_logic;
-      ORX2_09_N        : in  std_logic;
-      ORX2_09_P        : in  std_logic;
-      ORX2_10_N        : in  std_logic;
-      ORX2_10_P        : in  std_logic;
-      ORX2_11_N        : in  std_logic;
-      ORX2_11_P        : in  std_logic;
-      ORX2_12_N        : in  std_logic;
-      ORX2_12_P        : in  std_logic;
+      ORX_01_N         : in  std_logic;
+      ORX_01_P         : in  std_logic;
+      ORX_02_N         : in  std_logic;
+      ORX_02_P         : in  std_logic;
+      ORX_03_N         : in  std_logic;
+      ORX_03_P         : in  std_logic;
+      ORX_04_N         : in  std_logic;
+      ORX_04_P         : in  std_logic;
+      ORX_05_N         : in  std_logic;
+      ORX_05_P         : in  std_logic;
+      ORX_06_N         : in  std_logic;
+      ORX_06_P         : in  std_logic;
+      ORX_07_N         : in  std_logic;
+      ORX_07_P         : in  std_logic;
+      ORX_08_N         : in  std_logic;
+      ORX_08_P         : in  std_logic;
+      ORX_09_N         : in  std_logic;
+      ORX_09_P         : in  std_logic;
+      ORX_10_N         : in  std_logic;
+      ORX_10_P         : in  std_logic;
+      ORX_11_N         : in  std_logic;
+      ORX_11_P         : in  std_logic;
+      ORX_12_N         : in  std_logic;
+      ORX_12_P         : in  std_logic;
       DCFEB1_DATA      : out std_logic_vector(15 downto 0);
       DCFEB2_DATA      : out std_logic_vector(15 downto 0);
       DCFEB3_DATA      : out std_logic_vector(15 downto 0);
@@ -457,22 +357,6 @@ architecture bdf_type of ODMB_V6 is
       DAQ_RX_160REFCLK_115_0 : in  std_logic
       );
   end component;
-
-
-  component mode_pb_sel is
-    port (
-
-      pb0      : in  std_logic;
-      pb1      : in  std_logic;
-      pb2      : in  std_logic;
-      pb3      : in  std_logic;
-      pb_reset : out std_logic;
-      lb_en    : out std_logic;
-      lb_ff_en : out std_logic;
-      tm_en    : out std_logic
-      );
-  end component;
-
 
   component LVMB_ADC_SDO_MUX is
     port (
@@ -502,7 +386,7 @@ architecture bdf_type of ODMB_V6 is
       );  
     port
       (clk           : in  std_logic;
-       clk80           : in  std_logic;
+       clk80         : in  std_logic;
        rst           : in  std_logic;
        l1a           : in  std_logic;
        l1a_match     : in  std_logic;
@@ -610,7 +494,7 @@ architecture bdf_type of ODMB_V6 is
       ul_movlp : in std_logic_vector(6 downto 0);  -- movlp(5 DOWNTO 1) - from DCFEBs
 
       dcfeb_injpulse  : out std_logic;  -- inject - to DCFEBs
-      dcfeb_extpulse  : out std_logic;  -- extpulse - to DCFEBs
+      dcfeb_extpulse  : out std_logic;  -- extpls - to DCFEBs
       dcfeb_l1a       : out std_logic;
       dcfeb_l1a_match : out std_logic_vector(NFEB downto 1);
 
@@ -790,13 +674,13 @@ architecture bdf_type of ODMB_V6 is
       flf_ctrl : out std_logic_vector(15 downto 0);
       flf_data : in  std_logic_vector(15 downto 0);
 
-      tc_l1a : OUT std_logic;
-      tc_alct_dav : OUT std_logic;
-      tc_tmb_dav : OUT std_logic;
-      tc_lct : OUT std_logic_vector(NFEB downto 1);
-      ddu_data : IN std_logic_vector(15 downto 0);
-      ddu_data_valid : IN std_logic;
-      tc_run : OUT std_logic
+      tc_l1a         : out std_logic;
+      tc_alct_dav    : out std_logic;
+      tc_tmb_dav     : out std_logic;
+      tc_lct         : out std_logic_vector(NFEB downto 0);
+      ddu_data       : in  std_logic_vector(15 downto 0);
+      ddu_data_valid : in  std_logic;
+      tc_run         : out std_logic
 
 
       );
@@ -816,27 +700,6 @@ architecture bdf_type of ODMB_V6 is
       empty      : out std_logic;
       prog_full  : out std_logic;
       prog_empty : out std_logic);
-  end component;
-
-  component ot_mgr
-    port(
-      otx1_tx_en  : out std_logic;
-      otx1_tx_dis : out std_logic;
-      otx1_reset  : out std_logic;
-      otx1_fault  : in  std_logic;
-      otx2_tx_en  : out std_logic;
-      otx2_tx_dis : out std_logic;
-      otx2_reset  : out std_logic;
-      otx2_fault  : in  std_logic;
-      orx1_rx_en  : out std_logic;
-      orx1_en_sd  : out std_logic;
-      orx1_sd     : in  std_logic;
-      orx1_sq_en  : out std_logic;
-      orx2_rx_en  : out std_logic;
-      orx2_en_sd  : out std_logic;
-      orx2_sd     : in  std_logic;
-      orx2_sq_en  : out std_logic
-      );
   end component;
 
 -- Global signals
@@ -924,27 +787,19 @@ architecture bdf_type of ODMB_V6 is
   signal fifo_oe                                    : std_logic_vector (NFEB+2 downto 1);
   signal fifo_in, fifo_out                          : std_logic_vector (15 downto 0);
 
--- TTC Signals
+-- JTAG signals To/From MBV
 
-  signal dl_jtag_tck, dl_jtag_tdo, dl_rtn_shft_en : std_logic_vector(7 downto 1);
-  signal dl_jtag_tms, dl_jtag_tdi                 : std_logic;
-  signal ul_jtag_tck, ul_jtag_tms, ul_jtag_tdi    : std_logic_vector(7 downto 1);
+  signal int_tck, int_tdo, int_rtn_shft_en : std_logic_vector(7 downto 1);
+  signal int_tms, int_tdi                  : std_logic;
 
-  signal dl_spi_cs0, dl_spi_cs1, dl_spi_scl, dl_spi_sda : std_logic_vector(7 downto 1);
-  signal ul_spi_scl, ul_spi_sda, ul_spi_busy            : std_logic_vector(7 downto 1);
+-- JTAG outputs from internal DCFEBs
 
-  signal dl_tkn : std_logic_vector(7 downto 1);
-  signal ul_tkn : std_logic_vector(7 downto 1);
+  signal gen_tdo, gen_rtn_shft_en : std_logic_vector(7 downto 1);
 
-  signal dl_i2c_scl, dl_i2c_sda : std_logic_vector(7 downto 1);
-  signal ul_i2c_scl, ul_i2c_sda : std_logic_vector(7 downto 1);
+-- Signals To DCFEBs from MBC
 
-  signal dcfeb_injpulse, dcfeb_extpulse, dcfeb_l1a : std_logic;  -- To be sent out to pins in V2
-  signal dcfeb_l1a_match                           : std_logic_vector (NFEB downto 1);  -- To be sent out to pins in V2
-  signal dl_global_rst                             : std_logic;
-  signal dl_resync                                 : std_logic_vector(7 downto 1);
-  signal dl_reprogram                              : std_logic_vector(7 downto 1);
-  signal ul_dav, ul_movlp, ul_done                 : std_logic_vector (7 downto 1);
+  signal int_injpls, int_extpls, int_l1a : std_logic;  -- To be sent out to pins in V2
+  signal int_l1a_match                   : std_logic_vector (NFEB downto 1);  -- To be sent out to pins in V2
 
 -- Mode Selection Signals
 
@@ -959,6 +814,28 @@ architecture bdf_type of ODMB_V6 is
   signal flf_error                                                                 : std_logic_vector(7 downto 1);
   signal flf_ctrl                                                                  : std_logic_vector(15 downto 0);
   signal flf_data                                                                  : std_logic_vector(15 downto 0);
+
+-- signals for V1
+
+  signal dl_reprogram : std_logic_vector(6 downto 0);
+  signal ul_dav       : std_logic_vector(6 downto 0) := (others => '0');
+  signal ul_movlp     : std_logic_vector(6 downto 0) := (others => '0');
+  signal ul_jtag_tck  : std_logic_vector(6 downto 0) := (others => '0');
+  signal ul_jtag_tms  : std_logic_vector(6 downto 0) := (others => '0');
+  signal ul_jtag_tdi  : std_logic_vector(6 downto 0) := (others => '0');
+  signal dl_spi_cs0   : std_logic_vector(6 downto 0);
+  signal dl_spi_cs1   : std_logic_vector(6 downto 0);
+  signal dl_spi_scl   : std_logic_vector(6 downto 0);
+  signal dl_spi_sda   : std_logic_vector(6 downto 0);
+  signal ul_spi_scl   : std_logic_vector(6 downto 0) := (others => '0');
+  signal ul_spi_sda   : std_logic_vector(6 downto 0) := (others => '0');
+  signal ul_spi_busy  : std_logic_vector(6 downto 0) := (others => '0');
+  signal dl_tkn       : std_logic_vector(6 downto 0);
+  signal ul_tkn       : std_logic_vector(6 downto 0) := (others => '0');
+  signal dl_i2c_scl   : std_logic_vector(6 downto 0);
+  signal dl_i2c_sda   : std_logic_vector(6 downto 0);
+  signal ul_i2c_scl   : std_logic_vector(6 downto 0) := (others => '0');
+  signal ul_i2c_sda   : std_logic_vector(6 downto 0) := (others => '0');
 
 -- TKN Test Signals
 
@@ -983,16 +860,16 @@ architecture bdf_type of ODMB_V6 is
 -- DCFEB I/O Signals
 
   type dcfeb_data_type is array (NFEB downto 1) of std_logic_vector(15 downto 0);
-  signal gen_dcfeb_data                                   : dcfeb_data_type;
-  signal rx_dcfeb_data                                    : dcfeb_data_type;
-  signal dcfeb_data                                       : dcfeb_data_type;
+  signal gen_dcfeb_data                     : dcfeb_data_type;
+  signal rx_dcfeb_data                      : dcfeb_data_type;
+  signal dcfeb_data                         : dcfeb_data_type;
   signal orx_dcfeb_data_n, orx_dcfeb_data_p : std_logic_vector(12 downto 1);
-  signal orx2_buf_n, orx2_buf_p : std_logic_vector(12 downto 1);
-  signal gen_dcfeb_data_p, rx_dcfeb_data_p : std_logic_vector(NFEB downto 1);
-  signal gen_dcfeb_data_n, rx_dcfeb_data_n : std_logic_vector(NFEB downto 1);
-  signal gen_dcfeb_data_valid                             : std_logic_vector(NFEB downto 1);
-  signal rx_dcfeb_data_valid                              : std_logic_vector(NFEB downto 1);
-  signal dcfeb_data_valid                                 : std_logic_vector(NFEB downto 1);
+  signal orx_buf_n, orx_buf_p               : std_logic_vector(12 downto 1);
+  signal gen_dcfeb_data_p, rx_dcfeb_data_p  : std_logic_vector(NFEB downto 1);
+  signal gen_dcfeb_data_n, rx_dcfeb_data_n  : std_logic_vector(NFEB downto 1);
+  signal gen_dcfeb_data_valid               : std_logic_vector(NFEB downto 1);
+  signal rx_dcfeb_data_valid                : std_logic_vector(NFEB downto 1);
+  signal dcfeb_data_valid                   : std_logic_vector(NFEB downto 1);
 
   signal rx_dcfeb_sel, opt_dcfeb_sel : std_logic;
   type dcfeb_addr_type is array (NFEB downto 1) of std_logic_vector(3 downto 0);
@@ -1005,15 +882,16 @@ architecture bdf_type of ODMB_V6 is
 
 -- From/To OTs 
 
-  signal otx1 : std_logic_vector(12 DOWNTO 1);
-  signal otx2 : std_logic_vector(12 DOWNTO 1);
-  signal orx1 : std_logic_vector(12 DOWNTO 1);
-  signal orx2 : std_logic_vector(12 DOWNTO 1);
+  signal otx1 : std_logic_vector(12 downto 1);
+  signal otx2 : std_logic_vector(12 downto 1);
+  signal orx1 : std_logic_vector(12 downto 1);
+  signal orx  : std_logic_vector(12 downto 1);
 
 -- From/To Giga-Bit Links
 
   signal gl0_tx, gl0_rx, gl1_tx, gl1_rx : std_logic;
-
+  signal gl0_tx_buf_n, gl0_tx_buf_p, gl1_tx_buf_n, gl1_tx_buf_p : std_logic;
+  
   signal grx0_data       : std_logic_vector(15 downto 0) := "0000000000000000";
   signal grx0_data_valid : std_logic                     := '0';
   signal grx1_data       : std_logic_vector(15 downto 0) := "0000000000000000";
@@ -1153,16 +1031,7 @@ architecture bdf_type of ODMB_V6 is
   signal tfifo_sel          : std_logic_vector(8 downto 1);
   signal tfifo_mode         : std_logic;
 
-  signal b_orx2_01_p, b_orx2_01_n : std_logic;
-
-  signal orx2_01_sd : std_logic;
-  signal orx2_02_sd : std_logic;
-  signal orx2_03_sd : std_logic;
-  signal orx2_04_sd : std_logic;
-  signal orx2_05_sd : std_logic;
-  signal orx2_06_sd : std_logic;
-  signal orx2_07_sd : std_logic;
-  signal orx2_08_sd : std_logic;
+  signal b_orx_01_p, b_orx_01_n : std_logic;
 
   signal por_reg  : std_logic_vector (31 downto 0);
   signal mbc_leds : std_logic_vector (5 downto 0);
@@ -1216,16 +1085,31 @@ architecture bdf_type of ODMB_V6 is
   signal dcfeb_tx_ack       : std_logic_vector(NFEB downto 1);
   signal dcfeb_daq_data_clk : std_logic_vector(NFEB downto 1);
 
-  signal int_l1a, tc_l1a : std_logic;
+  signal raw_l1a, tc_l1a           : std_logic;
+  signal raw_lct                   : std_logic_vector(NFEB downto 1);
   signal int_alct_dav, tc_alct_dav : std_logic;
-  signal int_tmb_dav, tc_tmb_dav : std_logic;
-  signal int_lct, tc_lct : std_logic_vector(NFEB downto 0);
-  signal ddu_data : std_logic_vector(15 downto 0) := (others => '0');
-  signal ddu_data_valid : std_logic := '0';
+  signal int_tmb_dav, tc_tmb_dav   : std_logic;
+  signal int_lct, tc_lct           : std_logic_vector(NFEB downto 0);
+  signal ddu_data                  : std_logic_vector(15 downto 0) := (others => '0');
+  signal ddu_data_valid            : std_logic                     := '0';
 
   signal tc_run : std_logic;
 
+--  signal odmb_hardrst_b : std_logic := '1';
+--  signal tph : std_logic_vector(46 downto 27) := (others => '0');
+--  signal tpl : std_logic_vector(23 downto 6) := (others => '0');
+--  signal v6_tck : std_logic := '0';
+--  signal v6_tms : std_logic := '0';
+--  signal v6_tdi : std_logic := '0';
+  
 begin
+
+  odmb_hardrst_b <= '1';
+  tph <= (others => '0');
+  tpl <= (others => '0');
+  v6_tck <= '0';
+  v6_tms <= '0';
+  v6_tdi <= '0';
 
   Select_TestPoints : process(diagout_lvdbmon, diagout_cfebjtag, qpll_clk40MHz)
   begin
@@ -1268,33 +1152,12 @@ begin
       d(39) <= diagout_cfebjtag(16);    -- TP73
       d(40) <= diagout_cfebjtag(17);    -- TP75
     else
-      d(0)  <= flf_ctrl(15);            -- TP58   TP59 TCK(1)
-      d(1)  <= flf_ctrl(14);            -- TP60   TP61 TDI
-      d(2)  <= dcfeb_injpulse;          -- TP62   TP63 TMS
-      d(3)  <= dcfeb_extpulse;          -- TP64   TP65 DL_RTN_SHFT_EN(1)
-      d(4)  <= dcfeb_l1a;               -- TP66   TP66 UL_JTAG_TCK(1)
-      d(5)  <= qpll_clk40MHz;           -- TP68   TP68 SELFEB(1)
-      d(6)  <= qpll_locked;             -- TP70   TP70 FEBTDO(1)
-      d(7)  <= diagout_cfebjtag(7);     -- TP72   TP72 READTDO
-      d(8)  <= DL_RTN_SHFT_EN(1);       -- TP74
-      d(32) <= int_vme_dtack_v6_b;      -- TP59
-      d(33) <= diagout_cfebjtag(10);    -- TP61
-      d(34) <= diagout_cfebjtag(11);    -- TP63
-      d(35) <= diagout_cfebjtag(12);    -- TP65   SLOWCLK
-      d(36) <= DL_RTN_SHFT_EN(3);       -- TP67
-      d(37) <= DL_RTN_SHFT_EN(4);       -- TP69
-      d(38) <= DL_RTN_SHFT_EN(5);       -- TP71
-      d(39) <= DL_RTN_SHFT_EN(6);       -- TP73
-      d(40) <= DL_RTN_SHFT_EN(7);       -- TP75
+      d(8 downto 0)   <= (others => '0');
+      d(40 downto 32) <= (others => '0');
     end if;
     d(31 downto 9)  <= (others => '0');
     d(63 downto 41) <= (others => '0');
   end process Select_TestPoints;
-
-  fd_clr <= '0';
-  fd_pre <= '0';
-
--- reset <= pb_reset;
 
 -- power on reset
 
@@ -1313,7 +1176,7 @@ begin
     port map (O => vme_dtack_v6_b);
 
   PULLDOWN_TMS : PULLDOWN
-    port map (O => dl_jtag_tms);
+    port map (O => dcfeb_tms);
 
   vme_d00_buf : IOBUF port map (O => vme_data_in(0), IO => vme_data(0), I => vme_data_out(0), T => vme_tovme_b);
   vme_d01_buf : IOBUF port map (O => vme_data_in(1), IO => vme_data(1), I => vme_data_out(1), T => vme_tovme_b);
@@ -1339,17 +1202,6 @@ begin
   lvmb_csb  <= int_lvmb_csb;
   lvmb_sclk <= int_lvmb_sclk;
   lvmb_sdin <= int_lvmb_sdin;
-
-  PB_SEL : mode_pb_sel
-    port map (
-      pb0      => pb(0),
-      pb1      => pb(1),
-      pb2      => pb(2),
-      pb3      => pb(3),
-      pb_reset => pb_reset,
-      lb_en    => lb_en,
-      lb_ff_en => lb_ff_en,
-      tm_en    => tm_en);
 
   test_vme_oe_b <= '1';  -- 3-state output enable for test_vme_data (high=input, low=output) 
 -- test_vme_data_out <= "1010101010101010";     -- constant output (0xaaaa) for test_vme_data 
@@ -1381,10 +1233,10 @@ begin
                       flf_ctrl(5 downto 0);
   leds(6)  <= not int_vme_dtack_v6_b;
   leds(7)  <= not pll1_locked;
-  leds(8)  <= not qpll_locked;          -- PB2
-  leds(9)  <= not pb(1);                -- PB3
-  leds(10) <= not pb(2);                -- PB4
-  leds(11) <= not pb(3);                -- PB5
+  leds(8)  <= not qpll_locked;
+  leds(9)  <= flf_ctrl(7);
+  leds(10) <= not pb(0);
+  leds(11) <= not pb(1);
 
   flf_status : process (dcfeb_adc_mask, dcfeb_fsel, dcfeb_jtag_ir, mbc_fsel, mbc_jtag_ir, flf_ctrl)
 
@@ -1432,7 +1284,7 @@ begin
       when "11110" => flf_data <= '0' & mbc_fsel(47 downto 33);
       when "11111" => flf_data <= "00" & mbc_jtag_ir(9 downto 0) & "0000";
 
-      when others  => flf_data <= "0000000000000000";
+      when others => flf_data <= "0000000000000000";
     end case;
     
   end process;
@@ -1455,19 +1307,19 @@ begin
 
 -- From ORX1
 
-GEN_ORX2 : for I in 12 downto 1 generate  
-begin
-  orx2_ibuf_p : IBUF port map (O => orx2_buf_p(I), I => orx2_p(I));
-  orx2_ibuf_n : IBUF port map (O => orx2_buf_n(I), I => orx2_n(I));
-end generate GEN_ORX2;
+  GEN_ORX : for I in 12 downto 1 generate
+  begin
+    orx_ibuf_p : IBUF port map (O => orx_buf_p(I), I => orx_p(I));
+    orx_ibuf_n : IBUF port map (O => orx_buf_n(I), I => orx_n(I));
+  end generate GEN_ORX;
 
 
--- From ORX2
+-- From ORX
 
---  GEN_ORX2 : for I in 12 downto 1 generate  
+--  GEN_ORX : for I in 12 downto 1 generate  
 --  begin
---    orx2_buf : IBUFDS port map (I => orx2_p(I), IB => orx2_n(I), O => orx2(I));
---  end generate GEN_ORX2;
+--    orx_buf : IBUFDS port map (I => orx_p(I), IB => orx_n(I), O => orx(I));
+--  end generate GEN_ORX;
 
 -- From QPLL
 
@@ -1477,258 +1329,28 @@ end generate GEN_ORX2;
   qpll_clk80MHz_buf : IBUFDS port map (I => qpll_clk80MHz_p, IB => qpll_clk80MHz_n, O => qpll_clk80MHz);
 
 
--- From Test Connector J3
-
--- ck_0
-  ck_0_buf : IBUFDS port map (I => ck_0_p, IB => ck_0_n, O => ck_0);
--- ck_1
-  ck_1_buf : IBUFDS port map (I => ck_1_p, IB => ck_1_n, O => ck_1);
--- tclk
-  tclk_buf : IBUFDS port map (I => tclk_p, IB => tclk_n, O => ck_2);
-
--- rx_0
-  rx_0_buf  : IBUFDS port map (I => rx_0_p, IB => rx_0_n, O => rx_0);
--- rx_1
-  rx_1_buf  : IBUFDS port map (I => rx_1_p, IB => rx_1_n, O => rx_1);
--- rx_2
-  rx_2_buf  : IBUFDS port map (I => rx_2_p, IB => rx_2_n, O => rx_2);
--- rx_3
-  rx_3_buf  : IBUFDS port map (I => rx_3_p, IB => rx_3_n, O => rx_3);
--- rx_4
-  rx_4_buf  : IBUFDS port map (I => rx_4_p, IB => rx_4_n, O => rx_4);
--- rx_5
-  rx_5_buf  : IBUFDS port map (I => rx_5_p, IB => rx_5_n, O => rx_5);
--- rx_6
-  rx_6_buf  : IBUFDS port map (I => rx_6_p, IB => rx_6_n, O => rx_6);
--- rx_7
-  rx_7_buf  : IBUFDS port map (I => rx_7_p, IB => rx_7_n, O => rx_7);
--- rx_8
-  rx_8_buf  : IBUFDS port map (I => rx_8_p, IB => rx_8_n, O => rx_8);
--- rx_9
-  rx_9_buf  : IBUFDS port map (I => rx_9_p, IB => rx_9_n, O => rx_9);
--- rx_10
-  rx_10_buf : IBUFDS port map (I => rx_10_p, IB => rx_10_n, O => rx_10);
-
 
 -- ------------------------------------------------------------------------------------------------- 
 
 -- CODE_D (LVDS output buffers)
 
 -- To OT1 (GigaBit Link)
-
+  
 -- gl1_tx
+
   gl1_tx_buf : OBUFDS port map (I => gl0_tx, O => gl0_tx_p, OB => gl0_tx_n);
 
 -- To OT2 (GigaBit Link)
 
 -- gl2_tx
+
   gl2_tx_buf : OBUFDS port map (I => gl1_tx, O => gl1_tx_p, OB => gl1_tx_n);
 
 
--- To TX1 
-
-  GEN_OTX1 : for I in 12 downto 1 generate  
-  begin
-    otx1_buf : OBUFDS port map (I => otx1(I), O => otx1_p(I), OB => otx1_n(I));
-  end generate GEN_OTX1;
-
--- To TX2 
-
-  GEN_OTX2 : for I in 12 downto 1 generate  
-  begin
-    otx2_buf : OBUFDS port map (I => otx2(I), O => otx2_p(I), OB => otx2_n(I));
-  end generate GEN_OTX2;
-
--- To Test Connector
-
--- rxb
-  rxb_buf   : OBUFDS port map (I => rxb, O => rxb_p, OB => rxb_n);
--- tx_0
-  tx_0_buf  : OBUFDS port map (I => tx_0, O => tx_0_p, OB => tx_0_n);
--- tx_1
-  tx_1_buf  : OBUFDS port map (I => tx_1, O => tx_1_p, OB => tx_1_n);
--- tx_2
-  tx_2_buf  : OBUFDS port map (I => tx_2, O => tx_2_p, OB => tx_2_n);
--- tx_1
-  tx_3_buf  : OBUFDS port map (I => tx_3, O => tx_3_p, OB => tx_3_n);
--- tx_1
-  tx_4_buf  : OBUFDS port map (I => tx_4, O => tx_4_p, OB => tx_4_n);
--- tx_1
-  tx_5_buf  : OBUFDS port map (I => tx_5, O => tx_5_p, OB => tx_5_n);
--- tx_1
-  tx_6_buf  : OBUFDS port map (I => tx_6, O => tx_6_p, OB => tx_6_n);
--- tx_1
-  tx_7_buf  : OBUFDS port map (I => tx_7, O => tx_7_p, OB => tx_7_n);
--- tx_1
-  tx_8_buf  : OBUFDS port map (I => tx_8, O => tx_8_p, OB => tx_8_n);
--- tx_1
-  tx_9_buf  : OBUFDS port map (I => tx_9, O => tx_9_p, OB => tx_9_n);
--- tx_1
-  tx_10_buf : OBUFDS port map (I => tx_10, O => tx_10_p, OB => tx_10_n);
 
 -- ------------------------------------------------------------------------------------------------- 
 
 -- CODE_E (Buffers for DIFFERENTIAL CLOCK LINES for GTX CORES)
-
---  IBUFGDS_CDC_CLK_0 : IBUFGDS
---  generic map (
---      DIFF_TERM => FALSE, -- Differential Termination 
---      IBUF_LOW_PWR => TRUE, -- Low power (TRUE) vs. performance (FALSE) setting for refernced I/O standards
---      IOSTANDARD => "DEFAULT")
---   port map (
---      O => cdc_clk(0),  -- Clock buffer output
---      I => cdc_clk_0_p,  -- Diff_p clock buffer input (connect directly to top-level port)
---      IB => cdc_clk_0_n -- Diff_n clock buffer input (connect directly to top-level port)
---   );
-
-  IBUFGDS_CDC_CLK_0 : IBUFDS_GTXE1
-    port map (
-      O     => cdc_clk(0),              -- Clock buffer output
-      ODIV2 => open,
-      CEB   => '0',
-      I     => cdc_clk_0_p,  -- Diff_p clock buffer input (connect directly to top-level port)
-      IB    => cdc_clk_0_n  -- Diff_n clock buffer input (connect directly to top-level port)
-      );
-
---  IBUFGDS_CDC_CLK_1 : IBUFGDS
---   generic map (
---      DIFF_TERM => FALSE, -- Differential Termination 
---      IBUF_LOW_PWR => TRUE, -- Low power (TRUE) vs. performance (FALSE) setting for refernced I/O standards
---      IOSTANDARD => "DEFAULT")
---   port map (
---      O => cdc_clk(1),  -- Clock buffer output
---      I => cdc_clk_1_p,  -- Diff_p clock buffer input (connect directly to top-level port)
---      IB => cdc_clk_1_n -- Diff_n clock buffer input (connect directly to top-level port)
---   );
-
-  IBUFGDS_CDC_CLK_1 : IBUFDS_GTXE1
-    port map (
-      O     => cdc_clk(1),              -- Clock buffer output
-      ODIV2 => open,
-      CEB   => '0',
-      I     => cdc_clk_1_p,  -- Diff_p clock buffer input (connect directly to top-level port)
-      IB    => cdc_clk_1_n  -- Diff_n clock buffer input (connect directly to top-level port)
-      );
-
---  IBUFGDS_CDC_CLK_2 : IBUFGDS
---   generic map (
---      DIFF_TERM => FALSE, -- Differential Termination 
---      IBUF_LOW_PWR => TRUE, -- Low power (TRUE) vs. performance (FALSE) setting for refernced I/O standards
---      IOSTANDARD => "DEFAULT")
---   port map (
---      O => cdc_clk(2),  -- Clock buffer output
---      I => cdc_clk_2_p,  -- Diff_p clock buffer input (connect directly to top-level port)
---      IB => cdc_clk_2_n -- Diff_n clock buffer input (connect directly to top-level port)
---   );
-
-  IBUFGDS_CDC_CLK_2 : IBUFDS_GTXE1
-    port map (
-      O     => cdc_clk(2),              -- Clock buffer output
-      ODIV2 => open,
-      CEB   => '0',
-      I     => cdc_clk_2_p,  -- Diff_p clock buffer input (connect directly to top-level port)
-      IB    => cdc_clk_2_n  -- Diff_n clock buffer input (connect directly to top-level port)
-      );
-
---  IBUFGDS_CDC_CLK_3 : IBUFGDS
---   generic map (
---      DIFF_TERM => FALSE, -- Differential Termination 
---      IBUF_LOW_PWR => TRUE, -- Low power (TRUE) vs. performance (FALSE) setting for refernced I/O standards
---      IOSTANDARD => "DEFAULT")
---   port map (
---      O => cdc_clk(3),  -- Clock buffer output
---      I => cdc_clk_3_p,  -- Diff_p clock buffer input (connect directly to top-level port)
---      IB => cdc_clk_3_n -- Diff_n clock buffer input (connect directly to top-level port)
---   );
-
-  IBUFGDS_CDC_CLK_3 : IBUFDS_GTXE1
-    port map (
-      O     => cdc_clk(3),              -- Clock buffer output
-      ODIV2 => open,
-      CEB   => '0',
-      I     => cdc_clk_3_p,  -- Diff_p clock buffer input (connect directly to top-level port)
-      IB    => cdc_clk_3_n  -- Diff_n clock buffer input (connect directly to top-level port)
-      );
-
---  IBUFGDS_CDC_CLK_4 : IBUFGDS
---   generic map (
---      DIFF_TERM => FALSE, -- Differential Termination 
---      IBUF_LOW_PWR => TRUE, -- Low power (TRUE) vs. performance (FALSE) setting for refernced I/O standards
---      IOSTANDARD => "DEFAULT")
---   port map (
---      O => cdc_clk(4),  -- Clock buffer output
---      I => cdc_clk_4_p,  -- Diff_p clock buffer input (connect directly to top-level port)
---      IB => cdc_clk_4_n -- Diff_n clock buffer input (connect directly to top-level port)
---   );
-
-  IBUFGDS_CDC_CLK_4 : IBUFDS_GTXE1
-    port map (
-      O     => cdc_clk(4),              -- Clock buffer output
-      ODIV2 => open,
-      CEB   => '0',
-      I     => cdc_clk_4_p,  -- Diff_p clock buffer input (connect directly to top-level port)
-      IB    => cdc_clk_4_n  -- Diff_n clock buffer input (connect directly to top-level port)
-      );
-
---  IBUFGDS_CDC_CLK_5 : IBUFGDS
---   generic map (
---      DIFF_TERM => FALSE, -- Differential Termination 
---      IBUF_LOW_PWR => TRUE, -- Low power (TRUE) vs. performance (FALSE) setting for refernced I/O standards
---      IOSTANDARD => "DEFAULT")
---   port map (
---      O => cdc_clk(5),  -- Clock buffer output
---      I => cdc_clk_5_p,  -- Diff_p clock buffer input (connect directly to top-level port)
---      IB => cdc_clk_5_n -- Diff_n clock buffer input (connect directly to top-level port)
---   );
-
-  IBUFGDS_CDC_CLK_5 : IBUFDS_GTXE1
-    port map (
-      O     => cdc_clk(5),              -- Clock buffer output
-      ODIV2 => open,
-      CEB   => '0',
-      I     => cdc_clk_5_p,  -- Diff_p clock buffer input (connect directly to top-level port)
-      IB    => cdc_clk_5_n  -- Diff_n clock buffer input (connect directly to top-level port)
-      );
-
---  IBUFGDS_CDC_CLK_6 : IBUFGDS
---   generic map (
---      DIFF_TERM => FALSE, -- Differential Termination 
---      IBUF_LOW_PWR => TRUE, -- Low power (TRUE) vs. performance (FALSE) setting for refernced I/O standards
---      IOSTANDARD => "DEFAULT")
---   port map (
---      O => cdc_clk(6),  -- Clock buffer output
---      I => cdc_clk_6_p,  -- Diff_p clock buffer input (connect directly to top-level port)
---      IB => cdc_clk_6_n -- Diff_n clock buffer input (connect directly to top-level port)
---   );
-
-  IBUFGDS_CDC_CLK_6 : IBUFDS_GTXE1
-    port map (
-      O     => cdc_clk(6),              -- Clock buffer output
-      ODIV2 => open,
-      CEB   => '0',
-      I     => cdc_clk_6_p,  -- Diff_p clock buffer input (connect directly to top-level port)
-      IB    => cdc_clk_6_n  -- Diff_n clock buffer input (connect directly to top-level port)
-      );
-
---  IBUFGDS_CDC_CLK_7 : IBUFGDS
---   generic map (
---      DIFF_TERM => FALSE, -- Differential Termination 
---      IBUF_LOW_PWR => TRUE, -- Low power (TRUE) vs. performance (FALSE) setting for refernced I/O standards
---      IOSTANDARD => "DEFAULT")
---   port map (
---      O => cdc_clk(7),  -- Clock buffer output
---      I => cdc_clk_7_p,  -- Diff_p clock buffer input (connect directly to top-level port)
---      IB => cdc_clk_7_n -- Diff_n clock buffer input (connect directly to top-level port)
---   );
-
-  IBUFGDS_CDC_CLK_7 : IBUFDS_GTXE1
-    port map (
-      O     => cdc_clk(7),              -- Clock buffer output
-      ODIV2 => open,
-      CEB   => '0',
-      I     => cdc_clk_7_p,  -- Diff_p clock buffer input (connect directly to top-level port)
-      IB    => cdc_clk_7_n  -- Diff_n clock buffer input (connect directly to top-level port)
-      );
 
 -- ------------------------------------------------------------------------------------------------- 
 
@@ -1741,7 +1363,7 @@ end generate GEN_ORX2;
 
 -- Clock from QPLL
 -- clkin <= qpll_clk40MHz;
-  
+
   pll1_rst <= '0';
   pll1_pd  <= '0';
 
@@ -1847,30 +1469,6 @@ end generate GEN_ORX2;
   MBV : ODMB_VME
     port map (
 
--- VME signals 
-
---              vme_addr => int_vme_addr,                                                                       -- input
---              vme_data_in => int_vme_data_in,                                                 -- input
---              vme_data_out => vme_data_out,                                                           -- output
---              vme_am => int_vme_am,                                                                                   -- input
---              vme_gap => int_vme_gap,                                                                         -- input
---              vme_ga => int_vme_ga,                                                                                   -- input
---              vme_ds_b => int_vme_ds_b,                                                                       -- input
---              vme_as_b => int_vme_as_b,                                                                       -- input
---              vme_lword_b => int_vme_lword_b,                                                 -- input
---              vme_write_b => int_vme_write_b,                                                 -- input
---              vme_iack_b => int_vme_iack_b,                                                           -- input
---              vme_sysreset_b => int_vme_sysreset_b,                                   -- input
---              vme_sysfail_b => int_vme_sysfail_b,                                             -- input
---              vme_sysfail_out => int_vme_sysfail_out,                         -- output
---              vme_berr_b => int_vme_berr_b,                                                           -- input
---              vme_berr_out => int_vme_berr_out,                                               -- output
---              vme_dtack_b => int_vme_dtack_v6_b,                                                      -- output
---              vme_tovme => int_vme_tovme,                                                                             -- tovme
---              vme_tovme_b => int_vme_tovme_b,                                                                         -- tovme*
---              vme_doe => int_vme_doe,                                                                 -- doe
---              vme_doe_b => int_vme_doe_b,                                                                     -- doe*
-
       vme_addr        => vme_addr,            -- input
       vme_data_in     => vme_data_in,         -- input
       vme_data_out    => vme_data_out,        -- output
@@ -1906,11 +1504,11 @@ end generate GEN_ORX2;
 
 -- JTAG signals To/From DCFEBs
 
-      dl_jtag_tck    => dl_jtag_tck,
-      dl_jtag_tms    => dl_jtag_tms,
-      dl_jtag_tdi    => dl_jtag_tdi,
-      dl_jtag_tdo    => dl_jtag_tdo,
-      dl_rtn_shft_en => dl_rtn_shft_en,
+      dl_jtag_tck    => int_tck,
+      dl_jtag_tms    => int_tms,
+      dl_jtag_tdi    => int_tdi,
+      dl_jtag_tdo    => int_tdo,
+      dl_rtn_shft_en => int_rtn_shft_en,
       ul_jtag_tck    => ul_jtag_tck,
       ul_jtag_tms    => ul_jtag_tms,
       ul_jtag_tdi    => ul_jtag_tdi,
@@ -1928,21 +1526,37 @@ end generate GEN_ORX2;
 
 -- Done from DCFEB FPGA (CFEBPRG)
 
-      ul_done => ul_done,
+      ul_done => dcfeb_done,
+
+---- To/From O-DMB ADC
+--
+--      adc_cs     => adc_cs,
+--      adc_sclk   => adc_sclk,
+--      adc_sdain  => adc_sdain,
+--      adc_sdaout => adc_sdaout,
+--
+---- To/From O-DMB DAC
+--
+--      dac_cs     => dac_cs,
+--      dac_sclk   => dac_sclk,
+--      dac_sdain  => dac_sdain,
+--      dac_sdaout => dac_sdaout,
+--
 
 -- To/From O-DMB ADC
 
-      adc_cs     => adc_cs,
-      adc_sclk   => adc_sclk,
-      adc_sdain  => adc_sdain,
-      adc_sdaout => adc_sdaout,
+      adc_cs     => open,
+      adc_sclk   => open,
+      adc_sdain  => open,
+      adc_sdaout => '0',
 
 -- To/From O-DMB DAC
 
-      dac_cs     => dac_cs,
-      dac_sclk   => dac_sclk,
-      dac_sdain  => dac_sdain,
-      dac_sdaout => dac_sdaout,
+      dac_cs     => open,
+      dac_sclk   => open,
+      dac_sdain  => open,
+      dac_sdaout => '0',
+
 
 -- To/From DCFEB FIFOs
 
@@ -1980,8 +1594,10 @@ end generate GEN_ORX2;
 -- From/To QPLL
 
       qpll_autorestart => qpll_autorestart,  -- NEW!
-      qpll_mode        => qpll_mode,         -- NEW!
-      qpll_extcontrol  => qpll_extcontrol,   -- NEW!
+--      qpll_mode        => qpll_mode,         -- NEW!
+--      qpll_extcontrol  => qpll_extcontrol,   -- NEW!
+      qpll_mode        => open,
+      qpll_extcontrol  => open,
       qpll_reset       => qpll_reset,        -- NEW!
       qpll_f0sel       => qpll_f0sel,        -- NEW!
       qpll_locked      => qpll_locked,       -- NEW!
@@ -1991,7 +1607,7 @@ end generate GEN_ORX2;
 
       lvmb_pon   => int_lvmb_pon,
       pon_load   => pon_load,
-      pon_oe_b   => pon_en,
+      pon_oe_b   => pon_en_b,
       r_lvmb_pon => r_lvmb_pon,
       lvmb_csb   => int_lvmb_csb,
       lvmb_sclk  => int_lvmb_sclk,
@@ -2015,22 +1631,24 @@ end generate GEN_ORX2;
       flf_ctrl => flf_ctrl,
       flf_data => flf_data,
 
-      tc_l1a => tc_l1a,
-      tc_alct_dav => tc_alct_dav,
-      tc_tmb_dav => tc_tmb_dav,
-      tc_lct => tc_lct,
-      ddu_data => gtx0_data,
+      tc_l1a         => tc_l1a,
+      tc_alct_dav    => tc_alct_dav,
+      tc_tmb_dav     => tc_tmb_dav,
+      tc_lct         => tc_lct,
+      ddu_data       => gtx0_data,
       ddu_data_valid => gtx0_data_valid,
-      tc_run => tc_run
+      tc_run         => tc_run
 
 
       );
 
-int_l1a <= tc_l1a when (tc_run = '1') else ccb_l1acc;
-int_alct_dav <= tc_alct_dav when (tc_run = '1') else lctdav2;
-int_tmb_dav <= tc_tmb_dav when (tc_run = '1') else lctdav1;
-int_lct <= tc_lct when (tc_run = '1') else rawlct;
-tc_run_out <= tc_run;
+  raw_l1a                <= tc_l1a                when (tc_run = '1') else ccb_l1acc;
+  raw_lct(NFEB downto 1) <= rawlct(NFEB-1 downto 0);
+  int_alct_dav           <= tc_alct_dav           when (tc_run = '1') else alctdav;  -- lctdav2
+  int_tmb_dav            <= tc_tmb_dav            when (tc_run = '1') else tmbdav;  -- lctdav1
+  int_lct(NFEB downto 1) <= tc_lct(NFEB downto 1) when (tc_run = '1') else raw_lct(NFEB downto 1);
+  int_lct(0)             <= tc_lct(0)             when (tc_run = '1') else or_reduce(raw_lct(NFEB downto 1));
+  tc_run_out             <= tc_run;
 
 -- ODMB_CTRL FPGA
 
@@ -2055,19 +1673,19 @@ tc_run_out <= tc_run;
       ccb_bxrst  => ccb_bxrst,          -- bxrst - from J3
 --      ccb_l1acc  => ccb_l1acc,          -- l1acc - from J3
 -- from testctrl
-      ccb_l1acc  => int_l1a,          -- l1acc - from J3 
+      ccb_l1acc  => int_l1a,            -- l1acc - from J3 
       ccb_l1arst => ccb_l1arst,         -- l1rst - from J3
       ccb_l1rls  => ccb_l1rls,          -- l1rls - to J3
       ccb_clken  => ccb_clken,          -- clken - from J3
 
 -- from testctrl
 --      rawlct    => rawlct,              -- rawlct(NFEB downto 0) - from J4
-      rawlct    => int_lct,              -- rawlct(NFEB downto 0) - from -- from testctrl
+      rawlct    => int_lct,  -- rawlct(NFEB downto 0) - from -- from testctrl
 --      tmb_dav   => lctdav1,             -- lctdav1 - from J4
-      tmb_dav   => int_tmb_dav,             -- lctdav1 - from J4
+      tmb_dav   => int_tmb_dav,         -- lctdav1 - from J4
 -- from testctrl
 --      alct_dav  => lctdav2,             -- lctdav2 - from J4
-      alct_dav  => int_alct_dav,             -- lctdav2 - from J4
+      alct_dav  => int_alct_dav,        -- lctdav2 - from J4
       lctrqst   => lctrqst,             -- lctrqst(2 downto 1) - to J4
       rsvtd_in  => rsvtd_in,            -- spare(7 DOWNTO 3) - to J4
 --              rsvtd_out => rsvtd_out(6 downto 3),                                                                                     -- spare(7 DOWNTO 3) - from J4
@@ -2134,10 +1752,10 @@ tc_run_out <= tc_run;
       ul_dav   => ul_dav,               -- davf(5 DOWNTO 1) - from DCFEBs 
       ul_movlp => ul_movlp,             -- movlp(5 DOWNTO 1) - from DCFEBs
 
-      dcfeb_l1a_match => dcfeb_l1a_match,  -- lctf(5 DOWNTO 1) - to DCFEBs
-      dcfeb_l1a       => dcfeb_l1a,        -- febrst - to DCFEBs
-      dcfeb_injpulse  => dcfeb_injpulse,   -- inject - to DCFEBs
-      dcfeb_extpulse  => dcfeb_extpulse,   -- extpulse - to DCFEBs
+      dcfeb_l1a_match => int_l1a_match,  -- lctf(5 DOWNTO 1) - to DCFEBs
+      dcfeb_l1a       => int_l1a,        -- febrst - to DCFEBs
+      dcfeb_injpulse    => dcfeb_injpls,   -- inject - to DCFEBs
+      dcfeb_extpulse    => dcfeb_extpls,   -- extpls - to DCFEBs
 
 -- From/To LVMB
 
@@ -2166,35 +1784,11 @@ tc_run_out <= tc_run;
       );
 
 -- OT Manager
+
+  orx_rx_en  <= '1';
+  orx_en_sd  <= '0';
+  orx_sq_en  <= '0';
   
-  OT_MANAGER : ot_mgr
-    port map (
-      otx1_tx_en  => otx1_tx_en,
-      otx1_tx_dis => otx1_tx_dis,
-      otx1_reset  => otx1_reset,
-      otx1_fault  => otx1_fault,
-      otx2_tx_en  => otx2_tx_en,
-      otx2_tx_dis => otx2_tx_dis,
-      otx2_reset  => otx2_reset,
-      otx2_fault  => otx2_fault,
-      orx1_rx_en  => orx1_rx_en,
-      orx1_en_sd  => orx1_en_sd,
-      orx1_sd     => orx1_sd,
-      orx1_sq_en  => orx1_sq_en,
-      orx2_rx_en  => orx2_rx_en,
-      orx2_en_sd  => orx2_en_sd,
-      orx2_sd     => orx2_sd,
-      orx2_sq_en  => orx2_sq_en);
-
-  orx2_01_sd <= orx2_sd;
-  orx2_02_sd <= orx2_sd;
-  orx2_03_sd <= orx2_sd;
-  orx2_04_sd <= orx2_sd;
-  orx2_05_sd <= orx2_sd;
-  orx2_06_sd <= orx2_sd;
-  orx2_07_sd <= orx2_sd;
-  orx2_08_sd <= orx2_sd;
-
 -- FIFO MUX
   fifo_out <= dcfeb_fifo_out(1) when data_fifo_oe = "111111110" else
               dcfeb_fifo_out(2) when data_fifo_oe = "111111101" else
@@ -2336,7 +1930,7 @@ tc_run_out <= tc_run;
 
       clk            => clk40,
       rst            => reset,
-      l1a            => dcfeb_l1a,
+      l1a            => int_l1a,
       alct_l1a_match => cafifo_l1a_match(NFEB+2),
       tmb_l1a_match  => cafifo_l1a_match(NFEB+1),
       alct_dv        => gen_alct_data_valid,
@@ -2409,48 +2003,6 @@ tc_run_out <= tc_run;
       WRCLK       => clk40,                 -- Input write clock
       WREN        => tmb_fifo_wr_en         -- Input write enable
       );
-
--- DCFEB0
-
-
-  dl_resync(1) <= dl_global_rst;
-
-
--- DCFEB1
-
-
-  dl_resync(2) <= dl_global_rst;
-
-
--- DCFEB2
-
-
-  dl_resync(3) <= dl_global_rst;
-
-
--- DCFEB3
-
-
-  dl_resync(4) <= dl_global_rst;
-
-
--- DCFEB4
-
-  dl_resync(5) <= dl_global_rst;
-
-
-
--- DCFEB5
-
-
-  dl_resync(6) <= dl_global_rst;
-
-
-
--- DCFEB6
-
-
-  dl_resync(7) <= dl_global_rst;
 
 
 -- TMB0
@@ -2618,13 +2170,13 @@ tc_run_out <= tc_run;
       sdo              => int_lvmb_sdout);
 
 
-  orx_dcfeb_data_n <= orx2_buf_n;
-  orx_dcfeb_data_p <= orx2_buf_p;
+  orx_dcfeb_data_n <= orx_buf_n;
+  orx_dcfeb_data_p <= orx_buf_p;
 
   DMB_RX_PM : dmb_receiver
     generic map (
       USE_2p56GbE => 1,
-      SIM_SPEEDUP => 1
+      SIM_SPEEDUP => 0
       )
     port map (
       -- Chip Scope Pro Logic Analyzer control -- bgb
@@ -2634,39 +2186,53 @@ tc_run_out <= tc_run;
 
 
       --External signals
-      RST              => reset,
-      ORX2_01_N        => rx_dcfeb_data_n(1),
-      ORX2_01_P        => rx_dcfeb_data_p(1),
-      ORX2_02_N        => rx_dcfeb_data_n(2),
-      ORX2_02_P        => rx_dcfeb_data_p(2),
-      ORX2_03_N        => rx_dcfeb_data_n(3),
-      ORX2_03_P        => rx_dcfeb_data_p(3),
-      ORX2_04_N        => rx_dcfeb_data_n(4),
-      ORX2_04_P        => rx_dcfeb_data_p(4),
-      ORX2_05_N        => rx_dcfeb_data_n(5),
-      ORX2_05_P        => rx_dcfeb_data_p(5),
-      ORX2_06_N        => rx_dcfeb_data_n(6),
-      ORX2_06_P        => rx_dcfeb_data_p(6),
-      ORX2_07_N        => rx_dcfeb_data_n(7),
-      ORX2_07_P        => rx_dcfeb_data_p(7),
-      ORX2_08_N        => orx2_buf_n(8),
-      ORX2_08_P        => orx2_buf_p(8),
-      ORX2_09_N        => orx2_buf_n(9),
-      ORX2_09_P        => orx2_buf_p(9),
-      ORX2_10_N        => orx2_buf_n(10),
-      ORX2_10_P        => orx2_buf_p(10),
-      ORX2_11_N        => orx2_buf_n(11),
-      ORX2_11_P        => orx2_buf_p(11),
-      ORX2_12_N        => orx2_buf_n(12),
-      ORX2_12_P        => orx2_buf_p(12),
-      DCFEB1_DATA      => rx_dcfeb_data(1),
-      DCFEB2_DATA      => rx_dcfeb_data(2),
-      DCFEB3_DATA      => rx_dcfeb_data(3),
-      DCFEB4_DATA      => rx_dcfeb_data(4),
-      DCFEB5_DATA      => rx_dcfeb_data(5),
-      DCFEB6_DATA      => rx_dcfeb_data(6),
-      DCFEB7_DATA      => rx_dcfeb_data(7),
-      DCFEB_DATA_VALID => rx_dcfeb_data_valid,
+      RST                    => reset,
+--      ORX_01_N               => rx_dcfeb_data_n(1),
+--      ORX_01_P               => rx_dcfeb_data_p(1),
+--      ORX_02_N               => rx_dcfeb_data_n(2),
+--      ORX_02_P               => rx_dcfeb_data_p(2),
+--      ORX_03_N               => rx_dcfeb_data_n(3),
+--      ORX_03_P               => rx_dcfeb_data_p(3),
+--      ORX_04_N               => rx_dcfeb_data_n(4),
+--      ORX_04_P               => rx_dcfeb_data_p(4),
+--      ORX_05_N               => rx_dcfeb_data_n(5),
+--      ORX_05_P               => rx_dcfeb_data_p(5),
+--      ORX_06_N               => rx_dcfeb_data_n(6),
+--      ORX_06_P               => rx_dcfeb_data_p(6),
+--      ORX_07_N               => rx_dcfeb_data_n(7),
+--      ORX_07_P               => rx_dcfeb_data_p(7),
+      ORX_01_N               => orx_buf_n(1),
+      ORX_01_P               => orx_buf_p(1),
+      ORX_02_N               => orx_buf_n(2),
+      ORX_02_P               => orx_buf_p(2),
+      ORX_03_N               => orx_buf_n(3),
+      ORX_03_P               => orx_buf_p(3),
+      ORX_04_N               => orx_buf_n(4),
+      ORX_04_P               => orx_buf_p(4),
+      ORX_05_N               => orx_buf_n(5),
+      ORX_05_P               => orx_buf_p(5),
+      ORX_06_N               => orx_buf_n(6),
+      ORX_06_P               => orx_buf_p(6),
+      ORX_07_N               => orx_buf_n(7),
+      ORX_07_P               => orx_buf_p(7),
+      ORX_08_N               => orx_buf_n(8),
+      ORX_08_P               => orx_buf_p(8),
+      ORX_09_N               => orx_buf_n(9),
+      ORX_09_P               => orx_buf_p(9),
+      ORX_10_N               => orx_buf_n(10),
+      ORX_10_P               => orx_buf_p(10),
+      ORX_11_N               => orx_buf_n(11),
+      ORX_11_P               => orx_buf_p(11),
+      ORX_12_N               => orx_buf_n(12),
+      ORX_12_P               => orx_buf_p(12),
+      DCFEB1_DATA            => rx_dcfeb_data(1),
+      DCFEB2_DATA            => rx_dcfeb_data(2),
+      DCFEB3_DATA            => rx_dcfeb_data(3),
+      DCFEB4_DATA            => rx_dcfeb_data(4),
+      DCFEB5_DATA            => rx_dcfeb_data(5),
+      DCFEB6_DATA            => rx_dcfeb_data(6),
+      DCFEB7_DATA            => rx_dcfeb_data(7),
+      DCFEB_DATA_VALID       => rx_dcfeb_data_valid,
       --Internal signals
       FIFO_VME_MODE          => fifo_vme_mode,
       FIFO_SEL               => fifo_sel,
@@ -2681,8 +2247,18 @@ tc_run_out <= tc_run;
       DAQ_RX_160REFCLK_115_0 => clk80
       );
 
-  rx_dcfeb_sel  <= '1';
+--  rx_dcfeb_sel  <= '1';
+  rx_dcfeb_sel  <= flf_ctrl(7);
   opt_dcfeb_sel <= '0';
+
+  dcfeb_tms <= int_tms;
+  dcfeb_tdi <= int_tdi;
+
+  dcfeb_l1a <= int_l1a;
+
+  dcfeb_resync    <= '0';
+  dcfeb_reprog_b  <= '0';
+  dcfeb_reprgen_b <= '0';
 
   GEN_DCFEB : for I in NFEB downto 1 generate
   begin
@@ -2692,9 +2268,9 @@ tc_run_out <= tc_run;
     rx_dcfeb_data_p(I) <= orx_dcfeb_data_p(I) when (opt_dcfeb_sel = '1') else gen_dcfeb_data_p(I);
     rx_dcfeb_data_n(I) <= orx_dcfeb_data_n(I) when (opt_dcfeb_sel = '1') else gen_dcfeb_data_n(I);
 
-    dcfeb_fifo_in(I) <= fifo_in when ((fifo_rm_en(I) = '0') and (fifo_rw_en(I) = '0')) else 
-                        fifo_out when ((fifo_rm_en(I) = '0') and (fifo_rw_en(I) = '1')) else
-                        rx_dcfeb_data(I) when (rx_dcfeb_sel = '1') else 
+    dcfeb_fifo_in(I) <= fifo_in when ((fifo_rm_en(I) = '0') and (fifo_rw_en(I) = '0')) else
+                        fifo_out         when ((fifo_rm_en(I) = '0') and (fifo_rw_en(I) = '1')) else
+                        rx_dcfeb_data(I) when (rx_dcfeb_sel = '1') else
                         gen_dcfeb_data(I);
 
     DCFEB_V6_PM : DCFEB_V6
@@ -2704,27 +2280,32 @@ tc_run_out <= tc_run;
         clk           => clk40,
         clk80         => clk80,
         rst           => reset,
-        l1a           => dcfeb_l1a,
-        l1a_match     => dcfeb_l1a_match(I),
-        tx_ack        => dcfeb_tx_ack(I), -- 1 if rx_dcfeb_sel = 0!!!
+        l1a           => int_l1a,
+        l1a_match     => int_l1a_match(I),
+        tx_ack        => dcfeb_tx_ack(I),  -- 1 if rx_dcfeb_sel = 0!!!
         dcfeb_dv      => gen_dcfeb_data_valid(I),
         dcfeb_data    => gen_dcfeb_data(I),
         adc_mask      => dcfeb_adc_mask(I),
         dcfeb_fsel    => dcfeb_fsel(I),
         dcfeb_jtag_ir => dcfeb_jtag_ir(I),
         trst          => reset,
-        tck           => dl_jtag_tck(I),
-        tms           => dl_jtag_tms,
-        tdi           => dl_jtag_tdi,
-        rtn_shft_en   => dl_rtn_shft_en(I),
-        tdo           => dl_jtag_tdo(I));
+        tck           => int_tck(I),
+        tms           => int_tms,
+        tdi           => int_tdi,
+        rtn_shft_en   => gen_rtn_shft_en(I),
+        tdo           => gen_tdo(I));
 
--- dcfeb_tx_ack(I) to be connected to data generator in DCFEB_V6!!!
+    dcfeb_tck(I) <= int_tck(I);
+
+    dcfeb_l1a_match(I) <= int_l1a_match(I);
+
+    int_tdo(I)         <= dcfeb_tdo(I)       when (rx_dcfeb_sel = '1') else gen_tdo(I);
+    int_rtn_shft_en(I) <= gen_rtn_shft_en(I) when (rx_dcfeb_sel = '1') else '1';
 
     DCFEB_TX_PM : daq_optical_out
       generic map(
         USE_CHIPSCOPE => 0,
-        SIM_SPEEDUP   => 1
+        SIM_SPEEDUP   => 0
         )
       port map(
         DAQ_TX_VIO_CNTRL     => LOGIC36L,

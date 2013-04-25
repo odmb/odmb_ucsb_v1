@@ -6,6 +6,12 @@
 =                                                                    =
 ======================================================================
 
+V01-00: 25 April 2013, Manuel
+--------------------------------
+Added V2 top and ucf files. It syntesizes.
+The V2 test bench is incomplete.
+
+
 V00-07: 22 April 2013, Manuel
 --------------------------------
 Synthesized the project in ISE, and added testctrl.vhd which stores

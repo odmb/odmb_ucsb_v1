@@ -103,7 +103,7 @@ architecture CONTROL_arch of CONTROL is
   signal DOTAIL : std_logic;
 
   signal DAV_D : std_logic;
-  signal DAV_D1,DAV_D2 : std_logic;
+  signal DAV_D1,DAV_D2,DAV_D3 : std_logic;
 
   signal POP_D : std_logic_vector(4 downto 1);
   signal TAILDONE, STPOP, L1ONLY, POP: std_logic;
@@ -138,6 +138,7 @@ architecture CONTROL_arch of CONTROL is
   signal P : std_logic_vector(NFEB+2 downto 1);
   signal OE : std_logic_vector(NFEB+2 downto 1);
   signal DOEALL, OEALL, OEALL_D, OEDATA, OEDATA_D, OEDATA_DD, POPLAST : std_logic;
+  signal OEDATA_DAV : std_logic_vector(2 downto 0);
   signal JRDFF, JRDFF_D : std_logic;
   signal EODATA, DATAON : std_logic;
     
@@ -253,11 +254,10 @@ begin
   DOTAIL <= TAILA or TAILB;
   
 -- Generate DAV (page 1)
-  DAV_D <= (OEDATA or OEHDTL) and not DISDAV;
-  FDC(DAV_D, CLK, POP, DAV_D1);
--- first clock cycle with data valid = 1 removed
-  FDC(DAV_D1, CLK, POP, DAV_D2);
-  DAV <= DAV_D1 and DAV_D2;
+  DAV_D <= (OEDATA_DAV(2) or OEHDTL) and not DISDAV;
+  FDC(DAV_D, CLK, POP, DAV);
+--  FDC(DAV_D2, CLK, POP, DAV_D3);
+--  DAV <= DAV_D1 and DAV_D2 and DAV_D3;
     
 -- Generate POP (page 1)
   FDC(TAIL(8), CLK, POP, TAILDONE);
@@ -422,6 +422,12 @@ begin
 --  FDC(OEDATA_D, CLK, POP, OEDATA);
   FDC(OEDATA_D, CLK, POP, OEDATA_DD); 
   FDC(OEDATA_DD, CLK, POP, OEDATA);
+  
+  -- Generate OEDATA_DAV (removes two clock cycles and shifts another)
+   FDC(OEDATA, CLK, POP, OEDATA_DAV(0));
+   FDC(OEDATA_DAV(0), CLK, POP, OEDATA_DAV(1));
+   OEDATA_DAV(2) <= OEDATA_DAV(1) and OEDATA_DAV(0) and OEDATA and OEDATA_DD;
+ 
   
 -- Generate JRDFF (page 4)
   FDC(LOGICH, RDFFNXT, JRDFF, JRDFF_D);

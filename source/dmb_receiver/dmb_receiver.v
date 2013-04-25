@@ -19,30 +19,30 @@ module dmb_receiver #(
 
    input RST,
 	// External signals
-	input ORX2_01_N,
-	input ORX2_01_P,
-	input ORX2_02_N,
-	input ORX2_02_P,
-	input ORX2_03_N,
-	input ORX2_03_P,
-	input ORX2_04_N,
-	input ORX2_04_P,
-	input ORX2_05_N,
-	input ORX2_05_P,
-	input ORX2_06_N,
-	input ORX2_06_P,
-	input ORX2_07_N,
-	input ORX2_07_P,
-	input ORX2_08_N,
-	input ORX2_08_P,
-	input ORX2_09_N,
-	input ORX2_09_P,
-	input ORX2_10_N,
-	input ORX2_10_P,
-	input ORX2_11_N,
-	input ORX2_11_P,
-	input ORX2_12_N,
-	input ORX2_12_P,
+	input ORX_01_N,
+	input ORX_01_P,
+	input ORX_02_N,
+	input ORX_02_P,
+	input ORX_03_N,
+	input ORX_03_P,
+	input ORX_04_N,
+	input ORX_04_P,
+	input ORX_05_N,
+	input ORX_05_P,
+	input ORX_06_N,
+	input ORX_06_P,
+	input ORX_07_N,
+	input ORX_07_P,
+	input ORX_08_N,
+	input ORX_08_P,
+	input ORX_09_N,
+	input ORX_09_P,
+	input ORX_10_N,
+	input ORX_10_P,
+	input ORX_11_N,
+	input ORX_11_P,
+	input ORX_12_N,
+	input ORX_12_P,
 	output [15:0] DCFEB1_DATA,
 	output [15:0] DCFEB2_DATA,
 	output [15:0] DCFEB3_DATA,
@@ -391,8 +391,8 @@ BUFR bufr_clk_ds (
         .GTX0_RXRECCLK_OUT              (rxrecclk_f[5]),
         .GTX0_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX0_RXN_IN                    (ORX2_05_N),
-        .GTX0_RXP_IN                    (ORX2_05_P),
+        .GTX0_RXN_IN                    (ORX_05_N),
+        .GTX0_RXP_IN                    (ORX_05_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX0_GTXRXRESET_IN             (pma_reset_i),
         .GTX0_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
@@ -424,8 +424,8 @@ BUFR bufr_clk_ds (
         .GTX1_RXRECCLK_OUT              (rxrecclk_f[1]),
         .GTX1_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX1_RXN_IN                    (ORX2_01_N),
-        .GTX1_RXP_IN                    (ORX2_01_P),
+        .GTX1_RXN_IN                    (ORX_01_N),
+        .GTX1_RXP_IN                    (ORX_01_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX1_GTXRXRESET_IN             (pma_reset_i),
         .GTX1_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
@@ -457,8 +457,8 @@ BUFR bufr_clk_ds (
         .GTX2_RXRECCLK_OUT              (rxrecclk_f[4]),
         .GTX2_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX2_RXN_IN                    (ORX2_04_N),
-        .GTX2_RXP_IN                    (ORX2_04_P),
+        .GTX2_RXN_IN                    (ORX_04_N),
+        .GTX2_RXP_IN                    (ORX_04_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX2_GTXRXRESET_IN             (pma_reset_i),
         .GTX2_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
@@ -490,8 +490,8 @@ BUFR bufr_clk_ds (
         .GTX3_RXRECCLK_OUT              (rxrecclk_f[2]),
         .GTX3_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX3_RXN_IN                    (ORX2_02_N),
-        .GTX3_RXP_IN                    (ORX2_02_P),
+        .GTX3_RXN_IN                    (ORX_02_N),
+        .GTX3_RXP_IN                    (ORX_02_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX3_GTXRXRESET_IN             (pma_reset_i),
         .GTX3_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
@@ -523,8 +523,8 @@ BUFR bufr_clk_ds (
         .GTX4_RXRECCLK_OUT              (rxrecclk_f[3]),
         .GTX4_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX4_RXN_IN                    (ORX2_03_N),
-        .GTX4_RXP_IN                    (ORX2_03_P),
+        .GTX4_RXN_IN                    (ORX_03_N),
+        .GTX4_RXP_IN                    (ORX_03_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX4_GTXRXRESET_IN             (pma_reset_i),
         .GTX4_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
@@ -556,8 +556,8 @@ BUFR bufr_clk_ds (
         .GTX5_RXRECCLK_OUT              (rxrecclk_f[11]),
         .GTX5_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX5_RXN_IN                    (ORX2_11_N),
-        .GTX5_RXP_IN                    (ORX2_11_P),
+        .GTX5_RXN_IN                    (ORX_11_N),
+        .GTX5_RXP_IN                    (ORX_11_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX5_GTXRXRESET_IN             (pma_reset_i),
         .GTX5_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
@@ -589,8 +589,8 @@ BUFR bufr_clk_ds (
         .GTX6_RXRECCLK_OUT              (rxrecclk_f[10]),
         .GTX6_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX6_RXN_IN                    (ORX2_10_N),
-        .GTX6_RXP_IN                    (ORX2_10_P),
+        .GTX6_RXN_IN                    (ORX_10_N),
+        .GTX6_RXP_IN                    (ORX_10_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX6_GTXRXRESET_IN             (pma_reset_i),
         .GTX6_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
@@ -622,8 +622,8 @@ BUFR bufr_clk_ds (
         .GTX7_RXRECCLK_OUT              (rxrecclk_f[12]),
         .GTX7_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX7_RXN_IN                    (ORX2_12_N),
-        .GTX7_RXP_IN                    (ORX2_12_P),
+        .GTX7_RXN_IN                    (ORX_12_N),
+        .GTX7_RXP_IN                    (ORX_12_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX7_GTXRXRESET_IN             (pma_reset_i),
         .GTX7_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
@@ -655,8 +655,8 @@ BUFR bufr_clk_ds (
         .GTX8_RXRECCLK_OUT              (rxrecclk_f[7]),
         .GTX8_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX8_RXN_IN                    (ORX2_07_N),
-        .GTX8_RXP_IN                    (ORX2_07_P),
+        .GTX8_RXN_IN                    (ORX_07_N),
+        .GTX8_RXP_IN                    (ORX_07_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX8_GTXRXRESET_IN             (pma_reset_i),
         .GTX8_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
@@ -688,8 +688,8 @@ BUFR bufr_clk_ds (
         .GTX9_RXRECCLK_OUT              (rxrecclk_f[8]),
         .GTX9_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX9_RXN_IN                    (ORX2_08_N),
-        .GTX9_RXP_IN                    (ORX2_08_P),
+        .GTX9_RXN_IN                    (ORX_08_N),
+        .GTX9_RXP_IN                    (ORX_08_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX9_GTXRXRESET_IN             (pma_reset_i),
         .GTX9_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
@@ -721,8 +721,8 @@ BUFR bufr_clk_ds (
         .GTX10_RXRECCLK_OUT             (rxrecclk_f[9]),
         .GTX10_RXUSRCLK2_IN             (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX10_RXN_IN                   (ORX2_09_N),
-        .GTX10_RXP_IN                   (ORX2_09_P),
+        .GTX10_RXN_IN                   (ORX_09_N),
+        .GTX10_RXP_IN                   (ORX_09_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX10_GTXRXRESET_IN            (pma_reset_i),
         .GTX10_MGTREFCLKRX_IN           (DAQ_RX_160REFCLK_115_0),
@@ -754,8 +754,8 @@ BUFR bufr_clk_ds (
         .GTX11_RXRECCLK_OUT             (rxrecclk_f[6]),
         .GTX11_RXUSRCLK2_IN             (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX11_RXN_IN                   (ORX2_06_N),
-        .GTX11_RXP_IN                   (ORX2_06_P),
+        .GTX11_RXN_IN                   (ORX_06_N),
+        .GTX11_RXP_IN                   (ORX_06_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX11_GTXRXRESET_IN            (pma_reset_i),
         .GTX11_MGTREFCLKRX_IN           (DAQ_RX_160REFCLK_115_0),
@@ -807,8 +807,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX0_RXRECCLK_OUT              (rxrecclk_f[5]),
         .GTX0_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX0_RXN_IN                    (ORX2_05_N),
-        .GTX0_RXP_IN                    (ORX2_05_P),
+        .GTX0_RXN_IN                    (ORX_05_N),
+        .GTX0_RXP_IN                    (ORX_05_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX0_GTXRXRESET_IN             (pma_reset_i),
         .GTX0_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
@@ -840,8 +840,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX1_RXRECCLK_OUT              (rxrecclk_f[1]),
         .GTX1_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX1_RXN_IN                    (ORX2_01_N),
-        .GTX1_RXP_IN                    (ORX2_01_P),
+        .GTX1_RXN_IN                    (ORX_01_N),
+        .GTX1_RXP_IN                    (ORX_01_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX1_GTXRXRESET_IN             (pma_reset_i),
         .GTX1_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
@@ -873,8 +873,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX2_RXRECCLK_OUT              (rxrecclk_f[4]),
         .GTX2_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX2_RXN_IN                    (ORX2_04_N),
-        .GTX2_RXP_IN                    (ORX2_04_P),
+        .GTX2_RXN_IN                    (ORX_04_N),
+        .GTX2_RXP_IN                    (ORX_04_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX2_GTXRXRESET_IN             (pma_reset_i),
         .GTX2_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
@@ -906,8 +906,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX3_RXRECCLK_OUT              (rxrecclk_f[2]),
         .GTX3_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX3_RXN_IN                    (ORX2_02_N),
-        .GTX3_RXP_IN                    (ORX2_02_P),
+        .GTX3_RXN_IN                    (ORX_02_N),
+        .GTX3_RXP_IN                    (ORX_02_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX3_GTXRXRESET_IN             (pma_reset_i),
         .GTX3_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
@@ -939,8 +939,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX4_RXRECCLK_OUT              (rxrecclk_f[3]),
         .GTX4_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX4_RXN_IN                    (ORX2_03_N),
-        .GTX4_RXP_IN                    (ORX2_03_P),
+        .GTX4_RXN_IN                    (ORX_03_N),
+        .GTX4_RXP_IN                    (ORX_03_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX4_GTXRXRESET_IN             (pma_reset_i),
         .GTX4_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
@@ -972,8 +972,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX5_RXRECCLK_OUT              (rxrecclk_f[11]),
         .GTX5_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX5_RXN_IN                    (ORX2_11_N),
-        .GTX5_RXP_IN                    (ORX2_11_P),
+        .GTX5_RXN_IN                    (ORX_11_N),
+        .GTX5_RXP_IN                    (ORX_11_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX5_GTXRXRESET_IN             (pma_reset_i),
         .GTX5_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
@@ -1005,8 +1005,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX6_RXRECCLK_OUT              (rxrecclk_f[10]),
         .GTX6_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX6_RXN_IN                    (ORX2_10_N),
-        .GTX6_RXP_IN                    (ORX2_10_P),
+        .GTX6_RXN_IN                    (ORX_10_N),
+        .GTX6_RXP_IN                    (ORX_10_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX6_GTXRXRESET_IN             (pma_reset_i),
         .GTX6_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
@@ -1038,8 +1038,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX7_RXRECCLK_OUT              (rxrecclk_f[12]),
         .GTX7_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX7_RXN_IN                    (ORX2_12_N),
-        .GTX7_RXP_IN                    (ORX2_12_P),
+        .GTX7_RXN_IN                    (ORX_12_N),
+        .GTX7_RXP_IN                    (ORX_12_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX7_GTXRXRESET_IN             (pma_reset_i),
         .GTX7_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
@@ -1071,8 +1071,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX8_RXRECCLK_OUT              (rxrecclk_f[7]),
         .GTX8_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX8_RXN_IN                    (ORX2_07_N),
-        .GTX8_RXP_IN                    (ORX2_07_P),
+        .GTX8_RXN_IN                    (ORX_07_N),
+        .GTX8_RXP_IN                    (ORX_07_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX8_GTXRXRESET_IN             (pma_reset_i),
         .GTX8_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
@@ -1104,8 +1104,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX9_RXRECCLK_OUT              (rxrecclk_f[8]),
         .GTX9_RXUSRCLK2_IN              (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX9_RXN_IN                    (ORX2_08_N),
-        .GTX9_RXP_IN                    (ORX2_08_P),
+        .GTX9_RXN_IN                    (ORX_08_N),
+        .GTX9_RXP_IN                    (ORX_08_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX9_GTXRXRESET_IN             (pma_reset_i),
         .GTX9_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
@@ -1137,8 +1137,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX10_RXRECCLK_OUT             (rxrecclk_f[9]),
         .GTX10_RXUSRCLK2_IN             (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX10_RXN_IN                   (ORX2_09_N),
-        .GTX10_RXP_IN                   (ORX2_09_P),
+        .GTX10_RXN_IN                   (ORX_09_N),
+        .GTX10_RXP_IN                   (ORX_09_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX10_GTXRXRESET_IN            (pma_reset_i),
         .GTX10_MGTREFCLKRX_IN           (DAQ_RX_125REFCLK),
@@ -1170,8 +1170,8 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         .GTX11_RXRECCLK_OUT             (rxrecclk_f[6]),
         .GTX11_RXUSRCLK2_IN             (usr_clk_wordwise),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
-        .GTX11_RXN_IN                   (ORX2_06_N),
-        .GTX11_RXP_IN                   (ORX2_06_P),
+        .GTX11_RXN_IN                   (ORX_06_N),
+        .GTX11_RXP_IN                   (ORX_06_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX11_GTXRXRESET_IN            (pma_reset_i),
         .GTX11_MGTREFCLKRX_IN           (DAQ_RX_125REFCLK),

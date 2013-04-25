@@ -255,6 +255,7 @@ begin
               f1_out when (f1_tx = '1') else
               (OTHERS => '0'); 
 
-  dv_out <= f0_rden or f1_rden;
+  --dv_out <= f0_rden or f1_rden;
+  dv_out <= f0_tx or f1_tx;
    
 end ddufifo_architecture;
