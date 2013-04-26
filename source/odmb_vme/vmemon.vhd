@@ -42,10 +42,10 @@ architecture VMEMON_Arch of VMEMON is
 begin
 
 -- generate CMDHIGH / generate WRITECTRL / generate READCTRL / generate READDATA
-  CMDHIGH <= '1' when (COMMAND(9 downto 4) = "000000" and DEVICE = '1') else '0';
-  WRITECTRL <= '1' when (COMMAND(3 downto 0) = "0000" and CMDHIGH = '1') else '0';
-  READCTRL <= '1' when (COMMAND(3 downto 0) = "0001" and CMDHIGH = '1') else '0';
-  READDATA <= '1' when (COMMAND(3 downto 0) = "0010" and CMDHIGH = '1') else '0';
+  CMDHIGH   <= '1' when (COMMAND(9 downto 4) = "000000" and DEVICE = '1') else '0';
+  WRITECTRL <= '1' when (COMMAND(3 downto 0) = "0000" and CMDHIGH = '1')  else '0';
+  READCTRL  <= '1' when (COMMAND(3 downto 0) = "0001" and CMDHIGH = '1')  else '0';
+  READDATA  <= '1' when (COMMAND(3 downto 0) = "0010" and CMDHIGH = '1')  else '0';
 
   GEN_FLFCTRL : for K in 0 to 15 generate
   begin
@@ -64,7 +64,7 @@ begin
   DTACK_INNER <= '0' when (Q_OUTDATA_1 = '1') else 'Z';
 
 --  OUTDATA(15 downto 0) <= FLFDATA(15 downto 0) when (STROBE = '1' and READDATA = '1') else (others => '1');
-  D_OUTDATA_2          <= '1'                  when (STROBE = '1' and READDATA = '1') else '0';
+  D_OUTDATA_2 <= '1' when (STROBE = '1' and READDATA = '1') else '0';
 
   FD_OUTDATA_2 : FD port map(Q_OUTDATA_2, SLOWCLK, D_OUTDATA_2);
 

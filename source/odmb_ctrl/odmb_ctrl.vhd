@@ -59,7 +59,7 @@ entity ODMB_CTRL is
 
 -- From/To Data FIFOs
 
-    fifo_rd_ck : out std_logic;
+    fifo_rd_ck   : out std_logic;
     data_fifo_re : out std_logic_vector(NFEB+2 downto 1);
     data_fifo_oe : out std_logic_vector(NFEB+2 downto 1);
 
@@ -75,8 +75,8 @@ entity ODMB_CTRL is
 
 -- From CAFIFO to Data FIFOs
     dcfeb_fifo_wr_en : out std_logic_vector(NFEB downto 1);
-    alct_fifo_wr_en : out std_logic;
-    tmb_fifo_wr_en : out std_logic;
+    alct_fifo_wr_en  : out std_logic;
+    tmb_fifo_wr_en   : out std_logic;
     cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 1);  -- L1A_MATCH from TRGCNTRL to CAFIFO sent to generate Data  
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
@@ -127,13 +127,19 @@ entity ODMB_CTRL is
     test_ccbinj : in std_logic;
     test_ccbpls : in std_logic;
 
-    lct_err : out std_logic;            -- To an LED in the original design
-    leds    : out std_logic_vector(6 downto 0);
-	 ALCT_PUSH_DLY_OUT : out std_logic_vector(4 downto 0);
-      TMB_PUSH_DLY_OUT  : out std_logic_vector(4 downto 0);
-      PUSH_DLY_OUT      : out std_logic_vector(4 downto 0);
-      LCT_L1A_DLY_OUT   : out std_logic_vector(5 downto 0)
-	 );
+    lct_err           : out std_logic;  -- To an LED in the original design
+    leds              : out std_logic_vector(6 downto 0);
+
+    ALCT_PUSH_DLY_OUT : out std_logic_vector(4 downto 0);
+    TMB_PUSH_DLY_OUT  : out std_logic_vector(4 downto 0);
+    PUSH_DLY_OUT      : out std_logic_vector(4 downto 0);
+    LCT_L1A_DLY_OUT   : out std_logic_vector(5 downto 0);
+
+    ALCT_PUSH_DLY : in std_logic_vector(4 downto 0);
+    TMB_PUSH_DLY  : in std_logic_vector(4 downto 0);
+    PUSH_DLY      : in std_logic_vector(4 downto 0);
+    LCT_L1A_DLY   : in std_logic_vector(5 downto 0)
+    );
 
 end ODMB_CTRL;
 
@@ -201,7 +207,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
       BTDI   : in std_logic;
       SEL2   : in std_logic;
       DRCK   : in std_logic;
-		clk40 : in std_logic;
+      clk40  : in std_logic;
       UPDATE : in std_logic;
       SHIFT  : in std_logic;
 
@@ -219,7 +225,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
       EXTDLY        : out std_logic_vector(4 downto 0);
       CALGDLY       : out std_logic_vector(4 downto 0);
       CALLCTDLY     : out std_logic_vector(3 downto 0);
-      KILL      : out std_logic_vector(NFEB+2 downto 1);
+      KILL          : out std_logic_vector(NFEB+2 downto 1);
       CRATEID       : out std_logic_vector(6 downto 0)
       );
 
@@ -376,81 +382,81 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
 
   end component;
 
-component ddufifo is
-  port(
+  component ddufifo is
+    port(
 
-    clk_in : in std_logic;
-    clk_out : in std_logic;
-    rst : in std_logic;
+      clk_in  : in std_logic;
+      clk_out : in std_logic;
+      rst     : in std_logic;
 
-    rx_ack : in std_logic;
+      rx_ack : in std_logic;
 
-    dv_in : in std_logic;
-    ld_in : in std_logic;
-    data_in : in std_logic_vector(15 downto 0);
+      dv_in   : in std_logic;
+      ld_in   : in std_logic;
+      data_in : in std_logic_vector(15 downto 0);
 
-    dv_out : out std_logic;
-    data_out : out std_logic_vector(15 downto 0)
-    );
+      dv_out   : out std_logic;
+      data_out : out std_logic_vector(15 downto 0)
+      );
   end component;
 
-component CONTROL is
-  generic (
-    NFEB : integer range 1 to 7 := 5  -- Number of DCFEBS, 7 in the final design
-    );  
-  port (
+  component CONTROL is
+    generic (
+      NFEB : integer range 1 to 7 := 5  -- Number of DCFEBS, 7 in the final design
+      );  
+    port (
 
-    RST : in std_logic;
-    CLKCMS : in std_logic;
-    CLK    : in std_logic;
-    STATUS : in std_logic_vector(47 downto 0);
-    L1ARST    : in std_logic;
+      RST    : in std_logic;
+      CLKCMS : in std_logic;
+      CLK    : in std_logic;
+      STATUS : in std_logic_vector(47 downto 0);
+      L1ARST : in std_logic;
 
 -- From DMB_VME
-    RDFFNXT : in std_logic;
+      RDFFNXT : in std_logic;
 
 -- to GigaBit Link
-    DOUT : out std_logic_vector(15 downto 0);
-    DAV  : out std_logic;
+      DOUT : out std_logic_vector(15 downto 0);
+      DAV  : out std_logic;
 
 -- to FIFOs
-    OEFIFO_B : out std_logic_vector(NFEB+2 downto 1);
-    RENFIFO_B  : out std_logic_vector(NFEB+2 downto 1);
-    OEFFMON_B  : out std_logic_vector(NFEB+2 downto 1);
-    RENFFMON_B : out std_logic_vector(NFEB+2 downto 1);
+      OEFIFO_B   : out std_logic_vector(NFEB+2 downto 1);
+      RENFIFO_B  : out std_logic_vector(NFEB+2 downto 1);
+      OEFFMON_B  : out std_logic_vector(NFEB+2 downto 1);
+      RENFFMON_B : out std_logic_vector(NFEB+2 downto 1);
 
 -- from FIFOs
-    FFOR_B : in std_logic_vector(NFEB+2 downto 1);
-    DATAIN  : in std_logic_vector(15 downto 0);
-    DATAIN_LAST : in std_logic;
+      FFOR_B      : in std_logic_vector(NFEB+2 downto 1);
+      DATAIN      : in std_logic_vector(15 downto 0);
+      DATAIN_LAST : in std_logic;
 
 -- From CONFREGS
-    KILLINPUT        : in std_logic_vector(NFEB+2 downto 1);
+      KILLINPUT : in std_logic_vector(NFEB+2 downto 1);
 
-    SETLOOPBACK : in std_logic;
+      SETLOOPBACK : in std_logic;
 -- From LOADFIFO
-    JOEF        : in std_logic_vector(NFEB+2 downto 1);
+      JOEF        : in std_logic_vector(NFEB+2 downto 1);
 
 -- to ???
-    DAQMBID : in std_logic_vector(11 downto 0); -- From CRATEID in SETFEBDLY, and GA
-    LOOPBACK : out std_logic;
-    OEOVLP  : out std_logic;
+      DAQMBID  : in  std_logic_vector(11 downto 0);  -- From CRATEID in SETFEBDLY, and GA
+      LOOPBACK : out std_logic;
+      OEOVLP   : out std_logic;
 
 -- FROM SW1
-    GIGAEN : in std_logic;
-    
+      GIGAEN : in std_logic;
+
 -- TO CAFIFO
-    FIFO_POP : out std_logic;
+      FIFO_POP : out std_logic;
 
 -- TO DDUFIFO
-    EOF : out std_logic;
+      EOF : out std_logic;
 
 -- FROM CAFIFO
-    cafifo_l1a_dav : in std_logic_vector(NFEB+2 downto 1);
-    cafifo_l1a_match : in std_logic_vector(NFEB+2 downto 1);
-    cafifo_l1a_cnt : in std_logic_vector(23 downto 0);
-    cafifo_bx_cnt : in std_logic_vector(11 downto 0)
-    );
+      cafifo_l1a_dav   : in std_logic_vector(NFEB+2 downto 1);
+      cafifo_l1a_match : in std_logic_vector(NFEB+2 downto 1);
+      cafifo_l1a_cnt   : in std_logic_vector(23 downto 0);
+      cafifo_bx_cnt    : in std_logic_vector(11 downto 0)
+      );
 
   end component;
 
@@ -503,9 +509,9 @@ component CONTROL is
 
   component LOADFIFO is
     generic (
-      NFEB      : integer range 1 to 7  := 7  -- Number of DCFEBS, 7 in the final design
+      NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
       );  
-    
+
     port (
       SHIFT  : in  std_logic;
       FENF   : in  std_logic;
@@ -607,16 +613,21 @@ component CONTROL is
   signal instr : std_logic_vector(47 downto 1);
 
 -- CONFREGS outputs
-  signal KILL          : std_logic_vector(NFEB+2 downto 1);
-  signal crateid       : std_logic_vector(6 downto 0);  -- Instruction 15    
-  signal callctdly     : std_logic_vector(3 downto 0);
-  signal calgdly       : std_logic_vector(4 downto 0);
-  signal extdly        : std_logic_vector(4 downto 0);
-  signal injdly        : std_logic_vector(4 downto 0);
-  signal alct_push_dly : std_logic_vector (4 downto 0);
-  signal tmb_push_dly  : std_logic_vector (4 downto 0);
-  signal push_dly      : std_logic_vector (4 downto 0);
-  signal lct_l1a_dly   : std_logic_vector (5 downto 0);
+  signal KILL               : std_logic_vector(NFEB+2 downto 1);
+  signal crateid            : std_logic_vector(6 downto 0);  -- Instruction 15    
+  signal callctdly          : std_logic_vector(3 downto 0);
+  signal calgdly            : std_logic_vector(4 downto 0);
+  signal extdly             : std_logic_vector(4 downto 0);
+  signal injdly             : std_logic_vector(4 downto 0);
+--  signal alct_push_dly : std_logic_vector (4 downto 0);
+--  signal tmb_push_dly  : std_logic_vector (4 downto 0);
+--  signal push_dly      : std_logic_vector (4 downto 0);
+--  signal lct_l1a_dly   : std_logic_vector (5 downto 0);
+  signal jtag_alct_push_dly : std_logic_vector (4 downto 0);
+  signal jtag_tmb_push_dly  : std_logic_vector (4 downto 0);
+  signal jtag_push_dly      : std_logic_vector (4 downto 0);
+  signal jtag_lct_l1a_dly   : std_logic_vector (5 downto 0);
+
 
 -- CONFLOGIC outputs
   signal CAL_TRGSEL, ENACFEB, CAL_MODE : std_logic;
@@ -640,13 +651,13 @@ component CONTROL is
   signal cafifo_bx_cnt_out    : std_logic_vector(11 downto 0);
 
 -- CONTROL outputs
-  signal cafifo_pop : std_logic := '0';
-  signal eof : std_logic := '0';
-  signal gtx_data : std_logic_vector(15 downto 0);                                                                                      
+  signal cafifo_pop     : std_logic := '0';
+  signal eof            : std_logic := '0';
+  signal gtx_data       : std_logic_vector(15 downto 0);
   signal gtx_data_valid : std_logic := 'L';
 
 -- DDUFIFO outputs
-  signal ddu_data : std_logic_vector(15 downto 0);                                                                                      
+  signal ddu_data       : std_logic_vector(15 downto 0);
   signal ddu_data_valid : std_logic;
 
 -- TRGFIFO
@@ -698,11 +709,11 @@ component CONTROL is
   signal mon_fifo_re : std_logic_vector(NFEB+2 downto 1);
   signal mon_fifo_oe : std_logic_vector(NFEB+2 downto 1);
 
-  signal status : std_logic_vector(47 downto 0) := (OTHERS => '0');
+  signal status : std_logic_vector(47 downto 0) := (others => '0');
 
-  signal rdffnxt  : std_logic := '0'; -- from MBV
-  signal setloopback  : std_logic := '0'; -- from JTAGCOM
-  signal daqmbid : std_logic_vector(11 downto 0); 
+  signal rdffnxt     : std_logic := '0';  -- from MBV
+  signal setloopback : std_logic := '0';  -- from JTAGCOM
+  signal daqmbid     : std_logic_vector(11 downto 0);
 
 begin
 
@@ -773,7 +784,7 @@ begin
 
       BTDI   => tdi,
       DRCK   => drck2,
-		clk40 => clk40,
+      clk40  => clk40,
       SEL2   => sel2,
       SHIFT  => shift2,
       UPDATE => update2,
@@ -784,10 +795,10 @@ begin
       FLOADKILL => instr(16),
 
       TDO           => open,
-      ALCT_PUSH_DLY => alct_push_dly,
-      TMB_PUSH_DLY  => tmb_push_dly,
-      PUSH_DLY      => push_dly,
-      LCT_L1A_DLY   => lct_l1a_dly,
+      ALCT_PUSH_DLY => jtag_alct_push_dly,
+      TMB_PUSH_DLY  => jtag_tmb_push_dly,
+      PUSH_DLY      => jtag_push_dly,
+      LCT_L1A_DLY   => jtag_lct_l1a_dly,
       INJDLY        => injdly,
       EXTDLY        => extdly,
       CALGDLY       => calgdly,
@@ -929,97 +940,97 @@ begin
       LCT_ERR         => lct_err
       );
 
-daqmbid(11 downto 5) <= crateid(6 downto 0);
-daqmbid(4 downto 0) <= ga(4 downto 0); -- to be inverted - why ga(0) is not included?
+  daqmbid(11 downto 5) <= crateid(6 downto 0);
+  daqmbid(4 downto 0)  <= ga(4 downto 0);  -- to be inverted - why ga(0) is not included?
 
-CONTROL_PM : CONTROL
-  generic map(NFEB => NFEB)  
-  port map(
+  CONTROL_PM : CONTROL
+    generic map(NFEB => NFEB)
+    port map(
 
-    CLK => clk40, -- CLKDDU?
-    CLKCMS => clk40, 
-    RST => reset,
-    STATUS => status,
-    L1ARST => l1arst, -- from CCBCODE
+      CLK    => clk40,                  -- CLKDDU?
+      CLKCMS => clk40,
+      RST    => reset,
+      STATUS => status,
+      L1ARST => l1arst,                 -- from CCBCODE
 
 -- From DMB_VME
-    RDFFNXT => rdffnxt, -- from MBV (currently assigned as a signal to '0')
+      RDFFNXT => rdffnxt,  -- from MBV (currently assigned as a signal to '0')
 
 -- to GigaBit Link
-    DOUT => gtx_data,
-    DAV => gtx_data_valid,
+      DOUT => gtx_data,
+      DAV  => gtx_data_valid,
 
 -- to Data FIFOs
-    OEFIFO_B => data_fifo_oe, 
-    RENFIFO_B => data_fifo_re, 
-    OEFFMON_B => mon_fifo_oe, 
-    RENFFMON_B => mon_fifo_re, 
+      OEFIFO_B   => data_fifo_oe,
+      RENFIFO_B  => data_fifo_re,
+      OEFFMON_B  => mon_fifo_oe,
+      RENFFMON_B => mon_fifo_re,
 
 -- from Data FIFOs
-    FFOR_B => fifo_empty_b,
-    DATAIN => fifo_out(15 downto 0),
-    DATAIN_LAST => LOGICL, -- Logic 1 when the last DW (800?) is received ????
+      FFOR_B      => fifo_empty_b,
+      DATAIN      => fifo_out(15 downto 0),
+      DATAIN_LAST => LOGICL,  -- Logic 1 when the last DW (800?) is received ????
 
 -- From CONFREGS
-    KILLINPUT => kill,
+      KILLINPUT => kill,
 
 -- From JTAGCOM
-    SETLOOPBACK => setloopback, -- from JTAGCOM
-    JOEF => joef, -- from LOADFIFO
+      SETLOOPBACK => setloopback,       -- from JTAGCOM
+      JOEF        => joef,              -- from LOADFIFO
 
 -- From CONFREG and GA
-    DAQMBID => daqmbid,
-    LOOPBACK => open,
-    OEOVLP => open,
+      DAQMBID  => daqmbid,
+      LOOPBACK => open,
+      OEOVLP   => open,
 
 -- FROM SW1
-    GIGAEN => LOGICH,
-    
+      GIGAEN => LOGICH,
+
 -- TO CAFIFO
-    FIFO_POP => cafifo_pop,
+      FIFO_POP => cafifo_pop,
 
 -- TO DDUFIFO
-    EOF => eof,
+      EOF => eof,
 
 -- FROM CAFIFO
-    cafifo_l1a_dav => cafifo_l1a_dav_out,
-    cafifo_l1a_match => cafifo_l1a_match_out,
-    cafifo_l1a_cnt => cafifo_l1a_cnt_out,
-    cafifo_bx_cnt => cafifo_bx_cnt_out
-    );
-    
+      cafifo_l1a_dav   => cafifo_l1a_dav_out,
+      cafifo_l1a_match => cafifo_l1a_match_out,
+      cafifo_l1a_cnt   => cafifo_l1a_cnt_out,
+      cafifo_bx_cnt    => cafifo_bx_cnt_out
+      );
+
 --gtx0_data <= gtx_data;                                                                                      
 --gtx0_data_valid <= gtx_data_valid; 
 --gtx1_data <= gtx_data;                                                                                      
 --gtx1_data_valid <= gtx_data_valid; 
 
-gtx0_data <= ddu_data;                                                                                      
-gtx0_data_valid <= ddu_data_valid; 
-gtx1_data <= ddu_data;                                                                                      
-gtx1_data_valid <= ddu_data_valid; 
+  gtx0_data       <= ddu_data;
+  gtx0_data_valid <= ddu_data_valid;
+  gtx1_data       <= ddu_data;
+  gtx1_data_valid <= ddu_data_valid;
 
-	 ALCT_PUSH_DLY_OUT <= alct_push_dly;
-      TMB_PUSH_DLY_OUT  <= tmb_push_dly;
-      PUSH_DLY_OUT      <= push_dly;
-      LCT_L1A_DLY_OUT   <= lct_l1a_dly;
+  ALCT_PUSH_DLY_OUT <= alct_push_dly;
+  TMB_PUSH_DLY_OUT  <= tmb_push_dly;
+  PUSH_DLY_OUT      <= push_dly;
+  LCT_L1A_DLY_OUT   <= lct_l1a_dly;
 
 
-DDUFIFO_PM : ddufifo
+  DDUFIFO_PM : ddufifo
 
-  port map(
+    port map(
 
-    clk_in => clk40,
-    clk_out => clk40,
-    rst => reset,
+      clk_in  => clk40,
+      clk_out => clk40,
+      rst     => reset,
 
-    rx_ack => LOGICH,
+      rx_ack => LOGICH,
 
-    dv_in => gtx_data_valid,
-    ld_in => eof,
-    data_in => gtx_data,
+      dv_in   => gtx_data_valid,
+      ld_in   => eof,
+      data_in => gtx_data,
 
-    dv_out => ddu_data_valid,
-    data_out => ddu_data);
+      dv_out   => ddu_data_valid,
+      data_out => ddu_data);
 
 
   CAFIFO_PM : cafifo
