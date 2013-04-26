@@ -57,7 +57,7 @@ entity ODMB_V6_V2 is
       vme_clk         : in    std_logic;
       vme_dtack_v6_b  : inout std_logic;
       vme_tovme       : out   std_logic;  -- not (tovme)
-      vme_doe_b         : out   std_logic;  
+      vme_doe_b       : out   std_logic;
 
 -- From/To PPIB (connectors J3 and J4)
 
@@ -194,7 +194,7 @@ entity ODMB_V6_V2 is
 -- From IC31 
 
       done_in : in std_logic
-		
+
       );
 end ODMB_V6_V2;
 
@@ -521,10 +521,16 @@ architecture bdf_type of ODMB_V6_V2 is
 
       leds : out std_logic_vector(6 downto 0);
 
-	 ALCT_PUSH_DLY_OUT : out std_logic_vector(4 downto 0);
+      ALCT_PUSH_DLY_OUT : out std_logic_vector(4 downto 0);
       TMB_PUSH_DLY_OUT  : out std_logic_vector(4 downto 0);
       PUSH_DLY_OUT      : out std_logic_vector(4 downto 0);
-      LCT_L1A_DLY_OUT   : out std_logic_vector(5 downto 0)
+      LCT_L1A_DLY_OUT   : out std_logic_vector(5 downto 0);
+
+      ALCT_PUSH_DLY : in std_logic_vector(4 downto 0);
+      TMB_PUSH_DLY  : in std_logic_vector(4 downto 0);
+      PUSH_DLY      : in std_logic_vector(4 downto 0);
+      LCT_L1A_DLY   : in std_logic_vector(5 downto 0)
+
 
       );
 
@@ -687,8 +693,12 @@ architecture bdf_type of ODMB_V6_V2 is
       ddu_data       : in  std_logic_vector(15 downto 0);
       ddu_data_valid : in  std_logic;
       tc_run         : out std_logic;
-		ts_out : out std_logic_vector(31 downto 0)
+      ts_out         : out std_logic_vector(31 downto 0);
 
+      ALCT_PUSH_DLY : out std_logic_vector(4 downto 0);
+      TMB_PUSH_DLY  : out std_logic_vector(4 downto 0);
+      PUSH_DLY      : out std_logic_vector(4 downto 0);
+      LCT_L1A_DLY   : out std_logic_vector(5 downto 0)
 
       );
 
@@ -724,7 +734,7 @@ architecture bdf_type of ODMB_V6_V2 is
   signal vme_data_out : std_logic_vector (15 downto 0);
   signal vme_data_in  : std_logic_vector (15 downto 0);
   signal vme_tovme_b  : std_logic;
-  signal vme_doe    : std_logic;
+  signal vme_doe      : std_logic;
 
 
   signal vme_test_mode : std_logic;
@@ -866,7 +876,7 @@ architecture bdf_type of ODMB_V6_V2 is
 
 -- DCFEB I/O Signals
 
-  type dcfeb_data_type is array (NFEB downto 1) of std_logic_vector(15 downto 0);
+  type   dcfeb_data_type is array (NFEB downto 1) of std_logic_vector(15 downto 0);
   signal gen_dcfeb_data                     : dcfeb_data_type;
   signal rx_dcfeb_data                      : dcfeb_data_type;
   signal dcfeb_data                         : dcfeb_data_type;
@@ -878,9 +888,9 @@ architecture bdf_type of ODMB_V6_V2 is
   signal rx_dcfeb_data_valid                : std_logic_vector(NFEB downto 1);
   signal dcfeb_data_valid                   : std_logic_vector(NFEB downto 1);
 
-  signal rx_dcfeb_sel, opt_dcfeb_sel : std_logic;
-  type dcfeb_addr_type is array (NFEB downto 1) of std_logic_vector(3 downto 0);
-  constant dcfeb_addr                : dcfeb_addr_type := ("1000", "1001", "1010", "1011", "1100", "1101", "1110");
+  signal   rx_dcfeb_sel, opt_dcfeb_sel : std_logic;
+  type     dcfeb_addr_type is array (NFEB downto 1) of std_logic_vector(3 downto 0);
+  constant dcfeb_addr                  : dcfeb_addr_type := ("1000", "1001", "1010", "1011", "1100", "1101", "1110");
 
 
   signal dcfeb0_data_p, dcfeb0_data_n                                                           : std_logic;
@@ -896,9 +906,9 @@ architecture bdf_type of ODMB_V6_V2 is
 
 -- From/To Giga-Bit Links
 
-  signal gl0_tx, gl0_rx, gl1_tx, gl1_rx : std_logic;
+  signal gl0_tx, gl0_rx, gl1_tx, gl1_rx                         : std_logic;
   signal gl0_tx_buf_n, gl0_tx_buf_p, gl1_tx_buf_n, gl1_tx_buf_p : std_logic;
-  
+
   signal grx0_data       : std_logic_vector(15 downto 0) := "0000000000000000";
   signal grx0_data_valid : std_logic                     := '0';
   signal grx1_data       : std_logic_vector(15 downto 0) := "0000000000000000";
@@ -958,7 +968,7 @@ architecture bdf_type of ODMB_V6_V2 is
 
 -- Test FIFOs
 
-  type dcfeb_gbrx_data_type is array (NFEB+1 downto 1) of std_logic_vector(15 downto 0);
+  type   dcfeb_gbrx_data_type is array (NFEB+1 downto 1) of std_logic_vector(15 downto 0);
   signal dcfeb_gbrx_data : dcfeb_gbrx_data_type;
 
   signal dcfeb_gbrx_data_valid : std_logic_vector(NFEB+1 downto 1) := (others => '0');
@@ -969,11 +979,11 @@ architecture bdf_type of ODMB_V6_V2 is
   signal dcfeb_tfifo_afull  : std_logic_vector(NFEB+1 downto 1);
   signal dcfeb_tfifo_full   : std_logic_vector(NFEB+1 downto 1);
 
-  type dcfeb_tfifo_data_type is array (NFEB+1 downto 1) of std_logic_vector(15 downto 0);
+  type   dcfeb_tfifo_data_type is array (NFEB+1 downto 1) of std_logic_vector(15 downto 0);
   signal dcfeb_tfifo_in  : dcfeb_tfifo_data_type;
   signal dcfeb_tfifo_out : dcfeb_tfifo_data_type;
 
-  type dcfeb_tfifo_cnt_type is array (NFEB+1 downto 1) of std_logic_vector(9 downto 0);
+  type   dcfeb_tfifo_cnt_type is array (NFEB+1 downto 1) of std_logic_vector(9 downto 0);
   signal dcfeb_tfifo_wr_cnt : dcfeb_tfifo_cnt_type;
   signal dcfeb_tfifo_rd_cnt : dcfeb_tfifo_cnt_type;
 
@@ -1003,13 +1013,13 @@ architecture bdf_type of ODMB_V6_V2 is
   signal alct_wr_cnt, alct_rd_cnt     : std_logic_vector(9 downto 0);
   signal alct_wr_err, alct_rd_err     : std_logic;
 
-  type dcfeb_adc_mask_type is array (NFEB downto 1) of std_logic_vector(11 downto 0);
+  type   dcfeb_adc_mask_type is array (NFEB downto 1) of std_logic_vector(11 downto 0);
   signal dcfeb_adc_mask : dcfeb_adc_mask_type;
 
-  type dcfeb_fsel_type is array (NFEB downto 1) of std_logic_vector(32 downto 0);
+  type   dcfeb_fsel_type is array (NFEB downto 1) of std_logic_vector(32 downto 0);
   signal dcfeb_fsel : dcfeb_fsel_type;
 
-  type dcfeb_jtag_ir_type is array (NFEB downto 1) of std_logic_vector(9 downto 0);
+  type   dcfeb_jtag_ir_type is array (NFEB downto 1) of std_logic_vector(9 downto 0);
   signal dcfeb_jtag_ir : dcfeb_jtag_ir_type;
 
   signal mbc_fsel : std_logic_vector(47 downto 1);
@@ -1063,14 +1073,14 @@ architecture bdf_type of ODMB_V6_V2 is
   signal gen_alct_data_valid : std_logic;
   signal gen_tmb_data_valid  : std_logic;
 
-  type dcfeb_fifo_data_type is array (NFEB downto 1) of std_logic_vector(15 downto 0);
+  type   dcfeb_fifo_data_type is array (NFEB downto 1) of std_logic_vector(15 downto 0);
   signal dcfeb_fifo_in  : dcfeb_fifo_data_type;
   signal dcfeb_fifo_out : dcfeb_fifo_data_type;
 
   signal gen_alct_fifo_in, gen_tmb_fifo_in   : std_logic_vector(15 downto 0);
   signal gen_alct_fifo_out, gen_tmb_fifo_out : std_logic_vector(15 downto 0);
 
-  type dcfeb_fifo_cnt_type is array (NFEB downto 1) of std_logic_vector(9 downto 0);
+  type   dcfeb_fifo_cnt_type is array (NFEB downto 1) of std_logic_vector(9 downto 0);
   signal dcfeb_fifo_wr_cnt : dcfeb_fifo_cnt_type;
   signal dcfeb_fifo_rd_cnt : dcfeb_fifo_cnt_type;
 
@@ -1100,17 +1110,21 @@ architecture bdf_type of ODMB_V6_V2 is
   signal ddu_data                  : std_logic_vector(15 downto 0) := (others => '0');
   signal ddu_data_valid            : std_logic                     := '0';
 
-  signal tc_run : std_logic;
-  signal counter_clk : INTEGER := 0;
-	signal clk1 : STD_LOGIC := '0';
-	signal ts_out : std_logic_vector(31 downto 0);
+  signal tc_run      : std_logic;
+  signal counter_clk : integer   := 0;
+  signal clk1        : std_logic := '0';
+  signal ts_out      : std_logic_vector(31 downto 0);
 
 -- from odmb_ctrl to flf_ctrl
-			 signal alct_push_dly_out : std_logic_vector(4 downto 0);
-      signal tmb_push_dly_out  : std_logic_vector(4 downto 0);
-      signal push_dly_out : std_logic_vector(4 downto 0);
-     signal lct_l1a_dly_out  : std_logic_vector(5 downto 0);
+  signal alct_push_dly_out : std_logic_vector(4 downto 0);
+  signal tmb_push_dly_out  : std_logic_vector(4 downto 0);
+  signal push_dly_out      : std_logic_vector(4 downto 0);
+  signal lct_l1a_dly_out   : std_logic_vector(5 downto 0);
 
+  signal ALCT_PUSH_DLY : std_logic_vector(4 downto 0);
+  signal TMB_PUSH_DLY  : std_logic_vector(4 downto 0);
+  signal PUSH_DLY      : std_logic_vector(4 downto 0);
+  signal LCT_L1A_DLY   : std_logic_vector(5 downto 0);
 
 --  signal odmb_hardrst_b : std_logic := '1';
 --  signal tph : std_logic_vector(46 downto 27) := (others => '0');
@@ -1122,11 +1136,11 @@ architecture bdf_type of ODMB_V6_V2 is
 begin
 
   odmb_hardrst_b <= '1';
-  tph <= (others => '0');
-  tpl <= (others => '0');
-  v6_tck <= '0';
-  v6_tms <= '0';
-  v6_tdi <= '0';
+  tph            <= (others => '0');
+  tpl            <= (others => '0');
+  v6_tck         <= '0';
+  v6_tms         <= '0';
+  v6_tdi         <= '0';
 
   Select_TestPoints : process(diagout_lvdbmon, diagout_cfebjtag, qpll_clk40MHz)
   begin
@@ -1250,9 +1264,9 @@ begin
   leds(2 downto 0) <= mbc_leds(2 downto 0) when flf_ctrl(6) = '1' else
                       flf_ctrl(2 downto 0);
   leds(3) <= clk1;
-  leds(4)  <= vme_berr_b;
-  leds(5)  <= vme_sysfail_b;
-  leds(6)  <= not int_vme_dtack_v6_b;
+  leds(4) <= vme_berr_b; 
+  leds(5) <= vme_sysfail_b; 
+                           leds(6) <= not int_vme_dtack_v6_b;
   leds(7)  <= not pll1_locked;
   leds(8)  <= not qpll_locked;
   leds(9)  <= flf_ctrl(7);
@@ -1305,15 +1319,15 @@ begin
       when "011110" => flf_data <= '0' & mbc_fsel(47 downto 33);
       when "011111" => flf_data <= "00" & mbc_jtag_ir(9 downto 0) & "0000";
 
-		when "100000" => flf_data <= ts_out(15 downto 0);
-		when "100001" => flf_data <= ts_out (31 downto 16);
-		
-		when "100010" => flf_data <=  "00000000000" & alct_push_dly_out;
-		when "100011" => flf_data <= "00000000000" & tmb_push_dly_out;
-		when "100100" => flf_data <= "00000000000" & push_dly_out;
-		when "110101" => flf_data <= "0000000000" & lct_l1a_dly_out;
+      when "100000" => flf_data <= ts_out(15 downto 0);
+      when "100001" => flf_data <= ts_out (31 downto 16);
 
-		when "110110" => flf_data <= "000000000" & mbc_leds; --crate_id
+      when "100010" => flf_data <= "00000000000" & alct_push_dly;
+      when "100011" => flf_data <= "00000000000" & tmb_push_dly;
+      when "100100" => flf_data <= "00000000000" & push_dly;
+      when "100101" => flf_data <= "0000000000" & lct_l1a_dly;
+
+      when "100110" => flf_data <= "000000000" & mbc_leds;  --crate_id
 
       when others => flf_data <= "0000000000000000";
     end case;
@@ -1360,21 +1374,21 @@ begin
   qpll_clk80MHz_buf : IBUFDS port map (I => qpll_clk80MHz_p, IB => qpll_clk80MHz_n, O => qpll_clk80MHz);
 
 
-Divide_Frequency : process(qpll_clk40MHz)
-	begin
-		if qpll_clk40MHz'event and qpll_clk40MHz='1' then
-			if counter_clk = 20000000 then
-				counter_clk <= 0;
-				if clk1='1' then 
-					clk1 <= '0';
-				else 
-					clk1 <= '1'; 
-				end if;
-			else
-				counter_clk <= counter_clk + 1;
-			end if;
-		end if;
-	end process Divide_Frequency;
+  Divide_Frequency : process(qpll_clk40MHz)
+  begin
+    if qpll_clk40MHz'event and qpll_clk40MHz = '1' then
+      if counter_clk = 20000000 then
+        counter_clk <= 0;
+        if clk1 = '1' then
+          clk1 <= '0';
+        else
+          clk1 <= '1';
+        end if;
+      else
+        counter_clk <= counter_clk + 1;
+      end if;
+    end if;
+  end process Divide_Frequency;
 
 
 -- ------------------------------------------------------------------------------------------------- 
@@ -1382,7 +1396,7 @@ Divide_Frequency : process(qpll_clk40MHz)
 -- CODE_D (LVDS output buffers)
 
 -- To OT1 (GigaBit Link)
-  
+
 -- gl1_tx
 
   gl1_tx_buf : OBUFDS port map (I => gl0_tx, O => gl0_tx_p, OB => gl0_tx_n);
@@ -1685,7 +1699,12 @@ Divide_Frequency : process(qpll_clk40MHz)
       ddu_data       => gtx0_data,
       ddu_data_valid => gtx0_data_valid,
       tc_run         => tc_run,
-		ts_out => ts_out
+      ts_out         => ts_out,
+
+      ALCT_PUSH_DLY => ALCT_PUSH_DLY,
+      TMB_PUSH_DLY  => TMB_PUSH_DLY,
+      PUSH_DLY      => PUSH_DLY,
+      LCT_L1A_DLY   => LCT_L1A_DLY
 
       );
 
@@ -1801,8 +1820,8 @@ Divide_Frequency : process(qpll_clk40MHz)
 
       dcfeb_l1a_match => int_l1a_match,  -- lctf(5 DOWNTO 1) - to DCFEBs
       dcfeb_l1a       => int_l1a,        -- febrst - to DCFEBs
-      dcfeb_injpulse    => dcfeb_injpls,   -- inject - to DCFEBs
-      dcfeb_extpulse    => dcfeb_extpls,   -- extpls - to DCFEBs
+      dcfeb_injpulse  => dcfeb_injpls,   -- inject - to DCFEBs
+      dcfeb_extpulse  => dcfeb_extpls,   -- extpls - to DCFEBs
 
 -- From/To LVMB
 
@@ -1827,21 +1846,24 @@ Divide_Frequency : process(qpll_clk40MHz)
       test_ccbpls => flf_ctrl(14),
 
       leds => mbc_leds,
-		
-			 ALCT_PUSH_DLY_OUT => alct_push_dly_out,
+
+      ALCT_PUSH_DLY_OUT => alct_push_dly_out,
       TMB_PUSH_DLY_OUT  => tmb_push_dly_out,
-      PUSH_DLY_OUT     => push_dly_out,
-      LCT_L1A_DLY_OUT   => lct_l1a_dly_out
+      PUSH_DLY_OUT      => push_dly_out,
+      LCT_L1A_DLY_OUT   => lct_l1a_dly_out,
 
-
+      ALCT_PUSH_DLY => ALCT_PUSH_DLY,
+      TMB_PUSH_DLY  => TMB_PUSH_DLY,
+      PUSH_DLY      => PUSH_DLY,
+      LCT_L1A_DLY   => LCT_L1A_DLY
       );
 
 -- OT Manager
 
-  orx_rx_en  <= '1';
-  orx_en_sd  <= '0';
-  orx_sq_en  <= '0';
-  
+  orx_rx_en <= '1';
+  orx_en_sd <= '0';
+  orx_sq_en <= '0';
+
 -- FIFO MUX
   fifo_out <= dcfeb_fifo_out(1) when data_fifo_oe = "111111110" else
               dcfeb_fifo_out(2) when data_fifo_oe = "111111101" else
@@ -2323,7 +2345,7 @@ Divide_Frequency : process(qpll_clk40MHz)
 
     dcfeb_fifo_in(I) <= fifo_in when ((fifo_rm_en(I) = '0') and (fifo_rw_en(I) = '0')) else
                         fifo_out         when ((fifo_rm_en(I) = '0') and (fifo_rw_en(I) = '1')) else
-                        rx_dcfeb_data(I) when (rx_dcfeb_sel = '1') else
+                        rx_dcfeb_data(I) when (rx_dcfeb_sel = '1')                              else
                         gen_dcfeb_data(I);
 
     DCFEB_V6_PM : DCFEB_V6
