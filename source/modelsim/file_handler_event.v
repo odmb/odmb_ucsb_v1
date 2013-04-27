@@ -64,6 +64,6 @@ initial #1
             r = $fscanf(infile,"%h %b %b %b %b\n",ts_in,l1a_in,alct_dav_in,tmb_dav_in,lct_in);
           end
     $fclose(infile);
-    $stop;
+//    $stop;
  end
 endmodule
