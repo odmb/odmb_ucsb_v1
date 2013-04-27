@@ -839,7 +839,7 @@ architecture ODMB_V6_V2_TB_arch of ODMB_V6_V2_TB is
 
 -- From Push Buttons
 
-  signal pb : std_logic_vector(1 downto 0) := "00";  -- in
+  signal pb : std_logic_vector(1 downto 0) := "11";  -- in. Set to 1, as they'd be unpressed
 
 -- From/To Test Connector for Single-Ended signals
 
