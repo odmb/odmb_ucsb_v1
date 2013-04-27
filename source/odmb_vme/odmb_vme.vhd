@@ -705,26 +705,6 @@ begin
 
       );
 
-  component VMECONFREGS is
-    port (
-
-      SLOWCLK => CLK_S2 ,
-      RST     => RST ,
-
-      DEVICE  => DEVICE(4) ,
-      STROBE  => STROBE ,
-      COMMAND => CMD ,
-
-      INDATA  => VME_DATA_IN ,
-      OUTDATA => OUTDATA_VMECONFREGS ,
-
-      DTACK         => VME_DTACK_B ,
-      ALCT_PUSH_DLY => ALCT_PUSH_DLY,
-      TMB_PUSH_DLY  => TMB_PUSH_DLY ,
-      PUSH_DLY      => PUSH_DLY ,
-      LCT_L1A_DLY   => LCT_L1A_DLY
-      );
-
 
   VMECONFREGS_PM  : VMECONFREGS
     port map (
