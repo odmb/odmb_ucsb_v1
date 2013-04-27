@@ -2375,7 +2375,7 @@ begin
     dcfeb_l1a_match(I) <= int_l1a_match(I);
 
     int_tdo(I)         <= dcfeb_tdo(I)       when (rx_dcfeb_sel = '1') else gen_tdo(I);
-    int_rtn_shft_en(I) <= gen_rtn_shft_en(I) when (rx_dcfeb_sel = '1') else '1';
+    int_rtn_shft_en(I) <= '1' when (rx_dcfeb_sel = '1') else gen_rtn_shft_en(I);
 
     DCFEB_TX_PM : daq_optical_out
       generic map(
