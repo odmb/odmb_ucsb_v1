@@ -24,8 +24,8 @@ initial
 initial
   begin
 // Test of CFEBJTAG
-//    infile=$fopen("C:\\ModelSim_Guido\\ODMB_FF_EMU\\test_dcfebjtag_v1b.txt","r");
-//    outfile=$fopen("C:\\ModelSim_Guido\\ODMB_FF_EMU\\test_dcfebjtag_v1b_out.txt","w");
+    infile=$fopen("commands\\test_dcfebjtag_v1b.txt","r");
+    outfile=$fopen("commands\\test_dcfebjtag_v1b_out.txt","w");
 // Test of CFEBJTAG
 //    infile=$fopen("C:\\ModelSim_Guido\\ODMB_FF_EMU\\test_lvmbmon_v1b.txt","r");
 //    outfile=$fopen("C:\\ModelSim_Guido\\ODMB_FF_EMU\\test_lvmbmon_v1b_out.txt","w");
@@ -39,8 +39,8 @@ initial
 //    infile=$fopen("commands\\test_lct_l1a_conf.txt","r");
 //    outfile=$fopen("commands\\test_lct_l1a_conf_out.txt","w");
 // Test of TESTCTRL
-    infile=$fopen("commands\\test_lct_l1a_run.txt","r");
-    outfile=$fopen("commands\\test_lct_l1a_run_out.txt","w");
+//    infile=$fopen("commands\\test_lct_l1a_run.txt","r");
+//    outfile=$fopen("commands\\test_lct_l1a_run_out.txt","w");
     while (!$feof(infile))
       begin
         @(posedge clk) #10
@@ -77,6 +77,6 @@ initial
 
     $fclose(outfile);
     $fclose(infile);
-//    $stop;
+    $stop;
  end
 endmodule
