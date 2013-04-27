@@ -80,9 +80,6 @@ begin  --Architecture
 
 	-- Generate VALIDGA
    CGA <= not GA;
--- for ModelSim simulations
---	VALIDGA <= '1' when ((CGA(0) xor CGA(1) xor CGA(2) xor CGA(3) xor CGA(4) xor CGA(5))='0') else '0';
--- for ISE synthesis
 	VALIDGA <= '1' when ((CGA(0) xor CGA(1) xor CGA(2) xor CGA(3) xor CGA(4) xor CGA(5))='1') else '0';        
 
 	-- Generate OLDCRATE / Generate AMS / Generate VALIDAM / Generate GOODAM / Generate FASTCLK_NOT
