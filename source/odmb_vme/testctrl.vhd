@@ -40,8 +40,8 @@ end TESTCTRL;
 architecture TESTCTRL_Arch of TESTCTRL is
 
   --Declaring internal signals
-  signal CMDHIGH, WRITE_FIFO, READ_FIFO, WRITE_FSR, READ_FSR, READ_STR, READ_WRC, READ_RDC : std_logic;
-  signal FSR_vector : std_logic_vector(6 downto 0);
+  signal CMDHIGH, WRITE_FIFO, READ_FIFO, WRITE_FSR, READ_FSR, READ_STR, READ_WRC, READ_RDC, READ_TRC : std_logic;
+  signal FSR_vector : std_logic_vector(12 downto 0);
   signal E_DTACK,D_DTACK : std_logic;
   signal D_DTACK_WRITE_FSR,E_DTACK_WRITE_FSR : std_logic;
   signal D_DTACK_READ_FSR,E_DTACK_READ_FSR : std_logic;
@@ -51,6 +51,7 @@ architecture TESTCTRL_Arch of TESTCTRL is
   signal D_DTACK_READ_WRC,E_DTACK_READ_WRC : std_logic;
   signal D_DTACK_WRITE_RDC,E_DTACK_WRITE_RDC : std_logic;
   signal D_DTACK_READ_RDC,E_DTACK_READ_RDC : std_logic;
+  signal D_DTACK_READ_TRC,E_DTACK_READ_TRC : std_logic;
   signal D_DTACK_READ_FIFO,E1_DTACK_READ_FIFO,E2_DTACK_READ_FIFO,E_DTACK_READ_FIFO : std_logic;
   signal D_DTACK_WRITE_FIFO,E1_DTACK_WRITE_FIFO,E2_DTACK_WRITE_FIFO,E_DTACK_WRITE_FIFO : std_logic;
   signal D_DTACK_FR,E_DTACK_FR : std_logic;
@@ -81,7 +82,22 @@ architecture TESTCTRL_Arch of TESTCTRL is
   signal tc_fifo_full, tc_fifo_afull, tc_fifo_aempty, tc_fifo_empty : std_logic_vector(3 downto 0);
   signal event_fifo_out : std_logic_vector(15 downto 0);
   signal tc_fifo_rst : std_logic;
-	signal ts_cnt_rst : std_logic;
+  signal ts_cnt_rst : std_logic;
+
+  signal trg_cnt_rst : std_logic;
+  signal trg_cnt_sel : std_logic_vector(3 downto 0);
+  type lct_cnt_data_type is array (7 downto 0) of std_logic_vector(15 downto 0);
+  signal lct_cnt_out  : lct_cnt_data_type;
+  signal l1a_cnt_out : std_logic_vector(15 downto 0);
+  signal alct_dav_cnt_out : std_logic_vector(15 downto 0);
+  signal tmb_dav_cnt_out : std_logic_vector(15 downto 0);
+  signal trg_cnt_data : std_logic_vector(15 downto 0);
+
+  signal l1a_inner : std_logic;
+  signal alct_dav_inner : std_logic;
+  signal tmb_dav_inner : std_logic;
+  signal lct_inner : std_logic_vector(NFEB downto 0);
+
 -----------
 
 begin  --Architecture
@@ -91,7 +107,25 @@ begin  --Architecture
   --the other possible names will be in the comments
   --This is so the reader can use ctrl+f functions to find relevant processes
 
+-- FSR(0) -> select fifo(0) (tc_fifo_ts_l)
+-- FSR(1) -> select fifo(1) (tc_fifo_ts_h)
+-- FSR(2) -> select fifo(2) (tc_fifo_event)
+-- FSR(3) -> select fifo(3) (tc_fifo_ddudata)
+-- FSR(4) -> tc_run (start test run)
+-- FSR(5) -> ts_cnt_rst (reset time stamp counter)
+-- FSR(6) -> tc_fifo_rst (reset tc fifos)
+-- FSR(7) -> trg_cnt_rst (reset trigger counters)
+-- FSR(11 downto 8) -> trg_cnt_sel (select trigger counter)
 
+-- COMMAND(3 downto 0) = "1000" (20) -> WRITE FSR
+-- COMMAND(3 downto 0) = "1001" (24) -> READ FSR
+-- COMMAND(3 downto 0) = "0010" (08) -> WRITE FIFO
+-- COMMAND(3 downto 0) = "0011" (0c) -> READ FIFO
+-- COMMAND(3 downto 0) = "0111" (1c) -> READ FIFO STATUS REGISTER
+-- COMMAND(3 downto 0) = "1011" (2c) -> READ WRITE COUNTER REGISTER
+-- COMMAND(3 downto 0) = "1111" (3c) -> READ FIFO READ COUNTER REGISTER
+-- COMMAND(3 downto 0) = "1010" (28) -> READ TRIGGER COUNTER
+ 
   CREATE_DECODE: process (DEVICE,COMMAND,CMDHIGH)     
   begin
     if (COMMAND(9 downto 4)="000000" and DEVICE='1') then
@@ -142,6 +176,12 @@ begin  --Architecture
       READ_RDC <= '0';
     end if;
 
+    if (COMMAND(0)='0' and COMMAND(1)='1' and COMMAND(2)='0' and COMMAND(3)='1' and CMDHIGH='1') then
+      READ_TRC <= '1';
+    else
+      READ_TRC <= '0';
+    end if;
+
   end process;
 
   CREATE_FSR_vector: process (RST,INDATA,WRITE_FSR,STROBE)
@@ -153,12 +193,21 @@ begin  --Architecture
     FDCE(INDATA(4),STROBE,WRITE_FSR,RST,FSR_vector(4));
     FDCE(INDATA(5),STROBE,WRITE_FSR,RST,FSR_vector(5));
     FDCE(INDATA(6),STROBE,WRITE_FSR,RST,FSR_vector(6));
+    FDCE(INDATA(7),STROBE,WRITE_FSR,RST,FSR_vector(7));
+    FDCE(INDATA(8),STROBE,WRITE_FSR,RST,FSR_vector(8));
+    FDCE(INDATA(9),STROBE,WRITE_FSR,RST,FSR_vector(9));
+    FDCE(INDATA(10),STROBE,WRITE_FSR,RST,FSR_vector(10));
+    FDCE(INDATA(11),STROBE,WRITE_FSR,RST,FSR_vector(11));
+    FDCE(INDATA(12),STROBE,WRITE_FSR,RST,FSR_vector(12));
   end process;
   
   FIFO_SEL <= FSR_vector(3 downto 0);
   tc_run_inner <= FSR_vector(4);
   ts_cnt_rst <= FSR_vector(5);
   tc_fifo_rst <= rst or FSR_vector(6);
+  trg_cnt_rst <= rst or FSR_vector(7);
+  trg_cnt_sel <= FSR_vector(11 downto 8);
+
   tc_run <= tc_run_inner;
 
   CREATE_OUTDATA: process (STROBE,READ_FSR,READ_STR,READ_WRC,READ_RDC,READ_FIFO,FSR_vector,FIFO_STR, FIFO_WRC, FIFO_RDC, SLOWCLK,D_DTACK,E_DTACK)  --Also CREATE_DTACK
@@ -176,6 +225,8 @@ begin  --Architecture
       OUTDATA(9 downto 0) <= FIFO_RDC(9 downto 0);
     elsif (STROBE='1' and READ_FIFO='1') then
       OUTDATA(15 downto 0) <= FIFO_DATA(15 downto 0);
+    elsif (STROBE='1' and READ_TRC='1') then
+      OUTDATA(15 downto 0) <= TRG_CNT_DATA(15 downto 0);
     else
 --      OUTDATA(15 downto 0) <= "ZZZZZZZZZZZZZZZZ";
       OUTDATA(15 downto 0) <= FIFO_DATA(15 downto 0);
@@ -257,6 +308,17 @@ begin  --Architecture
     FD(E1_DTACK_WRITE_FIFO,SLOWCLK,E2_DTACK_WRITE_FIFO);
     E_DTACK_WRITE_FIFO <= E1_DTACK_WRITE_FIFO or E2_DTACK_WRITE_FIFO;
     if (E_DTACK_WRITE_FIFO='1') then
+      DTACK <= '0';
+    else
+      DTACK <= 'Z';
+    end if;
+  end process;
+
+  CREATE_DTACK_READ_TRC: process (READ_TRC,STROBE,SLOWCLK,D_DTACK_READ_TRC,E_DTACK_READ_TRC)
+  begin
+    D_DTACK_READ_TRC <= READ_TRC and STROBE;
+    FD(D_DTACK_READ_TRC,SLOWCLK,E_DTACK_READ_TRC);
+    if (E_DTACK_READ_TRC='1') then
       DTACK <= '0';
     else
       DTACK <= 'Z';
@@ -475,18 +537,110 @@ BEGIN
 	
 	IF (RISING_EDGE(CLK)) then
 	  if (tc_run_inner = '1') AND (TS_CNT_OUT = TS_FIFO_OUT) THEN 
-		  L1A <= EVENT_FIFO_OUT(10);
-		  ALCT_DAV <= EVENT_FIFO_OUT(9);
-		  TMB_DAV <= EVENT_FIFO_OUT(8);
-		  LCT <= EVENT_FIFO_OUT(NFEB DOWNTO 0);
+		  L1A_INNER <= EVENT_FIFO_OUT(10);
+		  ALCT_DAV_INNER <= EVENT_FIFO_OUT(9);
+		  TMB_DAV_INNER <= EVENT_FIFO_OUT(8);
+		  LCT_INNER <= EVENT_FIFO_OUT(NFEB DOWNTO 0);
 		ELSE
-		  L1A <= '0';
-		  ALCT_DAV <= '0';
-		  TMB_DAV <= '0';
-		  LCT <= (OTHERS => '0');
+		  L1A_INNER <= '0';
+		  ALCT_DAV_INNER <= '0';
+		  TMB_DAV_INNER <= '0';
+		  LCT_INNER <= (OTHERS => '0');
 	 END IF;
 END IF;
+
 	
 END PROCESS;
+
+		  L1A <= L1A_INNER;
+		  ALCT_DAV_INNER <= ALCT_DAV_INNER;
+		  TMB_DAV_INNER <= TMB_DAV_INNER;
+		  LCT_INNER <= LCT_INNER;
+
+L1A_CNT: process (CLK,tc_run_inner,l1a_inner,trg_cnt_rst,rst)
+
+VARIABLE L1A_CNT_DATA : STD_LOGIC_VECTOR(15 DOWNTO 0);
+
+BEGIN
+
+	IF (RST = '1' or trg_cnt_rst = '1') THEN
+		L1A_CNT_DATA := (OTHERS => '0');
+	ELSIF (tc_run_inner = '1') AND (l1a_inner = '1') AND (RISING_EDGE(CLK)) then
+		L1A_CNT_DATA := std_logic_vector(unsigned(L1A_CNT_DATA) + 1);
+	END IF;              
+	
+	L1A_CNT_OUT <= L1A_CNT_DATA;
+
+END PROCESS;
+
+ALCT_DAV_CNT: process (CLK,tc_run_inner,alct_dav_inner,trg_cnt_rst,rst)
+
+VARIABLE ALCT_DAV_CNT_DATA : STD_LOGIC_VECTOR(15 DOWNTO 0);
+
+BEGIN
+
+	IF (RST = '1' or trg_cnt_rst = '1') THEN
+		ALCT_DAV_CNT_DATA := (OTHERS => '0');
+	ELSIF (tc_run_inner = '1') AND (l1a_inner = '1') AND (RISING_EDGE(CLK)) then
+		ALCT_DAV_CNT_DATA := std_logic_vector(unsigned(ALCT_DAV_CNT_DATA) + 1);
+	END IF;              
+	
+	ALCT_DAV_CNT_OUT <= ALCT_DAV_CNT_DATA;
+
+END PROCESS;
+
+TMB_DAV_CNT: process (CLK,tc_run_inner,tmb_dav_inner,trg_cnt_rst,rst)
+
+VARIABLE TMB_DAV_CNT_DATA : STD_LOGIC_VECTOR(15 DOWNTO 0);
+
+BEGIN
+
+	IF (RST = '1' or trg_cnt_rst = '1') THEN
+		TMB_DAV_CNT_DATA := (OTHERS => '0');
+	ELSIF (tc_run_inner = '1') AND (l1a_inner = '1') AND (RISING_EDGE(CLK)) then
+		TMB_DAV_CNT_DATA := std_logic_vector(unsigned(TMB_DAV_CNT_DATA) + 1);
+	END IF;              
+	
+	TMB_DAV_CNT_OUT <= TMB_DAV_CNT_DATA;
+
+END PROCESS;
+
+-- LCT_CNT: process (CLK,tc_run_inner,lct_inner,trg_cnt_rst,rst)
+-- 
+-- TYPE LCT_CNT_DATA_TYPE is array (7 downto 0) of std_logic_vector(15 downto 0);
+-- VARIABLE LCT_CNT_DATA  : LCT_CNT_DATA_TYPE;
+-- 
+-- BEGIN
+-- 
+-- 	IF (RST = '1' or trg_cnt_rst = '1') THEN
+-- 		LCT_CNT_DATA := (OTHERS => '0');
+-- 	ELSIF (tc_run_inner = '1') AND (lct_inner(I) = '1') AND (RISING_EDGE(CLK)) then
+-- 		LCT_CNT_DATA := std_logic_vector(unsigned(LCT_CNT_DATA) + 1);
+-- 	END IF;              
+-- 	
+-- 	LCT_CNT_OUT(I) <= LCT_CNT_DATA;
+-- 
+-- END PROCESS;
+
+GEN_LCT_CNT_OUT : for I in 0 to 7 generate
+  begin
+    LCT_CNT_OUT(I) <= (others => '0') when (RST = '1' or trg_cnt_rst = '1') else
+                    std_logic_vector(unsigned(LCT_CNT_OUT(I)) + 1) when (tc_run_inner = '1') AND (lct_inner(I) = '1') AND (RISING_EDGE(CLK)) else
+                    LCT_CNT_OUT(I);
+  end generate GEN_LCT_CNT_OUT;
+                    
+
+TRG_CNT_DATA <= LCT_CNT_OUT(0) when (TRG_CNT_SEL = "0000") else
+	   LCT_CNT_OUT(1) when (TRG_CNT_SEL = "0001") else
+	   LCT_CNT_OUT(2) when (TRG_CNT_SEL = "0010") else
+	   LCT_CNT_OUT(3) when (TRG_CNT_SEL = "0011") else
+	   LCT_CNT_OUT(4) when (TRG_CNT_SEL = "0100") else
+	   LCT_CNT_OUT(5) when (TRG_CNT_SEL = "0101") else
+	   LCT_CNT_OUT(6) when (TRG_CNT_SEL = "0110") else
+	   LCT_CNT_OUT(7) when (TRG_CNT_SEL = "0111") else
+	   L1A_CNT_OUT when (TRG_CNT_SEL = "1000") else
+	   ALCT_DAV_CNT_OUT when (TRG_CNT_SEL = "1001") else
+ 	   TMB_DAV_CNT_OUT when (TRG_CNT_SEL = "1010") else
+   	   (others => '0');
 
 end TESTCTRL_Arch;
