@@ -130,11 +130,6 @@ entity ODMB_CTRL is
     lct_err           : out std_logic;  -- To an LED in the original design
     leds              : out std_logic_vector(6 downto 0);
 
-    ALCT_PUSH_DLY_OUT : out std_logic_vector(4 downto 0);
-    TMB_PUSH_DLY_OUT  : out std_logic_vector(4 downto 0);
-    PUSH_DLY_OUT      : out std_logic_vector(4 downto 0);
-    LCT_L1A_DLY_OUT   : out std_logic_vector(5 downto 0);
-
     ALCT_PUSH_DLY : in std_logic_vector(4 downto 0);
     TMB_PUSH_DLY  : in std_logic_vector(4 downto 0);
     PUSH_DLY      : in std_logic_vector(4 downto 0);
@@ -1008,11 +1003,6 @@ begin
   gtx0_data_valid <= ddu_data_valid;
   gtx1_data       <= ddu_data;
   gtx1_data_valid <= ddu_data_valid;
-
-  ALCT_PUSH_DLY_OUT <= alct_push_dly;
-  TMB_PUSH_DLY_OUT  <= tmb_push_dly;
-  PUSH_DLY_OUT      <= push_dly;
-  LCT_L1A_DLY_OUT   <= lct_l1a_dly;
 
 
   DDUFIFO_PM : ddufifo

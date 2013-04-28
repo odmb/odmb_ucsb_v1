@@ -521,11 +521,6 @@ architecture bdf_type of ODMB_V6_V2 is
 
       leds : out std_logic_vector(6 downto 0);
 
-      ALCT_PUSH_DLY_OUT : out std_logic_vector(4 downto 0);
-      TMB_PUSH_DLY_OUT  : out std_logic_vector(4 downto 0);
-      PUSH_DLY_OUT      : out std_logic_vector(4 downto 0);
-      LCT_L1A_DLY_OUT   : out std_logic_vector(5 downto 0);
-
       ALCT_PUSH_DLY : in std_logic_vector(4 downto 0);
       TMB_PUSH_DLY  : in std_logic_vector(4 downto 0);
       PUSH_DLY      : in std_logic_vector(4 downto 0);
@@ -1116,11 +1111,6 @@ architecture bdf_type of ODMB_V6_V2 is
   signal ts_out      : std_logic_vector(31 downto 0);
 
 -- from odmb_ctrl to flf_ctrl
-  signal alct_push_dly_out : std_logic_vector(4 downto 0);
-  signal tmb_push_dly_out  : std_logic_vector(4 downto 0);
-  signal push_dly_out      : std_logic_vector(4 downto 0);
-  signal lct_l1a_dly_out   : std_logic_vector(5 downto 0);
-
   signal ALCT_PUSH_DLY : std_logic_vector(4 downto 0);
   signal TMB_PUSH_DLY  : std_logic_vector(4 downto 0);
   signal PUSH_DLY      : std_logic_vector(4 downto 0);
@@ -1846,11 +1836,6 @@ begin
       test_ccbpls => flf_ctrl(14),
 
       leds => mbc_leds,
-
-      ALCT_PUSH_DLY_OUT => alct_push_dly_out,
-      TMB_PUSH_DLY_OUT  => tmb_push_dly_out,
-      PUSH_DLY_OUT      => push_dly_out,
-      LCT_L1A_DLY_OUT   => lct_l1a_dly_out,
 
       ALCT_PUSH_DLY => ALCT_PUSH_DLY,
       TMB_PUSH_DLY  => TMB_PUSH_DLY,
