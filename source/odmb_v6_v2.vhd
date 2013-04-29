@@ -1098,7 +1098,7 @@ architecture bdf_type of ODMB_V6_V2 is
   signal dcfeb_daq_data_clk : std_logic_vector(NFEB downto 1);
 
   signal raw_l1a, tc_l1a           : std_logic;
-  signal raw_lct                   : std_logic_vector(NFEB downto 1);
+  signal raw_lct                   : std_logic_vector(NFEB downto 0);
   signal int_alct_dav, tc_alct_dav : std_logic;
   signal int_tmb_dav, tc_tmb_dav   : std_logic;
   signal int_lct, tc_lct           : std_logic_vector(NFEB downto 0);
@@ -1698,12 +1698,14 @@ begin
 
       );
 
+  -- raw signals are come unsynced from outside
   raw_l1a                <= tc_l1a                when (tc_run = '1') else ccb_l1acc;
-  raw_lct(NFEB downto 1) <= rawlct(NFEB-1 downto 0);
+  raw_lct(NFEB downto 1) <= tc_lct(NFEB downto 1) when (tc_run = '1') else rawlct(NFEB-1 downto 0);
+  raw_lct(0)             <= tc_lct(0)             when (tc_run = '1') else or_reduce(rawlct(NFEB-1 downto 0));
   int_alct_dav           <= tc_alct_dav           when (tc_run = '1') else alctdav;  -- lctdav2
   int_tmb_dav            <= tc_tmb_dav            when (tc_run = '1') else tmbdav;  -- lctdav1
-  int_lct(NFEB downto 1) <= tc_lct(NFEB downto 1) when (tc_run = '1') else raw_lct(NFEB downto 1);
-  int_lct(0)             <= tc_lct(0)             when (tc_run = '1') else or_reduce(raw_lct(NFEB downto 1));
+  --int_lct(NFEB downto 1) <= tc_lct(NFEB downto 1) when (tc_run = '1') else raw_lct(NFEB downto 1);
+  --int_lct(0)             <= tc_lct(0)             when (tc_run = '1') else or_reduce(raw_lct(NFEB downto 1));
   tc_run_out             <= tc_run;
 
 -- ODMB_CTRL FPGA
@@ -1729,14 +1731,14 @@ begin
       ccb_bxrst  => ccb_bxrst,          -- bxrst - from J3
 --      ccb_l1acc  => ccb_l1acc,          -- l1acc - from J3
 -- from testctrl
-      ccb_l1acc  => int_l1a,            -- l1acc - from J3 
+      ccb_l1acc  => raw_l1a,            -- l1acc - from J3 
       ccb_l1arst => ccb_l1arst,         -- l1rst - from J3
       ccb_l1rls  => ccb_l1rls,          -- l1rls - to J3
       ccb_clken  => ccb_clken,          -- clken - from J3
 
 -- from testctrl
 --      rawlct    => rawlct,              -- rawlct(NFEB downto 0) - from J4
-      rawlct    => int_lct,  -- rawlct(NFEB downto 0) - from -- from testctrl
+      rawlct    => raw_lct,  -- rawlct(NFEB downto 0) - from -- from testctrl
 --      tmb_dav   => lctdav1,             -- lctdav1 - from J4
       tmb_dav   => int_tmb_dav,         -- lctdav1 - from J4
 -- from testctrl
