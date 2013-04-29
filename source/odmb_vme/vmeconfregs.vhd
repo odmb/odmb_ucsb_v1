@@ -35,7 +35,7 @@ end VMECONFREGS;
 architecture VMECONFREGS_Arch of VMECONFREGS is
 
   signal DTACK_INNER : std_logic;
-  signal CMDDEV      : std_logic_vector(12 downto 0);
+  signal CMDDEV      : unsigned(12 downto 0);
 
   signal OUT_LCT_L1A                         : std_logic_vector(15 downto 0) := (others => '0');
   signal LCT_L1A_DLY_INNER                   : std_logic_vector(5 downto 0);
@@ -60,19 +60,16 @@ architecture VMECONFREGS_Arch of VMECONFREGS is
 begin  --Architecture
 
 -- Decode instruction
-  --CMDHIGH <= '1' when (COMMAND(9) = '0' and COMMAND(8) = '0' and COMMAND(7) = '0' and COMMAND(6) = '0'
-  --                     and COMMAND(5) = '0' and COMMAND(4) = '0' and DEVICE = '1') else '0';
-  --CMDDEV <= CMDHIGH & COMMAND(3) & COMMAND(2) & COMMAND(1) & COMMAND(0);
-  CMDDEV <= DEVICE  & COMMAND & "00";  -- Variable that looks like the VME commands we input  
+  CMDDEV <= unsigned(DEVICE  & COMMAND & "00");  -- Variable that looks like the VME commands we input  
 
-  W_LCT_L1A   <= '1' when (unsigned(CMDDEV) = x"1000") else '0';
-  W_TMB_PUSH  <= '1' when (unsigned(CMDDEV) = x"1004") else '0';
-  W_PUSH      <= '1' when (unsigned(CMDDEV) = x"1008") else '0';
-  W_ALCT_PUSH <= '1' when (unsigned(CMDDEV) = x"100C") else '0';
-  R_LCT_L1A   <= '1' when (unsigned(CMDDEV) = x"1400") else '0';
-  R_TMB_PUSH  <= '1' when (unsigned(CMDDEV) = x"1404") else '0';
-  R_PUSH      <= '1' when (unsigned(CMDDEV) = x"1408") else '0';
-  R_ALCT_PUSH <= '1' when (unsigned(CMDDEV) = x"140C") else '0';
+  W_LCT_L1A   <= '1' when (CMDDEV = x"1000") else '0';
+  W_TMB_PUSH  <= '1' when (CMDDEV = x"1004") else '0';
+  W_PUSH      <= '1' when (CMDDEV = x"1008") else '0';
+  W_ALCT_PUSH <= '1' when (CMDDEV = x"100C") else '0';
+  R_LCT_L1A   <= '1' when (CMDDEV = x"1400") else '0';
+  R_TMB_PUSH  <= '1' when (CMDDEV = x"1404") else '0';
+  R_PUSH      <= '1' when (CMDDEV = x"1408") else '0';
+  R_ALCT_PUSH <= '1' when (CMDDEV = x"140C") else '0';
 
 -- Write LCT_L1A_DLY
   GEN_LCT_L1A_DLY : for I in 5 downto 0 generate
