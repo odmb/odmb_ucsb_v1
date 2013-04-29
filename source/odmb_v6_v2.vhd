@@ -19,7 +19,6 @@ use ieee.std_logic_misc.all;
 use ieee.numeric_std.all;
 library UNISIM;
 use UNISIM.vcomponents.all;
-use UNISIM.vpkg.all;
 library UNIMACRO;
 use UNIMACRO.vcomponents.all;
 library work;
