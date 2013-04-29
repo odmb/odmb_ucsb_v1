@@ -6,6 +6,13 @@
 =                                                                    =
 ======================================================================
 
+V01-01: 29 April 2013, Manuel
+--------------------------------
+Fixed the V2 test bench. Notice that now the V1 test bench is not compatible.
+Changed file_handler.v to accept hex input vectors.
+Added vmeconfregs.vhd to avoid JTAG to set registers.
+Tested cfebjtag and testctrl successfully in simulation.
+
 V01-00: 25 April 2013, Manuel
 --------------------------------
 Added V2 top and ucf files. It syntesizes.
