@@ -553,9 +553,9 @@ END IF;
 END PROCESS;
 
 		  L1A <= L1A_INNER;
-		  ALCT_DAV_INNER <= ALCT_DAV_INNER;
-		  TMB_DAV_INNER <= TMB_DAV_INNER;
-		  LCT_INNER <= LCT_INNER;
+		  ALCT_DAV <= ALCT_DAV_INNER;
+		  TMB_DAV <= TMB_DAV_INNER;
+		  LCT <= LCT_INNER;
 
 L1A_CNT: process (CLK,tc_run_inner,l1a_inner,trg_cnt_rst,rst)
 
