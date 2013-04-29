@@ -13,19 +13,20 @@
 
 library IEEE;
 use IEEE.std_logic_1164.all;
-use IEEE.std_logic_arith.all;
-use IEEE.std_logic_unsigned.all;
+--use IEEE.std_logic_arith.all;
+--use IEEE.std_logic_unsigned.all;
+use ieee.std_logic_misc.all;
+use ieee.numeric_std.all;
 library UNISIM;
 use UNISIM.vcomponents.all;
---use UNISIM.VPKG.all;
+use UNISIM.vpkg.all;
 library UNIMACRO;
 use UNIMACRO.vcomponents.all;
 library work;
---USE work.Latches_Flipflops.all;
-use ieee.std_logic_misc.all;
 
 entity ODMB_V6_V2 is
   generic (
+    IS_SIMULATION : integer range 0 to 1 := 0;  -- Set to 1 by test bench in simulation 
     NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
     );  
   port
@@ -812,6 +813,12 @@ architecture bdf_type of ODMB_V6_V2 is
 
   signal int_injpls, int_extpls, int_l1a : std_logic;  -- To be sent out to pins in V2
   signal int_l1a_match                   : std_logic_vector (NFEB downto 1);  -- To be sent out to pins in V2
+  type l1a_match_cnt_type is array (NFEB downto 1) of std_logic_vector(15 downto 0);
+  signal l1a_match_cnt, lct_l1a_gap  : l1a_match_cnt_type;
+  type gap_state_type is (GAP_IDLE, GAP_COUNTING);
+  type gap_state_array_type is array (NFEB downto 1) of gap_state_type;
+  signal gap_next_state, gap_current_state           : gap_state_array_type;
+
 
 -- Mode Selection Signals
 
@@ -826,7 +833,8 @@ architecture bdf_type of ODMB_V6_V2 is
   signal flf_error                                                                 : std_logic_vector(7 downto 1);
   signal flf_ctrl                                                                  : std_logic_vector(15 downto 0);
   signal flf_data                                                                  : std_logic_vector(15 downto 0);
-
+  signal flf_ctrl_case : std_logic_vector(7 downto 0);
+  
 -- signals for V1
 
   signal dl_reprogram : std_logic_vector(6 downto 0);
@@ -1250,80 +1258,6 @@ begin
 --led09_buf : OBUFT port map (O => leds(9), I => '0', T => pb(1));      
 --led10_buf : OBUFT port map (O => leds(10), I => '0', T => pb(2));     
 --led11_buf : OBUFT port map (O => leds(11), I => '0', T => pb(3));     
-
-  leds(2 downto 0) <= mbc_leds(2 downto 0) when flf_ctrl(6) = '1' else
-                      flf_ctrl(2 downto 0);
-  leds(3) <= clk1;
-  leds(4) <= vme_berr_b; 
-  leds(5) <= vme_sysfail_b; 
-                           leds(6) <= not int_vme_dtack_v6_b;
-  leds(7)  <= not pll1_locked;
-  leds(8)  <= not qpll_locked;
-  leds(9)  <= flf_ctrl(7);
-  leds(10) <= not pb(0);
-  leds(11) <= not pb(1);
-
-  flf_status : process (dcfeb_adc_mask, dcfeb_fsel, dcfeb_jtag_ir, mbc_fsel, mbc_jtag_ir, flf_ctrl)
-
-  begin
-    
-    case flf_ctrl(5 downto 0) is
-
-      when "000000" => flf_data <= "0000" & dcfeb_adc_mask(1);
-      when "000001" => flf_data <= dcfeb_fsel(1)(15 downto 0);
-      when "000010" => flf_data <= dcfeb_fsel(1)(31 downto 16);
-      when "000011" => flf_data <= "00" & dcfeb_jtag_ir(1) & "000" & dcfeb_fsel(1)(31);
-
-      when "000100" => flf_data <= "0000" & dcfeb_adc_mask(2);
-      when "000101" => flf_data <= dcfeb_fsel(2)(15 downto 0);
-      when "000110" => flf_data <= dcfeb_fsel(2)(31 downto 16);
-      when "000111" => flf_data <= "00" & dcfeb_jtag_ir(2) & "000" & dcfeb_fsel(2)(31);
-
-      when "001000" => flf_data <= "0000" & dcfeb_adc_mask(3);
-      when "001001" => flf_data <= dcfeb_fsel(3)(15 downto 0);
-      when "001010" => flf_data <= dcfeb_fsel(3)(31 downto 16);
-      when "001011" => flf_data <= "00" & dcfeb_jtag_ir(3) & "000" & dcfeb_fsel(3)(31);
-
-      when "001100" => flf_data <= "0000" & dcfeb_adc_mask(4);
-      when "001101" => flf_data <= dcfeb_fsel(4)(15 downto 0);
-      when "001110" => flf_data <= dcfeb_fsel(4)(31 downto 16);
-      when "001111" => flf_data <= "00" & dcfeb_jtag_ir(4) & "000" & dcfeb_fsel(4)(31);
-
-      when "010000" => flf_data <= "0000" & dcfeb_adc_mask(5);
-      when "010001" => flf_data <= dcfeb_fsel(5)(15 downto 0);
-      when "010010" => flf_data <= dcfeb_fsel(5)(31 downto 16);
-      when "010011" => flf_data <= "00" & dcfeb_jtag_ir(5) & "000" & dcfeb_fsel(5)(31);
-
-      when "010100" => flf_data <= "0000" & dcfeb_adc_mask(6);
-      when "010101" => flf_data <= dcfeb_fsel(6)(15 downto 0);
-      when "010110" => flf_data <= dcfeb_fsel(6)(31 downto 16);
-      when "010111" => flf_data <= "00" & dcfeb_jtag_ir(6) & "000" & dcfeb_fsel(6)(31);
-
-      when "011000" => flf_data <= "0000" & dcfeb_adc_mask(7);
-      when "011001" => flf_data <= dcfeb_fsel(7)(15 downto 0);
-      when "011010" => flf_data <= dcfeb_fsel(7)(31 downto 16);
-      when "011011" => flf_data <= "00" & dcfeb_jtag_ir(7) & "000" & dcfeb_fsel(7)(31);
-
-      when "011100" => flf_data <= mbc_fsel(16 downto 1);
-      when "011101" => flf_data <= mbc_fsel(32 downto 17);
-      when "011110" => flf_data <= '0' & mbc_fsel(47 downto 33);
-      when "011111" => flf_data <= "00" & mbc_jtag_ir(9 downto 0) & "0000";
-
-      when "100000" => flf_data <= ts_out(15 downto 0);
-      when "100001" => flf_data <= ts_out (31 downto 16);
-
-      when "100010" => flf_data <= "00000000000" & alct_push_dly;
-      when "100011" => flf_data <= "00000000000" & tmb_push_dly;
-      when "100100" => flf_data <= "00000000000" & push_dly;
-      when "100101" => flf_data <= "0000000000" & lct_l1a_dly;
-
-      when "100110" => flf_data <= "000000000" & mbc_leds;  --crate_id
-
-      when others => flf_data <= "0000000000000000";
-    end case;
-    
-  end process;
-
 
 -- ------------------------------------------------------------------------------------------------- 
 
@@ -2232,13 +2166,73 @@ begin
       sdo              => int_lvmb_sdout);
 
 
+  
+GEN_L1A_MATCH_CNT: for I in 1 to NFEB generate
+  begin
+    L1A_MATCH_CNT(I) <= (others => '0') when (reset = '1') else
+                    std_logic_vector(unsigned(L1A_MATCH_CNT(I)) + 1) when ((int_l1a_match(I) = '1') AND (RISING_EDGE(CLK40))) else
+                    L1A_MATCH_CNT(I);
+  end generate GEN_L1A_MATCH_CNT;
+
+  gap_fsm_regs : process (gap_next_state, reset, clk40)
+    begin
+    for dcfeb_index in 1 to NFEB loop
+      if (reset = '1') then
+        gap_current_state(dcfeb_index) <= GAP_IDLE;
+      elsif rising_edge(clk40) then
+        gap_current_state(dcfeb_index) <= gap_next_state(dcfeb_index);
+      end if;
+    end loop;
+    end process;
+
+  gap_fsm_logic : process (gap_current_state, raw_lct, int_l1a, clk40)
+  begin
+    
+    for dcfeb_index in 1 to NFEB loop
+
+      case gap_current_state(dcfeb_index) is
+        
+        when GAP_IDLE =>
+          
+          if (raw_lct(dcfeb_index) = '1') then
+            gap_next_state(dcfeb_index) <= GAP_COUNTING;
+            lct_l1a_gap(dcfeb_index) <= (others => '0');
+          else
+            gap_next_state(dcfeb_index) <= GAP_IDLE;
+            lct_l1a_gap(dcfeb_index) <= lct_l1a_gap(dcfeb_index);
+          end if;
+          
+        when GAP_COUNTING =>
+           if (int_l1a = '1') then
+            gap_next_state(dcfeb_index) <= GAP_IDLE;
+            lct_l1a_gap(dcfeb_index) <= lct_l1a_gap(dcfeb_index);
+          elsif rising_edge(clk40) then
+            gap_next_state(dcfeb_index) <= GAP_COUNTING;
+            lct_l1a_gap(dcfeb_index) <= std_logic_vector(unsigned(lct_l1a_gap(dcfeb_index)) + 1);
+          else
+            lct_l1a_gap(dcfeb_index) <= lct_l1a_gap(dcfeb_index);          
+          end if;
+
+        when others =>
+          gap_next_state(dcfeb_index) <= GAP_IDLE;
+          lct_l1a_gap(dcfeb_index) <= (others => '0');
+          
+      end case;
+      
+    end loop;
+
+  end process;
+
+    
+
+
   orx_dcfeb_data_n <= orx_buf_n;
   orx_dcfeb_data_p <= orx_buf_p;
 
   DMB_RX_PM : dmb_receiver
     generic map (
       USE_2p56GbE => 1,
-      SIM_SPEEDUP => 0
+      SIM_SPEEDUP => IS_SIMULATION
       )
     port map (
       -- Chip Scope Pro Logic Analyzer control -- bgb
@@ -2367,7 +2361,7 @@ begin
     DCFEB_TX_PM : daq_optical_out
       generic map(
         USE_CHIPSCOPE => 0,
-        SIM_SPEEDUP   => 0
+        SIM_SPEEDUP   => IS_SIMULATION
         )
       port map(
         DAQ_TX_VIO_CNTRL     => LOGIC36L,
@@ -2419,5 +2413,100 @@ begin
         );
 
   end generate GEN_DCFEB;
+
+  leds(2 downto 0) <= mbc_leds(2 downto 0) when flf_ctrl(6) = '1' else
+                      flf_ctrl(2 downto 0);
+  leds(3)  <= clk1;
+  leds(4)  <= vme_berr_b;
+  leds(5)  <= vme_sysfail_b;
+  leds(6)  <= not int_vme_dtack_v6_b;
+  leds(7)  <= not pll1_locked;
+  leds(8)  <= not qpll_locked;
+  leds(9)  <= flf_ctrl(7);
+  leds(10) <= not pb(0);
+  leds(11) <= not pb(1);
+
+
+  flf_ctrl_case <= "00" & flf_ctrl(5 downto 0);
+  
+  flf_status : process (dcfeb_adc_mask, dcfeb_fsel, dcfeb_jtag_ir, mbc_fsel, mbc_jtag_ir, flf_ctrl_case)
+
+  begin
+    
+    case flf_ctrl_case is
+
+      when x"00" => flf_data <= "0000" & dcfeb_adc_mask(1);
+      when x"01" => flf_data <= dcfeb_fsel(1)(15 downto 0);
+      when x"02" => flf_data <= dcfeb_fsel(1)(31 downto 16);
+      when x"03" => flf_data <= "00" & dcfeb_jtag_ir(1) & "000" & dcfeb_fsel(1)(31);
+
+      when x"04" => flf_data <= "0000" & dcfeb_adc_mask(2);
+      when x"05" => flf_data <= dcfeb_fsel(2)(15 downto 0);
+      when x"06" => flf_data <= dcfeb_fsel(2)(31 downto 16);
+      when x"07" => flf_data <= "00" & dcfeb_jtag_ir(2) & "000" & dcfeb_fsel(2)(31);
+
+      when x"08" => flf_data <= "0000" & dcfeb_adc_mask(3);
+      when x"09" => flf_data <= dcfeb_fsel(3)(15 downto 0);
+      when x"0A" => flf_data <= dcfeb_fsel(3)(31 downto 16);
+      when x"0B" => flf_data <= "00" & dcfeb_jtag_ir(3) & "000" & dcfeb_fsel(3)(31);
+
+      when x"0C" => flf_data <= "0000" & dcfeb_adc_mask(4);
+      when x"0D" => flf_data <= dcfeb_fsel(4)(15 downto 0);
+      when x"0E" => flf_data <= dcfeb_fsel(4)(31 downto 16);
+      when x"0F" => flf_data <= "00" & dcfeb_jtag_ir(4) & "000" & dcfeb_fsel(4)(31);
+
+      when x"10" => flf_data <= "0000" & dcfeb_adc_mask(5);
+      when x"11" => flf_data <= dcfeb_fsel(5)(15 downto 0);
+      when x"12" => flf_data <= dcfeb_fsel(5)(31 downto 16);
+      when x"13" => flf_data <= "00" & dcfeb_jtag_ir(5) & "000" & dcfeb_fsel(5)(31);
+
+      when x"14" => flf_data <= "0000" & dcfeb_adc_mask(6);
+      when x"15" => flf_data <= dcfeb_fsel(6)(15 downto 0);
+      when x"16" => flf_data <= dcfeb_fsel(6)(31 downto 16);
+      when x"17" => flf_data <= "00" & dcfeb_jtag_ir(6) & "000" & dcfeb_fsel(6)(31);
+
+      when x"18" => flf_data <= "0000" & dcfeb_adc_mask(7);
+      when x"19" => flf_data <= dcfeb_fsel(7)(15 downto 0);
+      when x"1A" => flf_data <= dcfeb_fsel(7)(31 downto 16);
+      when x"1B" => flf_data <= "00" & dcfeb_jtag_ir(7) & "000" & dcfeb_fsel(7)(31);
+
+      when x"1C" => flf_data <= mbc_fsel(16 downto 1);
+      when x"1D" => flf_data <= mbc_fsel(32 downto 17);
+      when x"1E" => flf_data <= '0' & mbc_fsel(47 downto 33);
+      when x"1F" => flf_data <= "00" & mbc_jtag_ir(9 downto 0) & "0000";
+
+      when x"20" => flf_data <= "000000000" & mbc_leds;  --crate_id
+      
+      when x"21" => flf_data <= l1a_match_cnt(1);
+      when x"22" => flf_data <= l1a_match_cnt(2);
+      when x"23" => flf_data <= l1a_match_cnt(3);
+      when x"24" => flf_data <= l1a_match_cnt(4);
+      when x"25" => flf_data <= l1a_match_cnt(5);
+      when x"26" => flf_data <= l1a_match_cnt(6);
+      when x"27" => flf_data <= l1a_match_cnt(7);
+
+      when x"28" => flf_data <= ts_out(15 downto 0);
+      when x"29" => flf_data <= ts_out (31 downto 16);
+
+      when x"2A" => flf_data <= "00000000000" & alct_push_dly;
+      when x"2B" => flf_data <= "00000000000" & tmb_push_dly;
+      when x"2C" => flf_data <= "00000000000" & push_dly;
+      when x"2D" => flf_data <= "0000000000" & lct_l1a_dly;
+
+      when x"31" => flf_data <= lct_l1a_gap(1);
+      when x"32" => flf_data <= lct_l1a_gap(2);
+      when x"33" => flf_data <= lct_l1a_gap(3);
+      when x"34" => flf_data <= lct_l1a_gap(4);
+      when x"35" => flf_data <= lct_l1a_gap(5);
+      when x"36" => flf_data <= lct_l1a_gap(6);
+      when x"37" => flf_data <= lct_l1a_gap(7);
+
+      when others => flf_data <= "0000000000000000";
+    end case;
+    
+  end process;
+
+
+
 
 end bdf_type;
