@@ -187,6 +187,7 @@ architecture ODMB_V6_V2_TB_arch of ODMB_V6_V2_TB is
 
   component odmb_v6_v2 is
     generic (
+      IS_SIMULATION : integer range 0 to 1 := 1;  -- Set to 1 by test bench in simulation 
       NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
       );  
     port
@@ -1062,6 +1063,7 @@ begin
 
   PMAP_odmb_v6_v2 : odmb_v6_v2
     generic map(
+      IS_SIMULATION => 1,
       NFEB => 7)
   port map(
 
