@@ -581,7 +581,7 @@ BEGIN
 
 	IF (RST = '1' or trg_cnt_rst = '1') THEN
 		ALCT_DAV_CNT_DATA := (OTHERS => '0');
-	ELSIF (tc_run_inner = '1') AND (l1a_inner = '1') AND (RISING_EDGE(CLK)) then
+	ELSIF (tc_run_inner = '1') AND (ALCT_DAV_INNER = '1') AND (RISING_EDGE(CLK)) then
 		ALCT_DAV_CNT_DATA := std_logic_vector(unsigned(ALCT_DAV_CNT_DATA) + 1);
 	END IF;              
 	
@@ -597,7 +597,7 @@ BEGIN
 
 	IF (RST = '1' or trg_cnt_rst = '1') THEN
 		TMB_DAV_CNT_DATA := (OTHERS => '0');
-	ELSIF (tc_run_inner = '1') AND (l1a_inner = '1') AND (RISING_EDGE(CLK)) then
+	ELSIF (tc_run_inner = '1') AND (TMB_DAV_INNER = '1') AND (RISING_EDGE(CLK)) then
 		TMB_DAV_CNT_DATA := std_logic_vector(unsigned(TMB_DAV_CNT_DATA) + 1);
 	END IF;              
 	
