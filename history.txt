@@ -6,6 +6,11 @@
 =                                                                    =
 ======================================================================
 
+V01-02: 29 April 2013, Manuel
+--------------------------------
+Added L1A_MATCH_CNT and LCT_L1A_GAP, and tested them.
+Synthesized in ISE.
+
 V01-01: 29 April 2013, Manuel
 --------------------------------
 Fixed the V2 test bench. Notice that now the V1 test bench is not compatible.
