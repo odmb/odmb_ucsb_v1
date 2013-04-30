@@ -38,22 +38,22 @@ entity cafifo is
     dcfeb2_data : in std_logic_vector(15 downto 0);
     dcfeb3_dv   : in std_logic;
     dcfeb3_data : in std_logic_vector(15 downto 0);
-    dcfeb4_dv   : in std_logic; 
+    dcfeb4_dv   : in std_logic;
     dcfeb4_data : in std_logic_vector(15 downto 0);
     dcfeb5_dv   : in std_logic;
     dcfeb5_data : in std_logic_vector(15 downto 0);
     dcfeb6_dv   : in std_logic;
     dcfeb6_data : in std_logic_vector(15 downto 0);
 
-    dcfeb_fifo_wren : out std_logic_vector(NFEB downto 1);
-    alct_fifo_wren  : out std_logic;
-    tmb_fifo_wren   : out std_logic;
+    dcfeb_fifo_wren : out std_logic_vector(NFEB downto 1);  -- Not used
+    alct_fifo_wren  : out std_logic;                        -- Not used
+    tmb_fifo_wren   : out std_logic;                        -- Not used
 
     cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 1);
     cafifo_l1a_cnt   : out std_logic_vector(23 downto 0);
     cafifo_l1a_dav   : out std_logic_vector(NFEB+2 downto 1);
     cafifo_bx_cnt    : out std_logic_vector(11 downto 0);
-    
+
     cafifo_wr_addr : out std_logic_vector(3 downto 0);
     cafifo_rd_addr : out std_logic_vector(3 downto 0)
     );

@@ -13,7 +13,7 @@ reg [255:0] parameters;
 reg [0:480] comment; 
 reg read_cmd;
 reg [31:0] mask;
-reg [15:0] write_data, read_data;
+reg [15:0] write_data, read_data, vme_instruction;
 
 integer infile, outfile, r;
 
@@ -58,6 +58,7 @@ initial
               if (start == 1'b0)
                   $fwrite(outfile, "%s  %s", command,  comment);
               $display("%s",comment);
+              vme_instruction = vme_cmd_reg[15:0];
               vme_cmd_reg = vme_cmd_reg | mask;
               if (command == "R" || command == "r") 
 		            vme_cmd_reg[25] = 1'b1;
@@ -76,9 +77,9 @@ initial
           if (vme_dat_wr) 
             begin
               if (read_cmd)
-                $fwrite(outfile, "%s  %h %s", command, read_data, comment);
+                $fwrite(outfile, "%s  %h       %h %s", command, vme_instruction, read_data, comment);
               else
-                $fwrite(outfile, "%s  %h %s", command, write_data, comment);
+                $fwrite(outfile, "%s  %h %h %s", command, vme_instruction, write_data, comment);
            end
   end    
 

@@ -74,14 +74,15 @@ entity ODMB_CTRL is
     fifo_empty_b : in std_logic_vector(NFEB+2 downto 1);  -- emptyf*(7 DOWNTO 1) - from FIFOs 
 
 -- From CAFIFO to Data FIFOs
-    dcfeb_fifo_wr_en : out std_logic_vector(NFEB downto 1);
-    alct_fifo_wr_en  : out std_logic;
-    tmb_fifo_wr_en   : out std_logic;
-    cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 1);  -- L1A_MATCH from TRGCNTRL to CAFIFO sent to generate Data  
-    cafifo_l1a_cnt   : out std_logic_vector(23 downto 0);
-    cafifo_l1a_dav   : out std_logic_vector(NFEB+2 downto 1);
-    cafifo_bx_cnt    : out std_logic_vector(11 downto 0);
-    
+    dcfeb_fifo_wr_en     : out std_logic_vector(NFEB downto 1);
+    alct_fifo_wr_en      : out std_logic;
+    tmb_fifo_wr_en       : out std_logic;
+    cafifo_l1a_match_in  : out std_logic_vector(NFEB+2 downto 1);  -- From TRGCNTRL to CAFIFO to generate Data  
+    cafifo_l1a_match_out : out std_logic_vector(NFEB+2 downto 1);  -- From CAFIFO to CONTROL  
+    cafifo_l1a_cnt       : out std_logic_vector(23 downto 0);
+    cafifo_l1a_dav       : out std_logic_vector(NFEB+2 downto 1);
+    cafifo_bx_cnt        : out std_logic_vector(11 downto 0);
+
     cafifo_wr_addr : out std_logic_vector(3 downto 0);
     cafifo_rd_addr : out std_logic_vector(3 downto 0);
 
@@ -133,8 +134,8 @@ entity ODMB_CTRL is
     test_ccbinj : in std_logic;
     test_ccbpls : in std_logic;
 
-    lct_err           : out std_logic;  -- To an LED in the original design
-    leds              : out std_logic_vector(6 downto 0);
+    lct_err : out std_logic;            -- To an LED in the original design
+    leds    : out std_logic_vector(6 downto 0);
 
     ALCT_PUSH_DLY : in std_logic_vector(4 downto 0);
     TMB_PUSH_DLY  : in std_logic_vector(4 downto 0);
@@ -507,7 +508,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
 
       cafifo_wr_addr : out std_logic_vector(3 downto 0);
       cafifo_rd_addr : out std_logic_vector(3 downto 0)
-);
+      );
 
   end component;
 
@@ -643,16 +644,15 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
   signal sw4_enl1rls : std_logic := '1';
 
 -- TRGCNTRL outputs
-  signal FIFO_PUSH           : std_logic;
-  signal cafifo_l1a_match_in : std_logic_vector(NFEB+2 downto 0);
-  signal cafifo_push         : std_logic;  -- PUSH from TRGCNTRL to CAFIFO
-  --signal cafifo_l1a_match_inner      : std_logic_vector(NFEB+2 downto 0);  -- L1A_MATCH from TRGCNTRL to CAFIFO
+  signal FIFO_PUSH                 : std_logic;
+  signal cafifo_l1a_match_in_inner : std_logic_vector(NFEB+2 downto 0);
+  signal cafifo_push               : std_logic;  -- PUSH from TRGCNTRL to CAFIFO
 
 -- CAFIFO outputs
-  signal cafifo_l1a_match_out : std_logic_vector(NFEB+2 downto 1);
-  signal cafifo_l1a_cnt_out   : std_logic_vector(23 downto 0);
-  signal cafifo_l1a_dav_out   : std_logic_vector(NFEB+2 downto 1);
-  signal cafifo_bx_cnt_out    : std_logic_vector(11 downto 0);
+  signal cafifo_l1a_match_out_inner : std_logic_vector(NFEB+2 downto 1);
+  signal cafifo_l1a_cnt_out         : std_logic_vector(23 downto 0);
+  signal cafifo_l1a_dav_out         : std_logic_vector(NFEB+2 downto 1);
+  signal cafifo_bx_cnt_out          : std_logic_vector(11 downto 0);
 
 -- CONTROL outputs
   signal cafifo_pop     : std_logic := '0';
@@ -940,7 +940,7 @@ begin
       DCFEB_L1A       => dcfeb_l1a,
       DCFEB_L1A_MATCH => dcfeb_l1a_match,
       FIFO_PUSH       => cafifo_push,
-      FIFO_L1A_MATCH  => cafifo_l1a_match_in,
+      FIFO_L1A_MATCH  => cafifo_l1a_match_in_inner,
       LCT_ERR         => lct_err
       );
 
@@ -998,7 +998,7 @@ begin
 
 -- FROM CAFIFO
       cafifo_l1a_dav   => cafifo_l1a_dav_out,
-      cafifo_l1a_match => cafifo_l1a_match_out,
+      cafifo_l1a_match => cafifo_l1a_match_out_inner,
       cafifo_l1a_cnt   => cafifo_l1a_cnt_out,
       cafifo_bx_cnt    => cafifo_bx_cnt_out
 
@@ -1049,7 +1049,7 @@ begin
 --       l1a => dcfeb_l1a,
       l1a          => cafifo_push,
 --       l1a_match_in => dcfeb_l1a_match,
-      l1a_match_in => cafifo_l1a_match_in(NFEB+2 downto 1),
+      l1a_match_in => cafifo_l1a_match_in_inner(NFEB+2 downto 1),
 
       pop => cafifo_pop,
 
@@ -1074,7 +1074,7 @@ begin
       alct_fifo_wren  => alct_fifo_wr_en,
       tmb_fifo_wren   => tmb_fifo_wr_en,
 
-      cafifo_l1a_match => cafifo_l1a_match_out,
+      cafifo_l1a_match => cafifo_l1a_match_out_inner,
       cafifo_l1a_cnt   => cafifo_l1a_cnt_out,
       cafifo_l1a_dav   => cafifo_l1a_dav_out,
       cafifo_bx_cnt    => cafifo_bx_cnt_out,
@@ -1082,12 +1082,13 @@ begin
       cafifo_wr_addr => cafifo_wr_addr,
       cafifo_rd_addr => cafifo_rd_addr
       );
-      cafifo_l1a_dav   <= cafifo_l1a_dav_out;
-      cafifo_l1a_match <= cafifo_l1a_match_out;
-      cafifo_l1a_cnt   <= cafifo_l1a_cnt_out;
-      cafifo_bx_cnt    <= cafifo_bx_cnt_out;
 
-  cafifo_l1a_match <= cafifo_l1a_match_in(NFEB+2 downto 1);
+  cafifo_l1a_match_in  <= cafifo_l1a_match_in_inner(NFEB+2 downto 1);
+  cafifo_l1a_match_out <= cafifo_l1a_match_out_inner;
+  cafifo_l1a_dav       <= cafifo_l1a_dav_out;
+  cafifo_l1a_cnt       <= cafifo_l1a_cnt_out;
+  cafifo_bx_cnt        <= cafifo_bx_cnt_out;
+
 
   CCBCODE_PM : CCBCODE
     port map(

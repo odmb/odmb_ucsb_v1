@@ -34,8 +34,8 @@ W  8 	0	Write FIFO
 
 W  20	4	Select FIFO 3 *Triggers"  
 W  8   	3	Write FIFO			    
-W  8   	0	Write FIFO			    
-W  8   	0	Write FIFO			    
+W  8   	11	Write FIFO			    
+W  8   	81	Write FIFO			    
 W  8   	0	Write FIFO			    
 W  8   	700	Write FIFO			    
 W  8   	0	Write FIFO
@@ -70,11 +70,41 @@ W  3000 36	Set flf_ctrl *LCT_L1A_GAP(6)*
 R  3008 0	Read flf_data
 W  3000 37	Set flf_ctrl *LCT_L1A_GAP(7)*
 R  3008 0	Read flf_data
+W  3000 41	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(1)*
+R  3008 0	Read flf_data
+W  3000 42	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(2)*
+R  3008 0	Read flf_data
+W  3000 43	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(3)*
+R  3008 0	Read flf_data
+W  3000 44	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(4)*
+R  3008 0	Read flf_data
+W  3000 45	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(5)*
+R  3008 0	Read flf_data
+W  3000 46	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(6)*
+R  3008 0	Read flf_data
+W  3000 47	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(7)*
+R  3008 0	Read flf_data
+W  3000 48	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(8)*
+R  3008 0	Read flf_data
+W  3000 49	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(9)*
+R  3008 0	Read flf_data
 W  3000 29	Set flf_ctrl *Time stamp MSB*
 R  3008 0	Read flf_data
 W  3000 28	Set flf_ctrl *Time stamp LSB*
 R  3008 0	Read flf_data
-R  28   0	Read LCT_CNT_OUT(1)
+R  28   0	Read LCT_CNT_OUT(0)
+W  3000 38	Set flf_ctrl *CAFIFO_L1A_MATCH_OUT*
+R  3008 0	Read flf_data
+W  3000 39	Set flf_ctrl *CAFIFO_L1A_DAV*
+R  3008 0	Read flf_data
+W  3000 3A	Set flf_ctrl *CAFIFO_L1A_CNT MSB*
+R  3008 0	Read flf_data
+W  3000 3B	Set flf_ctrl *CAFIFO_L1A_CNT LSB*
+R  3008 0	Read flf_data
+W  3000 3C	Set flf_ctrl *CAFIFO_BX_CNT*
+R  3008 0	Read flf_data
+W  3000 3D	Set flf_ctrl *CAFIFO_RD_ADDR & CAFIFO_WR_ADDR*
+R  3008 0	Read flf_data
 W  20	18	Select FIFO 4 *DDU data" and start run
 
 == =============== Status after run =============== ==
@@ -117,7 +147,37 @@ W  3000 36	Set flf_ctrl *LCT_L1A_GAP(6)*
 R  3008 0	Read flf_data
 W  3000 37	Set flf_ctrl *LCT_L1A_GAP(7)*
 R  3008 0	Read flf_data
+W  3000 41	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(1)*
+R  3008 0	Read flf_data
+W  3000 42	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(2)*
+R  3008 0	Read flf_data
+W  3000 43	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(3)*
+R  3008 0	Read flf_data
+W  3000 44	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(4)*
+R  3008 0	Read flf_data
+W  3000 45	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(5)*
+R  3008 0	Read flf_data
+W  3000 46	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(6)*
+R  3008 0	Read flf_data
+W  3000 47	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(7)*
+R  3008 0	Read flf_data
+W  3000 48	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(8)*
+R  3008 0	Read flf_data
+W  3000 49	Set flf_ctrl *INTO_CAFIFO_DAV_CNT(9)*
+R  3008 0	Read flf_data
 R  28   0	Read LCT_CNT_OUT(0)
+W  3000 38	Set flf_ctrl *CAFIFO_L1A_MATCH_OUT*
+R  3008 0	Read flf_data
+W  3000 39	Set flf_ctrl *CAFIFO_L1A_DAV*
+R  3008 0	Read flf_data
+W  3000 3A	Set flf_ctrl *CAFIFO_L1A_CNT MSB*
+R  3008 0	Read flf_data
+W  3000 3B	Set flf_ctrl *CAFIFO_L1A_CNT LSB*
+R  3008 0	Read flf_data
+W  3000 3C	Set flf_ctrl *CAFIFO_BX_CNT*
+R  3008 0	Read flf_data
+W  3000 3D	Set flf_ctrl *CAFIFO_RD_ADDR & CAFIFO_WR_ADDR*
+R  3008 0	Read flf_data
 
 == ================ Reading FIFOs ================ ==
 R  C 	0	Read FIFO
