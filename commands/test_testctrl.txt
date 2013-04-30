@@ -105,11 +105,15 @@ W  3000 3C	Set flf_ctrl *CAFIFO_BX_CNT*
 R  3008 0	Read flf_data
 W  3000 3D	Set flf_ctrl *CAFIFO_RD_ADDR & CAFIFO_WR_ADDR*
 R  3008 0	Read flf_data
-W  3000 4A	Set flf_ctrl *DDUFIFO_DAV_CNT*
+W  3000 3E	Set flf_ctrl *CAFIFO_L1A_MATCH_IN*
+R  3008 0	Read flf_data
+W  3000 3F	Set flf_ctrl *RAW_L1A_CNT*
+R  3008 0	Read flf_data
+W  3000 4A	Set flf_ctrl *OE_CNT(1) from CONTROL*
 R  3008 0	Read flf_data
 W  3000 4B	Set flf_ctrl *CONTROL_DAV_CNT*
 R  3008 0	Read flf_data
-W  3000 4C	Set flf_ctrl *OE_CNT(1) from CONTROL*
+W  3000 4C	Set flf_ctrl *DDUFIFO_DAV_CNT*
 R  3008 0	Read flf_data
 W  3000 51	Set flf_ctrl *RE_CNT(1) from CONTROL*
 R  3008 0	Read flf_data
@@ -202,11 +206,15 @@ W  3000 3C	Set flf_ctrl *CAFIFO_BX_CNT*
 R  3008 0	Read flf_data
 W  3000 3D	Set flf_ctrl *CAFIFO_RD_ADDR & CAFIFO_WR_ADDR*
 R  3008 0	Read flf_data
-W  3000 4A	Set flf_ctrl *DDUFIFO_DAV_CNT*
+W  3000 3E	Set flf_ctrl *CAFIFO_L1A_MATCH_IN*
+R  3008 0	Read flf_data
+W  3000 3F	Set flf_ctrl *RAW_L1A_CNT*
+R  3008 0	Read flf_data
+W  3000 4A	Set flf_ctrl *OE_CNT(1) from CONTROL*
 R  3008 0	Read flf_data
 W  3000 4B	Set flf_ctrl *CONTROL_DAV_CNT*
 R  3008 0	Read flf_data
-W  3000 4C	Set flf_ctrl *OE_CNT(1) from CONTROL*
+W  3000 4C	Set flf_ctrl *DDUFIFO_DAV_CNT*
 R  3008 0	Read flf_data
 W  3000 51	Set flf_ctrl *RE_CNT(1) from CONTROL*
 R  3008 0	Read flf_data
