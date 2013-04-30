@@ -448,7 +448,7 @@ architecture bdf_type of ODMB_V6_V2 is
       gtx0_data_valid : out std_logic;
       gtx1_data       : out std_logic_vector(15 downto 0);  -- dout(15 downto 0)                                                                                      
       gtx1_data_valid : out std_logic;
-
+      
 -- From/To FIFOs
 
       fifo_rd_ck   : out std_logic;
@@ -531,9 +531,9 @@ architecture bdf_type of ODMB_V6_V2 is
       ALCT_PUSH_DLY : in std_logic_vector(4 downto 0);
       TMB_PUSH_DLY  : in std_logic_vector(4 downto 0);
       PUSH_DLY      : in std_logic_vector(4 downto 0);
-      LCT_L1A_DLY   : in std_logic_vector(5 downto 0)
+      LCT_L1A_DLY   : in std_logic_vector(5 downto 0);
 
-
+      gtx_data_valid : out std_logic
       );
 
   end component;
@@ -935,6 +935,7 @@ architecture bdf_type of ODMB_V6_V2 is
   signal gtx0_data_valid : std_logic;
   signal gtx1_data       : std_logic_vector(15 downto 0);
   signal gtx1_data_valid : std_logic;
+  signal gtx0_data_valid_cnt, gtx_data_valid_cnt : std_logic_vector(15 downto 0);
 
 -- From LVDS Test Connector
 
@@ -1080,6 +1081,9 @@ architecture bdf_type of ODMB_V6_V2 is
   signal alct_fifo_wr_en  : std_logic                         := '0';
   signal tmb_fifo_wr_en   : std_logic                         := '0';
 
+  signal data_fifo_re_cnt : std_logic_vector(15 downto 0);
+  signal data_fifo_oe_cnt : std_logic_vector(15 downto 0);  
+  
   signal cafifo_l1a_match_in  : std_logic_vector(NFEB+2 downto 1);
   signal cafifo_l1a_match_out : std_logic_vector(NFEB+2 downto 1);
   signal cafifo_l1a_cnt       : std_logic_vector(23 downto 0);
@@ -1144,6 +1148,10 @@ architecture bdf_type of ODMB_V6_V2 is
   signal PUSH_DLY      : std_logic_vector(4 downto 0);
   signal LCT_L1A_DLY   : std_logic_vector(5 downto 0);
 
+  signal gtx_data_valid : std_logic;
+
+  signal tc_run_hardcode : std_logic := '1';
+  
 --  signal odmb_hardrst_b : std_logic := '1';
 --  signal tph : std_logic_vector(46 downto 27) := (others => '0');
 --  signal tpl : std_logic_vector(23 downto 6) := (others => '0');
@@ -1219,7 +1227,7 @@ begin
     end if;
   end process;
 --  reset <= por_reg(31);
-  reset <= por_reg(31) or not pb(0);
+  reset <= por_reg(31) or not pb(0) or flf_ctrl(8);
 
 
   PULLUP_dtack_b : PULLUP
@@ -1653,6 +1661,7 @@ begin
       );
 
   -- raw signals are come unsynced from outside
+  -- temporarily replacing tc_run with tc_run_hardcode
   raw_l1a                <= tc_l1a                when (tc_run = '1') else ccb_l1acc;
   raw_lct(NFEB downto 1) <= tc_lct(NFEB downto 1) when (tc_run = '1') else rawlct(NFEB-1 downto 0);
   raw_lct(0)             <= tc_lct(0)             when (tc_run = '1') else or_reduce(rawlct(NFEB-1 downto 0));
@@ -1802,7 +1811,9 @@ begin
       ALCT_PUSH_DLY => ALCT_PUSH_DLY,
       TMB_PUSH_DLY  => TMB_PUSH_DLY,
       PUSH_DLY      => PUSH_DLY,
-      LCT_L1A_DLY   => LCT_L1A_DLY
+      LCT_L1A_DLY   => LCT_L1A_DLY,
+
+      gtx_data_valid => gtx_data_valid
       );
 
 -- OT Manager
@@ -2533,6 +2544,52 @@ begin
 
   end generate GEN_DCFEB;
 
+  -- gtx0_data_valid is high when tx from ddufifo to testctrl
+  -- count rising edge of gtx0_data_valid
+  gtx0_dv_cnt_proc : process (gtx0_data_valid, reset)
+  begin
+      if (reset = '1') then
+        gtx0_data_valid_cnt <= (others => '0');
+      elsif (rising_edge(gtx0_data_valid)) then
+          gtx0_data_valid_cnt <= gtx0_data_valid_cnt + 1;
+        end if;
+  end process;
+  
+  -- count rising edge of gtx_data_valid (from control to ddufifo)
+  -- expect high on start of transmission of header, tailer
+  -- and each data packet
+  gtx_dv_cnt_proc : process (gtx_data_valid, reset)
+  begin
+      if (reset = '1') then
+        gtx_data_valid_cnt <= (others => '0');
+      elsif (rising_edge(gtx_data_valid)) then
+          gtx_data_valid_cnt <= gtx_data_valid_cnt + 1;
+        end if;
+  end process;
+
+    data_fifo_re_cnt_proc : process (data_fifo_re, reset)
+    begin
+      for index in 1 to NFEB+2 loop
+        if (reset = '1') then
+          data_fifo_re_cnt <= (others => '0');
+        elsif (rising_edge(data_fifo_re(index))) then
+            data_fifo_re_cnt <= data_fifo_re_cnt + 1;
+          end if;
+    end loop;
+  end process;
+
+      data_fifo_oe_cnt_proc : process (data_fifo_oe, reset)
+    begin
+      for index in 1 to NFEB+2 loop
+        if (reset = '1') then
+          data_fifo_oe_cnt <= (others => '0');
+        elsif (rising_edge(data_fifo_oe(index))) then
+            data_fifo_oe_cnt <= data_fifo_oe_cnt + 1;
+          end if;
+    end loop;
+  end process;
+
+  
   leds(2 downto 0) <= mbc_leds(2 downto 0) when flf_ctrl(6) = '1' else
                       flf_ctrl(2 downto 0);
   leds(3)  <= clk1;
@@ -2627,7 +2684,8 @@ begin
       when x"3B" => flf_data <= cafifo_l1a_cnt(15 downto 0);
       when x"3C" => flf_data <= "0000" & cafifo_bx_cnt;
       when x"3D" => flf_data <= "00000000" & cafifo_rd_addr & cafifo_wr_addr;
-
+      when x"3E" => flf_data <= "0000000" & cafifo_l1a_match_in;
+                    
       when x"41" => flf_data <= into_cafifo_dav_cnt(1);
       when x"42" => flf_data <= into_cafifo_dav_cnt(2);
       when x"43" => flf_data <= into_cafifo_dav_cnt(3);
@@ -2638,12 +2696,14 @@ begin
       when x"48" => flf_data <= into_cafifo_dav_cnt(8);
       when x"49" => flf_data <= into_cafifo_dav_cnt(9);
 
+      when x"50" => flf_data <= gtx0_data_valid_cnt;  -- from ddufifo to testctrl
+      when x"51" => flf_data <= gtx_data_valid_cnt;  -- from control to ddufifo        
+      when x"52" => flf_data <= data_fifo_re_cnt;  -- from control to top
+      when x"53" => flf_data <= data_fifo_oe_cnt;  -- from control to top
+                    
       when others => flf_data <= "0000000000000000";
     end case;
     
   end process;
-
-
-
 
 end bdf_type;
