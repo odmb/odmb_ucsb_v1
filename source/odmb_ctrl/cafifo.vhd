@@ -2,6 +2,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_UNSIGNED.all;
 --use IEEE.STD_LOGIC_INTEGER.all;
+use ieee.numeric_std.all;
 use IEEE.STD_LOGIC_1164.all;
 library UNISIM;
 use UNISIM.vcomponents.all;
@@ -51,7 +52,10 @@ entity cafifo is
     cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 1);
     cafifo_l1a_cnt   : out std_logic_vector(23 downto 0);
     cafifo_l1a_dav   : out std_logic_vector(NFEB+2 downto 1);
-    cafifo_bx_cnt    : out std_logic_vector(11 downto 0)
+    cafifo_bx_cnt    : out std_logic_vector(11 downto 0);
+    
+    cafifo_wr_addr : out std_logic_vector(3 downto 0);
+    cafifo_rd_addr : out std_logic_vector(3 downto 0)
     );
 
 end cafifo;
@@ -124,6 +128,9 @@ architecture cafifo_architecture of cafifo is
 
   
 begin
+  
+  cafifo_wr_addr <= std_logic_vector(to_unsigned(wr_addr_out, cafifo_wr_addr'length));
+  cafifo_rd_addr <= std_logic_vector(to_unsigned(rd_addr_out, cafifo_rd_addr'length));
 
   -- Generate BX_CNT (page 5 TRGFIFO)
   BX_CNT_CLR              <= BC0 or BXRST or BX_CNT_RST;

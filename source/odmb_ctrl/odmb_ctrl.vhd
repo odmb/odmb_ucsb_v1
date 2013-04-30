@@ -78,6 +78,12 @@ entity ODMB_CTRL is
     alct_fifo_wr_en  : out std_logic;
     tmb_fifo_wr_en   : out std_logic;
     cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 1);  -- L1A_MATCH from TRGCNTRL to CAFIFO sent to generate Data  
+    cafifo_l1a_cnt   : out std_logic_vector(23 downto 0);
+    cafifo_l1a_dav   : out std_logic_vector(NFEB+2 downto 1);
+    cafifo_bx_cnt    : out std_logic_vector(11 downto 0);
+    
+    cafifo_wr_addr : out std_logic_vector(3 downto 0);
+    cafifo_rd_addr : out std_logic_vector(3 downto 0);
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
     alct_dv     : in std_logic;
@@ -497,8 +503,11 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
       cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 1);
       cafifo_l1a_cnt   : out std_logic_vector(23 downto 0);
       cafifo_l1a_dav   : out std_logic_vector(NFEB+2 downto 1);
-      cafifo_bx_cnt    : out std_logic_vector(11 downto 0)
-      );
+      cafifo_bx_cnt    : out std_logic_vector(11 downto 0);
+
+      cafifo_wr_addr : out std_logic_vector(3 downto 0);
+      cafifo_rd_addr : out std_logic_vector(3 downto 0)
+);
 
   end component;
 
@@ -992,7 +1001,9 @@ begin
       cafifo_l1a_match => cafifo_l1a_match_out,
       cafifo_l1a_cnt   => cafifo_l1a_cnt_out,
       cafifo_bx_cnt    => cafifo_bx_cnt_out
+
       );
+
 
 --gtx0_data <= gtx_data;                                                                                      
 --gtx0_data_valid <= gtx_data_valid; 
@@ -1066,9 +1077,15 @@ begin
       cafifo_l1a_match => cafifo_l1a_match_out,
       cafifo_l1a_cnt   => cafifo_l1a_cnt_out,
       cafifo_l1a_dav   => cafifo_l1a_dav_out,
-      cafifo_bx_cnt    => cafifo_bx_cnt_out
+      cafifo_bx_cnt    => cafifo_bx_cnt_out,
 
+      cafifo_wr_addr => cafifo_wr_addr,
+      cafifo_rd_addr => cafifo_rd_addr
       );
+      cafifo_l1a_dav   <= cafifo_l1a_dav_out;
+      cafifo_l1a_match <= cafifo_l1a_match_out;
+      cafifo_l1a_cnt   <= cafifo_l1a_cnt_out;
+      cafifo_bx_cnt    <= cafifo_bx_cnt_out;
 
   cafifo_l1a_match <= cafifo_l1a_match_in(NFEB+2 downto 1);
 

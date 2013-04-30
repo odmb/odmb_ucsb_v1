@@ -14,7 +14,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 --use IEEE.std_logic_arith.all;
---use IEEE.std_logic_unsigned.all;
+use IEEE.std_logic_unsigned.all;
 use ieee.std_logic_misc.all;
 use ieee.numeric_std.all;
 library UNISIM;
@@ -470,6 +470,12 @@ architecture bdf_type of ODMB_V6_V2 is
       alct_fifo_wr_en  : out std_logic;
       tmb_fifo_wr_en   : out std_logic;
       cafifo_l1a_match : out std_logic_vector(NFEB+2 downto 1);  -- L1A_MATCH from TRGCNTRL to CAFIFO sent to generate Data  
+    cafifo_l1a_cnt   : out std_logic_vector(23 downto 0);
+    cafifo_l1a_dav   : out std_logic_vector(NFEB+2 downto 1);
+    cafifo_bx_cnt    : out std_logic_vector(11 downto 0);
+    
+    cafifo_wr_addr : out std_logic_vector(3 downto 0);
+    cafifo_rd_addr : out std_logic_vector(3 downto 0);
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
       alct_dv     : in std_logic;
@@ -813,10 +819,14 @@ architecture bdf_type of ODMB_V6_V2 is
   signal int_injpls, int_extpls, int_l1a : std_logic;  -- To be sent out to pins in V2
   signal int_l1a_match                   : std_logic_vector (NFEB downto 1);  -- To be sent out to pins in V2
   type l1a_match_cnt_type is array (NFEB downto 1) of std_logic_vector(15 downto 0);
-  signal l1a_match_cnt, lct_l1a_gap  : l1a_match_cnt_type;
+  signal l1a_match_cnt, lct_l1a_gap, dcfeb_dav_cnt  : l1a_match_cnt_type;
+  signal gap_cnt_rst, gap_cnt_en, dav_cnt_en : std_logic_vector(NFEB downto 1);
   type gap_state_type is (GAP_IDLE, GAP_COUNTING);
   type gap_state_array_type is array (NFEB downto 1) of gap_state_type;
   signal gap_next_state, gap_current_state           : gap_state_array_type;
+  type dav_state_type is (DAV_IDLE, DAV_HIGH);
+  type dav_state_array_type is array (NFEB downto 1) of dav_state_type;
+  signal dav_next_state, dav_current_state           : dav_state_array_type;
 
 
 -- Mode Selection Signals
@@ -1066,6 +1076,11 @@ architecture bdf_type of ODMB_V6_V2 is
   signal tmb_fifo_wr_en   : std_logic                         := '0';
 
   signal cafifo_l1a_match : std_logic_vector(NFEB+2 downto 1);  -- L1A_MATCH from TRGCNTRL to CAFIFO sent to generate Data
+  signal cafifo_l1a_cnt   : std_logic_vector(23 downto 0);
+  signal cafifo_l1a_dav   : std_logic_vector(NFEB+2 downto 1);
+  signal cafifo_bx_cnt    : std_logic_vector(11 downto 0);    
+  signal cafifo_wr_addr   : std_logic_vector(3 downto 0);
+  signal cafifo_rd_addr   : std_logic_vector(3 downto 0);
 
 
 
@@ -1718,6 +1733,11 @@ begin
       tmb_fifo_wr_en   => tmb_fifo_wr_en,
 
       cafifo_l1a_match => cafifo_l1a_match,
+    cafifo_l1a_cnt  => cafifo_l1a_cnt,
+    cafifo_l1a_dav  => cafifo_l1a_dav,
+    cafifo_bx_cnt   => cafifo_bx_cnt ,
+    cafifo_wr_addr  => cafifo_wr_addr,
+    cafifo_rd_addr  => cafifo_rd_addr,   
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
       alct_dv     => gen_alct_data_valid,
@@ -2166,14 +2186,117 @@ begin
 
 
   
-GEN_L1A_MATCH_CNT: for I in 1 to NFEB generate
-  begin
-    L1A_MATCH_CNT(I) <= (others => '0') when (reset = '1') else
-                    std_logic_vector(unsigned(L1A_MATCH_CNT(I)) + 1) when ((int_l1a_match(I) = '1') AND (RISING_EDGE(CLK40))) else
-                    L1A_MATCH_CNT(I);
-  end generate GEN_L1A_MATCH_CNT;
+--GEN_L1A_MATCH_CNT: for I in 1 to NFEB generate
+--  begin
+--    L1A_MATCH_CNT(I) <= (others => '0') when (reset = '1') else
+--                    (L1A_MATCH_CNT(I) + 1) when ((int_l1a_match(I) = '1') AND (RISING_EDGE(CLK40)));
+--  end generate GEN_L1A_MATCH_CNT;
 
-  gap_fsm_regs : process (gap_next_state, reset, clk40)
+l1a_cnt: process (clk40, int_l1a_match, reset)
+
+variable l1a_match_cnt_data : l1a_match_cnt_type;
+
+begin
+
+    for dcfeb_index in 1 to NFEB loop
+	if (reset = '1') then
+		l1a_match_cnt_data(dcfeb_index) := (OTHERS => '0');
+	elsif (rising_edge(clk40)) then
+    if (int_l1a_match(dcfeb_index) = '1') then    
+			l1a_match_cnt_data(dcfeb_index) := l1a_match_cnt_data(dcfeb_index) + 1;
+		end if;              
+	end if; 
+
+	l1a_match_cnt(dcfeb_index) <= l1a_match_cnt_data(dcfeb_index);
+    end loop;
+	
+end process;
+
+dcfeb_dav_cnt_pro: process (clk40, reset, dav_cnt_en)
+variable dav_cnt_data : l1a_match_cnt_type;
+begin
+
+for dcfeb_index in 1 to NFEB loop
+	if (reset = '1') then
+		dav_cnt_data(dcfeb_index) := (OTHERS => '0');
+	elsif (rising_edge(clk40) and dav_cnt_en(dcfeb_index) = '1') then
+			dav_cnt_data(dcfeb_index) := dav_cnt_data(dcfeb_index) + 1;
+	end if; 
+
+	dcfeb_dav_cnt(dcfeb_index) <= dav_cnt_data(dcfeb_index);
+end loop;
+	
+end process;
+
+dav_fsm_regs : process (dav_next_state, reset, clk40)
+    begin
+    for dcfeb_index in 1 to NFEB loop
+      if (reset = '1') then
+        dav_current_state(dcfeb_index) <= DAV_IDLE;
+      elsif rising_edge(clk40) then
+        dav_current_state(dcfeb_index) <= dav_next_state(dcfeb_index);
+      end if;
+    end loop;
+end process;
+
+  dav_fsm_logic : process (dav_current_state, dcfeb_data_valid)
+  begin
+    
+    for dcfeb_index in 1 to NFEB loop
+
+      case dav_current_state(dcfeb_index) is
+        
+        when DAV_IDLE =>
+          
+          if (dcfeb_data_valid(dcfeb_index) = '1') then
+            dav_next_state(dcfeb_index) <= DAV_HIGH;
+            dav_cnt_en(dcfeb_index) <= '1';
+          else
+            dav_next_state(dcfeb_index) <= DAV_IDLE;
+            dav_cnt_en(dcfeb_index) <= '0';
+          end if;
+          
+        when DAV_HIGH =>
+          dav_cnt_en(dcfeb_index) <= '0';
+           if (dcfeb_data_valid(dcfeb_index) = '0') then
+            dav_next_state(dcfeb_index) <= DAV_IDLE;
+          else
+            dav_next_state(dcfeb_index) <= DAV_HIGH;
+          end if;
+
+        when others =>
+          dav_next_state(dcfeb_index) <= DAV_IDLE;
+          dav_cnt_en(dcfeb_index) <= '0';
+          
+      end case;
+      
+    end loop;
+
+  end process;
+
+
+gap_cnt: process (clk40, reset, gap_cnt_rst, gap_cnt_en)
+variable gap_cnt_data : l1a_match_cnt_type;
+begin
+
+for dcfeb_index in 1 to NFEB loop
+	if (reset = '1') then
+		gap_cnt_data(dcfeb_index) := (OTHERS => '0');
+	elsif (rising_edge(clk40)) then
+    if (gap_cnt_rst(dcfeb_index) = '1') then    
+			gap_cnt_data(dcfeb_index) := (OTHERS => '0');
+    elsif (gap_cnt_en(dcfeb_index) = '1') then    
+			gap_cnt_data(dcfeb_index) := gap_cnt_data(dcfeb_index) + 1;
+		end if;              
+	end if; 
+
+	lct_l1a_gap(dcfeb_index) <= gap_cnt_data(dcfeb_index);
+end loop;
+	
+end process;
+
+
+gap_fsm_regs : process (gap_next_state, reset, clk40)
     begin
     for dcfeb_index in 1 to NFEB loop
       if (reset = '1') then
@@ -2182,9 +2305,9 @@ GEN_L1A_MATCH_CNT: for I in 1 to NFEB generate
         gap_current_state(dcfeb_index) <= gap_next_state(dcfeb_index);
       end if;
     end loop;
-    end process;
+end process;
 
-  gap_fsm_logic : process (gap_current_state, raw_lct, int_l1a, clk40)
+  gap_fsm_logic : process (gap_current_state, raw_lct, int_l1a)
   begin
     
     for dcfeb_index in 1 to NFEB loop
@@ -2195,26 +2318,29 @@ GEN_L1A_MATCH_CNT: for I in 1 to NFEB generate
           
           if (raw_lct(dcfeb_index) = '1') then
             gap_next_state(dcfeb_index) <= GAP_COUNTING;
-            lct_l1a_gap(dcfeb_index) <= (others => '0');
+            gap_cnt_rst(dcfeb_index) <= '1';
+            gap_cnt_en(dcfeb_index) <= '0';
           else
             gap_next_state(dcfeb_index) <= GAP_IDLE;
-            lct_l1a_gap(dcfeb_index) <= lct_l1a_gap(dcfeb_index);
+            gap_cnt_rst(dcfeb_index) <= '0';
+            gap_cnt_en(dcfeb_index) <= '0';
           end if;
           
         when GAP_COUNTING =>
            if (int_l1a = '1') then
             gap_next_state(dcfeb_index) <= GAP_IDLE;
-            lct_l1a_gap(dcfeb_index) <= lct_l1a_gap(dcfeb_index);
-          elsif rising_edge(clk40) then
-            gap_next_state(dcfeb_index) <= GAP_COUNTING;
-            lct_l1a_gap(dcfeb_index) <= std_logic_vector(unsigned(lct_l1a_gap(dcfeb_index)) + 1);
+            gap_cnt_rst(dcfeb_index) <= '0';
+            gap_cnt_en(dcfeb_index) <= '0';
           else
-            lct_l1a_gap(dcfeb_index) <= lct_l1a_gap(dcfeb_index);          
+            gap_next_state(dcfeb_index) <= GAP_COUNTING;
+            gap_cnt_rst(dcfeb_index) <= '0';
+            gap_cnt_en(dcfeb_index) <= '1';
           end if;
 
         when others =>
           gap_next_state(dcfeb_index) <= GAP_IDLE;
-          lct_l1a_gap(dcfeb_index) <= (others => '0');
+            gap_cnt_rst(dcfeb_index) <= '1';
+            gap_cnt_en(dcfeb_index) <= '0';
           
       end case;
       
@@ -2426,7 +2552,7 @@ GEN_L1A_MATCH_CNT: for I in 1 to NFEB generate
   leds(11) <= not pb(1);
 
 
-  flf_ctrl_case <= "00" & flf_ctrl(5 downto 0);
+  flf_ctrl_case <= "0" & flf_ctrl(6 downto 0);
   
   flf_status : process (dcfeb_adc_mask, dcfeb_fsel, dcfeb_jtag_ir, mbc_fsel, mbc_jtag_ir, flf_ctrl_case)
 
@@ -2499,6 +2625,21 @@ GEN_L1A_MATCH_CNT: for I in 1 to NFEB generate
       when x"35" => flf_data <= lct_l1a_gap(5);
       when x"36" => flf_data <= lct_l1a_gap(6);
       when x"37" => flf_data <= lct_l1a_gap(7);
+
+      when x"38" => flf_data <= "0000000" & cafifo_l1a_match;
+      when x"39" => flf_data <= "0000000" & cafifo_l1a_dav;
+      when x"3A" => flf_data <= "00000000" & cafifo_l1a_cnt(23 downto 16);
+      when x"3B" => flf_data <= cafifo_l1a_cnt(15 downto 0);
+      when x"3C" => flf_data <= "0000" & cafifo_bx_cnt;
+      when x"3D" => flf_data <= "00000000" & cafifo_rd_addr & cafifo_wr_addr;
+
+      when x"41" => flf_data <= dcfeb_dav_cnt(1);
+      when x"42" => flf_data <= dcfeb_dav_cnt(2);
+      when x"43" => flf_data <= dcfeb_dav_cnt(3);
+      when x"44" => flf_data <= dcfeb_dav_cnt(4);
+      when x"45" => flf_data <= dcfeb_dav_cnt(5);
+      when x"46" => flf_data <= dcfeb_dav_cnt(6);
+      when x"47" => flf_data <= dcfeb_dav_cnt(7);
 
       when others => flf_data <= "0000000000000000";
     end case;
