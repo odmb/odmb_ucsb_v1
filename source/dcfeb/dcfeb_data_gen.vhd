@@ -54,7 +54,7 @@ begin
   
 -- l1a_counter
 	
-l1a_cnt: process (clk, l1a)
+l1a_cnt: process (clk, l1a, rst)
 
 variable l1a_cnt_data : std_logic_vector(23 downto 0);
 
