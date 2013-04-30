@@ -140,7 +140,8 @@ entity ODMB_CTRL is
     ALCT_PUSH_DLY : in std_logic_vector(4 downto 0);
     TMB_PUSH_DLY  : in std_logic_vector(4 downto 0);
     PUSH_DLY      : in std_logic_vector(4 downto 0);
-    LCT_L1A_DLY   : in std_logic_vector(5 downto 0)
+    LCT_L1A_DLY   : in std_logic_vector(5 downto 0);
+    gtx_data_valid : out std_logic
     );
 
 end ODMB_CTRL;
@@ -658,7 +659,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
   signal cafifo_pop     : std_logic := '0';
   signal eof            : std_logic := '0';
   signal gtx_data       : std_logic_vector(15 downto 0);
-  signal gtx_data_valid : std_logic := 'L';
+  signal gtx_data_valid_inner : std_logic := 'L';
 
 -- DDUFIFO outputs
   signal ddu_data       : std_logic_vector(15 downto 0);
@@ -962,7 +963,7 @@ begin
 
 -- to GigaBit Link
       DOUT => gtx_data,
-      DAV  => gtx_data_valid,
+      DAV  => gtx_data_valid_inner,
 
 -- to Data FIFOs
       OEFIFO_B   => data_fifo_oe,
@@ -1015,6 +1016,7 @@ begin
   gtx1_data       <= ddu_data;
   gtx1_data_valid <= ddu_data_valid;
 
+  gtx_data_valid <= gtx_data_valid_inner;
 
   DDUFIFO_PM : ddufifo
 
@@ -1026,7 +1028,7 @@ begin
 
       rx_ack => LOGICH,
 
-      dv_in   => gtx_data_valid,
+      dv_in   => gtx_data_valid_inner,
       ld_in   => eof,
       data_in => gtx_data,
 
