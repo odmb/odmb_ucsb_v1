@@ -411,6 +411,8 @@ NET: "odmb_hardrst_b" LOC = "AE17" | IOSTANDARD = LVCMOS25; #STAT2
 #NET: "p5v_sm_p" LOC = "A13" | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE; #STAT2
 #NET: "reprgen_b" LOC = "AJ19" | IOSTANDARD = LVCMOS25; #STAT2
 #NET: "resync" LOC = "AJ17" | IOSTANDARD = LVCMOS25; #STAT2
+NET: "dcfeb_tdi" LOC = "AK11" | IOSTANDARD = LVCMOS25; #STAT2
+NET: "dcfeb_tms" LOC = "AJ10" | IOSTANDARD = LVCMOS25; #STAT2
 NET: "dcfeb_tck[1]" LOC = "AL15" | IOSTANDARD = LVCMOS25; #STAT2
 NET: "dcfeb_tck[2]" LOC = "AK17" | IOSTANDARD = LVCMOS25; #STAT2
 NET: "dcfeb_tck[3]" LOC = "AJ15" | IOSTANDARD = LVCMOS25; #STAT2
@@ -464,9 +466,9 @@ NET: "tph[39]" LOC = "AM13" | IOSTANDARD = LVCMOS25; #STAT2   tp_13
 NET: "tph[40]" LOC = "AK12" | IOSTANDARD = LVCMOS25; #STAT2   tp_14
 NET: "tph[41]" LOC = "AL11" | IOSTANDARD = LVCMOS25; #STAT2   tp_15
 NET: "tph[42]" LOC = "AM11" | IOSTANDARD = LVCMOS25; #STAT2   tp_16
-NET: "tph[43]" LOC = "AK11" | IOSTANDARD = LVCMOS25; #STAT2   tp_17
+#NET: "tph[43]" LOC = "AK11" | IOSTANDARD = LVCMOS25; #STAT2   tp_17  #Connected to dcfeb_tdi
 NET: "tph[44]" LOC = "AL10" | IOSTANDARD = LVCMOS25; #STAT2   tp_18
-NET: "tph[45]" LOC = "AJ10" | IOSTANDARD = LVCMOS25; #STAT2   tp_19
+#NET: "tph[45]" LOC = "AJ10" | IOSTANDARD = LVCMOS25; #STAT2   tp_19  #Connected to dcfeb_tms
 NET: "tph[46]" LOC = "AH10" | IOSTANDARD = LVCMOS25; #STAT2   tp_20
 #NET: "unnamed_6_odmbfpga_i302_mgtavtt" LOC = "AP7" | IOSTANDARD = LVCMOS25; #STAT2
 #NET: "unnamed_6_odmbfpga_i302_mgtrref" LOC = "AN7" | IOSTANDARD = LVCMOS25; #STAT2

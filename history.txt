@@ -6,6 +6,12 @@
 =                                                                    =
 ======================================================================
 
+V01-03: 30 April 2013, Manuel
+--------------------------------
+We got packets!
+Added various counters (DAVs, L1As, etc.) and made sure the CCB did not
+send spurious L1As.
+
 V01-02: 29 April 2013, Manuel
 --------------------------------
 Added L1A_MATCH_CNT and LCT_L1A_GAP, and tested them.

@@ -89,24 +89,24 @@ architecture CONTROL_arch of CONTROL is
   signal BUSY : std_logic;
   signal GEMPTY_D : std_logic_vector(3 downto 1);
   
-  signal STARTREAD_RST, STARTREAD : std_logic;
-  signal OEHDR : std_logic_vector(8 downto 1);
-  signal OEHDRA, OEHDRB : std_logic;
-  signal DOHDR : std_logic;
-  signal TAIL_RST, DDCNT_EN_RST, DDCNT_CEO, DDCNT_TC, OKDATA, DODAT : std_logic;
+  signal STARTREAD_RST, STARTREAD : std_logic := '0';
+  signal OEHDR : std_logic_vector(8 downto 1) := (others => '0');
+  signal OEHDRA, OEHDRB : std_logic := '0';
+  signal DOHDR : std_logic := '0';
+  signal TAIL_RST, DDCNT_EN_RST, DDCNT_CEO, DDCNT_TC, OKDATA, DODAT : std_logic := '0';
   signal DDCNT_EN : std_logic_vector(1 downto 0);
   signal DDCNT : std_logic_vector(15 downto 0);
 
-  signal STARTTAIL_CE, STARTTAIL : std_logic;
+  signal STARTTAIL_CE, STARTTAIL : std_logic := '0';
   signal TAIL : std_logic_vector(8 downto 1);
-  signal TAILA, TAILB : std_logic;
-  signal DOTAIL : std_logic;
+  signal TAILA, TAILB : std_logic := '0';
+  signal DOTAIL : std_logic := '0';
 
-  signal DAV_D : std_logic;
-  signal DAV_D1,DAV_D2,DAV_D3 : std_logic;
+  signal DAV_D : std_logic := '0';
+  signal DAV_D1,DAV_D2,DAV_D3 : std_logic := '0';
 
   signal POP_D : std_logic_vector(4 downto 1);
-  signal TAILDONE, STPOP, L1ONLY, POP: std_logic;
+  signal TAILDONE, STPOP, L1ONLY, POP: std_logic := '0';
 
   signal FIFO_POP_RST, FIFO_POP_INNER, FIFO_POP_D : std_logic;
   

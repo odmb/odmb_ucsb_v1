@@ -97,8 +97,8 @@ architecture cafifo_architecture of cafifo is
   signal l1a_dav   : l1a_array_type;
 
   type l1a_b_array_type is array (FIFO_SIZE-1 downto 0) of std_logic;
-  signal l1a_dav_b8, l1a_dav_b8_gm : l1a_b_array_type;
-  signal l1a_dav_b9, l1a_dav_b9_gm : l1a_b_array_type;
+  signal l1a_dav_b8 : l1a_b_array_type;
+  signal l1a_dav_b9_gm : l1a_b_array_type;
 
   signal l1a_cnt_wren, l1a_match_wren : std_logic;
   signal wr_addr_en, rd_addr_en       : std_logic;
@@ -521,19 +521,19 @@ begin
   begin
     if (rst = '1') then
       for index in 0 to FIFO_SIZE-1 loop
-        l1a_dav_b8_gm(index) <= '0';
+        l1a_dav_b8(index) <= '0';
       end loop;
     elsif rising_edge(clk) then
       for index in 0 to FIFO_SIZE-1 loop
         if (tmb_fifo_out(11 downto 0) = l1a_cnt(index)) and (reg_tmb_l1a_dav = '1') then
-          l1a_dav_b8_gm(index) <= '1';
+          l1a_dav_b8(index) <= '1';
         end if;
       end loop;
     end if;
 
   end process;
 
-  cafifo_l1a_dav(NFEB+1) <= l1a_dav_b8_gm(rd_addr_out);
+  cafifo_l1a_dav(NFEB+1) <= l1a_dav_b8(rd_addr_out);
 
 -- Address Counters
 
