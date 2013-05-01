@@ -203,7 +203,7 @@ begin  --Architecture
   
   FIFO_SEL <= FSR_vector(3 downto 0);
   tc_run_inner <= FSR_vector(4);
-  ts_cnt_rst <= FSR_vector(5);
+  ts_cnt_rst <= rst or FSR_vector(5);
   tc_fifo_rst <= rst or FSR_vector(6);
   trg_cnt_rst <= rst or FSR_vector(7);
   trg_cnt_sel <= FSR_vector(11 downto 8);

@@ -11,7 +11,7 @@ R  440C  00	Read ALCT_PUSH_DLY
    	 	
 == ================ Writing FIFOs ================ ==
 R  1C   0       Read state of FIFOs
-W  20	1	Select FIFO 1 *LSB bunch crossing"
+W  20	1	Select FIFO 1 *LSB bunch crossing&quot;
 R  2C   0       Read current write address
 R  3C   0       Read current read address
 W  8 	3f	Write FIFO
@@ -24,7 +24,7 @@ R  1C   0       Read state of FIFOs
 R  2C   0       Read current write address
 R  3C   0       Read current read address
 
-W  20	2	Select FIFO 2 *MSB bunch crossing"
+W  20	2	Select FIFO 2 *MSB bunch crossing&quot;
 W  8 	0	Write FIFO
 W  8 	0	Write FIFO
 W  8 	0	Write FIFO
@@ -32,7 +32,7 @@ W  8 	0	Write FIFO
 W  8 	0	Write FIFO
 W  8 	0	Write FIFO
 
-W  20	4	Select FIFO 3 *Triggers"  
+W  20	4	Select FIFO 3 *Triggers&quot;  
 W  8   	3	Write FIFO			    
 W  8   	11	Write FIFO			    
 W  8   	81	Write FIFO			    
@@ -103,7 +103,7 @@ W  3000 3B	Set flf_ctrl *CAFIFO_L1A_CNT LSB*
 R  3008 0	Read flf_data
 W  3000 3C	Set flf_ctrl *CAFIFO_BX_CNT*
 R  3008 0	Read flf_data
-W  3000 3D	Set flf_ctrl *CAFIFO_RD_ADDR & CAFIFO_WR_ADDR*
+W  3000 3D	Set flf_ctrl *CAFIFO_RD_ADDR &amp; CAFIFO_WR_ADDR*
 R  3008 0	Read flf_data
 W  3000 3E	Set flf_ctrl *CAFIFO_L1A_MATCH_IN*
 R  3008 0	Read flf_data
@@ -133,7 +133,7 @@ W  3000 58	Set flf_ctrl *RE_CNT(8) from CONTROL*
 R  3008 0	Read flf_data
 W  3000 59	Set flf_ctrl *RE_CNT(9) from CONTROL*
 R  3008 0	Read flf_data
-W  20	18	Select FIFO 4 *DDU data" and start run
+W  20	18	Select FIFO 4 *DDU data&quot; and start run
 
 == =============== Status after run =============== ==
 W  3000 29	Set flf_ctrl *Time stamp MSB*
@@ -143,10 +143,10 @@ R  3008 0	Read flf_data
 R  1C   0       Read state of FIFOs
 R  2C   0       Read current write address
 R  3C   0       Read current read address
-W  20	14	Select FIFO 3 *Time stamp" and keep runnting
+W  20	14	Select FIFO 3 *Time stamp&quot; and keep runnting
 R  2C   0       Read current write address
 R  3C   0       Read current read address
-W  20	18	Select FIFO 4 *DDU data" and start run
+W  20	18	Select FIFO 4 *DDU data&quot; and start run
 W  3000 21	Set flf_ctrl *L1A_MATCH_CNT(1)*
 R  3008 0	Read flf_data
 W  3000 22	Set flf_ctrl *L1A_MATCH_CNT(2)*
@@ -204,7 +204,7 @@ W  3000 3B	Set flf_ctrl *CAFIFO_L1A_CNT LSB*
 R  3008 0	Read flf_data
 W  3000 3C	Set flf_ctrl *CAFIFO_BX_CNT*
 R  3008 0	Read flf_data
-W  3000 3D	Set flf_ctrl *CAFIFO_RD_ADDR & CAFIFO_WR_ADDR*
+W  3000 3D	Set flf_ctrl *CAFIFO_RD_ADDR &amp; CAFIFO_WR_ADDR*
 R  3008 0	Read flf_data
 W  3000 3E	Set flf_ctrl *CAFIFO_L1A_MATCH_IN*
 R  3008 0	Read flf_data
@@ -322,5 +322,3 @@ R  3C   0       Read current read address
 
 
 0  0  0	 	End of file
-
-

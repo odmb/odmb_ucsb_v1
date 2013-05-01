@@ -86,6 +86,9 @@ entity ODMB_CTRL is
     cafifo_wr_addr : out std_logic_vector(3 downto 0);
     cafifo_rd_addr : out std_logic_vector(3 downto 0);
 
+-- To DDUFIO
+    gl_pc_tx_ack : in std_logic;
+
 -- From ALCT,TMB,DCFEBs to CAFIFO
     alct_dv     : in std_logic;
     tmb_dv      : in std_logic;
@@ -392,7 +395,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
       clk_out : in std_logic;
       rst     : in std_logic;
 
-      rx_ack : in std_logic;
+      tx_ack : in std_logic;
 
       dv_in   : in std_logic;
       ld_in   : in std_logic;
@@ -1026,7 +1029,8 @@ begin
       clk_out => clk40,
       rst     => reset,
 
-      rx_ack => LOGICH,
+      tx_ack => gl_pc_tx_ack,
+      --tx_ack => logich,
 
       dv_in   => gtx_data_valid_inner,
       ld_in   => eof,
