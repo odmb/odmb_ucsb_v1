@@ -132,7 +132,7 @@ begin
     DTACK_INNER <= '0' when (Q_DTACK_SELCFEB='1') else 'Z';
 
 -- Write SELFEB to OUTDATA when READCFEB=1
-    OUTDATA(6 downto 0) <= SELFEB(7 downto 1) when (STROBE='1' and READCFEB='1') else "ZZZZZZZ";
+    OUTDATA <= "000000000" & SELFEB(7 downto 1) when (STROBE='1' and READCFEB='1') else (others => 'Z');
 
 -- Generate DTACK when READCFEB=1
     D_DTACK_READCFEB <= '1' when (STROBE='1' and READCFEB='1') else '0';

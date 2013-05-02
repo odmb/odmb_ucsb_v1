@@ -34,11 +34,11 @@ initial
 //    infile=$fopen("commands\\test_lct_l1a_run.txt","r");
 //    outfile=$fopen("commands\\test_lct_l1a_run_out.txt","w");
 
-    infile=$fopen("commands\\test_testctrl.txt","r");       // Test of TESTCTRL
-    outfile=$fopen("commands\\test_testctrl_out.txt","w");  // Test of TESTCTRL
+//    infile=$fopen("commands\\test_testctrl.txt","r");       // Test of TESTCTRL
+//    outfile=$fopen("commands\\test_testctrl_out.txt","w");  // Test of TESTCTRL
 
-//    infile=$fopen("commands\\test_cfebjtag.txt","r");      // Test of DCFEBJTAG
-//    outfile=$fopen("commands\\test_cfebjtag_out.txt","w"); // Test of DCFEBJTAG
+    infile=$fopen("commands\\test_cfebjtag.txt","r");      // Test of DCFEBJTAG
+    outfile=$fopen("commands\\test_cfebjtag_out.txt","w"); // Test of DCFEBJTAG
     
     while (!$feof(infile))
       begin
