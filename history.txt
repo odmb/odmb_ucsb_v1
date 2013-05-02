@@ -6,6 +6,11 @@
 =                                                                    =
 ======================================================================
 
+V01-04: 2 May 2013, Manuel
+--------------------------------
+We now get beautiful packets in the right order.
+Added the tranmitter through GigaLink 1.
+
 V01-03: 30 April 2013, Manuel
 --------------------------------
 We got packets!

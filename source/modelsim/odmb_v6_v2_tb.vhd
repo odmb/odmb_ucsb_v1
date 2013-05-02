@@ -188,7 +188,7 @@ architecture ODMB_V6_V2_TB_arch of ODMB_V6_V2_TB is
   component odmb_v6_v2 is
     generic (
       IS_SIMULATION : integer range 0 to 1 := 1;  -- Set to 1 by test bench in simulation 
-      NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
+      NFEB          : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
       );  
     port
       (
@@ -875,7 +875,7 @@ architecture ODMB_V6_V2_TB_arch of ODMB_V6_V2_TB is
   signal gl1_tx_n  : std_logic;         -- out
   signal gl1_rx_p  : std_logic := '0';  -- in
   signal gl1_rx_n  : std_logic := '0';  -- in
-  signal gl1_clk_p : std_logic := '0';  -- in
+  signal gl1_clk_p : std_logic := '1';  -- in
   signal gl1_clk_n : std_logic := '0';  -- in
 
 -- Others 
@@ -893,7 +893,7 @@ architecture ODMB_V6_V2_TB_arch of ODMB_V6_V2_TB is
 begin
 
   reset <= '1' after 200 ns, '0' after 13000 ns;
-  
+
   go <= '1' after 10 us;
   --goevent <= '1' after 300 us;
 
@@ -901,6 +901,8 @@ begin
   qpll_clk40MHz_n <= not qpll_clk40MHz_n after 10 ns;
   qpll_clk80MHz_p <= not qpll_clk80MHz_p after 5 ns;
   qpll_clk80MHz_n <= not qpll_clk80MHz_n after 5 ns;
+  gl1_clk_p       <= not gl1_clk_p       after 3.2 ns;
+  gl1_clk_n       <= not gl1_clk_n       after 3.2 ns;
   clk             <= not clk             after 10 ns;
 
   rst <= '0', '1' after 200 ns, '0' after 13000 ns;
@@ -1064,174 +1066,174 @@ begin
   PMAP_odmb_v6_v2 : odmb_v6_v2
     generic map(
       IS_SIMULATION => 1,
-      NFEB => 7)
-  port map(
+      NFEB          => 7)
+    port map(
 
-    tc_run_out => goevent,
+      tc_run_out => goevent,
 
 -- From/To VME connector To/From MBV
 
-    vme_data        => data(15 downto 0),  -- inout
-    vme_addr        => adr(23 downto 1),   -- in
-    vme_am          => am(5 downto 0),  -- in
-    vme_gap         => ga(5),           -- in
-    vme_ga          => ga(4 downto 0),  -- in
-    vme_bg0         => LOGIC0,          -- in
-    vme_bg1         => LOGIC0,          -- in
-    vme_bg2         => LOGIC0,          -- in
-    vme_bg3         => LOGIC0,          -- in
-    vme_as_b        => as,  -- in                                               
-    vme_ds_b        => ds,              -- in
-    vme_sysreset_b  => LOGIC1,          -- in ???
-    vme_sysfail_b   => sysfail,
-    vme_sysfail_out => sysfail_out,     -- out
-    vme_berr_b      => berr,            -- in
-    vme_berr_out    => berr_out,        -- out
-    vme_iack_b      => iack,            -- in
-    vme_lword_b     => lword,           -- in
-    vme_write_b     => write_b,         -- in
-    vme_clk         => LOGIC0,          -- in ???
-    vme_dtack_v6_b  => dtack,           -- inout
-    vme_tovme       => tovme,           -- out
-    vme_doe_b       => doe_b,           -- out
+      vme_data        => data(15 downto 0),  -- inout
+      vme_addr        => adr(23 downto 1),   -- in
+      vme_am          => am(5 downto 0),     -- in
+      vme_gap         => ga(5),         -- in
+      vme_ga          => ga(4 downto 0),     -- in
+      vme_bg0         => LOGIC0,        -- in
+      vme_bg1         => LOGIC0,        -- in
+      vme_bg2         => LOGIC0,        -- in
+      vme_bg3         => LOGIC0,        -- in
+      vme_as_b        => as,  -- in                                               
+      vme_ds_b        => ds,            -- in
+      vme_sysreset_b  => LOGIC1,        -- in ???
+      vme_sysfail_b   => sysfail,
+      vme_sysfail_out => sysfail_out,   -- out
+      vme_berr_b      => berr,          -- in
+      vme_berr_out    => berr_out,      -- out
+      vme_iack_b      => iack,          -- in
+      vme_lword_b     => lword,         -- in
+      vme_write_b     => write_b,       -- in
+      vme_clk         => LOGIC0,        -- in ???
+      vme_dtack_v6_b  => dtack,         -- inout
+      vme_tovme       => tovme,         -- out
+      vme_doe_b       => doe_b,         -- out
 
 -- From/To PPIB (connectors J3 and J4)
 
-    dcfeb_tck       => dcfeb_tck,
-    dcfeb_tms       => dcfeb_tms,
-    dcfeb_tdi       => dcfeb_tdi,
-    dcfeb_tdo       => dcfeb_tdo,
-    dcfeb_bco       => dcfeb_bco,
-    dcfeb_resync    => dcfeb_resync,
-    dcfeb_reprog_b  => dcfeb_reprog_b ,
-    dcfeb_reprgen_b => dcfeb_reprgen_b,
-    dcfeb_injpls    => dcfeb_injpls ,
-    dcfeb_extpls    => dcfeb_extpls ,
-    dcfeb_l1a       => dcfeb_l1a ,
-    dcfeb_l1a_match => dcfeb_l1a_match,
-    dcfeb_done      => dcfeb_done ,
+      dcfeb_tck       => dcfeb_tck,
+      dcfeb_tms       => dcfeb_tms,
+      dcfeb_tdi       => dcfeb_tdi,
+      dcfeb_tdo       => dcfeb_tdo,
+      dcfeb_bco       => dcfeb_bco,
+      dcfeb_resync    => dcfeb_resync,
+      dcfeb_reprog_b  => dcfeb_reprog_b,
+      dcfeb_reprgen_b => dcfeb_reprgen_b,
+      dcfeb_injpls    => dcfeb_injpls,
+      dcfeb_extpls    => dcfeb_extpls,
+      dcfeb_l1a       => dcfeb_l1a,
+      dcfeb_l1a_match => dcfeb_l1a_match,
+      dcfeb_done      => dcfeb_done,
 
 -- From/To ODMB_V6_V2 JTAG port (through IC34)
 
-    v6_tck => v6_tck,
-    v6_tms => v6_tms,
-    v6_tdi => v6_tdi,
-    v6_tdo => v6_tdo,
+      v6_tck => v6_tck,
+      v6_tms => v6_tms,
+      v6_tdi => v6_tdi,
+      v6_tdo => v6_tdo,
 
 -- From/To J6 (J3) connector to ODMB_CTRL
 
-    ccb_cmd     => ccb_cmd,             -- in
-    ccb_cmd_s   => ccb_cmd_s,           -- in
-    ccb_data    => ccb_data,            -- in
-    ccb_data_s  => ccb_data_s,          -- in
-    ccb_cal     => ccb_cal,             -- in
-    ccb_crsv    => ccb_crsv,            -- in
-    ccb_drsv    => ccb_drsv,            -- in
-    ccb_rsvo    => ccb_rsvo,            -- in
-    ccb_rsvi    => ccb_rsvi,            -- in
-    ccb_bx0     => ccb_bx0,             -- in
-    ccb_bxrst   => ccb_bxrst,           -- in
-    ccb_l1arst  => ccb_l1arst,          -- in
+      ccb_cmd     => ccb_cmd,           -- in
+      ccb_cmd_s   => ccb_cmd_s,         -- in
+      ccb_data    => ccb_data,          -- in
+      ccb_data_s  => ccb_data_s,        -- in
+      ccb_cal     => ccb_cal,           -- in
+      ccb_crsv    => ccb_crsv,          -- in
+      ccb_drsv    => ccb_drsv,          -- in
+      ccb_rsvo    => ccb_rsvo,          -- in
+      ccb_rsvi    => ccb_rsvi,          -- in
+      ccb_bx0     => ccb_bx0,           -- in
+      ccb_bxrst   => ccb_bxrst,         -- in
+      ccb_l1arst  => ccb_l1arst,        -- in
 --              ccb_l1acc => ccb_l1acc, -- in
-    ccb_l1acc   => l1a,                 -- from file_handler_event
-    ccb_l1rls   => ccb_l1rls,           -- out
-    ccb_clken   => ccb_clken,           -- in
-    ccb_hardrst => ccb_hardrst,         -- in           
-    ccb_softrst => ccb_softrst,         -- in
+      ccb_l1acc   => l1a,               -- from file_handler_event
+      ccb_l1rls   => ccb_l1rls,         -- out
+      ccb_clken   => ccb_clken,         -- in
+      ccb_hardrst => ccb_hardrst,       -- in           
+      ccb_softrst => ccb_softrst,       -- in
 
-    odmb_hardrst_b => odmb_hardrst_b,
+      odmb_hardrst_b => odmb_hardrst_b,
 
 -- From J6/J7 (J3/J4) to FIFOs
 
-    tmb      => tmb,                    -- in
-    alct     => alct,                   -- in
+      tmb      => tmb,                  -- in
+      alct     => alct,                 -- in
 --              rawlct => rawlct, -- in
-    rawlct   => lct(NFEB downto 1),                    -- from file_handler_event
-    tmbffclk => tmbffclk,               -- in
+      rawlct   => lct(NFEB downto 1),   -- from file_handler_event
+      tmbffclk => tmbffclk,             -- in
 
 -- From/To J3/J4 t/fromo ODMB_CTRL
 
-    tmbdav    => tmb_dav,               -- from file_handler_event
-    alctdav   => alct_dav,              -- from file_handler_event
+      tmbdav    => tmb_dav,             -- from file_handler_event
+      alctdav   => alct_dav,            -- from file_handler_event
 --              rsvtd : INOUT STD_LOGIC_VECTOR(7 DOWNTO 0);                     
-    rsvtd_in  => rsvtd_in,              -- in
-    rsvtd_out => rsvtd_out,             -- out
-    lctrqst   => lctrqst,               -- out
+      rsvtd_in  => rsvtd_in,            -- in
+      rsvtd_out => rsvtd_out,           -- out
+      lctrqst   => lctrqst,             -- out
 
 
 -- From/To QPLL (From/To DAQMBV)
 
-    qpll_autorestart => qpll_autorestart,  -- out
-    qpll_reset       => qpll_reset,        -- out
-    qpll_f0sel       => qpll_f0sel,        -- out
-    qpll_locked      => qpll_locked,       -- in
-    qpll_error       => qpll_error,        -- in
+      qpll_autorestart => qpll_autorestart,  -- out
+      qpll_reset       => qpll_reset,        -- out
+      qpll_f0sel       => qpll_f0sel,        -- out
+      qpll_locked      => qpll_locked,       -- in
+      qpll_error       => qpll_error,        -- in
 
-    qpll_clk40MHz_p  => qpll_clk40MHz_p,   -- in 
-    qpll_clk40MHz_n  => qpll_clk40MHz_n,   -- in 
-    qpll_clk80MHz_p  => qpll_clk80MHz_p,   -- in 
-    qpll_clk80MHz_n  => qpll_clk80MHz_n,   -- in 
-    qpll_clk160MHz_p => qpll_clk160MHz_p,  -- NEW!
-    qpll_clk160MHz_n => qpll_clk160MHz_n,  -- NEW!
+      qpll_clk40MHz_p  => qpll_clk40MHz_p,   -- in 
+      qpll_clk40MHz_n  => qpll_clk40MHz_n,   -- in 
+      qpll_clk80MHz_p  => qpll_clk80MHz_p,   -- in 
+      qpll_clk80MHz_n  => qpll_clk80MHz_n,   -- in 
+      qpll_clk160MHz_p => qpll_clk160MHz_p,  -- NEW!
+      qpll_clk160MHz_n => qpll_clk160MHz_n,  -- NEW!
 
 -- From/To LVMB (From/To DAQMBV and DAQMBC)
 
-    lvmb_pon   => lvmb_pon,             -- out
-    pon_load   => pon_load,             -- out
-    pon_en_b   => pon_en_b,               -- out
-    r_lvmb_pon => r_lvmb_pon,           -- in
-    lvmb_csb   => lvmb_csb,             -- out
-    lvmb_sclk  => lvmb_sclk,            -- out
-    lvmb_sdin  => lvmb_sdin,            -- out
-    lvmb_sdout => lvmb_sdout,           -- out
+      lvmb_pon   => lvmb_pon,           -- out
+      pon_load   => pon_load,           -- out
+      pon_en_b   => pon_en_b,           -- out
+      r_lvmb_pon => r_lvmb_pon,         -- in
+      lvmb_csb   => lvmb_csb,           -- out
+      lvmb_sclk  => lvmb_sclk,          -- out
+      lvmb_sdin  => lvmb_sdin,          -- out
+      lvmb_sdout => lvmb_sdout,         -- out
 
 -- To LEDs
 
-    leds => leds,                       -- out
+      leds => leds,                     -- out
 
 -- From Push Buttons
 
-    pb => pb,                           -- in
+      pb => pb,                         -- in
 
 -- From/To Test Connector for Single-Ended signals
 
-    d => d,                             -- out              
+      d => d,                           -- out              
 
 -- From/To Test Points
 
-    tph => tph,
-    tpl => tpl,
+      tph => tph,
+      tpl => tpl,
 
 -- From/To RX 
 
-    orx_p     => orx_p,                 -- in
-    orx_n     => orx_n,                 -- in
-    orx_rx_en => orx_rx_en,
-    orx_en_sd => orx_en_sd,
-    orx_sd    => orx_sd,
-    orx_sq_en => orx_sq_en,
+      orx_p     => orx_p,               -- in
+      orx_n     => orx_n,               -- in
+      orx_rx_en => orx_rx_en,
+      orx_en_sd => orx_en_sd,
+      orx_sd    => orx_sd,
+      orx_sq_en => orx_sq_en,
 
 -- From/To OT1 (GigaBit Link)
 
-    gl0_tx_p  => gl0_tx_p,              -- out
-    gl0_tx_n  => gl0_tx_n,              -- out
-    gl0_rx_p  => gl0_rx_p,              -- in
-    gl0_rx_n  => gl0_rx_n,              -- in
-    gl0_clk_p => gl0_clk_p,             -- in
-    gl0_clk_n => gl0_clk_n,             -- in
+      gl0_tx_p  => gl0_tx_p,            -- out
+      gl0_tx_n  => gl0_tx_n,            -- out
+      gl0_rx_p  => gl0_rx_p,            -- in
+      gl0_rx_n  => gl0_rx_n,            -- in
+      gl0_clk_p => gl0_clk_p,           -- in
+      gl0_clk_n => gl0_clk_n,           -- in
 
 -- From/To OT2 (GigaBit Link)
 
-    gl1_tx_p  => gl1_tx_p,              -- out
-    gl1_tx_n  => gl1_tx_n,              -- out
-    gl1_rx_p  => gl1_rx_p,              -- in
-    gl1_rx_n  => gl1_rx_n,              -- in
-    gl1_clk_p => gl1_clk_p,
-    gl1_clk_n => gl1_clk_n,
+      gl1_tx_p  => gl1_tx_p,            -- out
+      gl1_tx_n  => gl1_tx_n,            -- out
+      gl1_rx_p  => gl0_tx_p,            -- in : Loop test
+      gl1_rx_n  => gl0_tx_n,            -- in : Loop test
+      gl1_clk_p => gl1_clk_p,
+      gl1_clk_n => gl1_clk_n,
 
 
-    done_in => done_in,
-    ccb_evcntres => ccb_evcntres
-    );
+      done_in      => done_in,
+      ccb_evcntres => ccb_evcntres
+      );
 
 end ODMB_V6_V2_TB_arch;
