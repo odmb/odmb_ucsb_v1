@@ -938,6 +938,7 @@ architecture bdf_type of ODMB_V6_V2 is
 
   signal gl_pc_daq_data_clk, gl_pc_daq_tdis : std_logic;
   signal gl_pc_data_n, gl_pc_data_p : std_logic;
+  signal gl_pc_data_buf_n, gl_pc_data_buf_p : std_logic;
 
   signal grx0_data       : std_logic_vector(15 downto 0) := "0000000000000000";
   signal grx0_data_valid : std_logic                     := '0';
@@ -2396,8 +2397,10 @@ begin
         RATE_3_2             => open,
         TX_ACK               => gl_pc_tx_ack,
         DAQ_DATA_CLK         => gl_pc_daq_data_clk);
-
-
+--
+--    gl_pc_ibuf_n : IBUF port map (O => gl_pc_data_buf_n, I => gl_pc_data_n);
+--    gl_pc_ibuf_p : IBUF port map (O => gl_pc_data_buf_p, I => gl_pc_data_p);
+--
 
   orx_dcfeb_data_n <= orx_buf_n;
   orx_dcfeb_data_p <= orx_buf_p;
@@ -2416,7 +2419,7 @@ begin
 
       --External signals
       RST                    => reset,
---      ORX_01_N               => rx_dcfeb_data_n(1),
+--      ORX_01_N               => ,
 --      ORX_01_P               => rx_dcfeb_data_p(1),
 --      ORX_02_N               => rx_dcfeb_data_n(2),
 --      ORX_02_P               => rx_dcfeb_data_p(2),
@@ -2430,8 +2433,10 @@ begin
 --      ORX_06_P               => rx_dcfeb_data_p(6),
 --      ORX_07_N               => rx_dcfeb_data_n(7),
 --      ORX_07_P               => rx_dcfeb_data_p(7),
-      ORX_01_N               => gl_pc_data_n,
-      ORX_01_P               => gl_pc_data_p,
+--      ORX_01_N               => gl_pc_data_buf_n,
+--      ORX_01_P               => gl_pc_data_buf_p,
+      ORX_01_N               => orx_buf_n(1),
+      ORX_01_P               => orx_buf_p(1),
       ORX_02_N               => orx_buf_n(2),
       ORX_02_P               => orx_buf_p(2),
       ORX_03_N               => orx_buf_n(3),
@@ -2480,10 +2485,10 @@ begin
   rx_dcfeb_sel  <= flf_ctrl(7);
   opt_dcfeb_sel <= '0';
 
-  --dcfeb_tms <= int_tms;
-  --dcfeb_tdi <= int_tdi;
-  dcfeb_tms <= not pb(0);
-  dcfeb_tdi <= not pb(1);
+  dcfeb_tms <= int_tms;
+  dcfeb_tdi <= int_tdi;
+  --dcfeb_tms <= not pb(0);
+  --dcfeb_tdi <= not pb(1);
 
   dcfeb_l1a <= int_l1a;
 
@@ -2534,32 +2539,32 @@ begin
     int_tdo(I)         <= dcfeb_tdo(I) when (rx_dcfeb_sel = '1') else gen_tdo(I);
     int_rtn_shft_en(I) <= '1'          when (rx_dcfeb_sel = '1') else gen_rtn_shft_en(I);
 
-    DCFEB_TX_PM : daq_optical_out
-      generic map(
-        USE_CHIPSCOPE => 0,
-        SIM_SPEEDUP   => IS_SIMULATION
-        )
-      port map(
-        DAQ_TX_VIO_CNTRL     => LOGIC36L,
-        DAQ_TX_LA_CNTRL      => LOGIC36L,
-        RST                  => reset,
-        DAQ_RX_N             => LOGICL,
-        DAQ_RX_P             => LOGICH,
-        DAQ_TDIS             => dcfeb_daq_tdis(I),
-        DAQ_TX_N             => gen_dcfeb_data_n(I),
-        DAQ_TX_P             => gen_dcfeb_data_p(I),
-        DAQ_TX_125REFCLK     => LOGICL,  -- daq_tx_125refclk,
-        DAQ_TX_125REFCLK_DV2 => LOGICL,  -- daq_tx_125refclk_dv2,
-        DAQ_TX_160REFCLK     => clk80,
-        L1A_MATCH            => LOGICL,
-        TXD                  => gen_dcfeb_data(I),
-        TXD_VLD              => gen_dcfeb_data_valid(I),
-        JDAQ_RATE            => LOGICH,  -- '0' selects clock: 125 MHz (1.25 Gb), '1' selects 160 MHz (3.2 Gb)
-        RATE_1_25            => open,
-        RATE_3_2             => open,
-        TX_ACK               => daq_dcfeb_tx_ack(I),
-        DAQ_DATA_CLK         => dcfeb_daq_data_clk(I));
-
+--    DCFEB_TX_PM : daq_optical_out
+--      generic map(
+--        USE_CHIPSCOPE => 0,
+--        SIM_SPEEDUP   => IS_SIMULATION
+--        )
+--      port map(
+--        DAQ_TX_VIO_CNTRL     => LOGIC36L,
+--        DAQ_TX_LA_CNTRL      => LOGIC36L,
+--        RST                  => reset,
+--        DAQ_RX_N             => LOGICL,
+--        DAQ_RX_P             => LOGICH,
+--        DAQ_TDIS             => dcfeb_daq_tdis(I),
+--        DAQ_TX_N             => gen_dcfeb_data_n(I),
+--        DAQ_TX_P             => gen_dcfeb_data_p(I),
+--        DAQ_TX_125REFCLK     => LOGICL,  -- daq_tx_125refclk,
+--        DAQ_TX_125REFCLK_DV2 => LOGICL,  -- daq_tx_125refclk_dv2,
+--        DAQ_TX_160REFCLK     => clk80,
+--        L1A_MATCH            => LOGICL,
+--        TXD                  => gen_dcfeb_data(I),
+--        TXD_VLD              => gen_dcfeb_data_valid(I),
+--        JDAQ_RATE            => LOGICH,  -- '0' selects clock: 125 MHz (1.25 Gb), '1' selects 160 MHz (3.2 Gb)
+--        RATE_1_25            => open,
+--        RATE_3_2             => open,
+--        TX_ACK               => daq_dcfeb_tx_ack(I),
+--        DAQ_DATA_CLK         => dcfeb_daq_data_clk(I));
+--
     DCFEB_FIFO_PM : FIFO_DUALCLOCK_MACRO
       generic map (
         DEVICE                  => "VIRTEX6",  -- Target Device: "VIRTEX5", "VIRTEX6" 
