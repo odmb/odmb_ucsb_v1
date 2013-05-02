@@ -44,6 +44,9 @@ architecture ddufifo_architecture of ddufifo is
   signal f1_empty, f1_aempty, f1_afull, f1_full : std_logic;
   signal f1_wr_cnt, f1_rd_cnt                   : std_logic_vector(9 downto 0);
   signal f1_out                                 : std_logic_vector(15 downto 0);
+
+  signal tx_ack_q, tx_ack_q_q : std_logic := '0';
+  signal tx_ack_q_q_b : std_logic := '1';
   
 begin
 
@@ -103,6 +106,10 @@ begin
       WREN        => f1_wren            -- Input write enable
       );
 
+  FDCACK : FDC port map(tx_ack_q, tx_ack, tx_ack_q_q, tx_ack_q_q_b);
+  FDACK_Q : FD port map(tx_ack_q_q, clk_in, tx_ack_q);
+  tx_ack_q_q_b <= not tx_ack_q_q;
+  
 -- FSMs 
 
   f0_fsm_regs : process (f0_next_state, rst, clk_in)
@@ -116,7 +123,7 @@ begin
     
   end process;
 
-  f0_fsm_logic : process (f0_current_state, f0_empty, f1_empty, f1_rx, f1_tx, dv_in, ld_in, tx_ack)
+  f0_fsm_logic : process (f0_current_state, f0_empty, f1_empty, f1_rx, f1_tx, dv_in, ld_in, tx_ack_q)
   begin
     
     case f0_current_state is
@@ -149,7 +156,7 @@ begin
         f0_rx   <= '0';
         f0_tx   <= '1';
         f0_wren <= '0';
-        if (tx_ack = '1') then
+        if (tx_ack_q_q = '1') then
           f0_rden <= '1';
           f0_next_state <= FIFO_TX;
         else
@@ -229,7 +236,7 @@ begin
         f1_rx   <= '0';
         f1_tx   <= '1';
         f1_wren <= '0';
-        if (tx_ack = '1') then
+        if (tx_ack_q = '1') then
           f1_rden <= '1';
         else
           f1_rden <= '0';
