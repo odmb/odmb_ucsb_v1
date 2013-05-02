@@ -952,6 +952,8 @@ architecture bdf_type of ODMB_V6_V2 is
   signal gtx0_data_valid_cnt, gtx_data_valid_cnt : std_logic_vector(15 downto 0);
   signal raw_l1a_cnt : std_logic_vector(15 downto 0);
 
+  signal gl1_clk, gl1_clk_2 : std_logic;
+
 -- From LVDS Test Connector
 
   signal ck_0, ck_1, ck_2, clk, tx_0, tx_1, tx_2, tx_3, tx_4, tx_5, tx_6, tx_7, tx_8, tx_9, tx_10 : std_logic;
@@ -1240,7 +1242,8 @@ begin
   --end process;
 --  reset <= por_reg(31);
   FD_RESET : FD port map(int_reset, clk2p5, flf_ctrl(8));  -- It complains about edges and vectors
-  por_reg <= x"0FFFFFFF" when (pll1_locked = '0' or (int_reset='0' and flf_ctrl(8)='1')) else
+--  por_reg <= x"0FFFFFFF" when (pll1_locked = '0' or (int_reset='0' and flf_ctrl(8)='1')) else
+  por_reg <= x"0FFFFFFF" when (pll1_locked = '0') else
              por_reg(30 downto 0) & '0' when clk2p5'event and clk2p5 = '1' else
              por_reg;
   reset <= por_reg(31) or not pb(0);
@@ -1309,13 +1312,13 @@ begin
 
 -- From OT1 (GigaBit Link)
 
--- gl1_rx
-  gl1_rx_buf : IBUFDS port map (I => gl0_rx_p, IB => gl0_rx_n, O => gl0_rx);
+-- gl0_rx
+  gl0_rx_buf : IBUFDS port map (I => gl0_rx_p, IB => gl0_rx_n, O => gl0_rx);
 
 -- From OT2 (GigaBit Link)
 
--- gl2_rx
-  gl2_rx_buf : IBUFDS port map (I => gl1_rx_p, IB => gl1_rx_n, O => gl1_rx);
+-- gl1_rx
+  --gl1_rx_buf : IBUFDS port map (I => gl1_rx_p, IB => gl1_rx_n, O => gl1_rx);
 
 
 -- From ORX1
@@ -1336,10 +1339,9 @@ begin
 
 -- From QPLL
 
--- qpll_clk40MHz
   qpll_clk40MHz_buf : IBUFDS port map (I => qpll_clk40MHz_p, IB => qpll_clk40MHz_n, O => qpll_clk40MHz);
--- qpll_clk80MHz
   qpll_clk80MHz_buf : IBUFDS port map (I => qpll_clk80MHz_p, IB => qpll_clk80MHz_n, O => qpll_clk80MHz);
+  gl1_clk_buf       : IBUFDS_GTXE1 port map (I => gl1_clk_p, IB => gl1_clk_n, CEB => logicl, O => gl1_clk, ODIV2 => gl1_clk_2);
 
 
   Divide_Frequency : process(qpll_clk40MHz)
@@ -1367,13 +1369,13 @@ begin
 
 -- gl1_tx
 
-  gl1_tx_buf : OBUFDS port map (I => gl0_tx, O => gl0_tx_p, OB => gl0_tx_n);
+  --gl1_tx_buf : OBUFDS port map (I => gl0_tx, O => gl0_tx_p, OB => gl0_tx_n);
 
 -- To OT2 (GigaBit Link)
 
 -- gl2_tx
 
-  gl2_tx_buf : OBUFDS port map (I => gl1_tx, O => gl1_tx_p, OB => gl1_tx_n);
+  --gl2_tx_buf : OBUFDS port map (I => gl1_tx, O => gl1_tx_p, OB => gl1_tx_n);
 
 
 
@@ -2384,15 +2386,15 @@ begin
         DAQ_RX_N             => LOGICL,
         DAQ_RX_P             => LOGICH,
         DAQ_TDIS             => gl_pc_daq_tdis,
-        DAQ_TX_N             => gl_pc_data_n,
-        DAQ_TX_P             => gl_pc_data_p,
-        DAQ_TX_125REFCLK     => LOGICL,  -- daq_tx_125refclk,
-        DAQ_TX_125REFCLK_DV2 => LOGICL,  -- daq_tx_125refclk_dv2,
-        DAQ_TX_160REFCLK     => clk40,
+        DAQ_TX_N             => gl1_tx_n,
+        DAQ_TX_P             => gl1_tx_p,
+        DAQ_TX_125REFCLK     => gl1_clk,  -- daq_tx_125refclk,
+        DAQ_TX_125REFCLK_DV2 => gl1_clk_2,  -- daq_tx_125refclk_dv2,
+        DAQ_TX_160REFCLK     => LOGICL,
         L1A_MATCH            => LOGICL,
         TXD                  => gtx0_data,
         TXD_VLD              => gtx0_data_valid,
-        JDAQ_RATE            => LOGICH,  -- '0' selects clock: 125 MHz (1.25 Gb), '1' selects 160 MHz (3.2 Gb)
+        JDAQ_RATE            => LOGICL,  -- '0' selects clock: 125 MHz (1.25 Gb), '1' selects 160 MHz (3.2 Gb)
         RATE_1_25            => open,
         RATE_3_2             => open,
         TX_ACK               => gl_pc_tx_ack,
@@ -2433,8 +2435,8 @@ begin
 --      ORX_06_P               => rx_dcfeb_data_p(6),
 --      ORX_07_N               => rx_dcfeb_data_n(7),
 --      ORX_07_P               => rx_dcfeb_data_p(7),
---      ORX_01_N               => gl_pc_data_buf_n,
---      ORX_01_P               => gl_pc_data_buf_p,
+      --ORX_01_N               => gl1_rx_n,
+      --ORX_01_P               => gl1_rx_p,
       ORX_01_N               => orx_buf_n(1),
       ORX_01_P               => orx_buf_p(1),
       ORX_02_N               => orx_buf_n(2),
