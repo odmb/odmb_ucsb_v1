@@ -251,7 +251,9 @@ endgenerate
   OBUF  #(.DRIVE(12),.IOSTANDARD("DEFAULT"),.SLEW("SLOW")) OBUF_DAQ_TDIS (.O(DAQ_TDIS),.I(daq_tx_dis));
 //BUFGMUX daq_clk_mux_i (.O(usr_clk_wordwise),.I0(DAQ_TX_125REFCLK_DV2),.I1(DAQ_TX_160REFCLK),.S(word_clk_sel));
   
-  assign usr_clk_wordwise = DAQ_TX_160REFCLK;
+//  assign usr_clk_wordwise = DAQ_TX_160REFCLK;
+   assign usr_clk_wordwise = DAQ_TX_125REFCLK_DV2;
+   
   
 //-----------------------------------------------------------------------------
 // Main body of code
