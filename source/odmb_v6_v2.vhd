@@ -481,6 +481,7 @@ architecture bdf_type of ODMB_V6_V2 is
 
 -- To DDUFIO
     gl_pc_tx_ack : in std_logic;
+    dduclk : in std_logic;
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
       alct_dv     : in std_logic;
@@ -1242,8 +1243,8 @@ begin
   --end process;
 --  reset <= por_reg(31);
   FD_RESET : FD port map(int_reset, clk2p5, flf_ctrl(8));  -- It complains about edges and vectors
---  por_reg <= x"0FFFFFFF" when (pll1_locked = '0' or (int_reset='0' and flf_ctrl(8)='1')) else
-  por_reg <= x"0FFFFFFF" when (pll1_locked = '0') else
+  por_reg <= x"0FFFFFFF" when (pll1_locked = '0' or (int_reset='0' and flf_ctrl(8)='1')) else
+--  por_reg <= x"0FFFFFFF" when (pll1_locked = '0') else
              por_reg(30 downto 0) & '0' when clk2p5'event and clk2p5 = '1' else
              por_reg;
   reset <= por_reg(31) or not pb(0);
@@ -1775,6 +1776,7 @@ begin
 
 -- To DDUFIFO
       gl_pc_tx_ack => gl_pc_tx_ack,
+      dduclk => gl1_clk_2,
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
       alct_dv     => gen_alct_data_valid,
@@ -2374,7 +2376,11 @@ begin
 
   end process;
 
-    GIGALINK_PC_TX_PM : daq_optical_out
+--  gl1_clk_2_bufg  : BUFG port map (O => gl1_clk_2_buf, I => gl1_clk_2);
+
+
+
+  GIGALINK_PC_TX_PM : daq_optical_out
       generic map(
         USE_CHIPSCOPE => 0,
         SIM_SPEEDUP   => IS_SIMULATION
@@ -2407,81 +2413,81 @@ begin
   orx_dcfeb_data_n <= orx_buf_n;
   orx_dcfeb_data_p <= orx_buf_p;
 
-  DMB_RX_PM : dmb_receiver
-    generic map (
-      USE_2p56GbE => 1,
-      SIM_SPEEDUP => IS_SIMULATION
-      )
-    port map (
-      -- Chip Scope Pro Logic Analyzer control -- bgb
-      CSP_GTX_MAC_LA_CTRL => LOGIC36L,
-      CSP_PKT_FRM_LA_CTRL => LOGIC36L,
-      CSP_FIFO_LA_CTRL    => LOGIC36L,
+--  DMB_RX_PM : dmb_receiver
+--    generic map (
+--      USE_2p56GbE => 0,
+--      SIM_SPEEDUP => IS_SIMULATION
+--      )
+--    port map (
+--      -- Chip Scope Pro Logic Analyzer control -- bgb
+--      CSP_GTX_MAC_LA_CTRL => LOGIC36L,
+--      CSP_PKT_FRM_LA_CTRL => LOGIC36L,
+--      CSP_FIFO_LA_CTRL    => LOGIC36L,
 
 
-      --External signals
-      RST                    => reset,
---      ORX_01_N               => ,
---      ORX_01_P               => rx_dcfeb_data_p(1),
---      ORX_02_N               => rx_dcfeb_data_n(2),
---      ORX_02_P               => rx_dcfeb_data_p(2),
---      ORX_03_N               => rx_dcfeb_data_n(3),
---      ORX_03_P               => rx_dcfeb_data_p(3),
---      ORX_04_N               => rx_dcfeb_data_n(4),
---      ORX_04_P               => rx_dcfeb_data_p(4),
---      ORX_05_N               => rx_dcfeb_data_n(5),
---      ORX_05_P               => rx_dcfeb_data_p(5),
---      ORX_06_N               => rx_dcfeb_data_n(6),
---      ORX_06_P               => rx_dcfeb_data_p(6),
---      ORX_07_N               => rx_dcfeb_data_n(7),
---      ORX_07_P               => rx_dcfeb_data_p(7),
-      --ORX_01_N               => gl1_rx_n,
-      --ORX_01_P               => gl1_rx_p,
-      ORX_01_N               => orx_buf_n(1),
-      ORX_01_P               => orx_buf_p(1),
-      ORX_02_N               => orx_buf_n(2),
-      ORX_02_P               => orx_buf_p(2),
-      ORX_03_N               => orx_buf_n(3),
-      ORX_03_P               => orx_buf_p(3),
-      ORX_04_N               => orx_buf_n(4),
-      ORX_04_P               => orx_buf_p(4),
-      ORX_05_N               => orx_buf_n(5),
-      ORX_05_P               => orx_buf_p(5),
-      ORX_06_N               => orx_buf_n(6),
-      ORX_06_P               => orx_buf_p(6),
-      ORX_07_N               => orx_buf_n(7),
-      ORX_07_P               => orx_buf_p(7),
-      ORX_08_N               => orx_buf_n(8),
-      ORX_08_P               => orx_buf_p(8),
-      ORX_09_N               => orx_buf_n(9),
-      ORX_09_P               => orx_buf_p(9),
-      ORX_10_N               => orx_buf_n(10),
-      ORX_10_P               => orx_buf_p(10),
-      ORX_11_N               => orx_buf_n(11),
-      ORX_11_P               => orx_buf_p(11),
-      ORX_12_N               => orx_buf_n(12),
-      ORX_12_P               => orx_buf_p(12),
-      DCFEB1_DATA            => rx_dcfeb_data(1),
-      DCFEB2_DATA            => rx_dcfeb_data(2),
-      DCFEB3_DATA            => rx_dcfeb_data(3),
-      DCFEB4_DATA            => rx_dcfeb_data(4),
-      DCFEB5_DATA            => rx_dcfeb_data(5),
-      DCFEB6_DATA            => rx_dcfeb_data(6),
-      DCFEB7_DATA            => rx_dcfeb_data(7),
-      DCFEB_DATA_VALID       => rx_dcfeb_data_valid,
-      --Internal signals
-      FIFO_VME_MODE          => fifo_vme_mode,
-      FIFO_SEL               => fifo_sel,
-      RD_EN_FF               => rd_en_ff,
-      WR_EN_FF               => wr_en_ff,
-      FF_DATA_IN             => ff_data_in,
-      FF_DATA_OUT            => ff_data_out,
-      FF_WRD_CNT             => ff_wrd_cnt,
-      FF_STATUS              => ff_status,
-      DMBVME_CLK_S2          => dmbvme_clk_s2,
-      DAQ_RX_125REFCLK       => daq_rx_125refclk,
-      DAQ_RX_160REFCLK_115_0 => clk40
-      );
+--      --External signals
+--      RST                    => reset,
+----      ORX_01_N               => ,
+----      ORX_01_P               => rx_dcfeb_data_p(1),
+----      ORX_02_N               => rx_dcfeb_data_n(2),
+----      ORX_02_P               => rx_dcfeb_data_p(2),
+----      ORX_03_N               => rx_dcfeb_data_n(3),
+----      ORX_03_P               => rx_dcfeb_data_p(3),
+----      ORX_04_N               => rx_dcfeb_data_n(4),
+----      ORX_04_P               => rx_dcfeb_data_p(4),
+----      ORX_05_N               => rx_dcfeb_data_n(5),
+----      ORX_05_P               => rx_dcfeb_data_p(5),
+----      ORX_06_N               => rx_dcfeb_data_n(6),
+----      ORX_06_P               => rx_dcfeb_data_p(6),
+----      ORX_07_N               => rx_dcfeb_data_n(7),
+----      ORX_07_P               => rx_dcfeb_data_p(7),
+--      ORX_01_N               => gl1_rx_n,
+--      ORX_01_P               => gl1_rx_p,
+--      --ORX_01_N               => orx_buf_n(1),
+--      --ORX_01_P               => orx_buf_p(1),
+--      ORX_02_N               => orx_buf_n(2),
+--      ORX_02_P               => orx_buf_p(2),
+--      ORX_03_N               => orx_buf_n(3),
+--      ORX_03_P               => orx_buf_p(3),
+--      ORX_04_N               => orx_buf_n(4),
+--      ORX_04_P               => orx_buf_p(4),
+--      ORX_05_N               => orx_buf_n(5),
+--      ORX_05_P               => orx_buf_p(5),
+--      ORX_06_N               => orx_buf_n(6),
+--      ORX_06_P               => orx_buf_p(6),
+--      ORX_07_N               => orx_buf_n(7),
+--      ORX_07_P               => orx_buf_p(7),
+--      ORX_08_N               => orx_buf_n(8),
+--      ORX_08_P               => orx_buf_p(8),
+--      ORX_09_N               => orx_buf_n(9),
+--      ORX_09_P               => orx_buf_p(9),
+--      ORX_10_N               => orx_buf_n(10),
+--      ORX_10_P               => orx_buf_p(10),
+--      ORX_11_N               => orx_buf_n(11),
+--      ORX_11_P               => orx_buf_p(11),
+--      ORX_12_N               => orx_buf_n(12),
+--      ORX_12_P               => orx_buf_p(12),
+--      DCFEB1_DATA            => rx_dcfeb_data(1),
+--      DCFEB2_DATA            => rx_dcfeb_data(2),
+--      DCFEB3_DATA            => rx_dcfeb_data(3),
+--      DCFEB4_DATA            => rx_dcfeb_data(4),
+--      DCFEB5_DATA            => rx_dcfeb_data(5),
+--      DCFEB6_DATA            => rx_dcfeb_data(6),
+--      DCFEB7_DATA            => rx_dcfeb_data(7),
+--      DCFEB_DATA_VALID       => rx_dcfeb_data_valid,
+--      --Internal signals
+--      FIFO_VME_MODE          => fifo_vme_mode,
+--      FIFO_SEL               => fifo_sel,
+--      RD_EN_FF               => rd_en_ff,
+--      WR_EN_FF               => wr_en_ff,
+--      FF_DATA_IN             => ff_data_in,
+--      FF_DATA_OUT            => ff_data_out,
+--      FF_WRD_CNT             => ff_wrd_cnt,
+--      FF_STATUS              => ff_status,
+--      DMBVME_CLK_S2          => gl1_clk_2,
+--      DAQ_RX_125REFCLK       => gl1_clk,
+--      DAQ_RX_160REFCLK_115_0 => clk40
+--      );
 
 --  rx_dcfeb_sel  <= '1';
   rx_dcfeb_sel  <= flf_ctrl(7);
