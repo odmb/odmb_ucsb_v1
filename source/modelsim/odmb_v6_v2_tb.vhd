@@ -1226,8 +1226,8 @@ begin
 
       gl1_tx_p  => gl1_tx_p,            -- out
       gl1_tx_n  => gl1_tx_n,            -- out
-      gl1_rx_p  => gl0_tx_p,            -- in : Loop test
-      gl1_rx_n  => gl0_tx_n,            -- in : Loop test
+      gl1_rx_p  => gl1_tx_p,            -- in : Loop test in simulation
+      gl1_rx_n  => gl1_tx_n,            -- in : Loop test in simulation
       gl1_clk_p => gl1_clk_p,
       gl1_clk_n => gl1_clk_n,
 
