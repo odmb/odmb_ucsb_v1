@@ -86,8 +86,9 @@ entity ODMB_CTRL is
     cafifo_wr_addr : out std_logic_vector(3 downto 0);
     cafifo_rd_addr : out std_logic_vector(3 downto 0);
 
--- To DDUFIO
+-- To DDUFIFO
     gl_pc_tx_ack : in std_logic;
+    dduclk : in std_logic;
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
     alct_dv     : in std_logic;
@@ -1026,7 +1027,7 @@ begin
     port map(
 
       clk_in  => clk40,
-      clk_out => clk40,
+      clk_out => dduclk,
       rst     => reset,
 
       tx_ack => gl_pc_tx_ack,

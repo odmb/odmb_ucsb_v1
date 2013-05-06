@@ -45,8 +45,8 @@ architecture ddufifo_architecture of ddufifo is
   signal f1_wr_cnt, f1_rd_cnt                   : std_logic_vector(9 downto 0);
   signal f1_out                                 : std_logic_vector(15 downto 0);
 
-  signal tx_ack_q, tx_ack_q_q : std_logic := '0';
-  signal tx_ack_q_q_b : std_logic := '1';
+  signal tx_ack_q : std_logic_vector(2 downto 0) := (others => '0');
+  signal tx_ack_q_b : std_logic := '1';
   
 begin
 
@@ -106,18 +106,19 @@ begin
       WREN        => f1_wren            -- Input write enable
       );
 
-  FDCACK : FDC port map(tx_ack_q, tx_ack, tx_ack_q_q, tx_ack_q_q_b);
-  FDACK_Q : FD port map(tx_ack_q_q, clk_in, tx_ack_q);
-  tx_ack_q_q_b <= not tx_ack_q_q;
+  FDCACK : FDC port map(tx_ack_q(0), tx_ack, tx_ack_q(2), tx_ack_q_b);
+  FDACK_Q : FD port map(tx_ack_q(1), clk_out, tx_ack_q(0));
+  FDACK_QQ : FD port map(tx_ack_q(2), clk_out, tx_ack_q(1));
+  tx_ack_q_b <= not tx_ack_q(2);
   
 -- FSMs 
 
-  f0_fsm_regs : process (f0_next_state, rst, clk_in)
+  f0_fsm_regs : process (f0_next_state, rst, clk_out)
 
   begin
     if (rst = '1') then
       f0_current_state <= IDLE;
-    elsif rising_edge(clk_in) then
+    elsif rising_edge(clk_out) then
       f0_current_state <= f0_next_state;
     end if;
     
@@ -156,7 +157,7 @@ begin
         f0_rx   <= '0';
         f0_tx   <= '1';
         f0_wren <= '0';
-        if (tx_ack_q_q = '1') then
+        if (tx_ack_q(0) = '1') then
           f0_rden <= '1';
           f0_next_state <= FIFO_TX;
         else
@@ -188,12 +189,12 @@ begin
     
   end process;
 
-  f1_fsm_regs : process (f1_next_state, rst, clk_in)
+  f1_fsm_regs : process (f1_next_state, rst, clk_out)
 
   begin
     if (rst = '1') then
       f1_current_state <= IDLE;
-    elsif rising_edge(clk_in) then
+    elsif rising_edge(clk_out) then
       f1_current_state <= f1_next_state;
     end if;
     
@@ -236,7 +237,7 @@ begin
         f1_rx   <= '0';
         f1_tx   <= '1';
         f1_wren <= '0';
-        if (tx_ack_q = '1') then
+        if (tx_ack_q(0) = '1') then
           f1_rden <= '1';
         else
           f1_rden <= '0';
