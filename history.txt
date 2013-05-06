@@ -6,10 +6,16 @@
 =                                                                    =
 ======================================================================
 
+V01-05: 6 May 2013, Manuel
+--------------------------------
+Project has now been succesfully tested to send ethernet packets to a PC,
+perhaps missing 4 tail words.
+
 V01-04: 2 May 2013, Manuel
 --------------------------------
-We now get beautiful packets in the right order.
+We now get beautiful packets in the right order. 
 Added the tranmitter through GigaLink 1.
+[*NOT TRUE. There was a problem with the routing of the clock.*]
 
 V01-03: 30 April 2013, Manuel
 --------------------------------
