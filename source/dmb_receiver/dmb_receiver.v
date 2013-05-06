@@ -422,13 +422,15 @@ BUFR bufr_clk_ds (
         //----------------- Receive Ports - RX Data Path interface -----------------
         .GTX1_RXDATA_OUT                (mgt_rx_data_i_f[1]),
         .GTX1_RXRECCLK_OUT              (rxrecclk_f[1]),
-        .GTX1_RXUSRCLK2_IN              (usr_clk_wordwise),
+//        .GTX1_RXUSRCLK2_IN              (usr_clk_wordwise),
+        .GTX1_RXUSRCLK2_IN              (DMBVME_CLK_S2),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
         .GTX1_RXN_IN                    (ORX_01_N),
         .GTX1_RXP_IN                    (ORX_01_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX1_GTXRXRESET_IN             (pma_reset_i),
-        .GTX1_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
+//        .GTX1_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
+        .GTX1_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
         .GTX1_PLLRXRESET_IN             (pma_reset_i),
         .GTX1_RXPLLLKDET_OUT            (plllock_i_f[1]),
         .GTX1_RXRESETDONE_OUT           (rxresetdone_f[1]),
@@ -838,12 +840,14 @@ begin: GbE_rx_gtx    //For 1 GbE (line rate of 1.25 Gbps)
         //----------------- Receive Ports - RX Data Path interface -----------------
         .GTX1_RXDATA_OUT                (mgt_rx_data_i_f[1]),
         .GTX1_RXRECCLK_OUT              (rxrecclk_f[1]),
-        .GTX1_RXUSRCLK2_IN              (usr_clk_wordwise),
+//        .GTX1_RXUSRCLK2_IN              (usr_clk_wordwise),
+        .GTX1_RXUSRCLK2_IN              (DMBVME_CLK_S2),
         //----- Receive Ports - RX Driver,OOB signalling,Coupling and Eq.,CDR ------
         .GTX1_RXN_IN                    (ORX_01_N),
         .GTX1_RXP_IN                    (ORX_01_P),
         //---------------------- Receive Ports - RX PLL Ports ----------------------
         .GTX1_GTXRXRESET_IN             (pma_reset_i),
+//        .GTX1_MGTREFCLKRX_IN            (DAQ_RX_160REFCLK_115_0),
         .GTX1_MGTREFCLKRX_IN            (DAQ_RX_125REFCLK),
         .GTX1_PLLRXRESET_IN             (pma_reset_i),
         .GTX1_RXPLLLKDET_OUT            (plllock_i_f[1]),
