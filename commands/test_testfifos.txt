@@ -6,7 +6,7 @@ W  3000  0	Set flf_ctrl(8) low (Global reset off)
 W  3000  0	Set flf_ctrl(8) low (Global reset off)
 W  3000  0	Set flf_ctrl(8) low (Global reset off)
 W  3000  0	Set flf_ctrl(8) low (Global reset off)
-W  3000  0	Set flf_ctrl(8) low (Global reset off)
+W  3000  0	Set flf_ctrl(8) low (Global reset now really off)
 
 == ================ Setting delays ================ ==
 W  4000  C	Set LCT_L1A_DLY   
@@ -19,9 +19,9 @@ R  4404  00	Read TMB_PUSH_DLY
 R  4408  00	Read PUSH_DLY	  
 R  440C  00	Read ALCT_PUSH_DLY 
    	 	
-== ================ Writing FIFOs ================ ==
+== ================ Writing TC FIFOs ================ ==
 R  1C   0       Read state of FIFOs
-W  20	1	Select FIFO 1 *LSB bunch crossing*
+W  20	1	SelectTC  FIFO 1 *LSB bunch crossing*
 R  2C   0       Read current write address
 R  3C   0       Read current read address
 W  8 	3f	Write FIFO
@@ -33,14 +33,14 @@ W  8 	b1	Write FIFO
 R  1C   0       Read state of FIFOs
 R  2C   0       Read current write address
 R  3C   0       Read current read address
-W  20	2	Select FIFO 2 *MSB bunch crossing*
+W  20	2	Select TC FIFO 2 *MSB bunch crossing*
 W  8 	0	Write FIFO
 W  8 	0	Write FIFO
 W  8 	0	Write FIFO
 W  8 	0	Write FIFO
 W  8 	0	Write FIFO
 W  8 	0	Write FIFO
-W  20	4	Select FIFO 3 *Triggers*  
+W  20	4	Select TC FIFO 3 *Triggers*  
 W  8   	3	Write FIFO			    
 W  8   	0	Write FIFO			    
 W  8   	81	Write FIFO			    
@@ -51,7 +51,7 @@ W  8   	0	Write FIFO
 W  5010 1	Select test FIFO 1
 R  5014 0	Read which test FIFO is selected
 R  500C 0	Read word count of test FIFO
-W  20	18	Select FIFO 4 *DDU data* and start run
+W  20	18	Select TC FIFO 4 *DDU data* and start run
 
 == =============== Test FIFOs =============== ==
 W  5010 1	Select test FIFO 1
