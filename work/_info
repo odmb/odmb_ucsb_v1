@@ -3388,17 +3388,17 @@ vdaq_optical_out
 V]>g7nmQVMP5W;4>B=D1cz3
 r1
 31
-I<MFT@didZoK7zMb8WTYIL2
+IU[`1Ua3ziKc@0J_5jF>SS1
 R5
-w1367839764
+w1367958377
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/daq_optical_out/daq_optical_out.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/daq_optical_out/daq_optical_out.v
 L0 2
 R63
 R64
 !s90 -reportprogress|300|-work|work|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/daq_optical_out/daq_optical_out.v|
-!s100 Q9beIf4_EYicWE5gHbhfM2
-!s108 1367840931.570000
+!s100 iFnf`b^Q[]5VVR?SOPiWG2
+!s108 1367958498.631000
 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/daq_optical_out/daq_optical_out.v|
 !s85 0
 !i10b 1
@@ -3406,9 +3406,9 @@ vDAQ_Rate_Sel_FSM
 VD:N0@hcDMoTE<^MUC4e=X0
 r1
 31
-I3nQJdWYOOn^nFj;<<R[J91
+IP;kjZcln4fUY^lOaT>`QZ0
 R5
-w1367525567
+w1367958375
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/daq_optical_out/fizzim/DAQ_Rate_Sel_FSM.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/daq_optical_out/fizzim/DAQ_Rate_Sel_FSM.v
 L0 4
@@ -3416,8 +3416,8 @@ R63
 R64
 n@d@a@q_@rate_@sel_@f@s@m
 !s90 -reportprogress|300|-work|work|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/daq_optical_out/fizzim/DAQ_Rate_Sel_FSM.v|
-!s100 6:n[_Xbc3V2DnDM^oeLB[3
-!s108 1367525600.392000
+!s100 ff<FhbLJjhmm6NZEWTMTS3
+!s108 1367958506.241000
 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/daq_optical_out/fizzim/DAQ_Rate_Sel_FSM.v|
 !s85 0
 !i10b 1
@@ -3542,7 +3542,7 @@ R13
 !s100 A97OZebT=SfdJ=C<fOTQo1
 !i10b 1
 Eddufifo
-Z107 w1367841525
+Z107 w1367926507
 R29
 R30
 R16
@@ -3558,7 +3558,7 @@ L12
 V2oHd_Pm42Zgf_J@J_ZEWK3
 R8
 32
-Z110 !s108 1367841689.113000
+Z110 !s108 1367926536.822000
 Z111 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/ddufifo.vhd|
 Z112 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/ddufifo.vhd|
 R12
@@ -3575,16 +3575,16 @@ R4
 R1
 DEx4 work 7 ddufifo 0 22 2oHd_Pm42Zgf_J@J_ZEWK3
 32
-l51
+l52
 L32
-VklN`<@@^[Yn7KUcaHajQo2
+VWINaec=In2?VL5DE7IcB61
 R8
 R110
 R111
 R112
 R12
 R13
-!s100 h<3S?@NBR;gIL7`NUiPWb2
+!s100 lAED]VUz@ojU6_gkhXKeQ3
 !i10b 1
 Edec_cc16
 R14
@@ -3913,20 +3913,20 @@ vdmb_receiver
 VKKgCDMDBAgE^g8<[C5YaO1
 r1
 31
-ID9Y^5kb@TBeX83ZDC:]OR2
+I@?BG_^B5bUYh8fmcF>lL:3
 R5
-w1367843977
+w1368003695
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/dmb_receiver.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/dmb_receiver.v
 L0 9
 R63
 R64
-!s85 0
 !s90 -reportprogress|300|-work|work|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/dmb_receiver.v|
-!i10b 1
-!s100 hi[G12ChXHY]BifCh76Fh2
-!s108 1367843983.757000
+!s100 ZK;Q;FVoj<E8V<@;dVUMJ0
+!s108 1368005161.088000
 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/dmb_receiver.v|
+!s85 0
+!i10b 1
 Efd16ce
 R14
 R3
@@ -4260,16 +4260,16 @@ r1
 31
 IZ;ln44?XG0O3JHcLo]]`i2
 R5
-R88
+w1367994863
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/fifo_wrd_count.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/fifo_wrd_count.v
 L0 10
 R63
 R64
 !s100 jHH3RhU?h;h3NUb7iM0a>0
-!s108 1367065974.454000
-!s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/fifo_wrd_count.v|
 !s90 -reportprogress|300|-work|work|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/fifo_wrd_count.v|
+!s108 1367998970.591000
+!s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/fifo_wrd_count.v|
 !s85 0
 !i10b 1
 Efifomon
@@ -4313,24 +4313,63 @@ R12
 R13
 !s100 9omm[zR]4JOn66??FOO1L2
 !i10b 1
+Efifotest
+Z140 w1367998807
+R31
+R3
+R4
+R16
+R5
+Z141 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/fifotest.vhd
+Z142 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/fifotest.vhd
+l0
+L10
+VFlcfhfi@BX4J4<?=K3j<62
+R8
+32
+Z143 !s108 1367998810.561000
+Z144 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/fifotest.vhd|
+Z145 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/fifotest.vhd|
+R12
+R13
+!s100 h<IgFV3nIZQDm;XeHJTX^0
+!i10b 1
+Afifotest_arch
+R31
+R3
+R4
+R16
+DEx4 work 8 fifotest 0 22 Flcfhfi@BX4J4<?=K3j<62
+32
+l53
+L36
+V8_Wi^[N;96]GNW6J9=N;h0
+R8
+R143
+R144
+R145
+R12
+R13
+!s100 G7WUei]9CfmXSU2Qc;AJ01
+!i10b 1
 vfile_handler
 VE<``f=_Qa@YiTb<WY6obg1
 r1
 31
-I8<3A2bDW1nzXKeGB0]^:h3
+IDjC]H`k7gkALl:WjmWN=b2
 R5
-w1367498533
+w1368008366
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler.v
 L0 2
 R63
 R64
-!s90 -reportprogress|300|-work|work|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler.v|
-!s100 AnSVLo?93iDGeSkEdm[>[1
-!s108 1367498537.485000
-!s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler.v|
 !s85 0
+!s90 -reportprogress|300|-work|work|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler.v|
 !i10b 1
+!s100 UF>k8FBP]Xm?314XNjFY@1
+!s108 1368008385.085000
+!s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/file_handler.v|
 vfile_handler_event
 V8Kz[aL4EOK`kgD2B6e^?]0
 r1
@@ -6093,7 +6132,7 @@ r1
 31
 IH>>g<O<bImbgY0];?Okez1
 R5
-Z140 w1365110631
+Z146 w1365110631
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/instr_dcd.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/instr_dcd.v
 L0 55
@@ -6106,21 +6145,21 @@ R64
 !s85 0
 !i10b 1
 Einstrgdc
-Z141 w1365110633
+Z147 w1365110633
 R31
 R3
 R4
 R5
-Z142 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd
-Z143 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd
+Z148 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd
+Z149 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd
 l0
 L6
 VSSak82hdbi3dkY7IH>1Aa1
 R8
 32
-Z144 !s108 1367065979.974000
-Z145 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd|
-Z146 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd|
+Z150 !s108 1367065979.974000
+Z151 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd|
+Z152 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/instrgdc.vhd|
 R12
 R13
 !s100 ;kCXd;:mlb0mZ@W;hTV`U2
@@ -6135,9 +6174,9 @@ l26
 L20
 V>TUJb5?ZXPIfMMhinX0LT1
 R8
-R144
-R145
-R146
+R150
+R151
+R152
 R12
 R13
 !s100 kznNnQDC`eDZGkbz_LIlC2
@@ -6273,17 +6312,17 @@ R3
 R4
 R134
 R5
-Z147 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd
-Z148 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd
+Z153 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd
+Z154 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd
 l0
 L7
 V?KAki>7A61XbG9IA1L1XF2
 R8
 32
 b1
-Z149 !s108 1367065975.504000
-Z150 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd|
-Z151 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd|
+Z155 !s108 1367065975.504000
+Z156 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd|
+Z157 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/package_latches_flipflops.vhd|
 R12
 R13
 !s100 h1aMlQg4zfiA15ieAZcED2
@@ -6299,30 +6338,30 @@ l0
 L300
 Vz@mXnbW<GSHl^1NcZQ_Rz2
 R8
-R149
-R150
-R151
+R155
+R156
+R157
 R12
 R13
 nbody
 !s100 YjFf70UB2TZMEPf@N[Aoo3
 !i10b 1
 Elctdly
-R141
+R147
 R16
 R3
 R4
 R5
-Z152 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd
-Z153 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd
+Z158 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd
+Z159 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd
 l0
 L10
 VgBV5@oRGnVP?<RAe@J=`X3
 R8
 32
-Z154 !s108 1367065980.304000
-Z155 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd|
-Z156 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd|
+Z160 !s108 1367065980.304000
+Z161 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd|
+Z162 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/lctdly.vhd|
 R12
 R13
 !s100 O6WK2cQI>]QA@O578Wob]3
@@ -6337,9 +6376,9 @@ l27
 L21
 VfL^J1iD=0ZCHKWk@]oS6m2
 R8
-R154
-R155
-R156
+R160
+R161
+R162
 R12
 R13
 !s100 UlLmKHI21TQYIdIbDe7Zb1
@@ -6555,23 +6594,23 @@ R13
 !s100 ccA>kdG<G3?;iKO=Wo0=E2
 !i10b 1
 Eloadcfeb
-R141
+R147
 R44
 R45
 R3
 R4
 R16
 R5
-Z157 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd
-Z158 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd
+Z163 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd
+Z164 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd
 l0
 L8
 VfPG]m;b4lE>Y[ol4@6k<f1
 R8
 32
-Z159 !s108 1367065980.744000
-Z160 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd|
-Z161 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd|
+Z165 !s108 1367065980.744000
+Z166 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd|
+Z167 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadcfeb.vhd|
 R12
 R13
 !s100 `YTSbQm7_7kClb9gV[IK=0
@@ -6588,29 +6627,29 @@ l39
 L32
 VEc<Tl42cLeRN3MnmilQcT1
 R8
-R159
-R160
-R161
+R165
+R166
+R167
 R12
 R13
 !s100 ][<RoOGC]MbZ?BDBW?nm60
 !i10b 1
 Eloadfifo
-Z162 w1366147233
+Z168 w1366147233
 R3
 R4
 R16
 R5
-Z163 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd
-Z164 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd
+Z169 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd
+Z170 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd
 l0
 L7
 V9HH4<gJhQb8F_d`5a;AnD2
 R8
 32
-Z165 !s108 1367065981.194000
-Z166 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd|
-Z167 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd|
+Z171 !s108 1367065981.194000
+Z172 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd|
+Z173 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/loadfifo.vhd|
 R12
 R13
 !s100 lj6<g4CdXB<7]]z5fK@z30
@@ -6625,9 +6664,9 @@ l38
 L25
 VVebS1iIZAoTb`VHh1ViSY1
 R8
-R165
-R166
-R167
+R171
+R172
+R173
 R12
 R13
 !s100 X>eBRW@eglN1U5icQBSJ;1
@@ -6640,16 +6679,16 @@ R3
 R4
 R38
 R5
-Z168 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd
-Z169 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd
+Z174 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd
+Z175 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd
 l0
 L6
 VgF>9TXbT3YZZnM8IM4FnX0
 R8
 32
-Z170 !s108 1367065977.434000
-Z171 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd|
-Z172 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd|
+Z176 !s108 1367065977.434000
+Z177 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd|
+Z178 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/lvdbmon.vhd|
 R12
 R13
 !s100 kk_8hDaOhP0knGOkYS?g@3
@@ -6666,9 +6705,9 @@ l63
 L38
 V[5AM3B=mWHnoUK>1f30a60
 R8
-R170
-R171
-R172
+R176
+R177
+R178
 R12
 R13
 !s100 m8X_d`198K]3]C4d=X5ae2
@@ -6680,16 +6719,16 @@ R3
 R4
 R1
 R5
-Z173 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd
-Z174 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd
+Z179 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd
+Z180 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd
 l0
 L8
 VFWeI50ffERcDF>l=>fT192
 R8
 32
-Z175 !s108 1367066030.844000
-Z176 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd|
-Z177 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd|
+Z181 !s108 1367066030.844000
+Z182 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd|
+Z183 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/lvmb_adc.vhd|
 R12
 R13
 !s100 M4gIK7Ti1zX=994nJzBzf2
@@ -6705,9 +6744,9 @@ l52
 L25
 VT]=3dT]fg^o==<0`Di5iT2
 R8
-R175
-R176
-R177
+R181
+R182
+R183
 R12
 R13
 !s100 P?Rmc8ScL20a2D`_E?hoQ2
@@ -6983,16 +7022,16 @@ R3
 R4
 R38
 R5
-Z178 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd
-Z179 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd
+Z184 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd
+Z185 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd
 l0
 L6
 V]G4MGL5Ce^7nb7:J5?WQh2
 R8
 32
-Z180 !s108 1367065977.684000
-Z181 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd|
-Z182 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd|
+Z186 !s108 1367065977.684000
+Z187 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd|
+Z188 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/mbcjtag.vhd|
 R12
 R13
 !s100 iR0J^G5b5bC]e370``_XG0
@@ -7009,9 +7048,9 @@ l93
 L30
 V4NLgzLi479EVed3izk3<[3
 R8
-R180
-R181
-R182
+R186
+R187
+R188
 R12
 R13
 !s100 iM[aY4RzP<mgO]7ljfmIS0
@@ -7022,27 +7061,26 @@ r1
 31
 Ib5P=ZF0]5FaVG9:GdU=i>2
 R5
-Z183 w1366249709
+Z189 w1366249709
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_125gbps_16bit_1to12.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_125gbps_16bit_1to12.v
 L0 69
 R63
 R64
 n@m@g@t_125@g@b@p@s_16@b@i@t_1@t@o12
-!s85 0
 !s100 oZJM2K2mG`UUg@nFHY7HN1
 !s108 1367065973.474000
 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_125gbps_16bit_1to12.v|
 !s90 -reportprogress|300|-work|work|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_125gbps_16bit_1to12.v|
+!s85 0
 !i10b 1
 vMGT_125GBPS_16BIT_1TO12_GTX
 VZBJ29^Th7lZKfo__GbJeJ3
 r1
-!s85 0
 31
 Ih]ZG<P@VRW>`anA8h34@S0
 R5
-R183
+R189
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_125gbps_16bit_1to12_gtx.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_125gbps_16bit_1to12_gtx.v
 L0 69
@@ -7053,6 +7091,7 @@ n@m@g@t_125@g@b@p@s_16@b@i@t_1@t@o12_@g@t@x
 !s108 1367065973.694000
 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_125gbps_16bit_1to12_gtx.v|
 !s90 -reportprogress|300|-work|work|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_125gbps_16bit_1to12_gtx.v|
+!s85 0
 !i10b 1
 vMGT_32GBPS_16BIT_1TO12
 VhnWDg81DJB?b2PgD=3;a80
@@ -7060,7 +7099,7 @@ r1
 31
 IZ8GYPmeOSnH^gVDDIk[=31
 R5
-R183
+R189
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_32gbps_16bit_1to12.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_32gbps_16bit_1to12.v
 L0 69
@@ -7079,7 +7118,7 @@ r1
 31
 IRE=TCdQW5=JYPA6699EO=3
 R5
-R183
+R189
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_32gbps_16bit_1to12_gtx.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dmb_receiver/ipcore_rx/mgt_32gbps_16bit_1to12_gtx.v
 L0 69
@@ -7099,16 +7138,16 @@ R3
 R4
 R1
 R5
-Z184 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd
-Z185 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd
+Z190 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd
+Z191 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd
 l0
 L8
 V>BO5HZJPZB^;>WSiMml1J2
 R8
 32
-Z186 !s108 1367066031.144000
-Z187 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd|
-Z188 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd|
+Z192 !s108 1367066031.144000
+Z193 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd|
+Z194 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/mode_pb_sel.vhd|
 R12
 R13
 !s100 K@6ZzWQFggknKzJJVzHl10
@@ -7124,9 +7163,9 @@ L26
 V?l3QLhM0h5jogEQ`zKkkG1
 R8
 32
-R186
-R187
-R188
+R192
+R193
+R194
 R12
 R13
 !s100 H1@?BfJZCkY5L?]:CIMk82
@@ -7902,23 +7941,23 @@ R13
 !s100 o1C8QB@mzoR;6az@VgPA[1
 !i10b 1
 Eodmb_ctrl
-Z189 w1367839915
+Z195 w1367839915
 R2
 R1
 R3
 R4
 R38
 R5
-Z190 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd
-Z191 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd
+Z196 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd
+Z197 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd
 l0
 L11
 Vk:;l=jdfC9A]>Zm^c[fG42
 R8
 32
-Z192 !s108 1367840941.910000
-Z193 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd|
-Z194 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd|
+Z198 !s108 1367840941.910000
+Z199 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd|
+Z200 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd|
 R12
 R13
 !s100 Y7HY6<0KmET>TBKgM7]aa1
@@ -7935,15 +7974,15 @@ l727
 L154
 VM;S0784]TK:kn?UCHIR`S2
 R8
-R192
-R193
-R194
+R198
+R199
+R200
 R12
 R13
 !s100 HWCFY6TIoB?X_B`QFGEAc2
 !i10b 1
 Eodmb_v6
-Z195 w1366879776
+Z201 w1366879776
 R30
 R16
 R1
@@ -7951,16 +7990,16 @@ R2
 R3
 R4
 R5
-Z196 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd
-Z197 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd
+Z202 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd
+Z203 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd
 l0
 L27
 Vf@z57eS3k5CT8UMjE;NaS0
 R8
 32
-Z198 !s108 1367066029.434000
-Z199 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd|
-Z200 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd|
+Z204 !s108 1367066029.434000
+Z205 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd|
+Z206 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6.vhd|
 R12
 R13
 !s100 F4K:@e:RBNcZ]cWi:c=_Z2
@@ -7978,15 +8017,15 @@ L300
 VnlRJZabDT^b4gUREViHSe1
 R8
 32
-R198
-R199
-R200
+R204
+R205
+R206
 R12
 R13
 !s100 R0i@T0L61S<KD?AG7N^NT3
 !i10b 1
 Eodmb_v6_tb
-Z201 w1366651836
+Z207 w1366651836
 R16
 R30
 R2
@@ -7996,16 +8035,16 @@ R31
 R3
 R4
 R5
-Z202 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd
-Z203 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd
+Z208 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd
+Z209 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd
 l0
 L36
 VhMTgG4^QZjgPFF9<m>Ge^0
 R8
 32
-Z204 !s108 1367066033.744000
-Z205 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd|
-Z206 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd|
+Z210 !s108 1367066033.744000
+Z211 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd|
+Z212 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_tb.vhd|
 R12
 R13
 !s100 bd[b1:4AL@7WzFN3KZmT70
@@ -8025,15 +8064,15 @@ L46
 VCXS:9DJgTKOA2COn3NVoY1
 R8
 32
-R204
-R205
-R206
+R210
+R211
+R212
 R12
 R13
 !s100 CS:XJEYne4GjzgOanmbKL2
 !i10b 1
 Eodmb_v6_v2
-Z207 w1367844291
+Z213 w1368007116
 R29
 R30
 R16
@@ -8045,16 +8084,16 @@ R1
 R3
 R4
 R5
-Z208 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6_v2.vhd
-Z209 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6_v2.vhd
+Z214 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6_v2.vhd
+Z215 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6_v2.vhd
 l0
 L27
 VTV7RHN=G8VAKGAidK6_``0
 R8
 32
-Z210 !s108 1367844397.518000
-Z211 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6_v2.vhd|
-Z212 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6_v2.vhd|
+Z216 !s108 1368007155.342000
+Z217 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6_v2.vhd|
+Z218 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_v6_v2.vhd|
 R12
 R13
 !s100 HQ0B[;Eg4z<>MaOhff^1l0
@@ -8072,19 +8111,19 @@ R3
 R4
 DEx4 work 10 odmb_v6_v2 0 22 TV7RHN=G8VAKGAidK6_``0
 32
-l1177
+l1191
 L202
-VNdW<zeJoVZWPGn107GTSY2
+VfL<W5X[GoMCo1YV?bAMRG1
 R8
-R210
-R211
-R212
+R216
+R217
+R218
 R12
 R13
-!s100 aDQIn5g_2[T;dgMO5]:SZ3
+!s100 io>O?M6LPm51;XSN=EoIN1
 !i10b 1
 Eodmb_v6_v2_tb
-Z213 w1367841643
+Z219 w1368011887
 R16
 R30
 R2
@@ -8094,16 +8133,16 @@ R31
 R3
 R4
 R5
-Z214 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd
-Z215 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd
+Z220 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd
+Z221 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd
 l0
 L36
 V7^;be8K5TW]Qm56]@VQA31
 R8
 32
-Z216 !s108 1367841684.813000
-Z217 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd|
-Z218 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd|
+Z222 !s108 1368011901.783000
+Z223 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd|
+Z224 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd|
 R12
 R13
 !s100 6fSbe3?J5W3_<z73BIQ0B1
@@ -8121,53 +8160,53 @@ DEx4 work 13 odmb_v6_v2_tb 0 22 7^;be8K5TW]Qm56]@VQA31
 32
 l893
 L46
-VDECeeBTC6W1WhCPiNHF=o1
-R8
-R216
-R217
-R218
-R12
-R13
-!s100 Q^e7<X1kJhHDZB62MXQoC2
-!i10b 1
-Eodmb_vme
-Z219 w1367066125
-R1
-R2
-R3
-R4
-R5
-Z220 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd
-Z221 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd
-l0
-L5
-Vhc3:2DGBOzmb22<_mRnfT1
-R8
-32
-Z222 !s108 1367066166.764000
-Z223 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd|
-Z224 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd|
-R12
-R13
-!s100 oDAXkl5hgOlZjGe[Y=O1>0
-!i10b 1
-Aodmb_vme_architecture
-R1
-R2
-R3
-R4
-DEx4 work 8 odmb_vme 0 22 hc3:2DGBOzmb22<_mRnfT1
-32
-l481
-L180
-VZ13^L>@OA[ieE3=<6mA^n1
+VomGLcIFk]DkHL5cTFmaal0
 R8
 R222
 R223
 R224
 R12
 R13
-!s100 PTfMJmnD1M4R:@g4V_<XV1
+!s100 9A_`EGXOzIMJm9]`Y]j?B1
+!i10b 1
+Eodmb_vme
+Z225 w1368000563
+R1
+R2
+R3
+R4
+R5
+Z226 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd
+Z227 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd
+l0
+L5
+VHlga1ULkXQDiXF>a?58mT0
+R8
+32
+Z228 !s108 1368000820.076000
+Z229 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd|
+Z230 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd|
+R12
+R13
+!s100 31D^5Cz@:2[bcK5ho?8@=0
+!i10b 1
+Aodmb_vme_architecture
+R1
+R2
+R3
+R4
+DEx4 work 8 odmb_vme 0 22 Hlga1ULkXQDiXF>a?58mT0
+32
+l514
+L188
+VBSKlGN7khhEPa<^@>B_nN2
+R8
+R228
+R229
+R230
+R12
+R13
+!s100 _lI`]nVVk7gj2UQKnDF;S0
 !i10b 1
 Eofd
 R14
@@ -9220,22 +9259,22 @@ R13
 !s100 9UhdfkIe6^LLVDCPhnKNa3
 !i10b 1
 Eot_mgr
-Z225 w1366879777
+Z231 w1366879777
 R1
 R2
 R3
 R4
 R5
-Z226 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd
-Z227 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd
+Z232 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd
+Z233 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd
 l0
 L6
 VhGhH0n1Q_:EdP3BEASJG>0
 R8
 32
-Z228 !s108 1367066031.914000
-Z229 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd|
-Z230 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd|
+Z234 !s108 1367066031.914000
+Z235 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd|
+Z236 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/ot_mgr.vhd|
 R12
 R13
 !s100 ^^OVT_oVYI=Az<I=TlH8:3
@@ -9251,9 +9290,9 @@ L29
 V1=1<ZGH5AZB`6KF1>W]5`1
 R8
 32
-R228
-R229
-R230
+R234
+R235
+R236
 R12
 R13
 !s100 5LM68=<BXb>_ES0DXCYUL1
@@ -9412,7 +9451,7 @@ R13
 !s100 ALcEKJ8H=lVR6haF1l^P40
 !i10b 1
 Erandomtrg
-Z231 w1365110634
+Z237 w1365110634
 R1
 R2
 R29
@@ -9422,16 +9461,16 @@ R3
 R4
 R16
 R5
-Z232 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd
-Z233 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd
+Z238 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd
+Z239 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd
 l0
 L9
 V9_24>`QOV1m6::2[=2Im[1
 R8
 32
-Z234 !s108 1367066035.614000
-Z235 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd|
-Z236 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd|
+Z240 !s108 1367066035.614000
+Z241 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd|
+Z242 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd|
 R12
 R13
 !s100 9BjUCo?HKM6Gj6?Zb[M[I2
@@ -9451,9 +9490,9 @@ l106
 L38
 V0OV<6Nh94L06Lz:D5dhQA1
 R8
-R234
-R235
-R236
+R240
+R241
+R242
 R12
 R13
 !s100 bNzPf@S5YDU^V]=B^<`Jh2
@@ -10550,7 +10589,7 @@ r1
 31
 Ig7md8LljQaUn54ia^6QN32
 R5
-R140
+R146
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/tdo_mux.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/tdo_mux.v
 L0 55
@@ -10569,16 +10608,16 @@ R3
 R4
 R1
 R5
-Z237 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd
-Z238 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd
+Z243 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd
+Z244 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd
 l0
 L18
 VO7OT=gL=2]U5zcR5L0ehL1
 R8
 32
-Z239 !s108 1367066034.304000
-Z240 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd|
-Z241 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd|
+Z245 !s108 1367066034.304000
+Z246 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd|
+Z247 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/test_controller.vhd|
 R12
 R13
 !s100 ]ZoFHeL9e2izYndVY9i]l2
@@ -10594,15 +10633,15 @@ l79
 L66
 V5o1FUamhXz4=m0Vlzf2K^0
 R8
-R239
-R240
-R241
+R245
+R246
+R247
 R12
 R13
 !s100 NR0V<n1W4z?`2WSF_jM`a1
 !i10b 1
 Etestctrl
-Z242 w1367399208
+Z248 w1367399208
 R30
 R31
 R2
@@ -10611,16 +10650,16 @@ R3
 R4
 R38
 R5
-Z243 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd
-Z244 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd
+Z249 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd
+Z250 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd
 l0
 L9
 VGf0=cc^oa@_V`9NO3NH6D3
 R8
 32
-Z245 !s108 1367399267.272000
-Z246 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd|
-Z247 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd|
+Z251 !s108 1367399267.272000
+Z252 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd|
+Z253 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd|
 R12
 R13
 !s100 C=N3n:TM?T]DGoTS4G5^Y0
@@ -10639,31 +10678,70 @@ l103
 L40
 VfGZczh`?HcC[_oEY>:6PV1
 R8
-R245
-R246
-R247
+R251
+R252
+R253
 R12
 R13
 !s100 :fS;]FblhMcSGkce[B;9M0
 !i10b 1
+Etestfifos
+Z254 w1368005485
+R31
+R3
+R4
+R16
+R5
+Z255 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd
+Z256 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd
+l0
+L10
+VIHb_i0ZF>]G:Lc?MYe_Wg1
+R8
+32
+Z257 !s108 1368005490.008000
+Z258 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd|
+Z259 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd|
+R12
+R13
+!s100 1X;IefRgMB<FkP?TTjP5m1
+!i10b 1
+Atestfifos_arch
+R31
+R3
+R4
+R16
+DEx4 work 9 testfifos 0 22 IHb_i0ZF>]G:Lc?MYe_Wg1
+32
+l57
+L36
+VKfQ_NNBO:oLEX1=_gk19>3
+R8
+R257
+R258
+R259
+R12
+R13
+!s100 h@[Lcm3jV;9X81JdFS<Ci1
+!i10b 1
 Etrgcntrl
-Z248 w1367274347
+Z260 w1367274347
 R44
 R45
 R3
 R4
 R16
 R5
-Z249 8C:\Users\Manuel\Documents\Firmware\odmb_ucsb_v1\source\odmb_ctrl\trgcntrl.vhd
-Z250 FC:\Users\Manuel\Documents\Firmware\odmb_ucsb_v1\source\odmb_ctrl\trgcntrl.vhd
+Z261 8C:\Users\Manuel\Documents\Firmware\odmb_ucsb_v1\source\odmb_ctrl\trgcntrl.vhd
+Z262 FC:\Users\Manuel\Documents\Firmware\odmb_ucsb_v1\source\odmb_ctrl\trgcntrl.vhd
 l0
 L11
 VAfg4oFD71;bYM7b[kMP2S3
 R8
 32
-Z251 !s108 1367274364.932000
-Z252 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:\Users\Manuel\Documents\Firmware\odmb_ucsb_v1\source\odmb_ctrl\trgcntrl.vhd|
-Z253 !s107 C:\Users\Manuel\Documents\Firmware\odmb_ucsb_v1\source\odmb_ctrl\trgcntrl.vhd|
+Z263 !s108 1367274364.932000
+Z264 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:\Users\Manuel\Documents\Firmware\odmb_ucsb_v1\source\odmb_ctrl\trgcntrl.vhd|
+Z265 !s107 C:\Users\Manuel\Documents\Firmware\odmb_ucsb_v1\source\odmb_ctrl\trgcntrl.vhd|
 R12
 R13
 !s100 A8W`R2Ta3dEPP4VaidF9e3
@@ -10680,31 +10758,31 @@ l63
 L43
 V`9B3nSXSjh^<HK8IA[OGO2
 R8
-R251
-R252
-R253
+R263
+R264
+R265
 R12
 R13
 !s100 9KVOZLb57l5[[HEn5DFz@3
 !i10b 1
 Etrgsel
-R231
+R237
 R44
 R45
 R3
 R4
 R16
 R5
-Z254 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd
-Z255 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd
+Z266 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd
+Z267 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd
 l0
 L8
 VZf_gn7mVBIcACA<;_CzmA3
 R8
 32
-Z256 !s108 1367065981.854000
-Z257 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd|
-Z258 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd|
+Z268 !s108 1367065981.854000
+Z269 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd|
+Z270 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd|
 R12
 R13
 !s100 ^McY4HdhIWF8;;NRkL[@_3
@@ -10721,9 +10799,9 @@ l32
 L26
 Vm15S]>zZgQD2NHLg8?@;P0
 R8
-R256
-R257
-R258
+R268
+R269
+R270
 R12
 R13
 !s100 YkCD:H1S0020mGfU6?78M0
@@ -10734,7 +10812,7 @@ r1
 31
 IEemGmF>h2;^AElzOR;BN]0
 R5
-R140
+R146
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/user_cap_reg.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/user_cap_reg.v
 L0 25
@@ -10752,7 +10830,7 @@ r1
 31
 I4?lTXKW[<^n3Zl<2H>zfL2
 R5
-R140
+R146
 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/usr_wr_reg.v
 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/dcfeb/usr_wr_reg.v
 L0 26
@@ -10765,22 +10843,22 @@ R64
 !s85 0
 !i10b 1
 Evme_master
-Z259 w1367069160
+Z271 w1367069160
 R2
 R3
 R4
 R1
 R5
-Z260 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd
-Z261 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd
+Z272 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd
+Z273 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd
 l0
 L8
 VLXm2D@d[a1ReKC@@n[3U91
 R8
 32
-Z262 !s108 1367069207.122000
-Z263 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd|
-Z264 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd|
+Z274 !s108 1367069207.122000
+Z275 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd|
+Z276 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/modelsim/vme_master.vhd|
 R12
 R13
 !s100 mlHXfXZeCD<ofH9Q_WKFn2
@@ -10796,69 +10874,69 @@ l73
 L52
 VDW5m:Q3hodKMn947SOcMi2
 R8
-R262
-R263
-R264
+R274
+R275
+R276
 R12
 R13
 !s100 M3[a=RR0Fin5XYobFl0?C2
 !i10b 1
 Evme_outdata_sel
-Z265 w1366991366
+Z277 w1367997459
 R2
 R3
 R4
 R1
 R5
-Z266 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd
-Z267 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd
+Z278 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd
+Z279 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd
 l0
 L8
-V8cb:4HZczPEOk`3P7^6Ec1
+V5HGk0bX7zkASEH0PbN>VU1
 R8
 32
-Z268 !s108 1367065978.324000
-Z269 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd|
-Z270 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd|
+Z280 !s108 1367998672.911000
+Z281 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd|
+Z282 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd|
 R12
 R13
-!s100 RU:U84WIcVO<z[GbkbVCK2
+!s100 BHiUDhUB<Sk7OnbLT`b550
 !i10b 1
 Avme_outdata_sel_architecture
 R2
 R3
 R4
 R1
-DEx4 work 15 vme_outdata_sel 0 22 8cb:4HZczPEOk`3P7^6Ec1
+DEx4 work 15 vme_outdata_sel 0 22 5HGk0bX7zkASEH0PbN>VU1
 32
-l26
-L24
-VRO6QD>0SO69AoFH5P;FhG2
+l27
+L25
+V6Qdz9=BlUd:h`PiCdk97[2
 R8
-R268
-R269
-R270
+R280
+R281
+R282
 R12
 R13
-!s100 bT`FZWKBh>b=J^QI6F9Cl3
+!s100 3LOX1TkLZ]@1M7dJiGUT^0
 !i10b 1
 Evmeconfregs
-Z271 w1367230180
+Z283 w1367230180
 R31
 R3
 R4
 R16
 R5
-Z272 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd
-Z273 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd
+Z284 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd
+Z285 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd
 l0
 L10
 VghU[25F2ec29JI[59GH>a0
 R8
 32
-Z274 !s108 1367230197.361000
-Z275 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd|
-Z276 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd|
+Z286 !s108 1367230197.361000
+Z287 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd|
+Z288 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd|
 R12
 R13
 !s100 _J2ZPPTl@eeMIFjlAbWW;1
@@ -10874,29 +10952,29 @@ l60
 L35
 V2?cGGK@jmXBi9S_V=3^0g3
 R8
-R274
-R275
-R276
+R286
+R287
+R288
 R12
 R13
 !s100 <8cnGUfBND_ZG<AIPK8LR3
 !i10b 1
 Evmemon
-Z277 w1366991426
+Z289 w1366991426
 R3
 R4
 R16
 R5
-Z278 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd
-Z279 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd
+Z290 8C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd
+Z291 FC:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd
 l0
 L9
 VjHA15`K53i_a]HLY]_dcY2
 R8
 32
-Z280 !s108 1367065976.424000
-Z281 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd|
-Z282 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd|
+Z292 !s108 1367065976.424000
+Z293 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd|
+Z294 !s107 C:/Users/Manuel/Documents/Firmware/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd|
 R12
 R13
 !s100 `Rg6Jl02N9c6C=YP23VDI2
@@ -10911,9 +10989,9 @@ l42
 L31
 V]RUcn`VzgmUBEfzJXSzMd2
 R8
-R280
-R281
-R282
+R292
+R293
+R294
 R12
 R13
 !s100 <V`IiH1jCiODO[SV9OV^m0

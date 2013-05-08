@@ -701,11 +701,19 @@ architecture bdf_type of ODMB_V6_V2 is
       ddu_data_valid : in  std_logic;
       tc_run         : out std_logic;
       ts_out         : out std_logic_vector(31 downto 0);
+      dduclk         : in std_logic;
 
+    -- VMECONFREGS outputs
       ALCT_PUSH_DLY : out std_logic_vector(4 downto 0);
       TMB_PUSH_DLY  : out std_logic_vector(4 downto 0);
       PUSH_DLY      : out std_logic_vector(4 downto 0);
-      LCT_L1A_DLY   : out std_logic_vector(5 downto 0)
+      LCT_L1A_DLY   : out std_logic_vector(5 downto 0);
+
+    -- TESTFIFOS
+    TFF_DATA_OUT : in std_logic_vector(15 downto 0);
+    TFF_WRD_CNT  : in std_logic_vector(11 downto 0);
+    TFF_SEL   : out std_logic_vector(8 downto 1);
+    RD_EN_TFF : out std_logic_vector(8 downto 1)
 
       );
 
@@ -953,7 +961,7 @@ architecture bdf_type of ODMB_V6_V2 is
   signal gtx0_data_valid_cnt, gtx_data_valid_cnt : std_logic_vector(15 downto 0);
   signal raw_l1a_cnt : std_logic_vector(15 downto 0);
 
-  signal gl1_clk, gl1_clk_2 : std_logic;
+  signal gl1_clk, gl1_clk_2, gl1_clk_2_buf, dduclk : std_logic;
 
 -- From LVDS Test Connector
 
@@ -963,7 +971,7 @@ architecture bdf_type of ODMB_V6_V2 is
 
 -- PLL Signals
 
-  signal clkin, qpll_clk40MHz, qpll_clk80MHz, qpll_clk160MHz : std_logic;
+  signal clkin, qpll_clk40MHz, qpll_clk80MHz, qpll_clk160MHz, clk160 : std_logic;
 
   signal pll1_fb, pll1_rst, pll1_pd, pll1_locked : std_logic := '0';
 
@@ -1157,13 +1165,19 @@ architecture bdf_type of ODMB_V6_V2 is
   signal clk1        : std_logic := '0';
   signal ts_out      : std_logic_vector(31 downto 0);
 
--- from odmb_ctrl to flf_ctrl
+-- From VMECONFREGS to odmb_ctrl and flf_ctrl
   signal ALCT_PUSH_DLY : std_logic_vector(4 downto 0);
   signal TMB_PUSH_DLY  : std_logic_vector(4 downto 0);
   signal PUSH_DLY      : std_logic_vector(4 downto 0);
   signal LCT_L1A_DLY   : std_logic_vector(5 downto 0);
 
-  signal gtx_data_valid : std_logic;
+  -- From/to TESTFIFOS to test FIFOs
+  signal TFF_DATA_OUT : std_logic_vector(15 downto 0);
+  signal TFF_WRD_CNT  : std_logic_vector(11 downto 0);
+  signal TFF_SEL      : std_logic_vector(8 downto 1);
+  signal RD_EN_TFF    : std_logic_vector(8 downto 1);
+
+      signal gtx_data_valid : std_logic;
 
   signal tc_run_hardcode : std_logic := '1';
   
@@ -1342,9 +1356,18 @@ begin
 
   qpll_clk40MHz_buf : IBUFDS port map (I => qpll_clk40MHz_p, IB => qpll_clk40MHz_n, O => qpll_clk40MHz);
   qpll_clk80MHz_buf : IBUFDS port map (I => qpll_clk80MHz_p, IB => qpll_clk80MHz_n, O => qpll_clk80MHz);
-  gl1_clk_buf       : IBUFDS_GTXE1 port map (I => gl1_clk_p, IB => gl1_clk_n, CEB => logicl, O => gl1_clk, ODIV2 => gl1_clk_2);
-
-
+  
+  qpll_clk160MHz_buf : IBUFDS_GTXE1 port map (I => qpll_clk160MHz_p, IB => qpll_clk160MHz_n, CEB => logicl,
+                                              O => qpll_clk160MHz, ODIV2 => open);
+  gl1_clk_buf : IBUFDS_GTXE1 port map (I => gl1_clk_p, IB => gl1_clk_n, CEB => logicl,
+                                       O => gl1_clk, ODIV2 => gl1_clk_2);
+  --gl1_clk_2_bufg  : BUFG port map (O => gl1_clk_2_buf,  I => gl1_clk_2);
+  gl1_clk_2_bufr      : BUFR port map (O => gl1_clk_2_buf, CE => logich, CLR => logicl, I => gl1_clk_2);
+  --dduclk <= gl1_clk_2_buf;
+  --dduclk <= gl1_clk_2;
+  qpll_clk160MHz_bufr : BUFR port map (O => clk160, CE => logich, CLR => logicl, I => qpll_clk160MHz);
+  dduclk <= clk160;
+ 
   Divide_Frequency : process(qpll_clk40MHz)
   begin
     if qpll_clk40MHz'event and qpll_clk40MHz = '1' then
@@ -1663,6 +1686,7 @@ begin
       flf_ctrl => flf_ctrl,
       flf_data => flf_data,
 
+    -- TESTCTRL
       tc_l1a         => tc_l1a,
       tc_alct_dav    => tc_alct_dav,
       tc_tmb_dav     => tc_tmb_dav,
@@ -1671,12 +1695,19 @@ begin
       ddu_data_valid => gtx0_data_valid,
       tc_run         => tc_run,
       ts_out         => ts_out,
-
+      dduclk         => dduclk,
+      
+    -- VMECONFREGS outputs
       ALCT_PUSH_DLY => ALCT_PUSH_DLY,
       TMB_PUSH_DLY  => TMB_PUSH_DLY,
       PUSH_DLY      => PUSH_DLY,
-      LCT_L1A_DLY   => LCT_L1A_DLY
+      LCT_L1A_DLY   => LCT_L1A_DLY,
 
+    -- TESTFIFOS
+      TFF_DATA_OUT => TFF_DATA_OUT,
+      TFF_WRD_CNT  => TFF_WRD_CNT,
+      TFF_SEL      => TFF_SEL,
+      RD_EN_TFF    => RD_EN_TFF
       );
 
   -- raw signals are come unsynced from outside
@@ -1776,7 +1807,7 @@ begin
 
 -- To DDUFIFO
       gl_pc_tx_ack => gl_pc_tx_ack,
-      dduclk => gl1_clk_2,
+      dduclk => dduclk,
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
       alct_dv     => gen_alct_data_valid,
@@ -2376,7 +2407,6 @@ begin
 
   end process;
 
---  gl1_clk_2_bufg  : BUFG port map (O => gl1_clk_2_buf, I => gl1_clk_2);
 
 
 
@@ -2395,7 +2425,7 @@ begin
         DAQ_TX_N             => gl1_tx_n,
         DAQ_TX_P             => gl1_tx_p,
         DAQ_TX_125REFCLK     => gl1_clk,  -- daq_tx_125refclk,
-        DAQ_TX_125REFCLK_DV2 => gl1_clk_2,  -- daq_tx_125refclk_dv2,
+        DAQ_TX_125REFCLK_DV2 => gl1_clk_2_buf,  -- daq_tx_125refclk_dv2,
         DAQ_TX_160REFCLK     => LOGICL,
         L1A_MATCH            => LOGICL,
         TXD                  => gtx0_data,
@@ -2405,89 +2435,106 @@ begin
         RATE_3_2             => open,
         TX_ACK               => gl_pc_tx_ack,
         DAQ_DATA_CLK         => gl_pc_daq_data_clk);
---
---    gl_pc_ibuf_n : IBUF port map (O => gl_pc_data_buf_n, I => gl_pc_data_n);
---    gl_pc_ibuf_p : IBUF port map (O => gl_pc_data_buf_p, I => gl_pc_data_p);
---
+
+  -- TX to test DCFEB receivers in simulation. *IT DOES NOT ROUTE*
+  --DCFEB_TEST_TX_PM : daq_optical_out
+  --    generic map(
+  --      USE_CHIPSCOPE => 0,
+  --      SIM_SPEEDUP   => IS_SIMULATION
+  --      )
+  --    port map(
+  --      DAQ_TX_VIO_CNTRL     => LOGIC36L,
+  --      DAQ_TX_LA_CNTRL      => LOGIC36L,
+  --      RST                  => reset,
+  --      DAQ_RX_N             => LOGICL,
+  --      DAQ_RX_P             => LOGICH,
+  --      DAQ_TDIS             => gl_pc_daq_tdis,
+  --      DAQ_TX_N             => gl1_tx_n,
+  --      DAQ_TX_P             => gl1_tx_p,
+  --      DAQ_TX_125REFCLK     => gl1_clk,  -- daq_tx_125refclk,
+  --      DAQ_TX_125REFCLK_DV2 => gl1_clk_2_buf,  -- daq_tx_125refclk_dv2,
+  --      DAQ_TX_160REFCLK     => clk160,
+  --      L1A_MATCH            => LOGICL,
+  --      TXD                  => gtx0_data,
+  --      TXD_VLD              => gtx0_data_valid,
+  --      JDAQ_RATE            => LOGICH,  -- '0' selects clock: 125 MHz (1.25 Gb), '1' selects 160 MHz (3.2 Gb)
+  --      RATE_1_25            => open,
+  --      RATE_3_2             => open,
+  --      TX_ACK               => gl_pc_tx_ack,
+  --      DAQ_DATA_CLK         => gl_pc_daq_data_clk);
 
   orx_dcfeb_data_n <= orx_buf_n;
   orx_dcfeb_data_p <= orx_buf_p;
 
---  DMB_RX_PM : dmb_receiver
---    generic map (
---      USE_2p56GbE => 0,
---      SIM_SPEEDUP => IS_SIMULATION
---      )
---    port map (
---      -- Chip Scope Pro Logic Analyzer control -- bgb
---      CSP_GTX_MAC_LA_CTRL => LOGIC36L,
---      CSP_PKT_FRM_LA_CTRL => LOGIC36L,
---      CSP_FIFO_LA_CTRL    => LOGIC36L,
+  DMB_RX_PM : dmb_receiver
+    generic map (
+      USE_2p56GbE => 1,
+      --USE_2p56GbE => 0,
+      SIM_SPEEDUP => IS_SIMULATION
+      )
+    port map (
+      -- Chip Scope Pro Logic Analyzer control -- bgb
+      CSP_GTX_MAC_LA_CTRL => LOGIC36L,
+      CSP_PKT_FRM_LA_CTRL => LOGIC36L,
+      CSP_FIFO_LA_CTRL    => LOGIC36L,
 
-
---      --External signals
---      RST                    => reset,
-----      ORX_01_N               => ,
-----      ORX_01_P               => rx_dcfeb_data_p(1),
-----      ORX_02_N               => rx_dcfeb_data_n(2),
-----      ORX_02_P               => rx_dcfeb_data_p(2),
-----      ORX_03_N               => rx_dcfeb_data_n(3),
-----      ORX_03_P               => rx_dcfeb_data_p(3),
-----      ORX_04_N               => rx_dcfeb_data_n(4),
-----      ORX_04_P               => rx_dcfeb_data_p(4),
-----      ORX_05_N               => rx_dcfeb_data_n(5),
-----      ORX_05_P               => rx_dcfeb_data_p(5),
-----      ORX_06_N               => rx_dcfeb_data_n(6),
-----      ORX_06_P               => rx_dcfeb_data_p(6),
-----      ORX_07_N               => rx_dcfeb_data_n(7),
-----      ORX_07_P               => rx_dcfeb_data_p(7),
---      ORX_01_N               => gl1_rx_n,
---      ORX_01_P               => gl1_rx_p,
---      --ORX_01_N               => orx_buf_n(1),
---      --ORX_01_P               => orx_buf_p(1),
---      ORX_02_N               => orx_buf_n(2),
---      ORX_02_P               => orx_buf_p(2),
---      ORX_03_N               => orx_buf_n(3),
---      ORX_03_P               => orx_buf_p(3),
---      ORX_04_N               => orx_buf_n(4),
---      ORX_04_P               => orx_buf_p(4),
---      ORX_05_N               => orx_buf_n(5),
---      ORX_05_P               => orx_buf_p(5),
---      ORX_06_N               => orx_buf_n(6),
---      ORX_06_P               => orx_buf_p(6),
---      ORX_07_N               => orx_buf_n(7),
---      ORX_07_P               => orx_buf_p(7),
---      ORX_08_N               => orx_buf_n(8),
---      ORX_08_P               => orx_buf_p(8),
---      ORX_09_N               => orx_buf_n(9),
---      ORX_09_P               => orx_buf_p(9),
---      ORX_10_N               => orx_buf_n(10),
---      ORX_10_P               => orx_buf_p(10),
---      ORX_11_N               => orx_buf_n(11),
---      ORX_11_P               => orx_buf_p(11),
---      ORX_12_N               => orx_buf_n(12),
---      ORX_12_P               => orx_buf_p(12),
---      DCFEB1_DATA            => rx_dcfeb_data(1),
---      DCFEB2_DATA            => rx_dcfeb_data(2),
---      DCFEB3_DATA            => rx_dcfeb_data(3),
---      DCFEB4_DATA            => rx_dcfeb_data(4),
---      DCFEB5_DATA            => rx_dcfeb_data(5),
---      DCFEB6_DATA            => rx_dcfeb_data(6),
---      DCFEB7_DATA            => rx_dcfeb_data(7),
---      DCFEB_DATA_VALID       => rx_dcfeb_data_valid,
---      --Internal signals
---      FIFO_VME_MODE          => fifo_vme_mode,
---      FIFO_SEL               => fifo_sel,
---      RD_EN_FF               => rd_en_ff,
---      WR_EN_FF               => wr_en_ff,
---      FF_DATA_IN             => ff_data_in,
---      FF_DATA_OUT            => ff_data_out,
---      FF_WRD_CNT             => ff_wrd_cnt,
---      FF_STATUS              => ff_status,
---      DMBVME_CLK_S2          => gl1_clk_2,
---      DAQ_RX_125REFCLK       => gl1_clk,
---      DAQ_RX_160REFCLK_115_0 => clk40
---      );
+      --External signals
+      RST                    => reset,
+      
+      --DMBVME_CLK_S2          => gl1_clk_2,
+      --DAQ_RX_125REFCLK       => gl1_clk,
+      --DAQ_RX_160REFCLK_115_0 => clk40,
+      
+      --ORX_01_N               => gl1_rx_n,
+      --ORX_01_P               => gl1_rx_p,
+      
+      DMBVME_CLK_S2          => clk2p5,  --Data clock
+      DAQ_RX_125REFCLK       => clk40,
+      DAQ_RX_160REFCLK_115_0 => clk160,
+      
+      ORX_01_N               => orx_buf_n(1),
+      ORX_01_P               => orx_buf_p(1),
+      
+      ORX_02_N               => orx_buf_n(2),
+      ORX_02_P               => orx_buf_p(2),
+      ORX_03_N               => orx_buf_n(3),
+      ORX_03_P               => orx_buf_p(3),
+      ORX_04_N               => orx_buf_n(4),
+      ORX_04_P               => orx_buf_p(4),
+      ORX_05_N               => orx_buf_n(5),
+      ORX_05_P               => orx_buf_p(5),
+      ORX_06_N               => orx_buf_n(6),
+      ORX_06_P               => orx_buf_p(6),
+      ORX_07_N               => orx_buf_n(7),
+      ORX_07_P               => orx_buf_p(7),
+      ORX_08_N               => orx_buf_n(8),
+      ORX_08_P               => orx_buf_p(8),
+      ORX_09_N               => orx_buf_n(9),
+      ORX_09_P               => orx_buf_p(9),
+      ORX_10_N               => orx_buf_n(10),
+      ORX_10_P               => orx_buf_p(10),
+      ORX_11_N               => orx_buf_n(11),
+      ORX_11_P               => orx_buf_p(11),
+      ORX_12_N               => orx_buf_n(12),
+      ORX_12_P               => orx_buf_p(12),
+      DCFEB1_DATA            => rx_dcfeb_data(1),
+      DCFEB2_DATA            => rx_dcfeb_data(2),
+      DCFEB3_DATA            => rx_dcfeb_data(3),
+      DCFEB4_DATA            => rx_dcfeb_data(4),
+      DCFEB5_DATA            => rx_dcfeb_data(5),
+      DCFEB6_DATA            => rx_dcfeb_data(6),
+      DCFEB7_DATA            => rx_dcfeb_data(7),
+      DCFEB_DATA_VALID       => rx_dcfeb_data_valid,
+      --Internal signals
+      FIFO_VME_MODE          => fifo_vme_mode,
+      FIFO_SEL               => TFF_SEL,
+      RD_EN_FF               => RD_EN_TFF,
+      WR_EN_FF               => wr_en_ff,
+      FF_DATA_IN             => ff_data_in,
+      FF_DATA_OUT            => TFF_DATA_OUT,
+      FF_WRD_CNT             => TFF_WRD_CNT,
+      FF_STATUS              => ff_status
+      );
 
 --  rx_dcfeb_sel  <= '1';
   rx_dcfeb_sel  <= flf_ctrl(7);

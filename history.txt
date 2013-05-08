@@ -6,6 +6,11 @@
 =                                                                    =
 ======================================================================
 
+V01-06: 8 May 2013, Manuel
+--------------------------------
+Connected DMB_RECEIVER to the 12 fibers and 160 MHz, and the test FIFOs.
+Tested in simulation, and synthesis.
+
 V01-05: 6 May 2013, Manuel
 --------------------------------
 Project has now been succesfully tested to send ethernet packets to a PC,

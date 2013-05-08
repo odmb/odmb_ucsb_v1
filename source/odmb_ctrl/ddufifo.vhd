@@ -45,6 +45,7 @@ architecture ddufifo_architecture of ddufifo is
   signal f1_wr_cnt, f1_rd_cnt                   : std_logic_vector(9 downto 0);
   signal f1_out                                 : std_logic_vector(15 downto 0);
 
+  signal ld_in_q : std_logic := '0';
   signal tx_ack_q : std_logic_vector(2 downto 0) := (others => '0');
   signal tx_ack_q_b : std_logic := '1';
   
@@ -124,7 +125,9 @@ begin
     
   end process;
 
-  f0_fsm_logic : process (f0_current_state, f0_empty, f1_empty, f1_rx, f1_tx, dv_in, ld_in, tx_ack_q)
+  FDLD : FD port map(ld_in_q, clk_in, ld_in);
+  
+  f0_fsm_logic : process (f0_current_state, f0_empty, f1_empty, f1_rx, f1_tx, dv_in, ld_in_q, tx_ack_q)
   begin
     
     case f0_current_state is
@@ -145,7 +148,7 @@ begin
         f0_rx   <= '1';
         f0_tx   <= '0';
         f0_wren <= dv_in;
-        if (ld_in = '1') and (f1_tx = '0') then
+        if (ld_in_q = '1') and (f1_tx = '0') then
           f0_rden       <= '1';
           f0_next_state <= FIFO_TX_HEADER;
         else
@@ -200,7 +203,7 @@ begin
     
   end process;
 
-  f1_fsm_logic : process (f1_current_state, f0_empty, f1_empty, f0_rx, f0_tx, dv_in, ld_in)
+  f1_fsm_logic : process (f1_current_state, f0_empty, f1_empty, f0_rx, f0_tx, dv_in, ld_in_q)
 
   begin
     
@@ -224,7 +227,7 @@ begin
         f1_rx   <= '1';
         f1_tx   <= '0';
         f1_wren <= dv_in;
-        if (ld_in = '1') and (f0_tx = '0') then
+        if (ld_in_q = '1') and (f0_tx = '0') then
           f1_rden       <= '1';
           f1_next_state <= FIFO_TX;
         else

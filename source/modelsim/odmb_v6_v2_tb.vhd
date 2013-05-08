@@ -901,9 +901,26 @@ begin
   qpll_clk40MHz_n <= not qpll_clk40MHz_n after 10 ns;
   qpll_clk80MHz_p <= not qpll_clk80MHz_p after 5 ns;
   qpll_clk80MHz_n <= not qpll_clk80MHz_n after 5 ns;
+  qpll_clk160MHz_p <= not qpll_clk160MHz_p after 2.5 ns;
+  qpll_clk160MHz_n <= not qpll_clk160MHz_n after 2.5 ns;
   gl1_clk_p       <= not gl1_clk_p       after 3.2 ns;
   gl1_clk_n       <= not gl1_clk_n       after 3.2 ns;
   clk             <= not clk             after 10 ns;
+
+  orx_p(1) <= gl1_tx_p;  -- Test of the DCFEB RX
+  orx_n(1) <= gl1_tx_n;  -- Test of the DCFEB RX
+  orx_p(2) <= gl1_tx_p;  -- Test of the DCFEB RX
+  orx_n(2) <= gl1_tx_n;  -- Test of the DCFEB RX
+  orx_p(3) <= gl1_tx_p;  -- Test of the DCFEB RX
+  orx_n(3) <= gl1_tx_n;  -- Test of the DCFEB RX
+  orx_p(4) <= gl1_tx_p;  -- Test of the DCFEB RX
+  orx_n(4) <= gl1_tx_n;  -- Test of the DCFEB RX
+  orx_p(5) <= gl1_tx_p;  -- Test of the DCFEB RX
+  orx_n(5) <= gl1_tx_n;  -- Test of the DCFEB RX
+  orx_p(6) <= gl1_tx_p;  -- Test of the DCFEB RX
+  orx_n(6) <= gl1_tx_n;  -- Test of the DCFEB RX
+  orx_p(7) <= gl1_tx_p;  -- Test of the DCFEB RX
+  orx_n(7) <= gl1_tx_n;  -- Test of the DCFEB RX
 
   rst <= '0', '1' after 200 ns, '0' after 13000 ns;
 

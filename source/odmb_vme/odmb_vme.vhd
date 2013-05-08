@@ -156,6 +156,7 @@ entity ODMB_VME is
     flf_ctrl : out std_logic_vector(15 downto 0);
     flf_data : in  std_logic_vector(15 downto 0);
 
+    -- TESTCTRL
     tc_l1a         : out std_logic;
     tc_alct_dav    : out std_logic;
     tc_tmb_dav     : out std_logic;
@@ -164,12 +165,19 @@ entity ODMB_VME is
     ddu_data_valid : in  std_logic;
     tc_run         : out std_logic;
     ts_out         : out std_logic_vector(31 downto 0);
+    dduclk         : in std_logic;
 
     -- VMECONFREGS outputs
     ALCT_PUSH_DLY : out std_logic_vector(4 downto 0);
     TMB_PUSH_DLY  : out std_logic_vector(4 downto 0);
     PUSH_DLY      : out std_logic_vector(4 downto 0);
-    LCT_L1A_DLY   : out std_logic_vector(5 downto 0)
+    LCT_L1A_DLY   : out std_logic_vector(5 downto 0);
+
+    -- TESTFIFOS
+    TFF_DATA_OUT : in std_logic_vector(15 downto 0);
+    TFF_WRD_CNT  : in std_logic_vector(11 downto 0);
+    TFF_SEL   : out std_logic_vector(8 downto 1);
+    RD_EN_TFF : out std_logic_vector(8 downto 1)
 
 
     );
@@ -203,6 +211,7 @@ architecture ODMB_VME_architecture of ODMB_VME is
 
   signal outdata_vmemon      : std_logic_vector(15 downto 0);
   signal outdata_vmeconfregs : std_logic_vector(15 downto 0);
+  signal outdata_testfifos : std_logic_vector(15 downto 0);
 
   signal jtag_tck : std_logic_vector(6 downto 0);
 
@@ -253,7 +262,30 @@ architecture ODMB_VME_architecture of ODMB_VME is
       );
   end component;
 
-  component TESTCTRL is
+  component TESTFIFOS is
+  port (
+
+    SLOWCLK : in std_logic;
+    RST     : in std_logic;
+
+    DEVICE  : in std_logic;
+    STROBE  : in std_logic;
+    COMMAND : in std_logic_vector(9 downto 0);
+
+    INDATA  : in  std_logic_vector(15 downto 0);
+    OUTDATA : out std_logic_vector(15 downto 0);
+
+    DTACK : out std_logic;
+
+    TFF_DATA_OUT : in std_logic_vector(15 downto 0);
+    TFF_WRD_CNT  : in std_logic_vector(11 downto 0);
+
+    TFF_SEL   : out std_logic_vector(8 downto 1);
+    RD_EN_TFF : out std_logic_vector(8 downto 1)
+    );
+end component;
+
+component TESTCTRL is
     generic (
       NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
       );    
@@ -443,6 +475,7 @@ architecture ODMB_VME_architecture of ODMB_VME is
         device2_outdata : in  std_logic_vector(15 downto 0);
         device3_outdata : in  std_logic_vector(15 downto 0);
         device4_outdata : in  std_logic_vector(15 downto 0);
+        device5_outdata : in  std_logic_vector(15 downto 0);
         device8_outdata : in  std_logic_vector(15 downto 0);
         device9_outdata : in  std_logic_vector(15 downto 0);
         outdata         : out std_logic_vector(15 downto 0)
@@ -537,6 +570,7 @@ begin
       device2_outdata => outdata_mbcjtag,
       device3_outdata => outdata_vmemon,
       device4_outdata => outdata_vmeconfregs,
+      device5_outdata => outdata_testfifos,
       device8_outdata => outdata_lvdbmon,
       device9_outdata => outdata_fifomon,
       outdata         => vme_data_out
@@ -724,6 +758,28 @@ begin
       TMB_PUSH_DLY  => TMB_PUSH_DLY ,
       PUSH_DLY      => PUSH_DLY ,
       LCT_L1A_DLY   => LCT_L1A_DLY
+      );
+
+  TESTFIFOS_PM  : TESTFIFOS
+    port map (
+
+      SLOWCLK => CLK_S2 ,
+      RST     => RST ,
+
+      DEVICE  => DEVICE(5) ,
+      STROBE  => STROBE ,
+      COMMAND => CMD ,
+
+      INDATA  => VME_DATA_IN ,
+      OUTDATA => OUTDATA_TESTFIFOS ,
+
+      DTACK         => VME_DTACK_B ,
+      
+      TFF_DATA_OUT => TFF_DATA_OUT,
+      TFF_WRD_CNT  => TFF_WRD_CNT,
+      TFF_SEL      => TFF_SEL,
+      RD_EN_TFF    => RD_EN_TFF
+
       );
 
 -- From/To LVMB
