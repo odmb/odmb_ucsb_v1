@@ -13,6 +13,7 @@ entity TESTCTRL is
   
   port (
     CLK : in std_logic;
+    DDUCLK : in std_logic;
     SLOWCLK : in std_logic;
     RST : in std_logic;
 
@@ -442,7 +443,7 @@ begin
 
 end generate GEN_TC_FIFO_VALS;
 	tc_fifo_wr_en(3) <= ddu_data_valid when (tc_run_inner = '1') else fifo_wr_en(3);
-  tc_fifo_wr_ck(3) <= clk when (tc_run_inner = '1') else slowclk;
+  tc_fifo_wr_ck(3) <= dduclk when (tc_run_inner = '1') else slowclk;
  	tc_fifo_rd_en(3) <= fifo_rd_en(3);
  	tc_fifo_rd_ck(3) <= slowclk;
 	tc_fifo_in(3) <= ddu_data when (tc_run_inner = '1') else indata;

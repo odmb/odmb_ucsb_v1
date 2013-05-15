@@ -34,6 +34,7 @@ entity ODMB_VME is
 
 -- Clock
 
+    clk80  : in std_logic;            -- For testctrl (80MHz)
     clk    : in std_logic;              -- NEW (fastclk -> 40MHz)
     clk_s1 : in std_logic;              -- NEW (midclk -> fastclk/4 -> 10MHz)
     clk_s2 : in std_logic;              -- NEW (slowclk -> midclk/4 -> 2.5MHz)
@@ -291,6 +292,7 @@ component TESTCTRL is
       );    
     port (
       CLK     : in std_logic;
+      DDUCLK     : in std_logic;
       SLOWCLK : in std_logic;
       RST     : in std_logic;
 
@@ -697,6 +699,8 @@ begin
     port map (
 
       CLK     => clk,
+      DDUCLK  => clk80, -- Ideally, it'd be DDUCLK, but for some reason it does
+                        -- not work
       SLOWCLK => clk_s2,
       RST     => rst,
 
