@@ -65,6 +65,8 @@ entity ODMB_CTRL is
 
     fifo_out : in std_logic_vector(15 downto 0);
 
+    fifo_eof : in std_logic;
+    
     fifo_mrst_b : out std_logic;        -- ok -> fifo_mrst* - to FIFOs 
     fifo_prst_b : out std_logic;        -- ok -> fifo_pst* - to FIFOs 
 
@@ -978,8 +980,9 @@ begin
 -- from Data FIFOs
       FFOR_B      => fifo_empty_b,
       DATAIN      => fifo_out(15 downto 0),
-      DATAIN_LAST => LOGICL,  -- Logic 1 when the last DW (800?) is received ????
-
+--      DATAIN_LAST => LOGICL,  -- Logic 1 when the last DW (800?) is received ????
+      DATAIN_LAST => fifo_eof,
+      
 -- From CONFREGS
       KILLINPUT => kill,
 
