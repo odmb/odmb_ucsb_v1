@@ -69,8 +69,8 @@ module DAQ_Rate_Sel_FSM (
   // sequential always block
   always @(posedge CLK or posedge RST) begin
     if (RST)
-//      state <= ST_1_25_GBPS;
-      state <= ST_3_2_GBPS;
+      state <= ST_1_25_GBPS;
+//      state <= ST_3_2_GBPS;
     else
       state <= nextstate;
   end

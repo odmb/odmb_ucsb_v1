@@ -252,8 +252,8 @@ endgenerate
 //BUFGMUX daq_clk_mux_i (.O(usr_clk_wordwise),.I0(DAQ_TX_125REFCLK_DV2),.I1(DAQ_TX_160REFCLK),.S(word_clk_sel));
   
 //   BUFG usr_clk_buf (.O(usr_clk_wordwise), .I(DAQ_TX_125REFCLK_DV2));
-//    assign usr_clk_wordwise = DAQ_TX_125REFCLK_DV2;
-  assign usr_clk_wordwise = DAQ_TX_160REFCLK;
+    assign usr_clk_wordwise = DAQ_TX_125REFCLK_DV2;
+//  assign usr_clk_wordwise = DAQ_TX_160REFCLK;
   
   
 //-----------------------------------------------------------------------------
