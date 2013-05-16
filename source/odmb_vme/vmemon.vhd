@@ -21,8 +21,9 @@ entity VMEMON is
 
     DTACK : out std_logic;
 
-    FLFCTRL : out std_logic_vector(15 downto 0);
-    FLFDATA : in  std_logic_vector(15 downto 0)
+    ODMB_CTRL : out std_logic_vector(15 downto 0);
+    DCFEB_CTRL : out std_logic_vector(15 downto 0);
+    ODMB_DATA : in  std_logic_vector(15 downto 0)
 
     );
 end VMEMON;
@@ -33,38 +34,51 @@ architecture VMEMON_Arch of VMEMON is
   --Declaring internal signals
   signal CMDHIGH                       : std_logic;
   signal BUSY                          : std_logic;
-  signal WRITECTRL, READCTRL, READDATA : std_logic;
+  signal WRITE_ODMB_CTRL, READ_ODMB_CTRL, READ_ODMB_DATA : std_logic;
+  signal WRITE_DCFEB_CTRL, READ_DCFEB_CTRL : std_logic;
 
   signal DTACK_INNER                                        : std_logic;
-  signal FLFCTRL_INNER                                      : std_logic_vector(15 downto 0);
+  signal ODMB_CTRL_INNER                                      : std_logic_vector(15 downto 0);
+  signal DCFEB_CTRL_INNER                                      : std_logic_vector(15 downto 0);
   signal D_OUTDATA_1, Q_OUTDATA_1, D_OUTDATA_2, Q_OUTDATA_2 : std_logic;
   
 begin
 
 -- generate CMDHIGH / generate WRITECTRL / generate READCTRL / generate READDATA
   CMDHIGH   <= '1' when (COMMAND(9 downto 4) = "000000" and DEVICE = '1') else '0';
-  WRITECTRL <= '1' when (COMMAND(3 downto 0) = "0000" and CMDHIGH = '1')  else '0';
-  READCTRL  <= '1' when (COMMAND(3 downto 0) = "0001" and CMDHIGH = '1')  else '0';
-  READDATA  <= '1' when (COMMAND(3 downto 0) = "0010" and CMDHIGH = '1')  else '0';
+  WRITE_ODMB_CTRL <= '1' when (COMMAND(3 downto 0) = "0000" and CMDHIGH = '1')  else '0';
+  READ_ODMB_CTRL  <= '1' when (COMMAND(3 downto 0) = "0001" and CMDHIGH = '1')  else '0';
+  READ_ODMB_DATA  <= '1' when (COMMAND(3 downto 0) = "0010" and CMDHIGH = '1')  else '0';
+  WRITE_DCFEB_CTRL <= '1' when (COMMAND(3 downto 0) = "0100" and CMDHIGH = '1')  else '0';
+  READ_DCFEB_CTRL  <= '1' when (COMMAND(3 downto 0) = "0101" and CMDHIGH = '1')  else '0';
 
-  GEN_FLFCTRL : for K in 0 to 15 generate
+  GEN_ODMB_CTRL : for K in 0 to 15 generate
   begin
-    FLFCTRL_K : FDCE port map (FLFCTRL_INNER(K) , STROBE , WRITECTRL , RST , INDATA(K));
-  end generate GEN_FLFCTRL;
+    ODMB_CTRL_K : FDCE port map (ODMB_CTRL_INNER(K) , STROBE , WRITE_ODMB_CTRL , RST , INDATA(K));
+  end generate GEN_ODMB_CTRL;
 
-  FLFCTRL <= FLFCTRL_INNER;
+  ODMB_CTRL <= ODMB_CTRL_INNER;
 
-  OUTDATA(15 downto 0) <= FLFCTRL_INNER(15 downto 0) when (STROBE = '1' and READCTRL = '1') else FLFDATA(15 downto 0) when (STROBE = '1' and READDATA = '1') else "ZZZZZZZZZZZZZZZZ";
+  GEN_DCFEB_CTRL : for K in 0 to 15 generate
+  begin
+    ODMB_DCFEB_K : FDCE port map (DCFEB_CTRL_INNER(K) , STROBE , WRITE_DCFEB_CTRL , RST , INDATA(K));
+  end generate GEN_DCFEB_CTRL;
+
+  DCFEB_CTRL <= DCFEB_CTRL_INNER;
+
+  OUTDATA(15 downto 0) <= ODMB_CTRL_INNER(15 downto 0) when (STROBE = '1' and READ_ODMB_CTRL = '1') else 
+                          DCFEB_CTRL_INNER(15 downto 0) when (STROBE = '1' and READ_DCFEB_CTRL = '1') else
+                          ODMB_DATA(15 downto 0) when (STROBE = '1' and READ_ODMB_DATA = '1') else "ZZZZZZZZZZZZZZZZ";
 
 -- bug in uncleaned version?
-  D_OUTDATA_1 <= '1' when ((STROBE = '1') and ((WRITECTRL = '1') or (READCTRL = '1'))) else '0';
+  D_OUTDATA_1 <= '1' when ((STROBE = '1') and ((WRITE_ODMB_CTRL = '1') or (READ_ODMB_CTRL = '1') or (WRITE_DCFEB_CTRL = '1') or (READ_DCFEB_CTRL = '1'))) else '0';
 
   FD_OUTDATA_1 : FD port map(Q_OUTDATA_1, SLOWCLK, D_OUTDATA_1);
 
   DTACK_INNER <= '0' when (Q_OUTDATA_1 = '1') else 'Z';
 
 --  OUTDATA(15 downto 0) <= FLFDATA(15 downto 0) when (STROBE = '1' and READDATA = '1') else (others => '1');
-  D_OUTDATA_2 <= '1' when (STROBE = '1' and READDATA = '1') else '0';
+  D_OUTDATA_2 <= '1' when (STROBE = '1' and READ_ODMB_DATA = '1') else '0';
 
   FD_OUTDATA_2 : FD port map(Q_OUTDATA_2, SLOWCLK, D_OUTDATA_2);
 

@@ -143,6 +143,10 @@ entity ODMB_CTRL is
     lct_err : out std_logic;            -- To an LED in the original design
     leds    : out std_logic_vector(6 downto 0);
 
+    cal_mode : in std_logic;
+    cal_trgsel : in std_logic;
+    cal_trgen : in std_logic_vector(3 downto 0);
+
     ALCT_PUSH_DLY : in std_logic_vector(4 downto 0);
     TMB_PUSH_DLY  : in std_logic_vector(4 downto 0);
     PUSH_DLY      : in std_logic_vector(4 downto 0);
@@ -642,7 +646,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
 
 
 -- CONFLOGIC outputs
-  signal CAL_TRGSEL, ENACFEB, CAL_MODE : std_logic;
+  signal JTAG_CAL_TRGSEL, ENACFEB, JTAG_CAL_MODE : std_logic;
 
 -- CALTRIGCON outputs
   signal prelct, pregtrg : std_logic;
@@ -683,7 +687,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
   signal loadcfeb_cfeb : std_logic_vector(NFEB downto 1);
 
 -- TRGSEL outputs
-  signal jtrgen : std_logic_vector(3 downto 0);
+  signal jtag_trgen : std_logic_vector(3 downto 0);
 
 -- CCBCODE outputs
 
@@ -830,9 +834,9 @@ begin
       CCBPED => ccbped,
       SELRAN => selran,
 
-      CAL_TRGSEL => cal_trgsel,
+      CAL_TRGSEL => jtag_cal_trgsel,
       ENACFEB    => enacfeb,
-      CAL_MODE   => cal_mode
+      CAL_MODE   => jtag_cal_mode
       );
 
   
@@ -919,7 +923,7 @@ begin
       FLOAD => instr(37),
 
       TDO    => open,
-      JTRGEN => jtrgen
+      JTRGEN => jtag_trgen
       );
 
 
@@ -938,7 +942,7 @@ begin
       ALCT_PUSH_DLY => alct_push_dly,
       TMB_PUSH_DLY  => tmb_push_dly,
 
-      JTRGEN    => jtrgen,
+      JTRGEN    => cal_trgen,
       EAFEB     => enacfeb,
       CMODE     => cal_mode,
       CALTRGSEL => cal_trgsel,

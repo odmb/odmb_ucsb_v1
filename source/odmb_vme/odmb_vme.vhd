@@ -154,8 +154,9 @@ entity ODMB_VME is
     tfifo_sel   : out std_logic_vector(7 downto 0);
     tfifo_mode  : out std_logic;
 
-    flf_ctrl : out std_logic_vector(15 downto 0);
-    flf_data : in  std_logic_vector(15 downto 0);
+    odmb_ctrl : out std_logic_vector(15 downto 0);
+    dcfeb_ctrl : out std_logic_vector(15 downto 0);
+    odmb_data : in  std_logic_vector(15 downto 0);
 
     -- TESTCTRL
     tc_l1a         : out std_logic;
@@ -234,8 +235,9 @@ architecture ODMB_VME_architecture of ODMB_VME is
 
       DTACK : out std_logic;
 
-      FLFCTRL : out std_logic_vector(15 downto 0);
-      FLFDATA : in  std_logic_vector(15 downto 0)
+      ODMB_CTRL : out std_logic_vector(15 downto 0);
+      DCFEB_CTRL : out std_logic_vector(15 downto 0);
+      ODMB_DATA : in  std_logic_vector(15 downto 0)
 
       );
   end component;
@@ -738,8 +740,9 @@ begin
 
       DTACK => vme_dtack_b,
 
-      FLFCTRL => flf_ctrl,
-      FLFDATA => flf_data
+      ODMB_CTRL => odmb_ctrl,
+      DCFEB_CTRL => dcfeb_ctrl,
+      ODMB_DATA => odmb_data
 
       );
 

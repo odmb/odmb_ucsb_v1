@@ -124,18 +124,21 @@ NET  "done_in"  			LOC = "R8"  	| IOSTANDARD = LVCMOS25;  # ok #STAT0
 NET  "done_in"  			LOC = "T31"  	| IOSTANDARD = LVCMOS25;  # ok #STAT0
 NET  "lctrqst[1]"  		LOC = "AK32"  	| IOSTANDARD = LVCMOS25; # ok  (out)   #STAT0
 NET  "lctrqst[2]"  		LOC = "T34"  	| IOSTANDARD = LVCMOS25; # ok  (out)   #STAT0
-NET  "leds[0]"  			LOC = "E27"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
-NET  "leds[10]"  			LOC = "D30"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
-NET  "leds[11]"  			LOC = "C30"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
-NET  "leds[1]"  			LOC = "E26"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
-NET  "leds[2]"  			LOC = "D26"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
-NET  "leds[3]"  			LOC = "D25"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
-NET  "leds[4]"  			LOC = "C24"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
-NET  "leds[5]"  			LOC = "C25"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
-NET  "leds[6]"  			LOC = "C27"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
-NET  "leds[7]"  			LOC = "C28"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
-NET  "leds[8]"  			LOC = "D29"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
-NET  "leds[9]"  			LOC = "C29"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+
+NET  "ledr[1]"  			LOC = "E27"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+NET  "ledr[2]"  			LOC = "D26"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+NET  "ledr[3]"  			LOC = "C24"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+NET  "ledr[4]"  			LOC = "C27"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+NET  "ledr[5]"  			LOC = "D29"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+NET  "ledr[6]"  			LOC = "D30"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+
+NET  "ledg[1]"  			LOC = "E26"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+NET  "ledg[2]"  			LOC = "D25"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+NET  "ledg[3]"  			LOC = "C25"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+NET  "ledg[4]"  			LOC = "C28"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+NET  "ledg[5]"  			LOC = "C29"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+NET  "ledg[6]"  			LOC = "C30"  	| IOSTANDARD = LVCMOS25; # ok  #STAT0
+
 NET  "lvmb_csb[0]"  		LOC = "D22"  	| IOSTANDARD = LVCMOS25; # ok (out)  #STAT0
 NET  "lvmb_csb[1]"  		LOC = "D21"  	| IOSTANDARD = LVCMOS25; # ok (out)  #STAT0
 NET  "lvmb_csb[2]"  		LOC = "C20"  	| IOSTANDARD = LVCMOS25; # ok (out)  #STAT0
@@ -410,7 +413,7 @@ NET: "odmb_hardrst_b" LOC = "AE17" | IOSTANDARD = LVCMOS25; #STAT2
 #NET: "p5v_sm_n" LOC = "A14" | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE; #STAT2
 #NET: "p5v_sm_p" LOC = "A13" | IOSTANDARD = LVDS_25 | DIFF_TERM = TRUE; #STAT2
 #NET: "reprgen_b" LOC = "AJ19" | IOSTANDARD = LVCMOS25; #STAT2
-#NET: "resync" LOC = "AJ17" | IOSTANDARD = LVCMOS25; #STAT2
+NET: "dcfeb_resync" LOC = "AJ17" | IOSTANDARD = LVCMOS25; #STAT2
 NET: "dcfeb_tdi" LOC = "AK11" | IOSTANDARD = LVCMOS25; #STAT2
 NET: "dcfeb_tms" LOC = "AJ10" | IOSTANDARD = LVCMOS25; #STAT2
 NET: "dcfeb_tck[1]" LOC = "AL15" | IOSTANDARD = LVCMOS25; #STAT2

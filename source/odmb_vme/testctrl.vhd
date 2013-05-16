@@ -461,7 +461,7 @@ end generate GEN_TC_FIFO_VALS;
         ALMOST_EMPTY_OFFSET     => X"0080",  -- Sets the almost empty threshold
         DATA_WIDTH              => 16,  -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
         FIFO_SIZE               => "18Kb",   -- Target BRAM, "18Kb" or "36Kb" 
-        FIRST_WORD_FALL_THROUGH => false)  -- Sets the FIFO FWFT to TRUE or FALSE
+        FIRST_WORD_FALL_THROUGH => true)  -- Sets the FIFO FWFT to TRUE or FALSE
 
       port map (
         ALMOSTEMPTY => tc_fifo_aempty(I),       -- Output almost empty 

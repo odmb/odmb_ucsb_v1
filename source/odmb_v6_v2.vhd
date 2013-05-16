@@ -150,7 +150,8 @@ entity ODMB_V6_V2 is
 
 -- To LEDs
 
-      leds : out std_logic_vector(11 downto 0);
+      ledg : out std_logic_vector(6 downto 1);
+      ledr : out std_logic_vector(6 downto 1);
 
 -- From Push Buttons
 
@@ -549,6 +550,10 @@ architecture bdf_type of ODMB_V6_V2 is
 
       leds : out std_logic_vector(6 downto 0);
 
+      cal_mode : in std_logic;
+      cal_trgsel : in std_logic;
+      cal_trgen : in std_logic_vector(3 downto 0);
+
       ALCT_PUSH_DLY : in std_logic_vector(4 downto 0);
       TMB_PUSH_DLY  : in std_logic_vector(4 downto 0);
       PUSH_DLY      : in std_logic_vector(4 downto 0);
@@ -707,8 +712,9 @@ architecture bdf_type of ODMB_V6_V2 is
       tfifo_sel   : out std_logic_vector(8 downto 1);
       tfifo_mode  : out std_logic;
 
-      flf_ctrl : out std_logic_vector(15 downto 0);
-      flf_data : in  std_logic_vector(15 downto 0);
+      odmb_ctrl : out std_logic_vector(15 downto 0);
+      dcfeb_ctrl : out std_logic_vector(15 downto 0);
+      odmb_data : in  std_logic_vector(15 downto 0);
 
       tc_l1a         : out std_logic;
       tc_alct_dav    : out std_logic;
@@ -909,15 +915,12 @@ architecture bdf_type of ODMB_V6_V2 is
 
 -- FLF Test Signals
 
-  signal flf_test_en, flf_reset, flf_tx_enable, flf_tx_burst_enable, flf_rx_enable : std_logic;
-  signal test_flf_p1_tx, test_flf_p2_tx, test_flf_e1_tx, test_flf_e2_tx            : std_logic;
-  signal tx_flf_p1_cnt, tx_flf_p2_cnt, tx_flf_e1_cnt, tx_flf_e2_cnt                : std_logic_vector(15 downto 0);
-
-  signal flf_cnt_sel   : std_logic_vector(4 downto 0);
-  signal flf_error     : std_logic_vector(7 downto 1);
-  signal flf_ctrl      : std_logic_vector(15 downto 0) := (others => '0');
-  signal flf_data      : std_logic_vector(15 downto 0);
-  signal flf_ctrl_case : std_logic_vector(7 downto 0);
+  signal flf_cnt_sel    : std_logic_vector(4 downto 0);
+  signal flf_error      : std_logic_vector(7 downto 1);
+  signal odmb_ctrl_reg      : std_logic_vector(15 downto 0) := (others => '0');
+  signal dcfeb_ctrl_reg     : std_logic_vector(15 downto 0) := (others => '0');
+  signal odmb_data      : std_logic_vector(15 downto 0);
+  signal odmb_ctrl_case : std_logic_vector(7 downto 0);
 
 -- signals for V1
 
@@ -1212,11 +1215,21 @@ architecture bdf_type of ODMB_V6_V2 is
   signal ddu_data_valid            : std_logic                     := '0';
 
   signal tc_run      : std_logic;
-  signal counter_clk : integer   := 0;
-  signal clk1        : std_logic := '0';
+  signal counter_clk, reset_cnt : integer   := 0;
+  signal clk1,clk2,clk4,clk8        : std_logic := '0';
+  signal clk1_inv,clk2_inv,clk4_inv        : std_logic := '1';
   signal ts_out      : std_logic_vector(31 downto 0);
 
--- From VMECONFREGS to odmb_ctrl and flf_ctrl
+  signal led_cnt             : integer   := 0;
+  signal led_cnt_rst, led_cnt_en : std_logic := '0';
+  signal reset_q, clk_led : std_logic := '0';
+  
+  type   led_state_type is (LED_IDLE, LED_COUNTING);
+  signal led_next_state, led_current_state : led_state_type;
+
+
+
+-- From VMECONFREGS to odmb_ctrl and odmb_ctrl
   signal ALCT_PUSH_DLY : std_logic_vector(4 downto 0);
   signal TMB_PUSH_DLY  : std_logic_vector(4 downto 0);
   signal PUSH_DLY      : std_logic_vector(4 downto 0);
@@ -1314,7 +1327,7 @@ begin
 
 -- power on reset
 
-  --process (clk2p5, pll1_locked, flf_ctrl)
+  --process (clk2p5, pll1_locked, odmb_ctrl)
   --begin
   --  if pll1_locked = '0' then
   --    por_reg <= x"0FFFFFFF";
@@ -1322,10 +1335,8 @@ begin
   --    por_reg <= por_reg(30 downto 0) & '0';
   --  end if;
   --end process;
---  reset <= por_reg(31);
-  FD_RESET : FD port map(int_reset, clk2p5, flf_ctrl(8));  -- It complains about edges and vectors
-  por_reg <= x"0FFFFFFF" when (pll1_locked = '0' or (int_reset = '0' and flf_ctrl(8) = '1')) else
---  por_reg <= x"0FFFFFFF" when (pll1_locked = '0') else
+  FD_RESET : FD port map(int_reset, clk2p5, odmb_ctrl_reg(8));  -- Avoids using rising_edge on a vector
+  por_reg <= x"0FFFFFFF" when (pll1_locked = '0' or (int_reset = '0' and odmb_ctrl_reg(8) = '1')) else
              por_reg(30 downto 0) & '0' when clk2p5'event and clk2p5 = '1' else
              por_reg;
   reset <= por_reg(31) or not pb(0);
@@ -1438,18 +1449,24 @@ begin
   Divide_Frequency : process(qpll_clk40MHz)
   begin
     if qpll_clk40MHz'event and qpll_clk40MHz = '1' then
-      if counter_clk = 10000000 then
+      if counter_clk = 2500000 then
         counter_clk <= 0;
-        if clk1 = '1' then
-          clk1 <= '0';
+        if clk8 = '1' then
+          clk8 <= '0';
         else
-          clk1 <= '1';
+          clk8 <= '1';
         end if;
       else
         counter_clk <= counter_clk + 1;
       end if;
     end if;
   end process Divide_Frequency;
+  clk1_inv  <= not clk1;
+  clk2_inv  <= not clk2;
+  clk4_inv  <= not clk4;
+  FD4 : FD port map (clk4, clk8, clk4_inv);
+  FD2 : FD port map (clk2, clk4, clk2_inv);
+  FD1 : FD port map (clk1, clk2, clk1_inv);
 
 
 -- ------------------------------------------------------------------------------------------------- 
@@ -1570,8 +1587,8 @@ begin
   clk1p25_inv <= not clk1p25;
 -- FD(clk2p5_inv, clk5, clk2p5);
 -- FD(clk1p25_inv, clk2p5, clk1p25);
-  FD1 : FD port map (D => clk2p5_inv, C => clk5, Q => clk2p5);
-  FD2 : FD port map (D => clk1p25_inv, C => clk2p5, Q => clk1p25);
+  FD2p5 : FD port map (D => clk2p5_inv, C => clk5, Q => clk2p5);
+  FD1p25 : FD port map (D => clk1p25_inv, C => clk2p5, Q => clk1p25);
 
 
 -- ------------------------------------------------------------------------------------------------- 
@@ -1636,7 +1653,7 @@ begin
       ul_jtag_tms    => ul_jtag_tms,
       ul_jtag_tdi    => ul_jtag_tdi,
 
--- JTAG Signals To/From ODMB_CTRL
+-- JTAG Signals To/From odmb_ctrl
 
       mbc_jtag_tck => mbc_jtag_tck,
       mbc_jtag_tms => mbc_jtag_tms,
@@ -1751,8 +1768,9 @@ begin
       tfifo_sel   => tfifo_sel,
       tfifo_mode  => tfifo_mode,
 
-      flf_ctrl => flf_ctrl,
-      flf_data => flf_data,
+      odmb_ctrl => odmb_ctrl_reg,
+      dcfeb_ctrl => dcfeb_ctrl_reg,
+      odmb_data => odmb_data,
 
       -- TESTCTRL
       tc_l1a         => tc_l1a,
@@ -1926,10 +1944,14 @@ begin
       tms => mbc_jtag_tms,
       tdo => mbc_jtag_tdo,
 
-      test_ccbinj => flf_ctrl(15),
-      test_ccbpls => flf_ctrl(14),
+      test_ccbinj => dcfeb_ctrl_reg(1),
+      test_ccbpls => dcfeb_ctrl_reg(2),
 
       leds => mbc_leds,
+
+      cal_mode       => dcfeb_ctrl_reg(3),
+      cal_trgsel     => dcfeb_ctrl_reg(4),
+      cal_trgen      => dcfeb_ctrl_reg(8 downto 5),
 
       ALCT_PUSH_DLY => ALCT_PUSH_DLY,
       TMB_PUSH_DLY  => TMB_PUSH_DLY,
@@ -2380,7 +2402,7 @@ begin
 
   LVMB_ADC_SDO_MUX_PM : LVMB_ADC_SDO_MUX
     port map (
-      int_lvmb_adc_en  => flf_ctrl(7),
+      int_lvmb_adc_en  => odmb_ctrl_reg(7),
       int_lvmb_adc_sdo => int_lvmb_adc_sdout,
       lvmb_adc_sdo     => lvmb_sdout,
       adc_ce           => int_lvmb_csb,
@@ -2685,7 +2707,7 @@ begin
 --  rx_dcfeb_sel  <= '1';
   rx_alct_sel  <= '0';
   rx_tmb_sel  <= '0';
-  rx_dcfeb_sel  <= flf_ctrl(7);
+  rx_dcfeb_sel  <= odmb_ctrl_reg(7);
   opt_dcfeb_sel <= '0';
 
   dcfeb_tms <= int_tms;
@@ -2695,7 +2717,7 @@ begin
 
   dcfeb_l1a <= int_l1a;
 
-  dcfeb_resync    <= '0';
+  dcfeb_resync    <= (not pb(1)) or dcfeb_ctrl_reg(0);
   dcfeb_reprog_b  <= '0';
   dcfeb_reprgen_b <= '0';
 
@@ -2882,130 +2904,240 @@ begin
   --  end loop;
   --end process;
 
+ 
+  --LED_PROCESS : process(clk_led, reset, led_cnt_en)
+  --begin
+  --  if(reset = '1' and reset_q = '0') then
+  --    reset_cnt <= 0;
+  --  elsif(led_cnt < 3000000) then
+  --      ledg(1) <= clk4;
+  --      ledg(2) <= clk2;
+  --      ledg(3) <= clk1;
+  --      ledg(4) <= clk1;
+  --      ledg(5) <= clk2;
+  --      ledg(6) <= clk4;
+  --      ledr(1) <= clk4;
+  --      ledr(2) <= clk2;
+  --      ledr(3) <= clk1;
+  --      ledr(4) <= clk1;
+  --      ledr(5) <= clk2;
+  --      ledr(6) <= clk4;
+  --    if(rising_edge(clk_led)) then
+  --      led_cnt <= led_cnt + 1;
+  --    end if;
+  --  else
+  --      ledg(1)          <= clk2;
+  --      ledg(2)          <= not qpll_locked;
+  --      ledg(3)          <= not pll1_locked;
+  --      ledg(4)          <= not tc_run_hardcode;
+  --      ledg(5)          <= not rx_dcfeb_sel;
+  --      ledg(6)          <= not pb(0);
+        
+  --      ledr(4 downto 1) <= not raw_l1a_cnt(3 downto 0);
+  --      ledr(5)          <= not opt_dcfeb_sel;
+  --      ledr(6)          <= not pb(1);
+  --  end if;
+  --end process;
 
-  leds(2 downto 0) <= not raw_l1a_cnt(2 downto 0);
-  leds(3)          <= clk1;
-  leds(4)          <= vme_berr_b;
-  leds(5)          <= vme_sysfail_b;
-  leds(6)          <= not qpll_locked;
-  leds(7)          <= not pll1_locked;
-  leds(8)          <= not tc_run_hardcode;
-  leds(9)          <= not flf_ctrl(7);
-  leds(10)         <= not pb(0);
-  leds(11)         <= not pb(1);
+
+  clk_led <= clk2p5;
+  FDRESET : FD port map(reset_q, clk_led, reset);
+
+  led_cnt_proc : process (clk_led, reset, led_cnt_en)
+    variable led_cnt_data : integer := 0;
+  begin
+    if (reset = '1') then
+      led_cnt_data := 0;
+    elsif (rising_edge(clk_led)) then
+      if led_cnt_rst = '1' then
+        led_cnt_data := 0;
+      elsif(led_cnt_en = '1') then
+        led_cnt_data := led_cnt_data + 1;
+      end if;
+    end if;
+
+    led_cnt <= led_cnt_data;
+  end process;
 
 
-  flf_ctrl_case <= "0" & flf_ctrl(6 downto 0);
+  led_fsm_regs : process (clk_led, led_next_state, reset)
+  begin
+    if (reset = '1') then
+      led_current_state <= LED_IDLE;
+    elsif rising_edge(clk_led) then
+      led_current_state <= led_next_state;
+    end if;
+  end process;
+
+  led_fsm_logic : process (led_current_state, reset, led_cnt)
+  begin
+    case led_current_state is
+      when LED_IDLE =>
+        ledg(1)          <= clk2;
+        ledg(2)          <= not qpll_locked;
+        ledg(3)          <= not pll1_locked;
+        ledg(4)          <= not tc_run_hardcode;
+        ledg(5)          <= not rx_dcfeb_sel;
+        ledg(6)          <= not pb(0);
+      
+        ledr(4 downto 1) <= not raw_l1a_cnt(3 downto 0);
+        ledr(5)          <= not opt_dcfeb_sel;
+        ledr(6)          <= not pb(1);
+      
+        if (reset = '0' and reset_q = '1') then
+          led_next_state <= LED_COUNTING;
+          led_cnt_rst    <= '1';
+          led_cnt_en     <= '0';
+        else
+          led_next_state <= LED_IDLE;
+          led_cnt_rst    <= '0';
+          led_cnt_en     <= '0';
+        end if;
+      
+      when LED_COUNTING =>
+        ledg(1) <= clk4;
+        ledg(2) <= clk2;
+        ledg(3) <= clk1;
+        ledg(4) <= clk1;
+        ledg(5) <= clk2;
+        ledg(6) <= clk4;
+        ledr(1) <= clk4;
+        ledr(2) <= clk2;
+        ledr(3) <= clk1;
+        ledr(4) <= clk1;
+        ledr(5) <= clk2;
+        ledr(6) <= clk4;
+        if (led_cnt > 3000000) then
+          led_next_state <= LED_IDLE;
+          led_cnt_rst    <= '0';
+          led_cnt_en     <= '0';
+        else
+          led_next_state <= LED_COUNTING;
+          led_cnt_rst    <= '0';
+          led_cnt_en     <= '1';
+        end if;
+
+      when others =>
+        led_next_state <= LED_IDLE;
+        ledr        <= (others => '0');
+        ledg        <= (others => '0');
+        led_cnt_rst <= '1';
+        led_cnt_en  <= '0';
+      
+    end case;
+  end process;
+
   
-  flf_status : process (dcfeb_adc_mask, dcfeb_fsel, dcfeb_jtag_ir, mbc_fsel, mbc_jtag_ir, flf_ctrl_case,
-                        l1a_match_cnt, lct_l1a_gap, into_cafifo_dav_cnt, cafifo_l1a_match_out, cafifo_l1a_dav)
 
+  odmb_ctrl_case <= "0" & odmb_ctrl_reg(6 downto 0);
+  
+  flf_status : process (dcfeb_adc_mask, dcfeb_fsel, dcfeb_jtag_ir, mbc_fsel, mbc_jtag_ir, odmb_ctrl_case,
+                        l1a_match_cnt, lct_l1a_gap, into_cafifo_dav_cnt, cafifo_l1a_match_out, cafifo_l1a_dav)
   begin
     
-    case flf_ctrl_case is
+    case odmb_ctrl_case is
 
-      when x"00" => flf_data <= "0000" & dcfeb_adc_mask(1);
-      when x"01" => flf_data <= dcfeb_fsel(1)(15 downto 0);
-      when x"02" => flf_data <= dcfeb_fsel(1)(31 downto 16);
-      when x"03" => flf_data <= "00" & dcfeb_jtag_ir(1) & "000" & dcfeb_fsel(1)(31);
+      when x"00" => odmb_data <= "0000" & dcfeb_adc_mask(1);
+      when x"01" => odmb_data <= dcfeb_fsel(1)(15 downto 0);
+      when x"02" => odmb_data <= dcfeb_fsel(1)(31 downto 16);
+      when x"03" => odmb_data <= "00" & dcfeb_jtag_ir(1) & "000" & dcfeb_fsel(1)(31);
 
-      when x"04" => flf_data <= "0000" & dcfeb_adc_mask(2);
-      when x"05" => flf_data <= dcfeb_fsel(2)(15 downto 0);
-      when x"06" => flf_data <= dcfeb_fsel(2)(31 downto 16);
-      when x"07" => flf_data <= "00" & dcfeb_jtag_ir(2) & "000" & dcfeb_fsel(2)(31);
+      when x"04" => odmb_data <= "0000" & dcfeb_adc_mask(2);
+      when x"05" => odmb_data <= dcfeb_fsel(2)(15 downto 0);
+      when x"06" => odmb_data <= dcfeb_fsel(2)(31 downto 16);
+      when x"07" => odmb_data <= "00" & dcfeb_jtag_ir(2) & "000" & dcfeb_fsel(2)(31);
 
-      when x"08" => flf_data <= "0000" & dcfeb_adc_mask(3);
-      when x"09" => flf_data <= dcfeb_fsel(3)(15 downto 0);
-      when x"0A" => flf_data <= dcfeb_fsel(3)(31 downto 16);
-      when x"0B" => flf_data <= "00" & dcfeb_jtag_ir(3) & "000" & dcfeb_fsel(3)(31);
+      when x"08" => odmb_data <= "0000" & dcfeb_adc_mask(3);
+      when x"09" => odmb_data <= dcfeb_fsel(3)(15 downto 0);
+      when x"0A" => odmb_data <= dcfeb_fsel(3)(31 downto 16);
+      when x"0B" => odmb_data <= "00" & dcfeb_jtag_ir(3) & "000" & dcfeb_fsel(3)(31);
 
-      when x"0C" => flf_data <= "0000" & dcfeb_adc_mask(4);
-      when x"0D" => flf_data <= dcfeb_fsel(4)(15 downto 0);
-      when x"0E" => flf_data <= dcfeb_fsel(4)(31 downto 16);
-      when x"0F" => flf_data <= "00" & dcfeb_jtag_ir(4) & "000" & dcfeb_fsel(4)(31);
+      when x"0C" => odmb_data <= "0000" & dcfeb_adc_mask(4);
+      when x"0D" => odmb_data <= dcfeb_fsel(4)(15 downto 0);
+      when x"0E" => odmb_data <= dcfeb_fsel(4)(31 downto 16);
+      when x"0F" => odmb_data <= "00" & dcfeb_jtag_ir(4) & "000" & dcfeb_fsel(4)(31);
 
-      when x"10" => flf_data <= "0000" & dcfeb_adc_mask(5);
-      when x"11" => flf_data <= dcfeb_fsel(5)(15 downto 0);
-      when x"12" => flf_data <= dcfeb_fsel(5)(31 downto 16);
-      when x"13" => flf_data <= "00" & dcfeb_jtag_ir(5) & "000" & dcfeb_fsel(5)(31);
+      when x"10" => odmb_data <= "0000" & dcfeb_adc_mask(5);
+      when x"11" => odmb_data <= dcfeb_fsel(5)(15 downto 0);
+      when x"12" => odmb_data <= dcfeb_fsel(5)(31 downto 16);
+      when x"13" => odmb_data <= "00" & dcfeb_jtag_ir(5) & "000" & dcfeb_fsel(5)(31);
 
-      when x"14" => flf_data <= "0000" & dcfeb_adc_mask(6);
-      when x"15" => flf_data <= dcfeb_fsel(6)(15 downto 0);
-      when x"16" => flf_data <= dcfeb_fsel(6)(31 downto 16);
-      when x"17" => flf_data <= "00" & dcfeb_jtag_ir(6) & "000" & dcfeb_fsel(6)(31);
+      when x"14" => odmb_data <= "0000" & dcfeb_adc_mask(6);
+      when x"15" => odmb_data <= dcfeb_fsel(6)(15 downto 0);
+      when x"16" => odmb_data <= dcfeb_fsel(6)(31 downto 16);
+      when x"17" => odmb_data <= "00" & dcfeb_jtag_ir(6) & "000" & dcfeb_fsel(6)(31);
 
-      when x"18" => flf_data <= "0000" & dcfeb_adc_mask(7);
-      when x"19" => flf_data <= dcfeb_fsel(7)(15 downto 0);
-      when x"1A" => flf_data <= dcfeb_fsel(7)(31 downto 16);
-      when x"1B" => flf_data <= "00" & dcfeb_jtag_ir(7) & "000" & dcfeb_fsel(7)(31);
+      when x"18" => odmb_data <= "0000" & dcfeb_adc_mask(7);
+      when x"19" => odmb_data <= dcfeb_fsel(7)(15 downto 0);
+      when x"1A" => odmb_data <= dcfeb_fsel(7)(31 downto 16);
+      when x"1B" => odmb_data <= "00" & dcfeb_jtag_ir(7) & "000" & dcfeb_fsel(7)(31);
 
-      when x"1C" => flf_data <= mbc_fsel(16 downto 1);
-      when x"1D" => flf_data <= mbc_fsel(32 downto 17);
-      when x"1E" => flf_data <= '0' & mbc_fsel(47 downto 33);
-      when x"1F" => flf_data <= "00" & mbc_jtag_ir(9 downto 0) & "0000";
+      when x"1C" => odmb_data <= mbc_fsel(16 downto 1);
+      when x"1D" => odmb_data <= mbc_fsel(32 downto 17);
+      when x"1E" => odmb_data <= '0' & mbc_fsel(47 downto 33);
+      when x"1F" => odmb_data <= "00" & mbc_jtag_ir(9 downto 0) & "0000";
 
-      when x"20" => flf_data <= "000000000" & mbc_leds;  --crate_id
+      when x"20" => odmb_data <= "000000000" & mbc_leds;  --crate_id
 
-      when x"21" => flf_data <= l1a_match_cnt(1);
-      when x"22" => flf_data <= l1a_match_cnt(2);
-      when x"23" => flf_data <= l1a_match_cnt(3);
-      when x"24" => flf_data <= l1a_match_cnt(4);
-      when x"25" => flf_data <= l1a_match_cnt(5);
-      when x"26" => flf_data <= l1a_match_cnt(6);
-      when x"27" => flf_data <= l1a_match_cnt(7);
+      when x"21" => odmb_data <= l1a_match_cnt(1);
+      when x"22" => odmb_data <= l1a_match_cnt(2);
+      when x"23" => odmb_data <= l1a_match_cnt(3);
+      when x"24" => odmb_data <= l1a_match_cnt(4);
+      when x"25" => odmb_data <= l1a_match_cnt(5);
+      when x"26" => odmb_data <= l1a_match_cnt(6);
+      when x"27" => odmb_data <= l1a_match_cnt(7);
 
-      when x"28" => flf_data <= ts_out(15 downto 0);
-      when x"29" => flf_data <= ts_out (31 downto 16);
+      when x"28" => odmb_data <= ts_out(15 downto 0);
+      when x"29" => odmb_data <= ts_out (31 downto 16);
 
-      when x"2A" => flf_data <= "00000000000" & alct_push_dly;
-      when x"2B" => flf_data <= "00000000000" & tmb_push_dly;
-      when x"2C" => flf_data <= "00000000000" & push_dly;
-      when x"2D" => flf_data <= "0000000000" & lct_l1a_dly;
+      when x"2A" => odmb_data <= "00000000000" & alct_push_dly;
+      when x"2B" => odmb_data <= "00000000000" & tmb_push_dly;
+      when x"2C" => odmb_data <= "00000000000" & push_dly;
+      when x"2D" => odmb_data <= "0000000000" & lct_l1a_dly;
 
-      when x"31" => flf_data <= lct_l1a_gap(1);
-      when x"32" => flf_data <= lct_l1a_gap(2);
-      when x"33" => flf_data <= lct_l1a_gap(3);
-      when x"34" => flf_data <= lct_l1a_gap(4);
-      when x"35" => flf_data <= lct_l1a_gap(5);
-      when x"36" => flf_data <= lct_l1a_gap(6);
-      when x"37" => flf_data <= lct_l1a_gap(7);
+      when x"31" => odmb_data <= lct_l1a_gap(1);
+      when x"32" => odmb_data <= lct_l1a_gap(2);
+      when x"33" => odmb_data <= lct_l1a_gap(3);
+      when x"34" => odmb_data <= lct_l1a_gap(4);
+      when x"35" => odmb_data <= lct_l1a_gap(5);
+      when x"36" => odmb_data <= lct_l1a_gap(6);
+      when x"37" => odmb_data <= lct_l1a_gap(7);
 
-      when x"38" => flf_data <= "0000000" & cafifo_l1a_match_out;
-      when x"39" => flf_data <= "0000000" & cafifo_l1a_dav;
-      when x"3A" => flf_data <= "00000000" & cafifo_l1a_cnt(23 downto 16);
-      when x"3B" => flf_data <= cafifo_l1a_cnt(15 downto 0);
-      when x"3C" => flf_data <= "0000" & cafifo_bx_cnt;
-      when x"3D" => flf_data <= "00000000" & cafifo_rd_addr & cafifo_wr_addr;
-      when x"3E" => flf_data <= "0000000" & cafifo_l1a_match_in;
-      when x"3F" => flf_data <= raw_l1a_cnt;
+      when x"38" => odmb_data <= "0000000" & cafifo_l1a_match_out;
+      when x"39" => odmb_data <= "0000000" & cafifo_l1a_dav;
+      when x"3A" => odmb_data <= "00000000" & cafifo_l1a_cnt(23 downto 16);
+      when x"3B" => odmb_data <= cafifo_l1a_cnt(15 downto 0);
+      when x"3C" => odmb_data <= "0000" & cafifo_bx_cnt;
+      when x"3D" => odmb_data <= "00000000" & cafifo_rd_addr & cafifo_wr_addr;
+      when x"3E" => odmb_data <= "0000000" & cafifo_l1a_match_in;
+      when x"3F" => odmb_data <= raw_l1a_cnt;
 
-      when x"41" => flf_data <= into_cafifo_dav_cnt(1);
-      when x"42" => flf_data <= into_cafifo_dav_cnt(2);
-      when x"43" => flf_data <= into_cafifo_dav_cnt(3);
-      when x"44" => flf_data <= into_cafifo_dav_cnt(4);
-      when x"45" => flf_data <= into_cafifo_dav_cnt(5);
-      when x"46" => flf_data <= into_cafifo_dav_cnt(6);
-      when x"47" => flf_data <= into_cafifo_dav_cnt(7);
-      when x"48" => flf_data <= into_cafifo_dav_cnt(8);
-      when x"49" => flf_data <= into_cafifo_dav_cnt(9);
+      when x"41" => odmb_data <= into_cafifo_dav_cnt(1);
+      when x"42" => odmb_data <= into_cafifo_dav_cnt(2);
+      when x"43" => odmb_data <= into_cafifo_dav_cnt(3);
+      when x"44" => odmb_data <= into_cafifo_dav_cnt(4);
+      when x"45" => odmb_data <= into_cafifo_dav_cnt(5);
+      when x"46" => odmb_data <= into_cafifo_dav_cnt(6);
+      when x"47" => odmb_data <= into_cafifo_dav_cnt(7);
+      when x"48" => odmb_data <= into_cafifo_dav_cnt(8);
+      when x"49" => odmb_data <= into_cafifo_dav_cnt(9);
 
-      when x"4A" => flf_data <= data_fifo_oe_cnt(1);  -- from control to FIFOs in top
-      when x"4B" => flf_data <= gtx_data_valid_cnt;  -- from control to ddufifo        
-      when x"4C" => flf_data <= gtx0_data_valid_cnt;  -- from ddufifo to testctrl
+      when x"4A" => odmb_data <= data_fifo_oe_cnt(1);  -- from control to FIFOs in top
+      when x"4B" => odmb_data <= gtx_data_valid_cnt;  -- from control to ddufifo        
+      when x"4C" => odmb_data <= gtx0_data_valid_cnt;  -- from ddufifo to testctrl
 
-      when x"51" => flf_data <= data_fifo_re_cnt(1);  -- from control to FIFOs in top
-      when x"52" => flf_data <= data_fifo_re_cnt(2);  -- from control to FIFOs in top
-      when x"53" => flf_data <= data_fifo_re_cnt(3);  -- from control to FIFOs in top
-      when x"54" => flf_data <= data_fifo_re_cnt(4);  -- from control to FIFOs in top
-      when x"55" => flf_data <= data_fifo_re_cnt(5);  -- from control to FIFOs in top
-      when x"56" => flf_data <= data_fifo_re_cnt(6);  -- from control to FIFOs in top
-      when x"57" => flf_data <= data_fifo_re_cnt(7);  -- from control to FIFOs in top
-      when x"58" => flf_data <= data_fifo_re_cnt(8);  -- from control to FIFOs in top
-      when x"59" => flf_data <= data_fifo_re_cnt(9);  -- from control to FIFOs in top
+      when x"51" => odmb_data <= data_fifo_re_cnt(1);  -- from control to FIFOs in top
+      when x"52" => odmb_data <= data_fifo_re_cnt(2);  -- from control to FIFOs in top
+      when x"53" => odmb_data <= data_fifo_re_cnt(3);  -- from control to FIFOs in top
+      when x"54" => odmb_data <= data_fifo_re_cnt(4);  -- from control to FIFOs in top
+      when x"55" => odmb_data <= data_fifo_re_cnt(5);  -- from control to FIFOs in top
+      when x"56" => odmb_data <= data_fifo_re_cnt(6);  -- from control to FIFOs in top
+      when x"57" => odmb_data <= data_fifo_re_cnt(7);  -- from control to FIFOs in top
+      when x"58" => odmb_data <= data_fifo_re_cnt(8);  -- from control to FIFOs in top
+      when x"59" => odmb_data <= data_fifo_re_cnt(9);  -- from control to FIFOs in top
 
-      when others => flf_data <= "0000000000000000";
+      when others => odmb_data <= "0000000000000000";
     end case;
-    
   end process;
 
 end bdf_type;

@@ -311,7 +311,8 @@ architecture ODMB_V6_V2_TB_arch of ODMB_V6_V2_TB is
 
 -- To LEDs
 
-        leds : out std_logic_vector(11 downto 0);
+      ledg : out std_logic_vector(6 downto 1);
+      ledr : out std_logic_vector(6 downto 1);
 
 -- From Push Buttons
 
@@ -836,7 +837,8 @@ architecture ODMB_V6_V2_TB_arch of ODMB_V6_V2_TB is
 
 -- To LEDs
 
-  signal leds : std_logic_vector(11 downto 0);  -- out
+  signal ledg       : std_logic_vector(6 downto 1);
+  signal ledr       : std_logic_vector(6 downto 1);
 
 -- From Push Buttons
 
@@ -1206,7 +1208,8 @@ begin
 
 -- To LEDs
 
-      leds => leds,                     -- out
+      ledg => ledg,                     -- out
+      ledr => ledr,                     -- out
 
 -- From Push Buttons
 
