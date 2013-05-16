@@ -73,14 +73,13 @@ begin  --Architecture
   end generate GEN_DLY_LCT;
 
 -- Generate LCT
-  LCT(0) <= --CAL_LCT(0) when (JCALSEL = '1') else 
-  DLY_LCT(0);
+  LCT(0) <= CAL_LCT(0) when (JCALSEL = '1') else DLY_LCT(0);
   GEN_LCT : for K in 1 to nfeb generate
   begin
     LCT(K) <= 
 -- '0' when (KILLCFEB(K) = '1') else
 --              LCT(0)     when (EAFEB = '1' and CAL_MODE = '0') else
---              CAL_LCT(K) when (JCALSEL = '1') else
+              CAL_LCT(K) when (JCALSEL = '1') else
               DLY_LCT(K);
   end generate GEN_LCT;
 
