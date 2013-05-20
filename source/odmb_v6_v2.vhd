@@ -425,7 +425,8 @@ architecture bdf_type of ODMB_V6_V2 is
     port (
       ga : in std_logic_vector(4 downto 0);
 
-      mbc_fsel    : out std_logic_vector(47 downto 1);
+      mbc_instr_sel    : in std_logic_vector(5 downto 0);
+      mbc_instr    : out std_logic_vector(47 downto 1);
       mbc_jtag_ir : out std_logic_vector(9 downto 0);
 
       ccb_cmd    : in  std_logic_vector (5 downto 0);  -- ccbcmnd(5 downto 0) - from J3
@@ -1122,7 +1123,7 @@ architecture bdf_type of ODMB_V6_V2 is
   type   dcfeb_jtag_ir_type is array (NFEB downto 1) of std_logic_vector(9 downto 0);
   signal dcfeb_jtag_ir : dcfeb_jtag_ir_type;
 
-  signal mbc_fsel : std_logic_vector(47 downto 1);
+  signal mbc_instr : std_logic_vector(47 downto 1);
 
   signal mbc_jtag_ir : std_logic_vector(9 downto 0);
 
@@ -1814,7 +1815,8 @@ begin
 
       ga => vme_ga,
 
-      mbc_fsel    => mbc_fsel,
+      mbc_instr_sel    => dcfeb_ctrl_reg(15 downto 10),
+      mbc_instr    => mbc_instr,
       mbc_jtag_ir => mbc_jtag_ir,
 
       ccb_cmd    => ccb_cmd,            -- ccbcmnd(5 downto 0) - from J3
@@ -3031,7 +3033,7 @@ begin
 
   odmb_ctrl_case <= "0" & odmb_ctrl_reg(6 downto 0);
   
-  flf_status : process (dcfeb_adc_mask, dcfeb_fsel, dcfeb_jtag_ir, mbc_fsel, mbc_jtag_ir, odmb_ctrl_case,
+  flf_status : process (dcfeb_adc_mask, dcfeb_fsel, dcfeb_jtag_ir, mbc_instr, mbc_jtag_ir, odmb_ctrl_case,
                         l1a_match_cnt, lct_l1a_gap, into_cafifo_dav_cnt, cafifo_l1a_match_out, cafifo_l1a_dav)
   begin
     
@@ -3072,9 +3074,9 @@ begin
       when x"1A" => odmb_data <= dcfeb_fsel(7)(31 downto 16);
       when x"1B" => odmb_data <= "00" & dcfeb_jtag_ir(7) & "000" & dcfeb_fsel(7)(31);
 
-      when x"1C" => odmb_data <= mbc_fsel(16 downto 1);
-      when x"1D" => odmb_data <= mbc_fsel(32 downto 17);
-      when x"1E" => odmb_data <= '0' & mbc_fsel(47 downto 33);
+      when x"1C" => odmb_data <= mbc_instr(16 downto 1);
+      when x"1D" => odmb_data <= mbc_instr(32 downto 17);
+      when x"1E" => odmb_data <= '0' & mbc_instr(47 downto 33);
       when x"1F" => odmb_data <= "00" & mbc_jtag_ir(9 downto 0) & "0000";
 
       when x"20" => odmb_data <= "000000000" & mbc_leds;  --crate_id

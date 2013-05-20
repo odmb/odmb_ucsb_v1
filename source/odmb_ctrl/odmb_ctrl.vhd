@@ -17,7 +17,8 @@ entity ODMB_CTRL is
 
     ga : in std_logic_vector(4 downto 0);
 
-    mbc_fsel    : out std_logic_vector(47 downto 1);
+    mbc_instr_sel    : in std_logic_vector(5 downto 0);
+    mbc_instr    : out std_logic_vector(47 downto 1);
     mbc_jtag_ir : out std_logic_vector(9 downto 0);
 
     ccb_cmd    : in  std_logic_vector (5 downto 0);  -- ccbcmnd(5 downto 0) - from J3
@@ -206,6 +207,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
       UPDATE : in  std_logic;
       SHIFT  : in  std_logic;
       D0     : out std_logic;
+      FSEL   : in std_logic_vector(5 downto 0);
       F      : out std_logic_vector(47 downto 1));
 
   end component;
@@ -238,6 +240,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
       EXTDLY        : out std_logic_vector(4 downto 0);
       CALGDLY       : out std_logic_vector(4 downto 0);
       CALLCTDLY     : out std_logic_vector(3 downto 0);
+      XL1ADLY       : out std_logic_vector(1 downto 0);
       KILL          : out std_logic_vector(NFEB+2 downto 1);
       CRATEID       : out std_logic_vector(6 downto 0)
       );
@@ -745,7 +748,7 @@ begin
 --  status(47 downto 41) <= fifo_aempty(7 downto 1);  -- from Data FIFOs
   
   
-  mbc_fsel <= instr;
+  mbc_instr <= instr;
 
   leds <= crateid;
 
@@ -790,6 +793,7 @@ begin
       SHIFT  => shift1,
       UPDATE => update1,
       D0     => tdo1,
+      FSEL   => mbc_instr_sel,
       F      => instr);
 
   CONFREGS_PM : CONFREGS  -- Used to be LOADTIME+SETFEBDLY+SETCALDLY in the old design
@@ -818,6 +822,7 @@ begin
       EXTDLY        => extdly,
       CALGDLY       => calgdly,
       CALLCTDLY     => callctdly,
+      XL1ADLY       => xl1adly,
       KILL          => kill,
       CRATEID       => crateid
       );

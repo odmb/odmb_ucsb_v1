@@ -36,6 +36,7 @@ entity CONFREGS is
     EXTDLY      : out std_logic_vector(4 downto 0);
     CALGDLY     : out std_logic_vector(4 downto 0);
     CALLCTDLY   : out std_logic_vector(3 downto 0);
+    XL1ADLY   : out std_logic_vector(1 downto 0); 
     KILL    : out std_logic_vector(NFEB+2 downto 1);
     CRATEID     : out std_logic_vector(6 downto 0)
     );
@@ -48,8 +49,10 @@ architecture CONFREGS_Arch of CONFREGS is
   signal DLY_SHR                            : std_logic_vector(22 downto 1);
   signal DLY_DR                             : std_logic_vector(21 downto 1);
   signal CDLY_SHR_EN, CDLY_DR_CLK, CDLY_TDO : std_logic;
-  signal CDLY_SHR                           : std_logic_vector(20 downto 1);
-  signal CDLY_DR                            : std_logic_vector(19 downto 1);
+--  signal CDLY_SHR                           : std_logic_vector(20 downto 1);
+--  signal CDLY_DR                            : std_logic_vector(19 downto 1);
+  signal CDLY_SHR                           : std_logic_vector(22 downto 1); -- Guido May 17
+  signal CDLY_DR                            : std_logic_vector(21 downto 1); -- Guido May 17
   signal ID_SHR_EN, ID_DR_CLK, ID_TDO       : std_logic;
   signal ID_SHR                             : std_logic_vector(8 downto 1);
   signal ID_DR                              : std_logic_vector(7 downto 1);
@@ -78,12 +81,15 @@ begin  --Architecture
   DLY_TDO                 <= DLY_SHR(1);
 
 
-  -- Generate INJDLY / Generate EXTDLY / Generate CALGDLY / Generate CALLCTDLY
+--  -- Generate INJDLY / Generate EXTDLY / Generate CALGDLY / Generate CALLCTDLY  
+  -- Generate INJDLY / Generate EXTDLY / Generate CALGDLY / Generate CALLCTDLY / Generate XL1ADLY -- Guido May 17
   CDLY_SHR_EN <= SHIFT and SEL2 and FLOADCDLY;
   CDLY_DR_CLK <= UPDATE and SEL2 and FLOADCDLY;
-  CDLY_SHR(20) <= BTDI;
+--  CDLY_SHR(20) <= BTDI;
+  CDLY_SHR(22) <= BTDI; -- Guido May 17
   -- In the original design, at reset DAVCDLY(14:10) = PUSH_CDLY was 10110  
-  GEN_CDLY_SHR : for I in 19 downto 1 generate
+--  GEN_CDLY_SHR : for I in 19 downto 1 generate
+  GEN_CDLY_SHR : for I in 21 downto 1 generate -- Guido May 17
   begin
     FDPE_I : FDPE port map(CDLY_SHR(I), DRCK, CDLY_SHR_EN, CDLY_SHR(I+1), RST);
     FDP_I  : FDP port map(CDLY_DR(I), CDLY_DR_CLK, CDLY_SHR(I), RST);
@@ -92,6 +98,7 @@ begin  --Architecture
   EXTDLY(4 downto 0)    <= CDLY_DR(10 downto 6);
   CALGDLY(4 downto 0)   <= CDLY_DR(15 downto 11);
   CALLCTDLY(3 downto 0) <= CDLY_DR(19 downto 16);
+  XL1ADLY(1 downto 0)   <= CDLY_DR(21 downto 20); -- Guido May 17
   CDLY_TDO              <= CDLY_SHR(1);
 
 

@@ -100,7 +100,8 @@ begin
   FDC(PREPLS_1, CMSCLK, RST, PREPLS);
 
   -- generate INJ
-  INJ_CMD <= PREINJ or CCBINJ;
+--  INJ_CMD <= PREINJ or CCBINJ; -- Guido May 17
+  INJ_CMD <= CCBINJ;
   FDC(LOGICH, INJ_CMD, RSTPLS, INJ_1);
   FDC(INJ_1, CMSCLK, PEDESTAL_INNER, INJ_2);
   SRL16(INJ_2, CLK80, INJDLY(4 downto 1), INJ_CNT, INJ_CNT, INJ_3);
@@ -115,7 +116,8 @@ begin
 
   
  -- generate PLS
-  PLS_CMD <= PREPLS or CCBPLS or PRELCT;
+--  PLS_CMD <= PREPLS or CCBPLS or PRELCT; -- Guido May 17
+  PLS_CMD <= CCBPLS; 
   FDC(LOGICH, PLS_CMD, RSTPLS, PLS_1);
   FDC(PLS_1, CMSCLK, PEDESTAL_INNER, PLS_2);
   SRL16(PLS_2, CLK80, EXTDLY(4 downto 1), PLS_CNT, PLS_CNT, PLS_3);
@@ -171,7 +173,8 @@ begin
             SR12_OUT when CALGDLY(4) = '1';
   FD(M2_OUT, CMSCLK, M2_OUT_CLK);                                      -- M2_OUT_CLK = L1CON2
   SRL16(M2_OUT_CLK, CMSCLK, CALGDLY(3 downto 0), SR13_CNT, SR13_CNT, SR13_OUT);
-  CAL_GTRG_1 <= SR13_OUT or RNDMGTRG;
+--  CAL_GTRG_1 <= SR13_OUT or RNDMGTRG; 
+  CAL_GTRG_1 <= SR13_OUT; -- Guido May 17
   FD(CAL_GTRG_1, CMSCLK, CAL_GTRG);
   
   -- generate CALLCT, LCTRQST
