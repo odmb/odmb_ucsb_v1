@@ -47,7 +47,7 @@ architecture dcfeb_data_gen_architecture of dcfeb_data_gen is
   signal dw_cnt_en, dw_cnt_rst : std_logic;
   signal l1a_cnt_out           : std_logic_vector(23 downto 0);
   signal dw_cnt_out            : std_logic_vector(11 downto 0);
-  constant dw_n                : std_logic_vector(11 downto 0) := x"00f";
+  constant dw_n                : std_logic_vector(11 downto 0) := x"320"; -- x"320" -> 800
   signal tx_start              : std_logic;
 
 begin

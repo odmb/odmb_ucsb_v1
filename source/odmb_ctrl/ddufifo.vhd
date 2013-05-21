@@ -10,6 +10,8 @@ use UNIMACRO.vcomponents.all;
 use work.hdlmacro.all;
 
 entity ddufifo is
+  generic (
+      NFIFO : integer range 1 to 16 := 8);  -- Number of FIFOs in DDUFIFO
   port(
 
     clk_in  : in std_logic;
@@ -31,81 +33,171 @@ end ddufifo;
 
 architecture ddufifo_architecture of ddufifo is
 
-  type fsm_state_type is (IDLE, FIFO_RX, FIFO_TX, FIFO_TX_HEADER);
+  type fsm_state_type is (IDLE, FIFO_TX, FIFO_TX_HEADER);
   signal f0_next_state, f0_current_state : fsm_state_type;
-  signal f1_next_state, f1_current_state : fsm_state_type;
 
-  signal f0_wren, f0_rden, f0_tx, f0_rx         : std_logic;
+  signal f0_rden : std_logic;
   signal f0_empty, f0_aempty, f0_afull, f0_full : std_logic;
   signal f0_wr_cnt, f0_rd_cnt                   : std_logic_vector(9 downto 0);
   signal f0_out                                 : std_logic_vector(15 downto 0);
 
-  signal f1_wren, f1_rden, f1_tx, f1_rx         : std_logic;
-  signal f1_empty, f1_aempty, f1_afull, f1_full : std_logic;
-  signal f1_wr_cnt, f1_rd_cnt                   : std_logic_vector(9 downto 0);
-  signal f1_out                                 : std_logic_vector(15 downto 0);
-
   signal ld_in_q : std_logic := '0';
   signal tx_ack_q : std_logic_vector(2 downto 0) := (others => '0');
   signal tx_ack_q_b : std_logic := '1';
+
+  type   fifo_data_type is array (NFIFO downto 1) of std_logic_vector(17 downto 0);
+  signal fifo_in, fifo_out : fifo_data_type;
+  signal fifo_aempty : std_logic_vector(NFIFO downto 1);
+  signal fifo_afull : std_logic_vector(NFIFO downto 1);
+  signal fifo_empty : std_logic_vector(NFIFO downto 1);
+  signal fifo_full : std_logic_vector(NFIFO downto 1);
+  signal fifo_wren, fifo_wrck : std_logic_vector(NFIFO downto 1);
+  signal fifo_rden, fifo_rdck : std_logic_vector(NFIFO downto 1);
+  type   fifo_cnt_type is array (NFIFO downto 1) of std_logic_vector(9 downto 0);
+  signal fifo_wr_cnt, fifo_rd_cnt : fifo_cnt_type;
   
 begin
 
 -- FIFOs
 
-  FIFO_0 : FIFO_DUALCLOCK_MACRO
+    fifo_wren(NFIFO) <= dv_in;
+    fifo_wrck(NFIFO) <= clk_in;
+    fifo_in(NFIFO) <= "00" & data_in;
+    fifo_rden(NFIFO) <= not (fifo_empty(NFIFO) or fifo_full(NFIFO-1));
+    fifo_rdck(NFIFO) <= clk_out;
+
+FIFO_M_NFIFO : FIFO_DUALCLOCK_MACRO
     generic map (
       DEVICE                  => "VIRTEX6",  -- Target Device: "VIRTEX5", "VIRTEX6" 
       ALMOST_FULL_OFFSET      => X"0080",    -- Sets almost full threshold
       ALMOST_EMPTY_OFFSET     => X"0080",    -- Sets the almost empty threshold
-      DATA_WIDTH              => 16,  -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
+      DATA_WIDTH              => 18,  -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
       FIFO_SIZE               => "18Kb",     -- Target BRAM, "18Kb" or "36Kb" 
-      FIRST_WORD_FALL_THROUGH => false)  -- Sets the FIFO FWFT to TRUE or FALSE
+      FIRST_WORD_FALL_THROUGH => true)  -- Sets the FIFO FWFT to TRUE or FALSE
 
     port map (
-      ALMOSTEMPTY => f0_aempty,         -- Output almost empty 
-      ALMOSTFULL  => f0_afull,          -- Output almost full
-      DO          => f0_out,            -- Output data
-      EMPTY       => f0_empty,          -- Output empty
-      FULL        => f0_full,           -- Output full
-      RDCOUNT     => f0_rd_cnt,         -- Output read count
+      ALMOSTEMPTY => fifo_aempty(NFIFO),         -- Output almost empty 
+      ALMOSTFULL  => fifo_afull(NFIFO),          -- Output almost full
+      DO          => fifo_out(NFIFO),            -- Output data
+      EMPTY       => fifo_empty(NFIFO),          -- Output empty
+      FULL        => fifo_full(NFIFO),           -- Output full
+      RDCOUNT     => fifo_rd_cnt(NFIFO),         -- Output read count
       RDERR       => open,              -- Output read error
-      WRCOUNT     => f0_wr_cnt,         -- Output write count
+      WRCOUNT     => fifo_wr_cnt(NFIFO),         -- Output write count
       WRERR       => open,              -- Output write error
-      DI          => data_in,           -- Input data
-      RDCLK       => clk_out,           -- Input read clock
-      RDEN        => f0_rden,           -- Input read enable
+      DI          => fifo_in(NFIFO),           -- Input data
+      RDCLK       => fifo_rdck(NFIFO),           -- Input read clock
+      RDEN        => fifo_rden(NFIFO),           -- Input read enable
       RST         => rst,               -- Input reset
-      WRCLK       => clk_in,            -- Input write clock
-      WREN        => f0_wren            -- Input write enable
+      WRCLK       => fifo_wrck(NFIFO),            -- Input write clock
+      WREN        => fifo_wren(NFIFO)            -- Input write enable
       );
 
-  FIFO_1 : FIFO_DUALCLOCK_MACRO
+GEN_FIFO_M : for I in NFIFO-1 downto 2 generate
+  begin
+
+    fifo_wren(I) <= not (fifo_empty(I+1) or fifo_full(I));
+    fifo_wrck(I) <= clk_out;
+    fifo_in(I) <= fifo_out(I+1);
+    fifo_rden(I) <= not (fifo_empty(I) or fifo_full(I-1));
+    fifo_rdck(I) <= clk_out;
+
+    FIFO_MOD : FIFO_DUALCLOCK_MACRO
     generic map (
       DEVICE                  => "VIRTEX6",  -- Target Device: "VIRTEX5", "VIRTEX6" 
       ALMOST_FULL_OFFSET      => X"0080",    -- Sets almost full threshold
       ALMOST_EMPTY_OFFSET     => X"0080",    -- Sets the almost empty threshold
-      DATA_WIDTH              => 16,  -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
+      DATA_WIDTH              => 18,  -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
+      FIFO_SIZE               => "18Kb",     -- Target BRAM, "18Kb" or "36Kb" 
+      FIRST_WORD_FALL_THROUGH => true)  -- Sets the FIFO FWFT to TRUE or FALSE
+
+    port map (
+      ALMOSTEMPTY => fifo_aempty(I),         -- Output almost empty 
+      ALMOSTFULL  => fifo_afull(I),          -- Output almost full
+      DO          => fifo_out(I),            -- Output data
+      EMPTY       => fifo_empty(I),          -- Output empty
+      FULL        => fifo_full(I),           -- Output full
+      RDCOUNT     => fifo_rd_cnt(I),         -- Output read count
+      RDERR       => open,              -- Output read error
+      WRCOUNT     => fifo_wr_cnt(I),         -- Output write count
+      WRERR       => open,              -- Output write error
+      DI          => fifo_in(I),           -- Input data
+      RDCLK       => fifo_rdck(I),           -- Input read clock
+      RDEN        => fifo_rden(I),           -- Input read enable
+      RST         => rst,               -- Input reset
+      WRCLK       => fifo_wrck(I),            -- Input write clock
+      WREN        => fifo_wren(I)            -- Input write enable
+      );
+  end generate GEN_FIFO_M;
+
+fifo_wren(1) <= not (fifo_empty(2) or fifo_full(1));
+fifo_wrck(1) <= clk_out;
+fifo_in(1) <= fifo_out(2);
+fifo_rden(1) <= f0_rden;
+fifo_rdck(1) <= clk_out;
+
+
+FIFO_M_1 : FIFO_DUALCLOCK_MACRO
+    generic map (
+      DEVICE                  => "VIRTEX6",  -- Target Device: "VIRTEX5", "VIRTEX6" 
+      ALMOST_FULL_OFFSET      => X"0080",    -- Sets almost full threshold
+      ALMOST_EMPTY_OFFSET     => X"0080",    -- Sets the almost empty threshold
+      DATA_WIDTH              => 18,  -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
       FIFO_SIZE               => "18Kb",     -- Target BRAM, "18Kb" or "36Kb" 
       FIRST_WORD_FALL_THROUGH => false)  -- Sets the FIFO FWFT to TRUE or FALSE
 
     port map (
-      ALMOSTEMPTY => f1_aempty,         -- Output almost empty 
-      ALMOSTFULL  => f1_afull,          -- Output almost full
-      DO          => f1_out,            -- Output data
-      EMPTY       => f1_empty,          -- Output empty
-      FULL        => f1_full,           -- Output full
-      RDCOUNT     => f1_rd_cnt,         -- Output read count
+      ALMOSTEMPTY => fifo_aempty(1),         -- Output almost empty 
+      ALMOSTFULL  => fifo_afull(1),          -- Output almost full
+      DO          => fifo_out(1),            -- Output data
+      EMPTY       => fifo_empty(1),          -- Output empty
+      FULL        => fifo_full(1),           -- Output full
+      RDCOUNT     => fifo_rd_cnt(1),         -- Output read count
       RDERR       => open,              -- Output read error
-      WRCOUNT     => f1_wr_cnt,         -- Output write count
+      WRCOUNT     => fifo_wr_cnt(1),         -- Output write count
       WRERR       => open,              -- Output write error
-      DI          => data_in,           -- Input data
-      RDCLK       => clk_out,           -- Input read clock
-      RDEN        => f0_rden,           -- Input read enable
+      DI          => fifo_in(1),           -- Input data
+      RDCLK       => fifo_rdck(1),           -- Input read clock
+      RDEN        => fifo_rden(1),           -- Input read enable
       RST         => rst,               -- Input reset
-      WRCLK       => clk_in,            -- Input write clock
-      WREN        => f1_wren            -- Input write enable
+      WRCLK       => fifo_wrck(1),            -- Input write clock
+      WREN        => fifo_wren(1)            -- Input write enable
       );
+
+f0_aempty <= fifo_aempty(1);
+f0_afull <= fifo_afull(1);
+f0_out <= fifo_out(1)(15 downto 0);
+f0_empty <= fifo_empty(1);
+f0_full <= fifo_full(1);
+f0_rd_cnt <= fifo_rd_cnt(1);
+f0_wr_cnt <= fifo_wr_cnt(1);
+
+--  FIFO_0 : FIFO_DUALCLOCK_MACRO
+--    generic map (
+--      DEVICE                  => "VIRTEX6",  -- Target Device: "VIRTEX5", "VIRTEX6" 
+--      ALMOST_FULL_OFFSET      => X"0080",    -- Sets almost full threshold
+--      ALMOST_EMPTY_OFFSET     => X"0080",    -- Sets the almost empty threshold
+--      DATA_WIDTH              => 16,  -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
+--      FIFO_SIZE               => "18Kb",     -- Target BRAM, "18Kb" or "36Kb" 
+--      FIRST_WORD_FALL_THROUGH => false)  -- Sets the FIFO FWFT to TRUE or FALSE
+--
+--    port map (
+--      ALMOSTEMPTY => f0_aempty,         -- Output almost empty 
+--      ALMOSTFULL  => f0_afull,          -- Output almost full
+--      DO          => f0_out,            -- Output data
+--      EMPTY       => f0_empty,          -- Output empty
+--      FULL        => f0_full,           -- Output full
+--      RDCOUNT     => f0_rd_cnt,         -- Output read count
+--      RDERR       => open,              -- Output read error
+--      WRCOUNT     => f0_wr_cnt,         -- Output write count
+--      WRERR       => open,              -- Output write error
+--      DI          => data_in,           -- Input data
+--      RDCLK       => clk_out,           -- Input read clock
+--      RDEN        => f0_rden,           -- Input read enable
+--      RST         => rst,               -- Input reset
+--      WRCLK       => clk_in,            -- Input write clock
+--      WREN        => f0_wren            -- Input write enable
+--      );
 
   FDCACK : FDC port map(tx_ack_q(0), tx_ack, tx_ack_q(2), tx_ack_q_b);
   FDACK_Q : FD port map(tx_ack_q(1), clk_out, tx_ack_q(0));
@@ -113,6 +205,9 @@ begin
   tx_ack_q_b <= not tx_ack_q(2);
   
 -- FSMs 
+
+  FDLD : FD port map(ld_in_q, clk_in, ld_in);
+  
 
   f0_fsm_regs : process (f0_next_state, rst, clk_out)
 
@@ -125,41 +220,25 @@ begin
     
   end process;
 
-  FDLD : FD port map(ld_in_q, clk_in, ld_in);
-  
-  f0_fsm_logic : process (f0_current_state, f0_empty, f1_empty, f1_rx, f1_tx, dv_in, ld_in_q, tx_ack_q)
+  f0_fsm_logic : process (f0_current_state, f0_out, f0_empty, ld_in_q, tx_ack_q)
   begin
     
     case f0_current_state is
       
       when IDLE =>
-        f0_rx   <= '0';
-        f0_tx   <= '0';
-        f0_rden <= '0';
-        if (f1_rx = '0') and (dv_in = '1') then
-          f0_wren       <= '1';
-          f0_next_state <= FIFO_RX;
-        else
-          f0_wren       <= '0';
-          f0_next_state <= IDLE;
-        end if;
-        
-      when FIFO_RX =>
-        f0_rx   <= '1';
-        f0_tx   <= '0';
-        f0_wren <= dv_in;
-        if (ld_in_q = '1') and (f1_tx = '0') then
+        dv_out <= '0';
+        data_out <= (others => '0');
+        if (ld_in_q = '1') then
           f0_rden       <= '1';
           f0_next_state <= FIFO_TX_HEADER;
         else
           f0_rden       <= '0';
-          f0_next_state <= FIFO_RX;
+          f0_next_state <= IDLE;
         end if;
-
+        
       when FIFO_TX_HEADER =>
-        f0_rx   <= '0';
-        f0_tx   <= '1';
-        f0_wren <= '0';
+        dv_out <= '1';
+        data_out <= f0_out;
         if (tx_ack_q(0) = '1') then
           f0_rden <= '1';
           f0_next_state <= FIFO_TX;
@@ -169,108 +248,24 @@ begin
         end if;
 
       when FIFO_TX =>
-        f0_rx   <= '0';
-        f0_tx   <= '1';
-        f0_wren <= '0';
+        dv_out <= '1';
+        data_out <= f0_out;
         f0_rden <= '1';
-        if (f0_empty = '1') and (dv_in = '0') then
+        if (f0_empty = '1') then
           f0_next_state <= IDLE;
-        elsif (f0_empty = '1') and (dv_in = '1') then
-          f0_next_state <= FIFO_RX;
         else
           f0_next_state <= FIFO_TX;
         end if;
 
       when others =>
 
-        f0_tx         <= '0';
-        f0_wren       <= '0';
+        dv_out <= '0';
+        data_out <= (others => '0');
         f0_rden       <= '0';
         f0_next_state <= IDLE;
         
     end case;
     
   end process;
-
-  f1_fsm_regs : process (f1_next_state, rst, clk_out)
-
-  begin
-    if (rst = '1') then
-      f1_current_state <= IDLE;
-    elsif rising_edge(clk_out) then
-      f1_current_state <= f1_next_state;
-    end if;
-    
-  end process;
-
-  f1_fsm_logic : process (f1_current_state, f0_empty, f1_empty, f0_rx, f0_tx, dv_in, ld_in_q)
-
-  begin
-    
-    case f1_current_state is
-      
-      when IDLE =>
-
-        f1_rx   <= '0';
-        f1_tx   <= '0';
-        f1_rden <= '0';
-        if (f0_rx = '0') and (f0_empty = '0') and (dv_in = '1') then
-          f1_wren       <= '1';
-          f1_next_state <= FIFO_RX;
-        else
-          f1_wren       <= '0';
-          f1_next_state <= IDLE;
-        end if;
-        
-      when FIFO_RX =>
-        
-        f1_rx   <= '1';
-        f1_tx   <= '0';
-        f1_wren <= dv_in;
-        if (ld_in_q = '1') and (f0_tx = '0') then
-          f1_rden       <= '1';
-          f1_next_state <= FIFO_TX;
-        else
-          f1_rden       <= '0';
-          f1_next_state <= FIFO_RX;
-        end if;
-
-      when FIFO_TX =>
-        
-        f1_rx   <= '0';
-        f1_tx   <= '1';
-        f1_wren <= '0';
-        if (tx_ack_q(0) = '1') then
-          f1_rden <= '1';
-        else
-          f1_rden <= '0';
-        end if;
-        if (f1_empty = '1') and (dv_in = '0') then
-          f1_next_state <= IDLE;
-        elsif (f0_empty = '1') and (f1_empty = '1') and (dv_in = '1') then
-          f1_next_state <= IDLE;
-        elsif (f0_empty = '0') and (f1_empty = '1') and (dv_in = '1') then
-          f1_next_state <= FIFO_RX;
-        else
-          f1_next_state <= FIFO_TX;
-        end if;
-
-      when others =>
-
-        f1_tx         <= '0';
-        f1_wren       <= '0';
-        f1_rden       <= '0';
-        f1_next_state <= IDLE;
-        
-    end case;
-    
-  end process;
-
-  data_out <= f0_out when (f0_tx = '1') else
-              f1_out when (f1_tx = '1') else
-              (others => '0');
-
-  --dv_out <= f0_rden or f1_rden;
-  dv_out <= f0_tx or f1_tx;
   
 end ddufifo_architecture;

@@ -10,6 +10,7 @@ use ieee.std_logic_1164.all;
 
 entity ODMB_CTRL is
   generic (
+    NFIFO     : integer range 1 to 16  := 8;  -- Number of FIFOs in DDUFIFO
     NFEB      : integer range 1 to 7  := 7;  -- Number of DCFEBS, 7 in the final design
     FIFO_SIZE : integer range 1 to 64 := 16  -- Number FIFO words in CAFIFO
     );  
@@ -399,6 +400,9 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
   end component;
 
   component ddufifo is
+    generic (
+      NFIFO : integer range 1 to 16 := 8  -- Number of FIFOs in DDUFIFO
+      );  
     port(
 
       clk_in  : in std_logic;
@@ -1035,6 +1039,7 @@ begin
   gtx_data_valid <= gtx_data_valid_inner;
 
   DDUFIFO_PM : ddufifo
+    generic map (NFIFO => NFIFO)
 
     port map(
 
