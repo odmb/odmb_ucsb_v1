@@ -33,6 +33,21 @@ end ddufifo;
 
 architecture ddufifo_architecture of ddufifo is
 
+  component EOFGEN is
+    port(
+      clk : in std_logic;
+      rst : in std_logic;
+
+      dv_in   : in std_logic;
+      data_in : in std_logic_vector(15 downto 0);
+
+      dv_out   : out std_logic;
+      data_out : out std_logic_vector(17 downto 0)
+      );
+
+  end component;
+
+
   type fsm_state_type is (IDLE, FIFO_TX, FIFO_TX_HEADER);
   signal f0_next_state, f0_current_state : fsm_state_type;
 
@@ -40,8 +55,10 @@ architecture ddufifo_architecture of ddufifo is
   signal f0_empty, f0_aempty, f0_afull, f0_full : std_logic;
   signal f0_wr_cnt, f0_rd_cnt                   : std_logic_vector(9 downto 0);
   signal f0_out                                 : std_logic_vector(15 downto 0);
+  signal f0_ld                                  : std_logic;
 
   signal ld_in_q : std_logic := '0';
+  signal ld_out : std_logic := '0';
   signal tx_ack_q : std_logic_vector(2 downto 0) := (others => '0');
   signal tx_ack_q_b : std_logic := '1';
 
@@ -55,16 +72,32 @@ architecture ddufifo_architecture of ddufifo is
   signal fifo_rden, fifo_rdck : std_logic_vector(NFIFO downto 1);
   type   fifo_cnt_type is array (NFIFO downto 1) of std_logic_vector(9 downto 0);
   signal fifo_wr_cnt, fifo_rd_cnt : fifo_cnt_type;
+
+  signal pck_cnt_out : std_logic_vector(7 downto 0);
   
 begin
 
 -- FIFOs
 
-    fifo_wren(NFIFO) <= dv_in;
+--EOFGEN_PM : EOFGEN
+--    port map (
+--
+--        clk => clk_in,
+--        rst => rst,
+--
+--        dv_in   => dv_in,
+--        data_in => data_in,
+--
+--        dv_out   => fifo_wren(NFIFO),
+--        data_out => fifo_in(NFIFO));
+--
     fifo_wrck(NFIFO) <= clk_in;
-    fifo_in(NFIFO) <= "00" & data_in;
-    fifo_rden(NFIFO) <= not (fifo_empty(NFIFO) or fifo_full(NFIFO-1));
+    fifo_wren(NFIFO) <= dv_in;
+    fifo_in(NFIFO) <= ld_in & ld_in & data_in;
+
     fifo_rdck(NFIFO) <= clk_out;
+    fifo_rden(NFIFO) <= not (fifo_empty(NFIFO) or fifo_full(NFIFO-1));
+
 
 FIFO_M_NFIFO : FIFO_DUALCLOCK_MACRO
     generic map (
@@ -167,6 +200,7 @@ FIFO_M_1 : FIFO_DUALCLOCK_MACRO
 f0_aempty <= fifo_aempty(1);
 f0_afull <= fifo_afull(1);
 f0_out <= fifo_out(1)(15 downto 0);
+f0_ld <= fifo_out(1)(17);
 f0_empty <= fifo_empty(1);
 f0_full <= fifo_full(1);
 f0_rd_cnt <= fifo_rd_cnt(1);
@@ -206,8 +240,27 @@ f0_wr_cnt <= fifo_wr_cnt(1);
   
 -- FSMs 
 
-  FDLD : FD port map(ld_in_q, clk_in, ld_in);
+--  FDLD : FD port map(ld_in_q, clk_in, ld_in);
   
+  pck_cnt : process (ld_in, ld_out, rst, clk_in)
+
+    variable pck_cnt_data : std_logic_vector(7 downto 0);
+
+  begin
+
+    if (rst = '1') then
+      pck_cnt_data := (others => '0');
+    elsif (rising_edge(clk_in)) then
+      if (ld_in = '1') and (ld_out = '0') then
+        pck_cnt_data := pck_cnt_data + 1;
+      elsif (ld_in = '0') and (ld_out = '1') then
+        pck_cnt_data := pck_cnt_data - 1;
+      end if;
+    end if;
+
+    pck_cnt_out <= pck_cnt_data;
+    
+  end process;
 
   f0_fsm_regs : process (f0_next_state, rst, clk_out)
 
@@ -220,7 +273,7 @@ f0_wr_cnt <= fifo_wr_cnt(1);
     
   end process;
 
-  f0_fsm_logic : process (f0_current_state, f0_out, f0_empty, ld_in_q, tx_ack_q)
+  f0_fsm_logic : process (f0_current_state, f0_out, f0_empty, f0_ld, pck_cnt_out, tx_ack_q)
   begin
     
     case f0_current_state is
@@ -228,17 +281,26 @@ f0_wr_cnt <= fifo_wr_cnt(1);
       when IDLE =>
         dv_out <= '0';
         data_out <= (others => '0');
-        if (ld_in_q = '1') then
-          f0_rden       <= '1';
-          f0_next_state <= FIFO_TX_HEADER;
-        else
+--        if (ld_in_q = '1') then
+--          f0_rden       <= '1';
+--          f0_next_state <= FIFO_TX_HEADER;
+--        else
+--          f0_rden       <= '0';
+--          f0_next_state <= IDLE;
+--        end if;
+        ld_out <= '0';
+        if (pck_cnt_out = "00000000") then
           f0_rden       <= '0';
           f0_next_state <= IDLE;
+        else
+          f0_rden       <= '1';
+          f0_next_state <= FIFO_TX_HEADER;
         end if;
         
       when FIFO_TX_HEADER =>
         dv_out <= '1';
         data_out <= f0_out;
+        ld_out <= '0';
         if (tx_ack_q(0) = '1') then
           f0_rden <= '1';
           f0_next_state <= FIFO_TX;
@@ -251,9 +313,12 @@ f0_wr_cnt <= fifo_wr_cnt(1);
         dv_out <= '1';
         data_out <= f0_out;
         f0_rden <= '1';
-        if (f0_empty = '1') then
+--        if (f0_empty = '1') then
+        if (f0_empty = '1') or (f0_ld = '1') then
+          ld_out <= '1';
           f0_next_state <= IDLE;
         else
+          ld_out <= '0';
           f0_next_state <= FIFO_TX;
         end if;
 
@@ -262,6 +327,7 @@ f0_wr_cnt <= fifo_wr_cnt(1);
         dv_out <= '0';
         data_out <= (others => '0');
         f0_rden       <= '0';
+        ld_out <= '0';
         f0_next_state <= IDLE;
         
     end case;
