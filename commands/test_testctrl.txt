@@ -20,6 +20,24 @@ W  8 	41	Write FIFO
 W  8 	42	Write FIFO
 W  8 	b0	Write FIFO
 W  8 	b1	Write FIFO
+W  8 	103f	Write FIFO
+W  8 	1040	Write FIFO
+W  8 	1041	Write FIFO
+W  8 	1042	Write FIFO
+W  8 	10b0	Write FIFO
+W  8 	10b1	Write FIFO
+W  8 	503f	Write FIFO
+W  8 	5040	Write FIFO
+W  8 	5041	Write FIFO
+W  8 	5042	Write FIFO
+W  8 	50b0	Write FIFO
+W  8 	50b1	Write FIFO
+W  8 	513f	Write FIFO
+W  8 	5140	Write FIFO
+W  8 	5141	Write FIFO
+W  8 	5142	Write FIFO
+W  8 	51b0	Write FIFO
+W  8 	51b1	Write FIFO
 R  1C   0       Read state of FIFOs
 R  2C   0       Read current write address
 R  3C   0       Read current read address
@@ -31,11 +49,47 @@ W  8 	0	Write FIFO
 W  8 	0	Write FIFO
 W  8 	0	Write FIFO
 W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
+W  8 	0	Write FIFO
 
 W  20	4	Select FIFO 3 *Triggers&quot;  
-W  8   	3	Write FIFO			    
+W  8   	f	Write FIFO			    
 W  8   	11	Write FIFO			    
-W  8   	81	Write FIFO			    
+W  8   	e1	Write FIFO			    
+W  8   	0	Write FIFO			    
+W  8   	700	Write FIFO			    
+W  8   	0	Write FIFO
+W  8   	f	Write FIFO			    
+W  8   	11	Write FIFO			    
+W  8   	e1	Write FIFO			    
+W  8   	0	Write FIFO			    
+W  8   	700	Write FIFO			    
+W  8   	0	Write FIFO
+W  8   	f	Write FIFO			    
+W  8   	11	Write FIFO			    
+W  8   	e1	Write FIFO			    
+W  8   	0	Write FIFO			    
+W  8   	700	Write FIFO			    
+W  8   	0	Write FIFO
+W  8   	f	Write FIFO			    
+W  8   	11	Write FIFO			    
+W  8   	e1	Write FIFO			    
 W  8   	0	Write FIFO			    
 W  8   	700	Write FIFO			    
 W  8   	0	Write FIFO
