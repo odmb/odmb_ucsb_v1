@@ -19,6 +19,7 @@ entity cafifo is
 
     clk : in std_logic;
     rst : in std_logic;
+    resync : in std_logic;
 
     BC0   : in std_logic;
     BXRST : in std_logic;
@@ -325,13 +326,13 @@ begin
 
 -- l1a Counter
 
-  l1a_counter : process (clk, l1a, rst)
+  l1a_counter : process (clk, l1a, rst, resync)
 
     variable l1a_cnt_data : std_logic_vector(23 downto 0);
 
   begin
 
-    if (rst = '1') then
+    if (rst = '1' or resync = '1') then
       l1a_cnt_data := (others => '0');
     elsif (rising_edge(clk)) then
       if (l1a = '1') then
