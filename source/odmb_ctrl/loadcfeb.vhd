@@ -45,12 +45,14 @@ begin  --Architecture
   begin
     FDPE_I : FDPE port map(SHR(I), DRCK, SHR_EN, RST, SHR(I-1));
     FDP_I  : FDP port map(DR(I), DR_CLK, RST, SHR(I));
-    LCT_D(I) <= (CALLCT_1 or RNDMLCT(I)) and DR(I);
+    --LCT_D(I) <= (CALLCT_1 or RNDMLCT(I)) and DR(I);
+    LCT_D(I) <= (CALLCT_1) and DR(I);
     FD_I   : FD port map(LCTFEB(I), CLK, LCT_D(I));
   end generate GEN_SHR;
   CFEB <= DR;
 
-  LCT_D(0) <= or_reduce(DR) and (CALLCT_1 or RNDMLCT(0));
+  --LCT_D(0) <= or_reduce(DR) and (CALLCT_1 or RNDMLCT(0));
+  LCT_D(0) <= or_reduce(DR) and (CALLCT_1);
   FD_0 : FD port map(LCTFEB(0), CLK, LCT_D(0));
 
 end LOADCFEB_Arch;
