@@ -52,8 +52,8 @@ architecture TRGCNTRL_Arch of TRGCNTRL is
   end component;
 
   signal JCALSEL, CAL_MODE : std_logic;
-  signal DLY_LCT, LCT      : std_logic_vector(NFEB downto 0);
-  signal RAW_L1A_Q         : std_logic;
+  signal DLY_LCT, LCT, LCT_IN      : std_logic_vector(NFEB downto 0);
+  signal RAW_L1A_Q, L1A_IN         : std_logic;
   signal L1A               : std_logic;
   type LCT_TYPE is array (NFEB downto 0) of std_logic_vector(4 downto 0);
   signal LCT_Q             : LCT_TYPE;
@@ -67,19 +67,21 @@ begin  --Architecture
   JCALSEL  <= JTRGEN(0) and CAL_MODE;
 
 -- Generate DLY_LCT
+  LCT_IN <= CAL_LCT when (JCALSEL = '1') else RAW_LCT;
   GEN_DLY_LCT : for K in 0 to NFEB generate
   begin
-    LCTDLY_K : LCTDLY port map(RAW_LCT(K), CLK, LCT_L1A_DLY, DLY_LCT(K));
+    LCTDLY_K : LCTDLY port map(LCT_IN(K), CLK, LCT_L1A_DLY, DLY_LCT(K));
   end generate GEN_DLY_LCT;
 
 -- Generate LCT
-  LCT(0) <= CAL_LCT(0) when (JCALSEL = '1') else DLY_LCT(0);
+--  LCT(0) <= CAL_LCT(0) when (JCALSEL = '1') else DLY_LCT(0);
+  LCT(0) <= DLY_LCT(0);
   GEN_LCT : for K in 1 to nfeb generate
   begin
     LCT(K) <= 
 -- '0' when (KILLCFEB(K) = '1') else
 --              LCT(0)     when (EAFEB = '1' and CAL_MODE = '0') else
-              CAL_LCT(K) when (JCALSEL = '1') else
+--              CAL_LCT(K) when (JCALSEL = '1') else
               DLY_LCT(K);
   end generate GEN_LCT;
 
@@ -88,8 +90,11 @@ begin  --Architecture
   FDLCTERR : FD port map(LCT_ERR, CLK, LCT_ERR_D);
 
 -- Generate L1A / Generate DCFEB_L1A
-  FDL1A : FD port map(RAW_L1A_Q, CLK, RAW_L1A);
-  L1A       <= CAL_L1A when (JTRGEN(1) = '1' and CAL_MODE = '1') else RAW_L1A_Q;
+  L1A_IN    <= CAL_L1A when (JTRGEN(1) = '1' and CAL_MODE = '1') else RAW_L1A;
+  
+  FDL1A : FD port map(RAW_L1A_Q, CLK, L1A_IN);
+--  L1A       <= CAL_L1A when (JTRGEN(1) = '1' and CAL_MODE = '1') else RAW_L1A_Q;
+  L1A       <= RAW_L1A_Q;
   DCFEB_L1A <= L1A;
 
 -- Generate DCFEB_L1A_MATCH / Generate FIFO_L1A_MATCH (We might add PUSHDLY to FIFO_L1A_MATCH later)
