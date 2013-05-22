@@ -1204,12 +1204,12 @@ end component;
   signal dcfeb_fifo_out          : ext_dcfeb_fifo_data_type;
 
 
-  type   dcfeb_fifo_cnt_type is array (NFEB downto 1) of std_logic_vector(9 downto 0);
+  type   dcfeb_fifo_cnt_type is array (NFEB downto 1) of std_logic_vector(10 downto 0);
   signal dcfeb_fifo_wr_cnt : dcfeb_fifo_cnt_type;
   signal dcfeb_fifo_rd_cnt : dcfeb_fifo_cnt_type;
 
-  signal alct_fifo_wr_cnt, tmb_fifo_wr_cnt : std_logic_vector(9 downto 0);
-  signal alct_fifo_rd_cnt, tmb_fifo_rd_cnt : std_logic_vector(9 downto 0);
+  signal alct_fifo_wr_cnt, tmb_fifo_wr_cnt : std_logic_vector(10 downto 0);
+  signal alct_fifo_rd_cnt, tmb_fifo_rd_cnt : std_logic_vector(10 downto 0);
 
   signal dcfeb_fifo_empty  : std_logic_vector(NFEB downto 1);
   signal dcfeb_fifo_aempty : std_logic_vector(NFEB downto 1);
@@ -2226,7 +2226,7 @@ begin
       ALMOST_FULL_OFFSET      => X"0080",    -- Sets almost full threshold
       ALMOST_EMPTY_OFFSET     => X"0080",    -- Sets the almost empty threshold
       DATA_WIDTH              => 18,  -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
-      FIFO_SIZE               => "18Kb",     -- Target BRAM, "18Kb" or "36Kb" 
+      FIFO_SIZE               => "36Kb",     -- Target BRAM, "18Kb" or "36Kb" 
       FIRST_WORD_FALL_THROUGH => false)  -- Sets the FIFO FWFT to TRUE or FALSE
 
     port map (
@@ -2255,7 +2255,7 @@ begin
       ALMOST_FULL_OFFSET      => X"0080",    -- Sets almost full threshold
       ALMOST_EMPTY_OFFSET     => X"0080",    -- Sets the almost empty threshold
       DATA_WIDTH              => 18,  -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
-      FIFO_SIZE               => "18Kb",     -- Target BRAM, "18Kb" or "36Kb" 
+      FIFO_SIZE               => "36Kb",     -- Target BRAM, "18Kb" or "36Kb" 
       FIRST_WORD_FALL_THROUGH => false)  -- Sets the FIFO FWFT to TRUE or FALSE
 
     port map (
@@ -2846,7 +2846,7 @@ begin
         ALMOST_EMPTY_OFFSET     => X"0080",  -- Sets the almost empty threshold
 --        DATA_WIDTH              => 16,  -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
         DATA_WIDTH              => 18,  -- Valid values are 1-72 (37-72 only valid when FIFO_SIZE="36Kb")
-        FIFO_SIZE               => "18Kb",   -- Target BRAM, "18Kb" or "36Kb" 
+        FIFO_SIZE               => "36Kb",   -- Target BRAM, "18Kb" or "36Kb" 
         FIRST_WORD_FALL_THROUGH => false)  -- Sets the FIFO FWFT to TRUE or FALSE
 
       port map (
