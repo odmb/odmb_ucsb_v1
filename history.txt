@@ -6,6 +6,14 @@
 =                                                                    =
 ======================================================================
 
+V01-07: 21 May 2013, Manuel
+--------------------------------
+QPLL locks after setting QPLL_AUTORESTART and QPLL_RESET properly.
+Extended the FIFO in DDUFIO to arbitrary length.
+Migrated CONFREGS.VHD to VMECONFREGS.VHD, and set up and tested 
+the calibration pulses.
+Applied RESYNC to both DCFEB and CAFIFO counters.
+
 V01-06: 8 May 2013, Manuel
 --------------------------------
 Connected DMB_RECEIVER to the 12 fibers and 160 MHz, and the test FIFOs.

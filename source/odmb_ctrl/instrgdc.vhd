@@ -64,12 +64,10 @@ begin  -- INSTRGDC_Arch
     variable NUM : integer range 0 to 47;
     variable MASK : std_logic_vector(47 downto 0) := (others => '0');
   begin
-    if (FSEL'event) then
       NUM := to_integer(unsigned(FSEL));   -- the bit to set to 1
       MASK := (others => '0');          -- clear the mask
       MASK(NUM) := '1';                 -- then set the one bit to 1
       F <= MASK(47 downto 1);                        -- assign the mask to F
-    end if;
   end process;
 
 end INSTRGDC_Arch;

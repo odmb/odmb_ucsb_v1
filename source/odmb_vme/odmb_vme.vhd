@@ -34,7 +34,7 @@ entity ODMB_VME is
 
 -- Clock
 
-    clk80  : in std_logic;            -- For testctrl (80MHz)
+    clk80  : in std_logic;              -- For testctrl (80MHz)
     clk    : in std_logic;              -- NEW (fastclk -> 40MHz)
     clk_s1 : in std_logic;              -- NEW (midclk -> fastclk/4 -> 10MHz)
     clk_s2 : in std_logic;              -- NEW (slowclk -> midclk/4 -> 2.5MHz)
@@ -122,10 +122,8 @@ entity ODMB_VME is
 -- From/To QPLL
 
     qpll_autorestart : out std_logic;
-    qpll_mode        : out std_logic;
-    qpll_extcontrol  : out std_logic;
     qpll_reset       : out std_logic;
-    qpll_f0sel       : out std_logic_vector(3 downto 0);
+    qpll_f0sel       : in std_logic_vector(3 downto 0);
     qpll_locked      : in  std_logic;
     qpll_error       : in  std_logic;
 
@@ -154,9 +152,9 @@ entity ODMB_VME is
     tfifo_sel   : out std_logic_vector(7 downto 0);
     tfifo_mode  : out std_logic;
 
-    odmb_ctrl : out std_logic_vector(15 downto 0);
+    odmb_ctrl  : out std_logic_vector(15 downto 0);
     dcfeb_ctrl : out std_logic_vector(15 downto 0);
-    odmb_data : in  std_logic_vector(15 downto 0);
+    odmb_data  : in  std_logic_vector(15 downto 0);
 
     -- TESTCTRL
     tc_l1a         : out std_logic;
@@ -167,19 +165,24 @@ entity ODMB_VME is
     ddu_data_valid : in  std_logic;
     tc_run         : out std_logic;
     ts_out         : out std_logic_vector(31 downto 0);
-    dduclk         : in std_logic;
+    dduclk         : in  std_logic;
 
     -- VMECONFREGS outputs
     ALCT_PUSH_DLY : out std_logic_vector(4 downto 0);
     TMB_PUSH_DLY  : out std_logic_vector(4 downto 0);
     PUSH_DLY      : out std_logic_vector(4 downto 0);
     LCT_L1A_DLY   : out std_logic_vector(5 downto 0);
+    INJ_DLY       : out std_logic_vector(4 downto 0);
+    EXT_DLY       : out std_logic_vector(4 downto 0);
+    CALLCT_DLY    : out std_logic_vector(3 downto 0);
+    KILL          : out std_logic_vector(NFEB+2 downto 1);
+    CRATEID       : out std_logic_vector(6 downto 0);
 
     -- TESTFIFOS
-    TFF_DATA_OUT : in std_logic_vector(15 downto 0);
-    TFF_WRD_CNT  : in std_logic_vector(11 downto 0);
-    TFF_SEL   : out std_logic_vector(8 downto 1);
-    RD_EN_TFF : out std_logic_vector(8 downto 1)
+    TFF_DATA_OUT : in  std_logic_vector(15 downto 0);
+    TFF_WRD_CNT  : in  std_logic_vector(11 downto 0);
+    TFF_SEL      : out std_logic_vector(8 downto 1);
+    RD_EN_TFF    : out std_logic_vector(8 downto 1)
 
 
     );
@@ -213,7 +216,7 @@ architecture ODMB_VME_architecture of ODMB_VME is
 
   signal outdata_vmemon      : std_logic_vector(15 downto 0);
   signal outdata_vmeconfregs : std_logic_vector(15 downto 0);
-  signal outdata_testfifos : std_logic_vector(15 downto 0);
+  signal outdata_testfifos   : std_logic_vector(15 downto 0);
 
   signal jtag_tck : std_logic_vector(6 downto 0);
 
@@ -235,9 +238,9 @@ architecture ODMB_VME_architecture of ODMB_VME is
 
       DTACK : out std_logic;
 
-      ODMB_CTRL : out std_logic_vector(15 downto 0);
+      ODMB_CTRL  : out std_logic_vector(15 downto 0);
       DCFEB_CTRL : out std_logic_vector(15 downto 0);
-      ODMB_DATA : in  std_logic_vector(15 downto 0)
+      ODMB_DATA  : in  std_logic_vector(15 downto 0)
 
       );
   end component;
@@ -261,40 +264,47 @@ architecture ODMB_VME_architecture of ODMB_VME is
       ALCT_PUSH_DLY : out std_logic_vector(4 downto 0);
       TMB_PUSH_DLY  : out std_logic_vector(4 downto 0);
       PUSH_DLY      : out std_logic_vector(4 downto 0);
-      LCT_L1A_DLY   : out std_logic_vector(5 downto 0)
+      LCT_L1A_DLY   : out std_logic_vector(5 downto 0);
+
+      INJ_DLY    : out std_logic_vector(4 downto 0);
+      EXT_DLY    : out std_logic_vector(4 downto 0);
+      CALLCT_DLY : out std_logic_vector(3 downto 0);
+
+      KILL    : out std_logic_vector(NFEB+2 downto 1);
+      CRATEID : out std_logic_vector(6 downto 0)
       );
   end component;
 
   component TESTFIFOS is
-  port (
+    port (
 
-    SLOWCLK : in std_logic;
-    RST     : in std_logic;
+      SLOWCLK : in std_logic;
+      RST     : in std_logic;
 
-    DEVICE  : in std_logic;
-    STROBE  : in std_logic;
-    COMMAND : in std_logic_vector(9 downto 0);
+      DEVICE  : in std_logic;
+      STROBE  : in std_logic;
+      COMMAND : in std_logic_vector(9 downto 0);
 
-    INDATA  : in  std_logic_vector(15 downto 0);
-    OUTDATA : out std_logic_vector(15 downto 0);
+      INDATA  : in  std_logic_vector(15 downto 0);
+      OUTDATA : out std_logic_vector(15 downto 0);
 
-    DTACK : out std_logic;
+      DTACK : out std_logic;
 
-    TFF_DATA_OUT : in std_logic_vector(15 downto 0);
-    TFF_WRD_CNT  : in std_logic_vector(11 downto 0);
+      TFF_DATA_OUT : in std_logic_vector(15 downto 0);
+      TFF_WRD_CNT  : in std_logic_vector(11 downto 0);
 
-    TFF_SEL   : out std_logic_vector(8 downto 1);
-    RD_EN_TFF : out std_logic_vector(8 downto 1)
-    );
-end component;
+      TFF_SEL   : out std_logic_vector(8 downto 1);
+      RD_EN_TFF : out std_logic_vector(8 downto 1)
+      );
+  end component;
 
-component TESTCTRL is
+  component TESTCTRL is
     generic (
       NFEB : integer range 1 to 7 := 7  -- Number of DCFEBS, 7 in the final design
       );    
     port (
       CLK     : in std_logic;
-      DDUCLK     : in std_logic;
+      DDUCLK  : in std_logic;
       SLOWCLK : in std_logic;
       RST     : in std_logic;
 
@@ -701,8 +711,8 @@ begin
     port map (
 
       CLK     => clk,
-      DDUCLK  => clk80, -- Ideally, it'd be DDUCLK, but for some reason it does
-                        -- not work
+      DDUCLK  => clk80,  -- Ideally, it'd be DDUCLK, but for some reason it does
+      -- not work
       SLOWCLK => clk_s2,
       RST     => rst,
 
@@ -740,14 +750,14 @@ begin
 
       DTACK => vme_dtack_b,
 
-      ODMB_CTRL => odmb_ctrl,
+      ODMB_CTRL  => odmb_ctrl,
       DCFEB_CTRL => dcfeb_ctrl,
-      ODMB_DATA => odmb_data
+      ODMB_DATA  => odmb_data
 
       );
 
 
-  VMECONFREGS_PM  : VMECONFREGS
+  VMECONFREGS_PM : VMECONFREGS
     port map (
 
       SLOWCLK => CLK_S2 ,
@@ -764,10 +774,17 @@ begin
       ALCT_PUSH_DLY => ALCT_PUSH_DLY,
       TMB_PUSH_DLY  => TMB_PUSH_DLY ,
       PUSH_DLY      => PUSH_DLY ,
-      LCT_L1A_DLY   => LCT_L1A_DLY
+      LCT_L1A_DLY   => LCT_L1A_DLY,
+
+      INJ_DLY    => INJ_DLY,
+      EXT_DLY    => EXT_DLY,
+      CALLCT_DLY => CALLCT_DLY,
+
+      KILL    => KILL,
+      CRATEID => CRATEID
       );
 
-  TESTFIFOS_PM  : TESTFIFOS
+  TESTFIFOS_PM : TESTFIFOS
     port map (
 
       SLOWCLK => CLK_S2 ,
@@ -780,8 +797,8 @@ begin
       INDATA  => VME_DATA_IN ,
       OUTDATA => OUTDATA_TESTFIFOS ,
 
-      DTACK         => VME_DTACK_B ,
-      
+      DTACK => VME_DTACK_B ,
+
       TFF_DATA_OUT => TFF_DATA_OUT,
       TFF_WRD_CNT  => TFF_WRD_CNT,
       TFF_SEL      => TFF_SEL,
@@ -793,7 +810,7 @@ begin
 
 -- lvmb_pon <= "00000000";
 -- pon_load <= '0';
-    pon_oe_b <= '0';
+  pon_oe_b <= '0';
 -- lvmb_csb <= "0000000";               
 -- lvmb_sclk <= '0';
 -- lvmb_sdin <= '0';                    
@@ -801,53 +818,50 @@ begin
 
 -- To/From O-DMB ADC
 
-    adc_cs    <= '0';
-    adc_sclk  <= '0';
-    adc_sdain <= '0';
+  adc_cs    <= '0';
+  adc_sclk  <= '0';
+  adc_sdain <= '0';
 
 -- To/From O-DMB DAC
 
-    dac_cs    <= '0';
-    dac_sclk  <= '0';
-    dac_sdain <= '0';
+  dac_cs    <= '0';
+  dac_sclk  <= '0';
+  dac_sdain <= '0';
 
 -- To/From DCFEB FIFOs
 
-    fifo_wr_ck <= '0';
-    fifo_wr_en <= "000000000";
-    fifo_rw_en <= "000000000";
-    fifo_rm_en <= (others => '1');
-    fifo_tm_en <= "000000000";
+  fifo_wr_ck <= '0';
+  fifo_wr_en <= "000000000";
+  fifo_rw_en <= "000000000";
+  fifo_rm_en <= (others => '1');
+  fifo_tm_en <= "000000000";
 
-    fifo_in <= (others => '0');
+  fifo_in <= (others => '0');
 
 -- To/From DCFEB ADCs and DACs
 
-    dl_spi_cs0 <= "0000000";
-    dl_spi_cs1 <= "0000000";
-    dl_spi_scl <= "0000000";
-    dl_spi_sda <= "0000000";
+  dl_spi_cs0 <= "0000000";
+  dl_spi_cs1 <= "0000000";
+  dl_spi_scl <= "0000000";
+  dl_spi_sda <= "0000000";
 
 -- Token To/From DCFEB FF-EMU 
 
-    dl_tkn <= "0000000";
+  dl_tkn <= "0000000";
 
 -- I2C control signals To/From DCFEB FF-EMU (CFEBI2C)
 
-    dl_i2c_scl <= "0000000";
-    dl_i2c_sda <= "0000000";
+  dl_i2c_scl <= "0000000";
+  dl_i2c_sda <= "0000000";
 
 -- reprogram To DCFEB FPGA (CFEBPRG)
 
-    dl_reprogram <= "0000000";
+  dl_reprogram <= "0000000";
 
 -- From/To QPLL
 
-    qpll_autorestart <= '0';
-    qpll_mode        <= '0';
-    qpll_extcontrol  <= '0';
-    qpll_reset       <= '0';
-    qpll_f0sel       <= "0000";
+  qpll_autorestart <= '1';
+  qpll_reset       <= not rst;
 
-  end ODMB_VME_architecture;
+end ODMB_VME_architecture;
 

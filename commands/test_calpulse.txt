@@ -11,11 +11,32 @@ W  3000  0	Set odmb_ctrl(8) low (Global reset now really off)
 == ================ Send Resync ================ ==
 W  3010  1	Set dcfeb_ctrl(0) high (Resync on)   
 W  3010  0	Reset dcfeb_ctrl(0) high (Resync on)   
+
 == ================ Send Injpls ================ ==
 W  3010  1fe	Set dcfeb_ctrl(1) high (Injplse and Extplse on)   
-R  3014  0 (read dcfeb_ctrl)
-R  3014  0 (read dcfeb_ctrl)    
-R  3014  0 (read dcfeb_ctrl)   
-R  3014  0 (read dcfeb_ctrl)    
+R  3014  0 	Read dcfeb_ctrl
+R  3014  0 	Read dcfeb_ctrl   
+R  3014  0 	Read dcfeb_ctrl  
+R  3014  0 	Read dcfeb_ctrl   
+   	 	
+== ================ Setting delays ================ ==
+W  4000  C	Set LCT_L1A_DLY   
+W  4010  1f	Set INJ_DLY
+W  4014  1f	Set EXT_DLY   
+W  4018  f	Set CALLCT_DLY
+
+R  4400  00	Read LCT_L1A_DLY   
+R  4410  00	Read INJ_DLY
+R  4414  00	Read EXT_DLY   
+R  4418  00	Read CALLCT_DLY
+   	 	
+== ================ Send Injpls ================ ==
+W  3010  0	Set dcfeb_ctrl(1) low (Injplse and Extplse off)   
+W  3010  1fe	Set dcfeb_ctrl(1) high (Injplse and Extplse on)   
+R  3014  0 	Read dcfeb_ctrl
+R  3014  0 	Read dcfeb_ctrl   
+R  3014  0 	Read dcfeb_ctrl  
+R  3014  0 	Read dcfeb_ctrl   
    	 	
 0  0  0	 	End of file
+ 
