@@ -288,7 +288,7 @@ architecture ODMB_V6_V2_TB_arch of ODMB_V6_V2_TB is
 
         qpll_autorestart : out std_logic;
         qpll_reset       : out std_logic;
-        qpll_f0sel       : out std_logic_vector(3 downto 0);
+        qpll_f0sel       : in std_logic_vector(3 downto 0);
         qpll_locked      : in  std_logic;
         qpll_error       : in  std_logic;
         qpll_clk40MHz_p  : in  std_logic;
