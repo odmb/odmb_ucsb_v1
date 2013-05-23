@@ -149,7 +149,7 @@ architecture CONTROL_arch of CONTROL is
   signal OEFIFO_B_D_D, OEFIFO_B_D_D_D : std_logic_vector(NFEB+2 downto 1);
 
 -- PAGE 6
-  signal DATA_A, DATA_B, DATA_C, DATA_D : std_logic_vector(15 downto 0);
+  signal DATA_A, DATA_B, DATA_C, DATA_D : std_logic_vector(15 downto 0):=(others=>'0');
   signal DONE, LAST_RST : std_logic;
   signal LAST : std_logic := '0';
 
@@ -157,7 +157,7 @@ architecture CONTROL_arch of CONTROL is
   signal DATANOEND, DAVNODATA, DAVNODATA_D, ERRORD : std_logic_vector(NFEB+2 downto 1);
   signal NOEND_RST, NOEND_CEO, NOEND_TC, RSTCNT : std_logic;
   signal NOEND : std_logic_vector(15 downto 0);
-  signal CRC, REG_CRC : std_logic_vector(23 downto 0);
+  signal CRC, REG_CRC : std_logic_vector(23 downto 0) := (others => '0');
   signal CRCEN, CRCEN_D, CRCEN_Q : std_logic;
   signal DATA_CRC : std_logic_vector(15 downto 0);
   signal TAIL78, DTAIL78, DTAIL7, DTAIL8 : std_logic;
@@ -190,7 +190,8 @@ begin
   
 --  DAV <= 'L';
   
-  GEMPTY_TMP <= cafifo_l1a_dav(8) or cafifo_l1a_dav(9);
+  GEMPTY_TMP <= or_reduce(cafifo_l1a_dav);
+  --GEMPTY_TMP <= cafifo_l1a_dav)(8) or cafifo_l1a_dav(9);
   
   DATAIN_LAST_TMP <= '1' when (DATAIN(11 downto 0) = "000000001000") else '0';
   
@@ -474,12 +475,13 @@ begin
   begin
     IFD_1(DATAIN(K), CLK, DATA_A(K));
     FD(DATA_B(K), CLK, DATA_C(K));    
-    FD(DATA_D(K), CLK, DOUT(K));
+    FDC(DATA_D(K), CLK, RST, DOUT(K));
   end generate GEN_DOUT;
   DATA_B <= DATA_A    when (DODAT='1') else 
             DATA_HDR  when (DOHDR='1') else
             DATA_TAIL when (DOTAIL='1');
   DATA_D <= DATA_CRC when (DTAIL78='1') else DATA_C;
+
 
 -- Generate DONE / Generate LAST (new, page 6)
   FDCE_1(DATAIN_LAST, CLK, DOEALL, LAST_RST, LAST);
@@ -535,14 +537,14 @@ begin
   FD(DTAIL7, CLK, DTAIL8);
   CRCEN_D <= OEHDRA or OEHDRB or TAILA;
   FDC(CRCEN_D, CLK, RST, CRCEN_Q);
-  CRCEN <= '1' when (((CRCEN_Q or OEDATA) = '1') and DISDAV='0') else '0';
+  CRCEN <= '1' when (((CRCEN_Q or OEDATA_DD) = '1') and DISDAV_DD='0') else '0';
   DATA_CRC(10 downto 0) <= REG_CRC(10 downto 0) when (DTAIL7='1') else 
                            REG_CRC(21 downto 11) when (DTAIL8='1') else
                            (others => '0');
   DATA_CRC(11) <= REG_CRC(22) when (DTAIL7='1') else 
                   REG_CRC(23) when (DTAIL8='1') else
                   '0';
-  DATA_CRC(15 downto 12) <= (others => '0');
+  DATA_CRC(15 downto 12) <= "1110";
 
 -- End Of Frame to DDUFIFO
   FD(DTAIL8, CLK, EOF);

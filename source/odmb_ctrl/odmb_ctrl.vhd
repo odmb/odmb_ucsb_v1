@@ -98,6 +98,7 @@ entity ODMB_CTRL is
 -- To DDUFIFO
     gl_pc_tx_ack : in std_logic;
     dduclk       : in std_logic;
+    pcclk       : in std_logic;
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
     alct_dv     : in std_logic;
@@ -894,7 +895,7 @@ begin
     generic map(NFEB => NFEB)
     port map(
 
-      CLK    => clk40,                  -- CLKDDU?
+      CLK    => dduclk,                  -- CLKDDU?
       CLKCMS => clk40,
       RST    => reset,
       STATUS => status,
@@ -954,8 +955,8 @@ begin
 --gtx1_data <= gtx_data;                                                                                      
 --gtx1_data_valid <= gtx_data_valid; 
 
-  gtx0_data       <= ddu_data;
-  gtx0_data_valid <= ddu_data_valid;
+  gtx0_data       <= gtx_data;
+  gtx0_data_valid <= gtx_data_valid_inner;
   gtx1_data       <= ddu_data;
   gtx1_data_valid <= ddu_data_valid;
 
@@ -966,8 +967,8 @@ begin
 
     port map(
 
-      clk_in  => clk40,
-      clk_out => dduclk,
+      clk_in  => dduclk,
+      clk_out => pcclk,
       rst     => reset,
 
       tx_ack => gl_pc_tx_ack,

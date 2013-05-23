@@ -74,6 +74,7 @@ architecture ddufifo_architecture of ddufifo is
   signal fifo_wr_cnt, fifo_rd_cnt : fifo_cnt_type;
 
   signal pck_cnt_out : std_logic_vector(7 downto 0);
+  signal int_clk : std_logic := '0';
   
 begin
 
@@ -91,11 +92,13 @@ begin
 --        dv_out   => fifo_wren(NFIFO),
 --        data_out => fifo_in(NFIFO));
 --
+
+    int_clk <= clk_in;      
     fifo_wrck(NFIFO) <= clk_in;
     fifo_wren(NFIFO) <= dv_in;
     fifo_in(NFIFO) <= ld_in & ld_in & data_in;
 
-    fifo_rdck(NFIFO) <= clk_out;
+    fifo_rdck(NFIFO) <= int_clk;
     fifo_rden(NFIFO) <= not (fifo_empty(NFIFO) or fifo_full(NFIFO-1));
 
 
@@ -130,10 +133,10 @@ GEN_FIFO_M : for I in NFIFO-1 downto 2 generate
   begin
 
     fifo_wren(I) <= not (fifo_empty(I+1) or fifo_full(I));
-    fifo_wrck(I) <= clk_out;
+    fifo_wrck(I) <= int_clk;
     fifo_in(I) <= fifo_out(I+1);
     fifo_rden(I) <= not (fifo_empty(I) or fifo_full(I-1));
-    fifo_rdck(I) <= clk_out;
+    fifo_rdck(I) <= int_clk;
 
     FIFO_MOD : FIFO_DUALCLOCK_MACRO
     generic map (
@@ -164,7 +167,7 @@ GEN_FIFO_M : for I in NFIFO-1 downto 2 generate
   end generate GEN_FIFO_M;
 
 fifo_wren(1) <= not (fifo_empty(2) or fifo_full(1));
-fifo_wrck(1) <= clk_out;
+fifo_wrck(1) <= int_clk;
 fifo_in(1) <= fifo_out(2);
 fifo_rden(1) <= f0_rden;
 fifo_rdck(1) <= clk_out;

@@ -269,6 +269,27 @@ architecture bdf_type of ODMB_V6_V2 is
 
   end component;
 
+  component daq_ddu_out is
+    generic (
+      SIM_SPEEDUP : integer := 0
+      );
+    port (
+      RST          : in  std_logic;
+      -- External signals
+      RX_DDU_N     : in  std_logic;     -- GTX receive data in - signal
+      RX_DDU_P     : in  std_logic;     -- GTX receive data in + signal
+      TX_DDU_N     : out std_logic;     -- GTX transmit data out - signal
+      TX_DDU_P     : out std_logic;     -- GTX transmit data out + signal
+      -- Reference clocks ideally straight from the IBUFDS_GTXE1 output
+      REF_CLK_80   : in std_logic;     -- 80 MHz for DDU data rate
+      -- Internal signals
+      TXD          : in  std_logic_vector(15 downto 0);  -- Data to be transmitted
+      TXD_VLD      : in  std_logic;     -- Flag for valid data;
+      DDU_DATA_CLK : out std_logic  -- Clock that should be used for passing data and controls to this module
+      );
+  end component;
+
+
   component daq_optical_out is
     generic (
       USE_CHIPSCOPE : integer := 1;
@@ -504,6 +525,8 @@ architecture bdf_type of ODMB_V6_V2 is
 
 -- To DDUFIFO
       gl_pc_tx_ack : in std_logic;
+      pcclk       : in std_logic;
+-- To CONTROL
       dduclk       : in std_logic;
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
@@ -662,35 +685,6 @@ architecture bdf_type of ODMB_V6_V2 is
       fifo_in  : out std_logic_vector (15 downto 0);
       fifo_out : in  std_logic_vector (15 downto 0);
 
--- To/From DCFEB ADCs and DACs
-
-      dl_spi_cs0  : out std_logic_vector(6 downto 0);
-      dl_spi_cs1  : out std_logic_vector(6 downto 0);
-      dl_spi_scl  : out std_logic_vector(6 downto 0);
-      dl_spi_sda  : out std_logic_vector(6 downto 0);
-      ul_spi_scl  : in  std_logic_vector(6 downto 0);
-      ul_spi_sda  : in  std_logic_vector(6 downto 0);
-      ul_spi_busy : in  std_logic_vector(6 downto 0);
-
--- Token To/From DCFEB FF-EMU 
-
-      dl_tkn : out std_logic_vector(6 downto 0);
-      ul_tkn : in  std_logic_vector(6 downto 0);
-
--- I2C control signals To/From DCFEB FF-EMU (CFEBI2C)
-
-      dl_i2c_scl : out std_logic_vector(6 downto 0);
-      dl_i2c_sda : out std_logic_vector(6 downto 0);
-      ul_i2c_scl : in  std_logic_vector(6 downto 0);
-      ul_i2c_sda : in  std_logic_vector(6 downto 0);
-
--- From/To QPLL
-
-      qpll_autorestart : out std_logic;
-      qpll_reset       : out std_logic;
-      qpll_f0sel       : in std_logic_vector(3 downto 0);
-      qpll_locked      : in  std_logic;
-      qpll_error       : in  std_logic;
 
 -- From/To LVMB
 
@@ -950,19 +944,6 @@ end component;
   signal ul_jtag_tck  : std_logic_vector(6 downto 0) := (others => '0');
   signal ul_jtag_tms  : std_logic_vector(6 downto 0) := (others => '0');
   signal ul_jtag_tdi  : std_logic_vector(6 downto 0) := (others => '0');
-  signal dl_spi_cs0   : std_logic_vector(6 downto 0);
-  signal dl_spi_cs1   : std_logic_vector(6 downto 0);
-  signal dl_spi_scl   : std_logic_vector(6 downto 0);
-  signal dl_spi_sda   : std_logic_vector(6 downto 0);
-  signal ul_spi_scl   : std_logic_vector(6 downto 0) := (others => '0');
-  signal ul_spi_sda   : std_logic_vector(6 downto 0) := (others => '0');
-  signal ul_spi_busy  : std_logic_vector(6 downto 0) := (others => '0');
-  signal dl_tkn       : std_logic_vector(6 downto 0);
-  signal ul_tkn       : std_logic_vector(6 downto 0) := (others => '0');
-  signal dl_i2c_scl   : std_logic_vector(6 downto 0);
-  signal dl_i2c_sda   : std_logic_vector(6 downto 0);
-  signal ul_i2c_scl   : std_logic_vector(6 downto 0) := (others => '0');
-  signal ul_i2c_sda   : std_logic_vector(6 downto 0) := (others => '0');
 
 -- TKN Test Signals
 
@@ -1037,7 +1018,9 @@ end component;
   signal gtx0_data_valid_cnt, gtx_data_valid_cnt : std_logic_vector(15 downto 0);
   signal raw_l1a_cnt                             : std_logic_vector(15 downto 0);
 
-  signal gl1_clk, gl1_clk_2, gl1_clk_2_buf, dduclk : std_logic;
+  signal gl1_clk, gl1_clk_2, gl1_clk_2_buf : std_logic;
+  signal gl0_clk, gl0_clk_2, gl0_clk_buf : std_logic;
+  signal ddu_data_clk, dduclk, pcclk : std_logic;
 
 -- From LVDS Test Connector
 
@@ -1301,6 +1284,11 @@ begin
   tph(44)           <= '0';
   tph(46)           <= '0';
 
+-- From/To QPLL
+
+  qpll_autorestart <= '1';
+  qpll_reset       <= not reset;
+
 
   Select_TestPoints : process(diagout_lvdbmon, diagout_cfebjtag, qpll_clk40MHz)
   begin
@@ -1367,12 +1355,14 @@ begin
   reset <= por_reg(31) or not pb(0);
 
 
-  PULLUP_dtack_b : PULLUP
-    port map (O => vme_dtack_v6_b);
-  
-  PULLDOWN_TMS : PULLDOWN
-    port map (O => dcfeb_tms);
+  PULLUP_dtack_b : PULLUP port map (vme_dtack_v6_b);  
+  PULLDOWN_TMS : PULLDOWN port map (dcfeb_tms);
+  GEN_PULLDOWN : for I in 0 to 15 generate
+    begin
+      PULLDOWN_FIFO : PULLDOWN port map (fifo_out(I));
+    end generate GEN_PULLDOWN; 
 
+      
   vme_d00_buf : IOBUF port map (O => vme_data_in(0), IO => vme_data(0), I => vme_data_out(0), T => vme_tovme_b);
   vme_d01_buf : IOBUF port map (O => vme_data_in(1), IO => vme_data(1), I => vme_data_out(1), T => vme_tovme_b);
   vme_d02_buf : IOBUF port map (O => vme_data_in(2), IO => vme_data(2), I => vme_data_out(2), T => vme_tovme_b);
@@ -1462,14 +1452,20 @@ begin
   
   qpll_clk160MHz_buf : IBUFDS_GTXE1 port map (I => qpll_clk160MHz_p, IB => qpll_clk160MHz_n, CEB => logicl,
                                               O => qpll_clk160MHz, ODIV2 => open);
-  gl1_clk_buf : IBUFDS_GTXE1 port map (I => gl1_clk_p, IB => gl1_clk_n, CEB => logicl,
-                                       O => gl1_clk, ODIV2 => gl1_clk_2);
-  --gl1_clk_2_bufg  : BUFG port map (O => gl1_clk_2_buf,  I => gl1_clk_2);
-  gl1_clk_2_bufr      : BUFR port map (O => gl1_clk_2_buf, CE => logich, CLR => logicl, I => gl1_clk_2);
-  dduclk <= gl1_clk_2_buf;
-  --dduclk <= gl1_clk_2;
   qpll_clk160MHz_bufr : BUFR port map (O => clk160, CE => logich, CLR => logicl, I => qpll_clk160MHz);
-  --dduclk <= clk160;
+
+  -- Clock for PC TX
+  gl1_clk_buf_gtxe1 : IBUFDS_GTXE1 port map (I => gl1_clk_p, IB => gl1_clk_n, CEB => logicl,
+                                       O => gl1_clk, ODIV2 => gl1_clk_2);
+  gl1_clk_2_bufr      : BUFR port map (O => gl1_clk_2_buf, CE => logich, CLR => logicl, I => gl1_clk_2);
+  --gl1_clk_2_bufg  : BUFG port map (O => gl1_clk_2_buf,  I => gl1_clk_2);
+  pcclk <= gl1_clk_2_buf;
+
+  -- Clock for DDU TX
+  gl0_clk_buf_gtxe1 : IBUFDS_GTXE1 port map (I => gl0_clk_p, IB => gl0_clk_n, CEB => logicl,
+                                       O => gl0_clk, ODIV2 => gl0_clk_2);
+  gl0_clk_bufr      : BUFR port map (O => gl0_clk_buf, CE => logich, CLR => logicl, I => gl0_clk);
+  dduclk <= gl0_clk_buf;
 
   Divide_Frequency : process(qpll_clk40MHz)
   begin
@@ -1734,36 +1730,6 @@ begin
       fifo_in  => fifo_in,
       fifo_out => fifo_out,
 
--- SPI signals To/From DCFEBs (ADCs and DACs)
-
-      dl_spi_cs0  => dl_spi_cs0,
-      dl_spi_cs1  => dl_spi_cs1,
-      dl_spi_scl  => dl_spi_scl,
-      dl_spi_sda  => dl_spi_sda,
-      ul_spi_scl  => ul_spi_scl,
-      ul_spi_sda  => ul_spi_sda,
-      ul_spi_busy => ul_spi_busy,
-
--- Token signals To/From DCFEBs
-
-      dl_tkn => dl_tkn,
-      ul_tkn => ul_tkn,
-
--- I2C signals To/From DCFEBs (FF-EMU ASICs)
-
-      dl_i2c_scl => dl_i2c_scl,
-      dl_i2c_sda => dl_i2c_sda,
-      ul_i2c_scl => ul_i2c_scl,
-      ul_i2c_sda => ul_i2c_sda,
-
--- From/To QPLL
-
-      qpll_autorestart => qpll_autorestart,  -- NEW!
-      qpll_reset       => qpll_reset,        -- NEW!
-      qpll_f0sel       => qpll_f0sel,        -- NEW!
-      qpll_locked      => qpll_locked,       -- NEW!
-      qpll_error       => qpll_error,        -- NEW!
-
 -- From/To LVMB
 
       lvmb_pon   => int_lvmb_pon,
@@ -1928,6 +1894,7 @@ begin
 -- To DDUFIFO
       gl_pc_tx_ack => gl_pc_tx_ack,
       dduclk       => dduclk,
+      pcclk       => pcclk,
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
       alct_dv     => alct_data_valid,
@@ -2240,7 +2207,7 @@ begin
       WRCOUNT     => alct_fifo_wr_cnt,       -- Output write count
       WRERR       => open,                   -- Output write error
       DI          => eofgen_alct_fifo_in,    -- Input data
-      RDCLK       => clk40,                  -- Input read clock
+      RDCLK       => dduclk,                  -- Input read clock
       RDEN        => data_fifo_re(NFEB+2),   -- Input read enable
       RST         => reset,                  -- Input reset
       WRCLK       => clk40,                  -- Input write clock
@@ -2269,7 +2236,7 @@ begin
       WRCOUNT     => tmb_fifo_wr_cnt,       -- Output write count
       WRERR       => open,                  -- Output write error
       DI          => eofgen_tmb_fifo_in,    -- Input data
-      RDCLK       => clk40,                 -- Input read clock
+      RDCLK       => dduclk,                 -- Input read clock
       RDEN        => data_fifo_re(NFEB+1),  -- Input read enable
       RST         => reset,                 -- Input reset
       WRCLK       => clk40,                 -- Input write clock
@@ -2594,6 +2561,25 @@ begin
   end process;
 
 
+  GIGALINK_DDU_TX_PM : daq_ddu_out 
+    generic map (
+      SIM_SPEEDUP => IS_SIMULATION
+      )
+  port map (
+    RST          => reset,
+    -- External signals
+    RX_DDU_N     => logicl,             -- GTX receive data in - signal
+    RX_DDU_P     => logich,             -- GTX receive data in + signal
+    TX_DDU_N     => gl0_tx_n,           -- GTX transmit data out - signal
+    TX_DDU_P     => gl0_tx_p,           -- GTX transmit data out + signal
+    -- Reference clocks ideally straight from the IBUFDS_GTXE1 output
+    REF_CLK_80   => gl0_clk,            -- 80 MHz for DDU data rate
+    -- Internal signals
+    TXD          => gtx0_data,          -- Data to be transmitted
+    TXD_VLD      => gtx0_data_valid,    -- Flag for valid data;
+    DDU_DATA_CLK => ddu_data_clk  -- Clock that should be used for passing data and controls to this module
+    );
+
 
 
   GIGALINK_PC_TX_PM : daq_optical_out
@@ -2614,8 +2600,8 @@ begin
       DAQ_TX_125REFCLK_DV2 => gl1_clk_2_buf,  -- daq_tx_125refclk_dv2,
       DAQ_TX_160REFCLK     => LOGICL,
       L1A_MATCH            => LOGICL,
-      TXD                  => gtx0_data,
-      TXD_VLD              => gtx0_data_valid,
+      TXD                  => gtx1_data,
+      TXD_VLD              => gtx1_data_valid,
       JDAQ_RATE            => LOGICL,  -- '0' selects clock: 125 MHz (1.25 Gb), '1' selects 160 MHz (3.2 Gb)
       RATE_1_25            => open,
       RATE_3_2             => open,
@@ -2676,7 +2662,8 @@ begin
 
       DMBVME_CLK_S2          => clk2p5,
       DAQ_RX_125REFCLK       => clk40,
-      DAQ_RX_160REFCLK_115_0 => clk160,
+      --DAQ_RX_160REFCLK_115_0 => clk160,
+      DAQ_RX_160REFCLK_115_0 => gl0_clk,
 
       --ORX_01_N => rx_dcfeb_data_n(1),  -- Only for simulation
       --ORX_01_P => rx_dcfeb_data_p(1),  -- Only for simulation
@@ -2861,7 +2848,7 @@ begin
         WRERR       => open,                       -- Output write error
 --        DI          => dcfeb_fifo_in(I),      -- Input data
         DI          => eofgen_dcfeb_fifo_in(I),    -- Input data
-        RDCLK       => clk40,                      -- Input read clock
+        RDCLK       => dduclk,                      -- Input read clock
         RDEN        => data_fifo_re(I),            -- Input read enable
         RST         => reset,                      -- Input reset
         WRCLK       => clk160,                     -- Input write clock

@@ -97,35 +97,6 @@ entity ODMB_VME is
     fifo_in  : out std_logic_vector (15 downto 0);
     fifo_out : in  std_logic_vector (15 downto 0);
 
--- To/From DCFEB ADCs and DACs
-
-    dl_spi_cs0  : out std_logic_vector(6 downto 0);
-    dl_spi_cs1  : out std_logic_vector(6 downto 0);
-    dl_spi_scl  : out std_logic_vector(6 downto 0);
-    dl_spi_sda  : out std_logic_vector(6 downto 0);
-    ul_spi_scl  : in  std_logic_vector(6 downto 0);
-    ul_spi_sda  : in  std_logic_vector(6 downto 0);
-    ul_spi_busy : in  std_logic_vector(6 downto 0);
-
--- Token To/From DCFEB FF-EMU 
-
-    dl_tkn : out std_logic_vector(6 downto 0);
-    ul_tkn : in  std_logic_vector(6 downto 0);
-
--- I2C control signals To/From DCFEB FF-EMU (CFEBI2C)
-
-    dl_i2c_scl : out std_logic_vector(6 downto 0);
-    dl_i2c_sda : out std_logic_vector(6 downto 0);
-    ul_i2c_scl : in  std_logic_vector(6 downto 0);
-    ul_i2c_sda : in  std_logic_vector(6 downto 0);
-
--- From/To QPLL
-
-    qpll_autorestart : out std_logic;
-    qpll_reset       : out std_logic;
-    qpll_f0sel       : in std_logic_vector(3 downto 0);
-    qpll_locked      : in  std_logic;
-    qpll_error       : in  std_logic;
 
 -- From/To LVMB
 
@@ -838,30 +809,9 @@ begin
 
   fifo_in <= (others => '0');
 
--- To/From DCFEB ADCs and DACs
-
-  dl_spi_cs0 <= "0000000";
-  dl_spi_cs1 <= "0000000";
-  dl_spi_scl <= "0000000";
-  dl_spi_sda <= "0000000";
-
--- Token To/From DCFEB FF-EMU 
-
-  dl_tkn <= "0000000";
-
--- I2C control signals To/From DCFEB FF-EMU (CFEBI2C)
-
-  dl_i2c_scl <= "0000000";
-  dl_i2c_sda <= "0000000";
-
 -- reprogram To DCFEB FPGA (CFEBPRG)
 
   dl_reprogram <= "0000000";
-
--- From/To QPLL
-
-  qpll_autorestart <= '1';
-  qpll_reset       <= not rst;
 
 end ODMB_VME_architecture;
 
