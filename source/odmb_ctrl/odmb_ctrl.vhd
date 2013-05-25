@@ -18,6 +18,7 @@ entity ODMB_CTRL is
 
     clk40 : in std_logic;
     clk80 : in std_logic;
+    clk160 : in std_logic;
     reset : in std_logic;
     resync : in std_logic;
 
@@ -99,6 +100,7 @@ entity ODMB_CTRL is
     gl_pc_tx_ack : in std_logic;
     dduclk       : in std_logic;
     pcclk       : in std_logic;
+    eof_data     : in std_logic_vector(NFEB+2 downto 1);
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
     alct_dv     : in std_logic;
@@ -460,6 +462,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
     port(
 
       clk : in std_logic;
+      dcfebclk : in std_logic;
       rst : in std_logic;
       resync : in std_logic;
 
@@ -471,6 +474,7 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
 
       pop : in std_logic;
 
+      eof_data    : in std_logic_vector(NFEB+2 downto 1);
       alct_dv     : in std_logic;
       tmb_dv      : in std_logic;
       dcfeb0_dv   : in std_logic;
@@ -989,6 +993,7 @@ begin
     port map(
 
       clk => clk40,
+      dcfebclk => clk160,
       rst => reset,
       resync => resync,
 
@@ -999,6 +1004,8 @@ begin
       l1a          => cafifo_push,
 --       l1a_match_in => dcfeb_l1a_match,
       l1a_match_in => cafifo_l1a_match_in_inner(NFEB+2 downto 1),
+
+      eof_data  => eof_data,
 
       pop => cafifo_pop,
 

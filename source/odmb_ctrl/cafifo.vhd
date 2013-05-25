@@ -18,6 +18,7 @@ entity cafifo is
   port(
 
     clk : in std_logic;
+    dcfebclk : in std_logic;
     rst : in std_logic;
     resync : in std_logic;
 
@@ -29,6 +30,7 @@ entity cafifo is
 
     pop : in std_logic;
 
+    eof_data    : in std_logic_vector(NFEB+2 downto 1);
     alct_dv     : in std_logic;
     tmb_dv      : in std_logic;
     dcfeb0_dv   : in std_logic;
@@ -67,7 +69,7 @@ architecture cafifo_architecture of cafifo is
   signal alct_l1a_dav, tmb_l1a_dav : std_logic;
   signal dcfeb_dv                  : std_logic_vector(NFEB downto 1);
 
-  type rx_state_type is (RX_IDLE, RX_HEADER, RX_DW);
+  type rx_state_type is (RX_IDLE, RX_HEADER1, RX_HEADER2, RX_DW);
   type rx_state_array_type is array (NFEB+2 downto 1) of rx_state_type;
   signal rx_next_state, rx_current_state           : rx_state_array_type;
   signal alct_rx_next_state, alct_rx_current_state : rx_state_type;
@@ -186,13 +188,13 @@ begin
 
 -- RX FSMs 
 
-  rx_fsm_regs : process (rx_next_state, rst, clk)
+  rx_fsm_regs : process (rx_next_state, rst, dcfebclk)
 
   begin
     for dcfeb_index in 1 to NFEB loop
       if (rst = '1') then
         rx_current_state(dcfeb_index) <= RX_IDLE;
-      elsif rising_edge(clk) then
+      elsif rising_edge(dcfebclk) then
         rx_current_state(dcfeb_index) <= rx_next_state(dcfeb_index);
       end if;
     end loop;
@@ -212,12 +214,18 @@ begin
           dcfeb_fifo_wren(dcfeb_index) <= '0';
           dcfeb_l1a_dav(dcfeb_index)   <= '0';
           if (dcfeb_dv(dcfeb_index) = '1') then
-            rx_next_state(dcfeb_index) <= RX_HEADER;
+            rx_next_state(dcfeb_index) <= RX_HEADER1;
           else
             rx_next_state(dcfeb_index) <= RX_IDLE;
           end if;
           
-        when RX_HEADER =>
+        when RX_HEADER1 =>
+          
+          dcfeb_fifo_wren(dcfeb_index) <= '0';
+          dcfeb_l1a_dav(dcfeb_index)   <= '0';
+          rx_next_state(dcfeb_index)   <= RX_HEADER2;
+          
+        when RX_HEADER2 =>
           
           dcfeb_fifo_wren(dcfeb_index) <= '0';
           dcfeb_l1a_dav(dcfeb_index)   <= '1';
@@ -346,7 +354,7 @@ begin
 
 -- Memory
 
-  l1a_cnt_fifo : process (l1a_cnt_wren, wr_addr_out, wr_addr_en, rd_addr_en, rst, clk)
+  l1a_cnt_fifo : process (l1a_cnt_wren, wr_addr_out, rst, clk, l1a_cnt_out)
 
   begin
     if (rst = '1') then
@@ -363,7 +371,7 @@ begin
 
   cafifo_l1a_cnt <= l1a_cnt(rd_addr_out);
 
-  bx_cnt_fifo : process (l1a_cnt_wren, wr_addr_out, wr_addr_en, rd_addr_en, rst, clk)
+  bx_cnt_fifo : process (l1a_cnt_wren, wr_addr_out, rst, clk, bx_cnt_out)
 
   begin
     if (rst = '1') then
@@ -380,7 +388,7 @@ begin
 
   cafifo_bx_cnt <= bx_cnt(rd_addr_out)(11 downto 0);
 
-  l1a_match_fifo : process (l1a_match_wren, wr_addr_out, wr_addr_en, rd_addr_en, rst, clk)
+  l1a_match_fifo : process (l1a_match_wren, wr_addr_out, rst, clk, l1a_match_in)
 
   begin
     if (rst = '1') then
@@ -397,18 +405,18 @@ begin
 
   cafifo_l1a_match <= l1a_match(rd_addr_out);
 
-  l1a_dav_fifo : process (l1a_cnt, ext_dcfeb_l1a_cnt, dcfeb_l1a_dav, rst, clk)
+  l1a_dav_fifo : process (l1a_cnt, ext_dcfeb_l1a_cnt, dcfeb_l1a_dav, rst, clk, l1a_match_wren)
 
   begin
     if (rst = '1') then
       for index in 0 to FIFO_SIZE-1 loop
         l1a_dav(index) <= (others => '0');
       end loop;
-    elsif rising_edge(clk) then
+    elsif (l1a_match_wren = '1') then
+        l1a_dav(wr_addr_out) <= (others => '0');
+    else
       for index in 0 to FIFO_SIZE-1 loop
         for dcfeb_index in 1 to NFEB loop
---             if (dcfeb_l1a_cnt(dcfeb_index) = l1a_cnt(index)) then
---            l1a_dav(index)(dcfeb_index) <= dcfeb_l1a_dav(dcfeb_index);
           if (ext_dcfeb_l1a_cnt(dcfeb_index) = l1a_cnt(index)) and (dcfeb_l1a_dav(dcfeb_index) = '1') then
             l1a_dav(index)(dcfeb_index) <= '1';
           end if;
@@ -468,7 +476,8 @@ begin
       end loop;
     elsif rising_edge(clk) then
       for index in 0 to FIFO_SIZE-1 loop
-        if (alct_fifo_out(11 downto 0) = l1a_cnt(index)) and (reg_alct_l1a_dav = '1') then
+        --if (alct_fifo_out(11 downto 0) = l1a_cnt(index)) and (reg_alct_l1a_dav = '1') then
+        if (alct_fifo_out(11 downto 0) = l1a_cnt(index)) and (eof_data(9) = '1') then
           l1a_dav_b9_gm(index) <= '1';
         end if;
       end loop;
@@ -526,7 +535,8 @@ begin
       end loop;
     elsif rising_edge(clk) then
       for index in 0 to FIFO_SIZE-1 loop
-        if (tmb_fifo_out(11 downto 0) = l1a_cnt(index)) and (reg_tmb_l1a_dav = '1') then
+        --if (tmb_fifo_out(11 downto 0) = l1a_cnt(index)) and (reg_tmb_l1a_dav = '1') then
+        if (tmb_fifo_out(11 downto 0) = l1a_cnt(index)) and (eof_data(8) = '1') then
           l1a_dav_b8(index) <= '1';
         end if;
       end loop;

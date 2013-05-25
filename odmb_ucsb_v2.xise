@@ -310,6 +310,22 @@
       <association xil_pn:name="BehavioralSimulation"/>
       <association xil_pn:name="Implementation"/>
     </file>
+    <file xil_pn:name="source/daq_optical_out/ddu/gtx_80_ddu_custom_gtx.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="source/daq_optical_out/ddu/double_reset.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="source/daq_optical_out/ddu/gtx_80_ddu_custom.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
+    <file xil_pn:name="source/daq_optical_out/ddu/daq_ddu_out.v" xil_pn:type="FILE_VERILOG">
+      <association xil_pn:name="BehavioralSimulation"/>
+      <association xil_pn:name="Implementation"/>
+    </file>
     <file xil_pn:name="ipcore_dir/test2.xise" xil_pn:type="FILE_COREGENISE">
       <association xil_pn:name="Implementation"/>
     </file>

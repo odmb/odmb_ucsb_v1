@@ -17,7 +17,7 @@ entity dcfeb_v6 is
 port
 	(
 	  clk: IN STD_LOGIC;
-	  clk80: IN STD_LOGIC;
+	  dcfebclk: IN STD_LOGIC;
 	  rst: IN STD_LOGIC;
 	  l1a : IN STD_LOGIC;
 	  l1a_match : IN STD_LOGIC;
@@ -44,7 +44,7 @@ COMPONENT dcfeb_data_gen is
    port(
   
    clk : in std_logic;
-   clk80 : in std_logic;
+   dcfebclk : in std_logic;
    rst : in std_logic;
    l1a : in std_logic;
    l1a_match : in std_logic;
@@ -191,7 +191,7 @@ PMAP_dcfeb_data_gen : dcfeb_data_gen
    port map(
   
 	 clk => clk,
-	 clk80 => clk80,
+	 dcfebclk => dcfebclk,
    rst => rst,
    l1a => l1a,
    l1a_match => l1a_match,

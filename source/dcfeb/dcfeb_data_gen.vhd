@@ -24,7 +24,7 @@ entity dcfeb_data_gen is
   port(
 
     clk       : in std_logic;
-    clk80     : in std_logic;
+    dcfebclk     : in std_logic;
     rst       : in std_logic;
     l1a       : in std_logic;
     l1a_match : in std_logic;
@@ -51,7 +51,7 @@ architecture dcfeb_data_gen_architecture of dcfeb_data_gen is
   signal dw_cnt_en, dw_cnt_rst : std_logic;
   signal l1a_cnt_out           : std_logic_vector(23 downto 0);
   signal dw_cnt_out            : std_logic_vector(11 downto 0);
-  constant dw_n                : std_logic_vector(11 downto 0) := x"320"; -- x"320" -> 800
+  constant dw_n                : std_logic_vector(11 downto 0) := x"008"; -- x"320" -> 800
   signal tx_start              : std_logic;
 
   signal l1a_cnt_l_fifo_in     : std_logic_vector(17 downto 0);
@@ -106,7 +106,7 @@ begin
     if (rst = '1') then
       l1a_cnt_fifo_wr_en <= '0';
     elsif (rising_edge(clk)) then 
-      if (l1a = '1') then
+      if (l1a_match = '1') then
         l1a_cnt_fifo_wr_en <= '1';
       else
         l1a_cnt_fifo_wr_en <= '0';
@@ -117,7 +117,7 @@ begin
 
 -- dw_counter
 
-  dw_cnt : process (clk80, dw_cnt_en, dw_cnt_rst)
+  dw_cnt : process (dcfebclk, dw_cnt_en, dw_cnt_rst)
 
     variable dw_cnt_data : std_logic_vector(11 downto 0);
 
@@ -125,7 +125,7 @@ begin
 
     if (rst = '1') then
       dw_cnt_data := (others => '0');
-    elsif (rising_edge(clk80)) then
+    elsif (rising_edge(dcfebclk)) then
       if (dw_cnt_rst = '1') then
         dw_cnt_data := (others => '0');
       elsif (dw_cnt_en = '1') then
@@ -157,7 +157,7 @@ l1a_cnt_l_fifo : FIFO_DUALCLOCK_MACRO
       WRCOUNT     => l1a_cnt_l_fifo_wrc,         -- Output write count
       WRERR       => open,              -- Output write error
       DI          => l1a_cnt_l_fifo_in,           -- Input data
-      RDCLK       => clk80,           -- Input read clock
+      RDCLK       => dcfebclk,           -- Input read clock
       RDEN        => l1a_cnt_fifo_rd_en,           -- Input read enable
       RST         => rst,               -- Input reset
       WRCLK       => clk,            -- Input write clock
@@ -184,7 +184,7 @@ l1a_cnt_h_fifo : FIFO_DUALCLOCK_MACRO
       WRCOUNT     => l1a_cnt_h_fifo_wrc,         -- Output write count
       WRERR       => open,              -- Output write error
       DI          => l1a_cnt_h_fifo_in,           -- Input data
-      RDCLK       => clk80,           -- Input read clock
+      RDCLK       => dcfebclk,           -- Input read clock
       RDEN        => l1a_cnt_fifo_rd_en,           -- Input read enable
       RST         => rst,               -- Input reset
       WRCLK       => clk,            -- Input write clock
@@ -197,14 +197,15 @@ l1a_cnt_h_fifo : FIFO_DUALCLOCK_MACRO
 --  SRL16_TX_START : SRL16 port map(tx_start, '1', '1', '1', '1', clk, l1a_match);
 
   tx_start_d <= not l1a_cnt_h_fifo_empty;
-  SRL16_TX_START : SRL16 port map(tx_start, '1', '1', '1', '1', clk, tx_start_d);
-
-  fsm_regs : process (next_state, rst, clk80)
+  --SRL16_TX_START : SRL16 port map(tx_start, '0', '0', '0', '1', clk, tx_start_d);
+  FD_TX : FD port map(tx_start, clk, tx_start_d);
+  
+  fsm_regs : process (next_state, rst, dcfebclk)
 
   begin
     if (rst = '1') then
       current_state <= IDLE;
-    elsif rising_edge(clk80) then
+    elsif rising_edge(dcfebclk) then
       current_state <= next_state;
     end if;
 
@@ -216,7 +217,7 @@ l1a_cnt_h_fifo : FIFO_DUALCLOCK_MACRO
     case current_state is
       
       when IDLE =>
-        dcfeb_data <= (others => 'Z');
+        dcfeb_data <= (others => '0');
         dcfeb_dv   <= '0';
         dw_cnt_en  <= '0';
         dw_cnt_rst <= '1';
@@ -266,7 +267,7 @@ l1a_cnt_h_fifo : FIFO_DUALCLOCK_MACRO
 
       when others =>
         l1a_cnt_fifo_rd_en <= '0';
-        dcfeb_data <= (others => 'Z');
+        dcfeb_data <= (others => '0');
         dcfeb_dv   <= '0';
         dw_cnt_en  <= '0';
         dw_cnt_rst <= '1';

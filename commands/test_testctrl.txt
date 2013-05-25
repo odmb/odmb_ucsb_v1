@@ -1,8 +1,8 @@
 == ================ Setting delays ================ ==
 W  4000  C	Set LCT_L1A_DLY   
-W  4004  16	Set TMB_PUSH_DLY
-W  4008  15	Set PUSH_DLY   
-W  400C  16	Set ALCT_PUSH_DLY
+W  4004  1	Set TMB_PUSH_DLY
+W  4008  0	Set PUSH_DLY   
+W  400C  1	Set ALCT_PUSH_DLY
 
 R  4400  00	Read LCT_L1A_DLY   
 R  4404  00	Read TMB_PUSH_DLY  
@@ -103,8 +103,6 @@ R  3008 0	Read flf_data
 W  3000 28	Set flf_ctrl *Time stamp LSB*
 R  3008 0	Read flf_data
 R  1C   0       Read state of FIFOs
-R  2C   0       Read current write address
-R  3C   0       Read current read address
 W  20	14	Select FIFO 3 *Time stamp&quot; and keep runnting
 R  2C   0       Read current write address
 R  3C   0       Read current read address
@@ -198,6 +196,8 @@ W  3000 59	Set flf_ctrl *RE_CNT(9) from CONTROL*
 R  3008 0	Read flf_data
 
 == ================ Reading FIFOs ================ ==
+R  2C   0       Read current write address
+R  3C   0       Read current read address
 R  C 	0	Read FIFO
 R  C 	0	Read FIFO
 R  C 	0	Read FIFO
@@ -206,6 +206,8 @@ R  C 	0	Read FIFO
 R  C 	0	Read FIFO
 R  C 	0	Read FIFO
 R  C 	0	Read FIFO
+R  2C   0       Read current write address
+R  3C   0       Read current read address
 R  C 	0	Read FIFO
 R  C 	0	Read FIFO
 R  C 	0	Read FIFO
@@ -214,6 +216,8 @@ R  C 	0	Read FIFO
 R  C 	0	Read FIFO
 R  C 	0	Read FIFO
 R  C 	0	Read FIFO
+R  2C   0       Read current write address
+R  3C   0       Read current read address
 R  C 	0	Read FIFO
 R  C 	0	Read FIFO
 R  C 	0	Read FIFO

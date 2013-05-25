@@ -410,7 +410,7 @@ architecture bdf_type of ODMB_V6_V2 is
       );  
     port
       (clk           : in  std_logic;
-       clk80         : in  std_logic;
+       dcfebclk         : in  std_logic;
        rst           : in  std_logic;
        l1a           : in  std_logic;
        l1a_match     : in  std_logic;
@@ -446,6 +446,7 @@ architecture bdf_type of ODMB_V6_V2 is
     port (
       clk40 : in std_logic;
       clk80 : in std_logic;
+      clk160 : in std_logic;
       reset : in std_logic;
       resync : in std_logic;
 
@@ -528,6 +529,7 @@ architecture bdf_type of ODMB_V6_V2 is
       pcclk       : in std_logic;
 -- To CONTROL
       dduclk       : in std_logic;
+      eof_data     : in std_logic_vector(NFEB+2 downto 1);
 
 -- From ALCT,TMB,DCFEBs to CAFIFO
       alct_dv     : in std_logic;
@@ -843,6 +845,8 @@ end component;
   signal dcfeb6_data_valid               : std_logic;
 
   signal dcfeb7_fifo_in, dcfeb7_fifo_out : std_logic_vector (15 downto 0);
+
+  signal eof_data  : std_logic_vector (NFEB+2 downto 1);
 
 -- ALCT
 
@@ -1218,8 +1222,8 @@ end component;
   signal ddu_data_valid            : std_logic                     := '0';
 
   signal tc_run                       : std_logic;
-  signal counter_clk, reset_cnt       : integer   := 0;
-  signal clk1, clk2, clk4, clk8       : std_logic := '0';
+  signal counter_clk, counter_clk_gl0, reset_cnt       : integer   := 0;
+  signal clk1, clk2, clk4, clk8, gl0_clk_slow       : std_logic := '0';
   signal clk1_inv, clk2_inv, clk4_inv : std_logic := '1';
   signal ts_out                       : std_logic_vector(31 downto 0);
 
@@ -1264,23 +1268,39 @@ end component;
 begin
 
   odmb_hardrst_b <= '1';
-  tpl            <= (others => '0');
   v6_tck         <= '0';
   v6_tms         <= '0';
   v6_tdi         <= '0';
 
-  tph(27)           <= clk40;
-  tph(28)           <= clk2p5;
+  tpl(15 downto 6) <= (others => '0');
+  tpl(16)           <= int_l1a_match(1);
+  tpl(17)           <= int_l1a_match(2);
+  tpl(18)           <= int_l1a_match(3);
+  tpl(19)           <= int_l1a_match(4);
+  tpl(20)           <= int_l1a_match(5);
+  tpl(21)           <= int_l1a_match(6);
+  tpl(22)           <= int_l1a_match(7);
+  tpl(23)           <= '0';
+
+
+    
+  tph(27)           <= gtx0_data_valid;
+  tph(28)           <= cafifo_l1a_dav(1);
+  tph(41)           <= int_l1a_match(1);
+  tph(42)           <= dcfeb_data_valid(1);
+  
   tph(29)           <= int_l1a;
   tph(30)           <= '0';
-  tph(31)           <= int_l1a_match(1);
-  tph(32)           <= int_l1a_match(2);
-  tph(33)           <= int_l1a_match(3);
-  tph(34)           <= int_l1a_match(4);
-  tph(35)           <= int_l1a_match(5);
-  tph(36)           <= int_l1a_match(6);
-  tph(37)           <= int_l1a_match(7);
-  tph(42 downto 38) <= (others => '0');
+  tph(31)           <= gtx0_data_valid;  
+  tph(32)           <= gtx1_data_valid;  
+  tph(33)           <= cafifo_l1a_dav(1); 
+  tph(34)           <= cafifo_l1a_dav(2); 
+  tph(35)           <= cafifo_l1a_dav(3);
+  tph(36)           <= cafifo_l1a_dav(4);
+  tph(37)           <= '1';
+  tph(38)           <= '1';
+  tph(39)           <= '1';
+  tph(40)           <= '1';
   tph(44)           <= '0';
   tph(46)           <= '0';
 
@@ -1361,6 +1381,7 @@ begin
     begin
       PULLDOWN_FIFO : PULLDOWN port map (fifo_out(I));
     end generate GEN_PULLDOWN; 
+
 
       
   vme_d00_buf : IOBUF port map (O => vme_data_in(0), IO => vme_data(0), I => vme_data_out(0), T => vme_tovme_b);
@@ -1452,7 +1473,8 @@ begin
   
   qpll_clk160MHz_buf : IBUFDS_GTXE1 port map (I => qpll_clk160MHz_p, IB => qpll_clk160MHz_n, CEB => logicl,
                                               O => qpll_clk160MHz, ODIV2 => open);
-  qpll_clk160MHz_bufr : BUFR port map (O => clk160, CE => logich, CLR => logicl, I => qpll_clk160MHz);
+--  qpll_clk160MHz_bufr : BUFR port map (O => clk160, CE => logich, CLR => logicl, I => qpll_clk160MHz);
+  qpll_clk160MHz_bufg : BUFG port map (O => clk160, I => qpll_clk160MHz);
 
   -- Clock for PC TX
   gl1_clk_buf_gtxe1 : IBUFDS_GTXE1 port map (I => gl1_clk_p, IB => gl1_clk_n, CEB => logicl,
@@ -1464,8 +1486,10 @@ begin
   -- Clock for DDU TX
   gl0_clk_buf_gtxe1 : IBUFDS_GTXE1 port map (I => gl0_clk_p, IB => gl0_clk_n, CEB => logicl,
                                        O => gl0_clk, ODIV2 => gl0_clk_2);
-  gl0_clk_bufr      : BUFR port map (O => gl0_clk_buf, CE => logich, CLR => logicl, I => gl0_clk);
+  --gl0_clk_bufr      : BUFR port map (O => gl0_clk_buf, CE => logich, CLR => logicl, I => gl0_clk);
+  gl0_clk_bufg      : BUFG port map (O => gl0_clk_buf, I => gl0_clk);
   dduclk <= gl0_clk_buf;
+  --dduclk <= clk80;
 
   Divide_Frequency : process(qpll_clk40MHz)
   begin
@@ -1488,6 +1512,22 @@ begin
   FD4 : FD port map (clk4, clk8, clk4_inv);
   FD2 : FD port map (clk2, clk4, clk2_inv);
   FD1 : FD port map (clk1, clk2, clk1_inv);
+  
+  Divide_Frequency2 : process(gl0_clk)
+  begin
+    if gl0_clk_buf'event and gl0_clk_buf = '1' then
+      if counter_clk_gl0 = 10000000 then
+        counter_clk_gl0 <= 0;
+        if gl0_clk_slow = '1' then
+          gl0_clk_slow <= '0';
+        else
+          gl0_clk_slow <= '1';
+        end if;
+      else
+        counter_clk_gl0 <= counter_clk_gl0 + 1;
+      end if;
+    end if;
+  end process Divide_Frequency2;
 
 
 -- ------------------------------------------------------------------------------------------------- 
@@ -1800,13 +1840,15 @@ begin
   tc_run_out             <= tc_run;
 
 -- ODMB_CTRL FPGA
-  dcfeb_injpls <= not dcfeb_injpls_b; -- Needed while p and n on the PPIB are reversed
+  --dcfeb_injpls <= not dcfeb_injpls_b; -- Needed while p and n on the PPIB are reversed
+  dcfeb_injpls <=  dcfeb_injpls_b when IS_SIMULATION = 1 else not dcfeb_injpls_b; 
   
   MBC : ODMB_CTRL
     port map (
 
       clk40 => clk40,
       clk80 => clk80,
+      clk160 => clk160,
       reset => reset,
       resync => resync,
 
@@ -1895,7 +1937,8 @@ begin
       gl_pc_tx_ack => gl_pc_tx_ack,
       dduclk       => dduclk,
       pcclk       => pcclk,
-
+      eof_data => eof_data,
+      
 -- From ALCT,TMB,DCFEBs to CAFIFO
       alct_dv     => alct_data_valid,
       tmb_dv      => tmb_data_valid,
@@ -2243,6 +2286,8 @@ begin
       WREN        => eofgen_tmb_data_valid  -- Input write enable
 --      WREN        => tmb_fifo_wr_en       -- Input write enable
       );
+  eof_data(9) <= eofgen_alct_fifo_in(17);
+  eof_data(8) <= eofgen_tmb_fifo_in(17);
 
 
 -- TMB
@@ -2662,8 +2707,8 @@ begin
 
       DMBVME_CLK_S2          => clk2p5,
       DAQ_RX_125REFCLK       => clk40,
-      --DAQ_RX_160REFCLK_115_0 => clk160,
-      DAQ_RX_160REFCLK_115_0 => gl0_clk,
+      DAQ_RX_160REFCLK_115_0 => clk160,
+      --DAQ_RX_160REFCLK_115_0 => gl0_clk,
 
       --ORX_01_N => rx_dcfeb_data_n(1),  -- Only for simulation
       --ORX_01_P => rx_dcfeb_data_p(1),  -- Only for simulation
@@ -2748,21 +2793,21 @@ begin
   begin
 
     dcfeb_data_valid(I) <= rx_dcfeb_data_valid(I) when (rx_dcfeb_sel = '1') else gen_dcfeb_data_valid(I);
+    dcfeb_data(I) <= rx_dcfeb_data(I) when (rx_dcfeb_sel = '1') else gen_dcfeb_data(I);
 
     rx_dcfeb_data_p(I) <= orx_dcfeb_data_p(I) when (opt_dcfeb_sel = '1') else gen_dcfeb_data_p(I);
     rx_dcfeb_data_n(I) <= orx_dcfeb_data_n(I) when (opt_dcfeb_sel = '1') else gen_dcfeb_data_n(I);
 
     dcfeb_fifo_in(I) <= fifo_in when ((fifo_rm_en(I) = '0') and (fifo_rw_en(I) = '0')) else
                         fifo_out         when ((fifo_rm_en(I) = '0') and (fifo_rw_en(I) = '1')) else
-                        rx_dcfeb_data(I) when (rx_dcfeb_sel = '1')                              else
-                        gen_dcfeb_data(I);
+                        dcfeb_data(I);
 
     DCFEB_V6_PM : DCFEB_V6
       generic map(
         dcfeb_addr => dcfeb_addr(I))
       port map(
         clk           => clk40,
-        clk80         => clk160,
+        dcfebclk      => clk160,
         rst           => reset,
         l1a           => int_l1a,
         l1a_match     => int_l1a_match(I),
@@ -2814,7 +2859,8 @@ begin
     --    DAQ_DATA_CLK         => dcfeb_daq_data_clk(I));
 
 
-    EOFGEN_PM : EOFGEN
+   eof_data(I) <= eofgen_dcfeb_fifo_in(I)(17);
+   EOFGEN_PM : EOFGEN
       port map (
 
         clk => clk160,
@@ -2997,9 +3043,9 @@ begin
     case led_current_state is
       when LED_IDLE =>
         ledg(1) <= clk2;
-        ledg(2) <= not qpll_locked;
+        ledg(2) <= gl0_clk_slow;
         ledg(3) <= not pll1_locked;
-        ledg(4) <= not tc_run_hardcode;
+        ledg(4) <= not qpll_locked;
         ledg(5) <= not rx_dcfeb_sel;
         ledg(6) <= not pb(0);
 

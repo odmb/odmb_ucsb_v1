@@ -682,8 +682,7 @@ begin
     port map (
 
       CLK     => clk,
-      DDUCLK  => clk80,  -- Ideally, it'd be DDUCLK, but for some reason it does
-      -- not work
+      DDUCLK  => dduclk,  -- Ideally, it'd be DDUCLK
       SLOWCLK => clk_s2,
       RST     => rst,
 
