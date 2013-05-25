@@ -1020,7 +1020,7 @@ end component;
   signal gtx1_data                               : std_logic_vector(15 downto 0);
   signal gtx1_data_valid                         : std_logic;
   signal gtx0_data_valid_cnt, gtx_data_valid_cnt : std_logic_vector(15 downto 0);
-  signal raw_l1a_cnt                             : std_logic_vector(15 downto 0);
+  signal int_l1a_cnt                             : std_logic_vector(15 downto 0);
 
   signal gl1_clk, gl1_clk_2, gl1_clk_2_buf : std_logic;
   signal gl0_clk, gl0_clk_2, gl0_clk_buf : std_logic;
@@ -1222,8 +1222,8 @@ end component;
   signal ddu_data_valid            : std_logic                     := '0';
 
   signal tc_run                       : std_logic;
-  signal counter_clk, counter_clk_gl0, reset_cnt       : integer   := 0;
-  signal clk1, clk2, clk4, clk8, gl0_clk_slow       : std_logic := '0';
+  signal counter_clk, counter_clk_gl0,  counter_clk160, reset_cnt       : integer   := 0;
+  signal clk1, clk2, clk4, clk8, gl0_clk_slow, clk160_slow       : std_logic := '0';
   signal clk1_inv, clk2_inv, clk4_inv : std_logic := '1';
   signal ts_out                       : std_logic_vector(31 downto 0);
 
@@ -1513,10 +1513,10 @@ begin
   FD2 : FD port map (clk2, clk4, clk2_inv);
   FD1 : FD port map (clk1, clk2, clk1_inv);
   
-  Divide_Frequency2 : process(gl0_clk)
+  Divide_Frequency_gl0 : process(gl0_clk_buf)
   begin
     if gl0_clk_buf'event and gl0_clk_buf = '1' then
-      if counter_clk_gl0 = 10000000 then
+      if counter_clk_gl0 = 20000000 then
         counter_clk_gl0 <= 0;
         if gl0_clk_slow = '1' then
           gl0_clk_slow <= '0';
@@ -1527,7 +1527,23 @@ begin
         counter_clk_gl0 <= counter_clk_gl0 + 1;
       end if;
     end if;
-  end process Divide_Frequency2;
+  end process Divide_Frequency_gl0;
+
+  Divide_Frequency_160 : process(clk160)
+  begin
+    if clk160'event and clk160 = '1' then
+      if counter_clk160 = 20000000 then
+        counter_clk160 <= 0;
+        if clk160_slow = '1' then
+          clk160_slow <= '0';
+        else
+          clk160_slow <= '1';
+        end if;
+      else
+        counter_clk160 <= counter_clk160 + 1;
+      end if;
+    end if;
+  end process Divide_Frequency_160;
 
 
 -- ------------------------------------------------------------------------------------------------- 
@@ -2916,12 +2932,12 @@ begin
     end if;
   end process;
 
-  raw_l1a_cnt_proc : process (raw_l1a, reset)
+  int_l1a_cnt_proc : process (int_l1a, reset)
   begin
     if (reset = '1') then
-      raw_l1a_cnt <= (others => '0');
-    elsif (rising_edge(raw_l1a)) then
-      raw_l1a_cnt <= raw_l1a_cnt + 1;
+      int_l1a_cnt <= (others => '0');
+    elsif (rising_edge(int_l1a)) then
+      int_l1a_cnt <= int_l1a_cnt + 1;
     end if;
   end process;
 
@@ -3002,7 +3018,7 @@ begin
   --      ledg(5)          <= not rx_dcfeb_sel;
   --      ledg(6)          <= not pb(0);
 
-  --      ledr(4 downto 1) <= not raw_l1a_cnt(3 downto 0);
+  --      ledr(4 downto 1) <= not int_l1a_cnt(3 downto 0);
   --      ledr(5)          <= not opt_dcfeb_sel;
   --      ledr(6)          <= not pb(1);
   --  end if;
@@ -3042,16 +3058,16 @@ begin
   begin
     case led_current_state is
       when LED_IDLE =>
-        ledg(1) <= clk2;
+        ledg(1) <= clk1;
         ledg(2) <= gl0_clk_slow;
-        ledg(3) <= not pll1_locked;
+        ledg(3) <= clk160_slow;
         ledg(4) <= not qpll_locked;
-        ledg(5) <= not rx_dcfeb_sel;
-        ledg(6) <= not pb(0);
+        ledg(5) <= not pll1_locked;
+        ledg(6) <= not rx_dcfeb_sel;
 
-        ledr(4 downto 1) <= not raw_l1a_cnt(3 downto 0);
+        ledr(4 downto 1) <= not int_l1a_cnt(3 downto 0);
         ledr(5)          <= not opt_dcfeb_sel;
-        ledr(6)          <= not pb(1);
+        ledr(6)          <= not pb(0);
 
         if (reset = '0' and reset_q = '1') then
           led_next_state <= LED_COUNTING;
@@ -3179,7 +3195,7 @@ begin
       when x"3C" => odmb_data <= "0000" & cafifo_bx_cnt;
       when x"3D" => odmb_data <= "00000000" & cafifo_rd_addr & cafifo_wr_addr;
       when x"3E" => odmb_data <= "0000000" & cafifo_l1a_match_in;
-      when x"3F" => odmb_data <= raw_l1a_cnt;
+      when x"3F" => odmb_data <= int_l1a_cnt;
 
       when x"41" => odmb_data <= into_cafifo_dav_cnt(1);
       when x"42" => odmb_data <= into_cafifo_dav_cnt(2);
