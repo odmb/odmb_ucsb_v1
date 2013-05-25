@@ -168,13 +168,13 @@ begin
   dcfeb_l1a_cnt(6) <= dcfeb5_data(11 downto 0) when (dcfeb5_dv = '1') else (others => '0');
   dcfeb_l1a_cnt(7) <= dcfeb6_data(11 downto 0) when (dcfeb6_dv = '1') else (others => '0');
 
-  l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, clk)
+  l1a_cnt_regs : process (dcfeb_l1a_cnt, rst, dcfebclk, reg_dcfeb_l1a_cnt)
 
   begin
     for index_dcfeb in 1 to NFEB loop
       if (rst = '1') then
         reg_dcfeb_l1a_cnt(index_dcfeb) <= (others => '0');
-      elsif rising_edge(clk) then
+      elsif rising_edge(dcfebclk) then
         reg_dcfeb_l1a_cnt(index_dcfeb) <= dcfeb_l1a_cnt(index_dcfeb);
       end if;
       ext_dcfeb_l1a_cnt(index_dcfeb) <= reg_dcfeb_l1a_cnt(index_dcfeb) & dcfeb_l1a_cnt(index_dcfeb);
@@ -222,13 +222,13 @@ begin
         when RX_HEADER1 =>
           
           dcfeb_fifo_wren(dcfeb_index) <= '0';
-          dcfeb_l1a_dav(dcfeb_index)   <= '0';
+          dcfeb_l1a_dav(dcfeb_index)   <= '1';
           rx_next_state(dcfeb_index)   <= RX_HEADER2;
           
         when RX_HEADER2 =>
           
           dcfeb_fifo_wren(dcfeb_index) <= '0';
-          dcfeb_l1a_dav(dcfeb_index)   <= '1';
+          dcfeb_l1a_dav(dcfeb_index)   <= '0';
           rx_next_state(dcfeb_index)   <= RX_DW;
           
         when RX_DW =>
@@ -405,7 +405,7 @@ begin
 
   cafifo_l1a_match <= l1a_match(rd_addr_out);
 
-  l1a_dav_fifo : process (l1a_cnt, ext_dcfeb_l1a_cnt, dcfeb_l1a_dav, rst, clk, l1a_match_wren)
+  l1a_dav_fifo : process (l1a_cnt, ext_dcfeb_l1a_cnt, dcfeb_l1a_dav, rst, dcfebclk, l1a_match_wren)
 
   begin
     if (rst = '1') then
@@ -414,7 +414,7 @@ begin
       end loop;
     elsif (l1a_match_wren = '1') then
         l1a_dav(wr_addr_out) <= (others => '0');
-    else
+    elsif(falling_edge(dcfebclk)) then
       for index in 0 to FIFO_SIZE-1 loop
         for dcfeb_index in 1 to NFEB loop
           if (ext_dcfeb_l1a_cnt(dcfeb_index) = l1a_cnt(index)) and (dcfeb_l1a_dav(dcfeb_index) = '1') then
