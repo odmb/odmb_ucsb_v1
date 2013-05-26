@@ -993,7 +993,7 @@ R13
 !s100 hkDYjaXaRX3Vo_9CYWjUe0
 !i10b 1
 Ecafifo
-Z28 w1369418099
+Z28 w1369525761
 Z29 DPx4 work 8 hdlmacro 0 22 NR1oezWEK2dQm5WBaIRV80
 Z30 DPx8 unimacro 11 vcomponents 0 22 >N9ETzig:kSg:fTAGz^H42
 R16
@@ -1003,19 +1003,19 @@ R3
 R4
 R1
 R5
-Z32 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/cafifo.vhd
-Z33 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/cafifo.vhd
+Z32 8C:\Users\odmb\Documents\LocalFW\odmb_ucsb_v1\source\odmb_ctrl\cafifo.vhd
+Z33 FC:\Users\odmb\Documents\LocalFW\odmb_ucsb_v1\source\odmb_ctrl\cafifo.vhd
 l0
 L13
-VNkhCKKkk^7nFR]nX4hL@g3
+VanGTCc[<TVROT<][bmjb41
 R8
 32
-Z34 !s108 1369418105.777000
-Z35 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/cafifo.vhd|
-Z36 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/cafifo.vhd|
+Z34 !s108 1369525769.464000
+Z35 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:\Users\odmb\Documents\LocalFW\odmb_ucsb_v1\source\odmb_ctrl\cafifo.vhd|
+Z36 !s107 C:\Users\odmb\Documents\LocalFW\odmb_ucsb_v1\source\odmb_ctrl\cafifo.vhd|
 R12
 R13
-!s100 j]Imd9JT`X[g^=Cf2_=DR3
+!s100 dO]YSL<on=L?Cj1ck4KHo0
 !i10b 1
 Acafifo_architecture
 R29
@@ -1026,18 +1026,18 @@ R2
 R3
 R4
 R1
-DEx4 work 6 cafifo 0 22 NkhCKKkk^7nFR]nX4hL@g3
-32
-l133
-L67
-VdZ>QU?Kd];HCl<dZKBZlK3
+DEx4 work 6 cafifo 0 22 anGTCc[<TVROT<][bmjb41
+l136
+L70
+V@Q=DNLG291Q3Q;i::[liz1
 R8
+32
 R34
 R35
 R36
 R12
 R13
-!s100 KnUALX2Nk>h`Jc7APgRd31
+!s100 5iPQhkQIzhl7Z2V4Q:UXW0
 !i10b 1
 Ecalibtrg
 Z37 w1369167897
@@ -4401,9 +4401,9 @@ vfile_handler
 VE<``f=_Qa@YiTb<WY6obg1
 r1
 31
-IZa3D0AnEEBNF=ee90`jzC2
+IY]R]3Rk2a?0mWFmT2R6TR3
 R5
-w1369419810
+w1369450984
 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/file_handler.v
 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/file_handler.v
 L0 2
@@ -4412,8 +4412,8 @@ R65
 !s85 0
 !s90 -reportprogress|300|-work|work|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/file_handler.v|
 !i10b 1
-!s100 gHL_ikPVDg8K67EhPFGdQ3
-!s108 1369419815.709000
+!s100 Vc75=PmH^>B_ZRz49[Jh33
+!s108 1369450987.122000
 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/file_handler.v|
 vfile_handler_event
 V8Kz[aL4EOK`kgD2B6e^?]0
@@ -8022,7 +8022,7 @@ R13
 !s100 o1C8QB@mzoR;6az@VgPA[1
 !i10b 1
 Eodmb_ctrl
-Z199 w1369417961
+Z199 w1369526019
 R2
 R1
 R3
@@ -8033,15 +8033,15 @@ Z200 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vh
 Z201 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd
 l0
 L11
-VDY:@K28LRI=3^A5fXiRgH3
+V:d7OSCeiO:g@`gU<HNcZX0
 R8
 32
-Z202 !s108 1369418032.207000
+Z202 !s108 1369526027.285000
 Z203 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd|
 Z204 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/odmb_ctrl.vhd|
 R12
 R13
-!s100 U?jh=gjGHUa;]_dL^D7<^2
+!s100 EzWMVS;2a>>^H>E<[gzNL0
 !i10b 1
 Aodmb_ctrl_arch
 R2
@@ -8049,21 +8049,21 @@ R1
 R3
 R4
 R38
-DEx4 work 9 odmb_ctrl 0 22 DY:@K28LRI=3^A5fXiRgH3
-32
-l699
-L171
-VXoed2[LXAaCzFG32@IRnM3
+DEx4 work 9 odmb_ctrl 0 22 :d7OSCeiO:g@`gU<HNcZX0
+l706
+L175
+VFMgA7j::lR`Z<WlbThjR02
 R8
+32
 R202
 R203
 R204
 R12
 R13
-!s100 V2jkFS;gWN6c^hjOdGegI0
+!s100 blNb3ZFF`@L^]b0VJIL`a2
 !i10b 1
 Eodmb_v6_v2
-Z205 w1369436007
+Z205 w1369526181
 R29
 R30
 R16
@@ -8080,15 +8080,15 @@ Z207 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_v6_v2.vhd
 l0
 L27
 V;dTbm=ddG3zhnPkDS^Y3m3
+!s100 `BhLe`Wg]N8l:^g`Anf533
 R8
 32
-Z208 !s108 1369436365.692000
+!i10b 1
+Z208 !s108 1369526190.795000
 Z209 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_v6_v2.vhd|
 Z210 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_v6_v2.vhd|
 R12
 R13
-!s100 `BhLe`Wg]N8l:^g`Anf533
-!i10b 1
 Abdf_type
 R29
 R30
@@ -8100,21 +8100,21 @@ R2
 R1
 R3
 R4
-DEx4 work 10 odmb_v6_v2 0 22 ;dTbm=ddG3zhnPkDS^Y3m3
-32
-l1268
+Z211 DEx4 work 10 odmb_v6_v2 0 22 ;dTbm=ddG3zhnPkDS^Y3m3
+l1275
 L203
-VILHPlDI?B9H6fC:3PK6ng3
+VCKlGB>hCCkj?:f9_e1mdQ0
+!s100 I3Qb:mj7kZWa^9KU4Hnk92
 R8
+32
+!i10b 1
 R208
 R209
 R210
 R12
 R13
-!s100 HB:JIPCN_fXW`NEQCcCV>3
-!i10b 1
 Eodmb_v6_v2_tb
-Z211 w1369255462
+Z212 w1369255462
 R16
 R30
 R2
@@ -8124,16 +8124,16 @@ R31
 R3
 R4
 R5
-Z212 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd
-Z213 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd
+Z213 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd
+Z214 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd
 l0
 L36
 V7^;be8K5TW]Qm56]@VQA31
 R8
 32
-Z214 !s108 1369255470.842000
-Z215 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd|
-Z216 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd|
+Z215 !s108 1369255470.842000
+Z216 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd|
+Z217 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/odmb_v6_v2_tb.vhd|
 R12
 R13
 !s100 6fSbe3?J5W3_<z73BIQ0B1
@@ -8153,51 +8153,51 @@ l895
 L46
 Vd3QJDj>PEf_6lHe<[29OO0
 R8
-R214
 R215
 R216
+R217
 R12
 R13
 !s100 ;ZKV9L[4de2lO6SdJAkhj3
 !i10b 1
 Eodmb_vme
-Z217 w1369366234
+Z218 w1369519924
 R1
 R2
 R3
 R4
 R5
-Z218 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd
-Z219 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd
+Z219 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd
+Z220 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd
 l0
 L5
-VcbmW;38bPjSBzKFh8]SHS3
+V6EfWc1_3S3XjLCO`d`a]L3
 R8
 32
-Z220 !s108 1369366420.602000
-Z221 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd|
-Z222 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd|
+Z221 !s108 1369519929.883000
+Z222 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd|
+Z223 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/odmb_vme.vhd|
 R12
 R13
-!s100 mKP;SMzMSQL_J2A>1=7cX0
+!s100 b=_C;EeBSHjg>V`nR>0W<2
 !i10b 1
 Aodmb_vme_architecture
 R1
 R2
 R3
 R4
-DEx4 work 8 odmb_vme 0 22 cbmW;38bPjSBzKFh8]SHS3
-32
-l499
-L164
-VY74JkIC5nnfk3gJlgQGHh1
+DEx4 work 8 odmb_vme 0 22 6EfWc1_3S3XjLCO`d`a]L3
+l501
+L165
+Vcab@n=jX9`jU2njXndf_F0
 R8
-R220
+32
 R221
 R222
+R223
 R12
 R13
-!s100 NZSnQjWdCG_J?AlQ3GLHB2
+!s100 :zmHjSkn9PIk=[nz7F<IB3
 !i10b 1
 Eofd
 R14
@@ -9250,22 +9250,22 @@ R13
 !s100 9UhdfkIe6^LLVDCPhnKNa3
 !i10b 1
 Eot_mgr
-Z223 w1366879777
+Z224 w1366879777
 R1
 R2
 R3
 R4
 R5
-Z224 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/ot_mgr.vhd
-Z225 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/ot_mgr.vhd
+Z225 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/ot_mgr.vhd
+Z226 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/ot_mgr.vhd
 l0
 L6
 VhGhH0n1Q_:EdP3BEASJG>0
 R8
 32
-Z226 !s108 1369070854.203000
-Z227 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/ot_mgr.vhd|
-Z228 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/ot_mgr.vhd|
+Z227 !s108 1369070854.203000
+Z228 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/ot_mgr.vhd|
+Z229 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/ot_mgr.vhd|
 R12
 R13
 !s100 ^^OVT_oVYI=Az<I=TlH8:3
@@ -9281,9 +9281,9 @@ L29
 V1=1<ZGH5AZB`6KF1>W]5`1
 R8
 32
-R226
 R227
 R228
+R229
 R12
 R13
 !s100 5LM68=<BXb>_ES0DXCYUL1
@@ -9325,21 +9325,21 @@ R65
 !s85 0
 !i10b 1
 Epulse_edge
-Z229 w1369184956
+Z230 w1369184956
 R16
 R3
 R4
 R5
-Z230 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/pulse_edge.vhd
-Z231 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/pulse_edge.vhd
+Z231 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/pulse_edge.vhd
+Z232 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/pulse_edge.vhd
 l0
 L8
 V1?Y1A_:=7_Igf3aT8ocec3
 R8
 32
-Z232 !s108 1369243387.018000
-Z233 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/pulse_edge.vhd|
-Z234 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/pulse_edge.vhd|
+Z233 !s108 1369243387.018000
+Z234 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/pulse_edge.vhd|
+Z235 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/pulse_edge.vhd|
 R12
 R13
 !s100 <KTQ6`lHkaD;RPen_E7TI2
@@ -9354,9 +9354,9 @@ l20
 L16
 VA=2Ee_V8UTLQFY7UL9d1:0
 R8
-R232
 R233
 R234
+R235
 R12
 R13
 !s100 OT^0OlJ72MO`d1k5EmQMl1
@@ -9479,7 +9479,7 @@ R13
 !s100 ALcEKJ8H=lVR6haF1l^P40
 !i10b 1
 Erandomtrg
-Z235 w1365110634
+Z236 w1365110634
 R1
 R2
 R29
@@ -9489,16 +9489,16 @@ R3
 R4
 R16
 R5
-Z236 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd
-Z237 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd
+Z237 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd
+Z238 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd
 l0
 L9
 V9_24>`QOV1m6::2[=2Im[1
 R8
 32
-Z238 !s108 1369070855.841000
-Z239 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd|
-Z240 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd|
+Z239 !s108 1369070855.841000
+Z240 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd|
+Z241 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/randomtrg.vhd|
 R12
 R13
 !s100 9BjUCo?HKM6Gj6?Zb[M[I2
@@ -9518,9 +9518,9 @@ l106
 L38
 V0OV<6Nh94L06Lz:D5dhQA1
 R8
-R238
 R239
 R240
+R241
 R12
 R13
 !s100 bNzPf@S5YDU^V]=B^<`Jh2
@@ -10636,16 +10636,16 @@ R3
 R4
 R1
 R5
-Z241 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/test_controller.vhd
-Z242 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/test_controller.vhd
+Z242 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/test_controller.vhd
+Z243 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/test_controller.vhd
 l0
 L18
 VO7OT=gL=2]U5zcR5L0ehL1
 R8
 32
-Z243 !s108 1369070855.202000
-Z244 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/test_controller.vhd|
-Z245 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/test_controller.vhd|
+Z244 !s108 1369070855.202000
+Z245 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/test_controller.vhd|
+Z246 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/test_controller.vhd|
 R12
 R13
 !s100 ]ZoFHeL9e2izYndVY9i]l2
@@ -10661,15 +10661,15 @@ l79
 L66
 V5o1FUamhXz4=m0Vlzf2K^0
 R8
-R243
 R244
 R245
+R246
 R12
 R13
 !s100 NR0V<n1W4z?`2WSF_jM`a1
 !i10b 1
 Etestctrl
-Z246 w1369371443
+Z247 w1369371443
 R30
 R31
 R2
@@ -10678,16 +10678,16 @@ R3
 R4
 R38
 R5
-Z247 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd
-Z248 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd
+Z248 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd
+Z249 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd
 l0
 L9
 V<W]m[BC6EC=gnm2Nc=l_j3
 R8
 32
-Z249 !s108 1369372603.095000
-Z250 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd|
-Z251 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd|
+Z250 !s108 1369372603.095000
+Z251 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd|
+Z252 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testctrl.vhd|
 R12
 R13
 !s100 n^Zz=chQmca60DS2lBG3E2
@@ -10706,30 +10706,30 @@ l106
 L41
 VMVMRG5UVR^6Yk^hz:57322
 R8
-R249
 R250
 R251
+R252
 R12
 R13
 !s100 mOMcHa?n4TVG6ZENJ7X0S2
 !i10b 1
 Etestfifos
-Z252 w1368013850
+Z253 w1368013850
 R31
 R3
 R4
 R16
 R5
-Z253 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd
-Z254 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd
+Z254 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd
+Z255 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd
 l0
 L10
 VIHb_i0ZF>]G:Lc?MYe_Wg1
 R8
 32
-Z255 !s108 1369070858.556000
-Z256 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd|
-Z257 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd|
+Z256 !s108 1369070858.556000
+Z257 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd|
+Z258 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/testfifos.vhd|
 R12
 R13
 !s100 1X;IefRgMB<FkP?TTjP5m1
@@ -10745,31 +10745,31 @@ l57
 L36
 Vg9LKnb9SiH>me3CRDf9PM0
 R8
-R255
 R256
 R257
+R258
 R12
 R13
 !s100 >6>Qld=JmULWYPVH?<`RO0
 !i10b 1
 Etrgcntrl
-Z258 w1369168997
+Z259 w1369168997
 R45
 R46
 R3
 R4
 R16
 R5
-Z259 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd
-Z260 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd
+Z260 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd
+Z261 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd
 l0
 L11
 VAfg4oFD71;bYM7b[kMP2S3
 R8
 32
-Z261 !s108 1369169013.605000
-Z262 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd|
-Z263 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd|
+Z262 !s108 1369169013.605000
+Z263 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd|
+Z264 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgcntrl.vhd|
 R12
 R13
 !s100 A8W`R2Ta3dEPP4VaidF9e3
@@ -10786,31 +10786,31 @@ l63
 L43
 V^dR423T8F28JeJkEW8dRb0
 R8
-R261
 R262
 R263
+R264
 R12
 R13
 !s100 T@@k_[oK>F4^Dl;ZoVTze2
 !i10b 1
 Etrgsel
-R235
+R236
 R45
 R46
 R3
 R4
 R16
 R5
-Z264 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd
-Z265 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd
+Z265 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd
+Z266 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd
 l0
 L8
 VZf_gn7mVBIcACA<;_CzmA3
 R8
 32
-Z266 !s108 1369070847.105000
-Z267 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd|
-Z268 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd|
+Z267 !s108 1369070847.105000
+Z268 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd|
+Z269 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_ctrl/trgsel.vhd|
 R12
 R13
 !s100 ^McY4HdhIWF8;;NRkL[@_3
@@ -10827,9 +10827,9 @@ l32
 L26
 Vm15S]>zZgQD2NHLg8?@;P0
 R8
-R266
 R267
 R268
+R269
 R12
 R13
 !s100 YkCD:H1S0020mGfU6?78M0
@@ -10871,22 +10871,22 @@ R65
 !s85 0
 !i10b 1
 Evme_master
-Z269 w1367082519
+Z270 w1367082519
 R2
 R3
 R4
 R1
 R5
-Z270 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/vme_master.vhd
-Z271 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/vme_master.vhd
+Z271 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/vme_master.vhd
+Z272 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/vme_master.vhd
 l0
 L8
 VLXm2D@d[a1ReKC@@n[3U91
 R8
 32
-Z272 !s108 1369070855.295000
-Z273 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/vme_master.vhd|
-Z274 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/vme_master.vhd|
+Z273 !s108 1369070855.295000
+Z274 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/vme_master.vhd|
+Z275 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/modelsim/vme_master.vhd|
 R12
 R13
 !s100 mlHXfXZeCD<ofH9Q_WKFn2
@@ -10902,30 +10902,30 @@ l73
 L52
 VDW5m:Q3hodKMn947SOcMi2
 R8
-R272
 R273
 R274
+R275
 R12
 R13
 !s100 M3[a=RR0Fin5XYobFl0?C2
 !i10b 1
 Evme_outdata_sel
-Z275 w1368013851
+Z276 w1368013851
 R2
 R3
 R4
 R1
 R5
-Z276 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd
-Z277 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd
+Z277 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd
+Z278 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd
 l0
 L8
 V5HGk0bX7zkASEH0PbN>VU1
 R8
 32
-Z278 !s108 1369070845.857000
-Z279 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd|
-Z280 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd|
+Z279 !s108 1369070845.857000
+Z280 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd|
+Z281 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vme_outdata_sel.vhd|
 R12
 R13
 !s100 BHiUDhUB<Sk7OnbLT`b550
@@ -10941,30 +10941,30 @@ l27
 L25
 V6Qdz9=BlUd:h`PiCdk97[2
 R8
-R278
 R279
 R280
+R281
 R12
 R13
 !s100 3LOX1TkLZ]@1M7dJiGUT^0
 !i10b 1
 Evmeconfregs
-Z281 w1369162405
+Z282 w1369162405
 R31
 R3
 R4
 R16
 R5
-Z282 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd
-Z283 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd
+Z283 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd
+Z284 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd
 l0
 L10
 VW27PJ^G3YBXlI4WX6^H]22
 R8
 32
-Z284 !s108 1369162492.293000
-Z285 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd|
-Z286 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd|
+Z285 !s108 1369162492.293000
+Z286 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd|
+Z287 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmeconfregs.vhd|
 R12
 R13
 !s100 hI^CA^9[Wh^T3@Dba1VWg3
@@ -10980,49 +10980,51 @@ l94
 L44
 VYXYRF2HifbSBJXBZjf2;M0
 R8
-R284
 R285
 R286
+R287
 R12
 R13
 !s100 7Ro2eQ8kV@i5mX_]5@b3O1
 !i10b 1
 Evmemon
-Z287 w1368738116
+Z288 w1369522798
+R31
 R3
 R4
 R16
 R5
-Z288 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd
-Z289 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd
+Z289 8C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd
+Z290 FC:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd
 l0
-L9
-VzJZzhPPE>cA7H2XXY22Z53
+L10
+V`PSK`a?4B`N^j2:O4B:<<1
 R8
 32
-Z290 !s108 1369070845.202000
-Z291 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd|
-Z292 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd|
+Z291 !s108 1369525888.214000
+Z292 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd|
+Z293 !s107 C:/Users/odmb/Documents/LocalFW/odmb_ucsb_v1/source/odmb_vme/vmemon.vhd|
 R12
 R13
-!s100 kXLKl^o:aMUd1RO9C1Sl:2
+!s100 oD6Ldn5LYZ1]EV=kKBo0z0
 !i10b 1
 Avmemon_arch
+R31
 R3
 R4
 R16
-DEx4 work 6 vmemon 0 22 zJZzhPPE>cA7H2XXY22Z53
-32
-l45
-L32
-VYT5MQNQ;bObN1Cd;e1@?z3
+DEx4 work 6 vmemon 0 22 `PSK`a?4B`N^j2:O4B:<<1
+l52
+L34
+ViNGH4mEO5b62TfElcRKNO3
 R8
-R290
+32
 R291
 R292
+R293
 R12
 R13
-!s100 @5O0724CT6;@dhH^FL5901
+!s100 _BmSbm`X8j0cd9PMWeN@N3
 !i10b 1
 Exnor6
 R14

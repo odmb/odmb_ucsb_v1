@@ -521,6 +521,9 @@ architecture bdf_type of ODMB_V6_V2 is
       cafifo_l1a_dav       : out std_logic_vector(NFEB+2 downto 1);
       cafifo_bx_cnt        : out std_logic_vector(11 downto 0);
 
+    ext_dcfeb_l1a_cnt1 : out std_logic_vector(23 downto 0);
+    dcfeb_l1a_dav1  : out std_logic;    
+    
       cafifo_wr_addr : out std_logic_vector(3 downto 0);
       cafifo_rd_addr : out std_logic_vector(3 downto 0);
 
@@ -713,6 +716,7 @@ architecture bdf_type of ODMB_V6_V2 is
       tfifo_sel   : out std_logic_vector(8 downto 1);
       tfifo_mode  : out std_logic;
 
+      tp_sel     : out std_logic_vector(15 downto 0);
       odmb_ctrl  : out std_logic_vector(15 downto 0);
       dcfeb_ctrl : out std_logic_vector(15 downto 0);
       odmb_data  : in  std_logic_vector(15 downto 0);
@@ -918,6 +922,8 @@ end component;
   type   dav_state_array_type is array (NFEB+2 downto 1) of dav_state_type;
   signal dav_next_state, dav_current_state  : dav_state_array_type;
 
+    signal ext_dcfeb_l1a_cnt1 :  std_logic_vector(23 downto 0);
+    signal dcfeb_l1a_dav1  :  std_logic;    
 
   type   gap_cnt_type is array (NFEB downto 1) of std_logic_vector(15 downto 0);
   signal lct_l1a_gap                       : gap_cnt_type;
@@ -935,6 +941,7 @@ end component;
 
   signal flf_cnt_sel    : std_logic_vector(4 downto 0);
   signal flf_error      : std_logic_vector(7 downto 1);
+  signal tp_sel_reg  : std_logic_vector(15 downto 0) := (others => '0');
   signal odmb_ctrl_reg  : std_logic_vector(15 downto 0) := (others => '0');
   signal dcfeb_ctrl_reg : std_logic_vector(15 downto 0) := (others => '0');
   signal odmb_data      : std_logic_vector(15 downto 0);
@@ -1284,10 +1291,70 @@ begin
 
 
     
-  tph(27)           <= gtx0_data_valid;
-  tph(28)           <= cafifo_l1a_dav(1);
-  tph(41)           <= int_l1a_match(1);
-  tph(42)           <= dcfeb_data_valid(1);
+  tp_selector : process (tp_sel_reg, gtx0_data_valid, cafifo_l1a_dav, int_l1a_match, dcfeb_data_valid)
+  begin
+    case tp_sel_reg is
+      when x"0000" =>
+        tph(27) <= gtx0_data_valid;
+        tph(28) <= cafifo_l1a_dav(1);
+        tph(41) <= int_l1a_match(1);
+        tph(42) <= dcfeb_data_valid(1);
+
+      when x"0001" =>
+        tph(27) <= int_l1a_match(1);
+        tph(28) <= cafifo_l1a_dav(1);
+        tph(41) <= dcfeb_data(1)(0);
+        tph(42) <= dcfeb_data_valid(1);
+
+      when x"0002" =>
+        tph(27) <= int_l1a_match(2);
+        tph(28) <= cafifo_l1a_dav(2);
+        tph(41) <= dcfeb_data(2)(0);
+        tph(42) <= dcfeb_data_valid(2);
+
+      when x"0003" =>
+        tph(27) <= int_l1a_match(3);
+        tph(28) <= cafifo_l1a_dav(3);
+        tph(41) <= dcfeb_data(3)(0);
+        tph(42) <= dcfeb_data_valid(3);
+
+      when x"0004" =>
+        tph(27) <= int_l1a_match(4);
+        tph(28) <= cafifo_l1a_dav(4);
+        tph(41) <= dcfeb_data(4)(0);
+        tph(42) <= dcfeb_data_valid(4);
+
+      when x"0005" =>
+        tph(27) <= int_l1a_match(5);
+        tph(28) <= cafifo_l1a_dav(5);
+        tph(41) <= dcfeb_data(5)(0);
+        tph(42) <= dcfeb_data_valid(5);
+
+      when x"0006" =>
+        tph(27) <= int_l1a_match(6);
+        tph(28) <= cafifo_l1a_dav(6);
+        tph(41) <= dcfeb_data(6)(0);
+        tph(42) <= dcfeb_data_valid(6);
+
+      when x"0007" =>
+        tph(27) <= int_l1a_match(7);
+        tph(28) <= cafifo_l1a_dav(7);
+        tph(41) <= dcfeb_data(7)(0);
+        tph(42) <= dcfeb_data_valid(7);
+
+      when x"0008" =>
+        tph(27) <= ext_dcfeb_l1a_cnt1(0);
+        tph(28) <= dcfeb_l1a_dav1;
+        tph(41) <= dcfeb_data(1)(0);
+        tph(42) <= dcfeb_data_valid(1);
+
+      when others =>
+        tph(27) <= gtx0_data_valid;
+        tph(28) <= cafifo_l1a_dav(1);
+        tph(41) <= int_l1a_match(1);
+        tph(42) <= dcfeb_data_valid(1);
+    end case;
+  end process;
   
   tph(29)           <= int_l1a;
   tph(30)           <= '0';
@@ -1811,6 +1878,7 @@ begin
       tfifo_sel   => tfifo_sel,
       tfifo_mode  => tfifo_mode,
 
+      tp_sel     => tp_sel_reg,
       odmb_ctrl  => odmb_ctrl_reg,
       dcfeb_ctrl => dcfeb_ctrl_reg,
       odmb_data  => odmb_data,
@@ -1948,6 +2016,8 @@ begin
       cafifo_bx_cnt        => cafifo_bx_cnt,
       cafifo_wr_addr       => cafifo_wr_addr,
       cafifo_rd_addr       => cafifo_rd_addr,
+    ext_dcfeb_l1a_cnt1 => ext_dcfeb_l1a_cnt1,
+    dcfeb_l1a_dav1  => dcfeb_l1a_dav1,    
 
 -- To DDUFIFO
       gl_pc_tx_ack => gl_pc_tx_ack,
@@ -3092,7 +3162,7 @@ begin
         ledr(4) <= clk1;
         ledr(5) <= clk2;
         ledr(6) <= clk4;
-        if (led_cnt > 3000000) then
+        if (led_cnt > 4000000) then
           led_next_state <= LED_IDLE;
           led_cnt_rst    <= '0';
           led_cnt_en     <= '0';

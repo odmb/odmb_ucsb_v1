@@ -6,6 +6,11 @@
 =                                                                    =
 ======================================================================
 
+V01-08: 25 May 2013, Manuel
+--------------------------------
+Fixed CAFIFO so that now we are able to transmit real DCFEB data to
+the TESTCNTRL, both from TESTCNTRL triggers and calibration pulses.
+
 V01-07: 21 May 2013, Manuel
 --------------------------------
 QPLL locks after setting QPLL_AUTORESTART and QPLL_RESET properly.
