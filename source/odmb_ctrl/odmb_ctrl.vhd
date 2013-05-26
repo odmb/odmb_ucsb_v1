@@ -96,6 +96,10 @@ entity ODMB_CTRL is
     cafifo_wr_addr : out std_logic_vector(3 downto 0);
     cafifo_rd_addr : out std_logic_vector(3 downto 0);
 
+    ext_dcfeb_l1a_cnt1 : out std_logic_vector(23 downto 0);
+    dcfeb_l1a_dav1  : out std_logic;    
+    
+
 -- To DDUFIFO
     gl_pc_tx_ack : in std_logic;
     dduclk       : in std_logic;
@@ -501,7 +505,10 @@ architecture ODMB_CTRL_arch of ODMB_CTRL is
       cafifo_l1a_dav   : out std_logic_vector(NFEB+2 downto 1);
       cafifo_bx_cnt    : out std_logic_vector(11 downto 0);
 
-      cafifo_wr_addr : out std_logic_vector(3 downto 0);
+     ext_dcfeb_l1a_cnt1 : out std_logic_vector(23 downto 0);
+     dcfeb_l1a_dav1  : out std_logic;    
+
+     cafifo_wr_addr : out std_logic_vector(3 downto 0);
       cafifo_rd_addr : out std_logic_vector(3 downto 0)
       );
 
@@ -1035,7 +1042,10 @@ begin
       cafifo_l1a_dav   => cafifo_l1a_dav_out,
       cafifo_bx_cnt    => cafifo_bx_cnt_out,
 
-      cafifo_wr_addr => cafifo_wr_addr,
+    ext_dcfeb_l1a_cnt1 => ext_dcfeb_l1a_cnt1,
+    dcfeb_l1a_dav1  => dcfeb_l1a_dav1,    
+
+    cafifo_wr_addr => cafifo_wr_addr,
       cafifo_rd_addr => cafifo_rd_addr
       );
 
