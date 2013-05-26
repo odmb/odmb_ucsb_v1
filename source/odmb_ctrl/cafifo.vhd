@@ -57,6 +57,9 @@ entity cafifo is
     cafifo_l1a_dav   : out std_logic_vector(NFEB+2 downto 1);
     cafifo_bx_cnt    : out std_logic_vector(11 downto 0);
 
+    ext_dcfeb_l1a_cnt1 : out std_logic_vector(23 downto 0);
+    dcfeb_l1a_dav1  : out std_logic;    
+    
     cafifo_wr_addr : out std_logic_vector(3 downto 0);
     cafifo_rd_addr : out std_logic_vector(3 downto 0)
     );
@@ -182,7 +185,10 @@ begin
     
   end process;
 
-
+  
+  ext_dcfeb_l1a_cnt1 <= ext_dcfeb_l1a_cnt(1);
+  dcfeb_l1a_dav1 <= dcfeb_l1a_dav(1);
+  
   wren <= l1a;
   rden <= pop;
 
@@ -222,13 +228,14 @@ begin
         when RX_HEADER1 =>
           
           dcfeb_fifo_wren(dcfeb_index) <= '0';
-          dcfeb_l1a_dav(dcfeb_index)   <= '1';
+          dcfeb_l1a_dav(dcfeb_index)   <= '1';  -- mfs: Set 2 cc high to make it more robust (only problem
+                                                -- is if we store 2^16 L1A_CNT in cafifo)
           rx_next_state(dcfeb_index)   <= RX_HEADER2;
           
         when RX_HEADER2 =>
           
           dcfeb_fifo_wren(dcfeb_index) <= '0';
-          dcfeb_l1a_dav(dcfeb_index)   <= '0';
+          dcfeb_l1a_dav(dcfeb_index)   <= '1';
           rx_next_state(dcfeb_index)   <= RX_DW;
           
         when RX_DW =>
@@ -410,11 +417,12 @@ begin
   begin
     if (rst = '1') then
       for index in 0 to FIFO_SIZE-1 loop
-        l1a_dav(index) <= (others => '0');
+        l1a_dav(index) <= (others => '1');  -- mfs: Set to 1 because there are
+                                            -- too many problems with 0
       end loop;
     elsif (l1a_match_wren = '1') then
         l1a_dav(wr_addr_out) <= (others => '0');
-    elsif(falling_edge(dcfebclk)) then
+    elsif(rising_edge(dcfebclk)) then
       for index in 0 to FIFO_SIZE-1 loop
         for dcfeb_index in 1 to NFEB loop
           if (ext_dcfeb_l1a_cnt(dcfeb_index) = l1a_cnt(index)) and (dcfeb_l1a_dav(dcfeb_index) = '1') then
