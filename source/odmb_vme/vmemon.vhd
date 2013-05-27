@@ -22,6 +22,11 @@ entity VMEMON is
 
     DTACK : out std_logic;
 
+    RESYNC   : out std_logic;
+    REPROG_B : out std_logic;
+    TEST_INJ : out std_logic;
+    TEST_PLS : out std_logic;
+
     TP_SEL     : out std_logic_vector(15 downto 0);
     ODMB_CTRL  : out std_logic_vector(15 downto 0);
     DCFEB_CTRL : out std_logic_vector(15 downto 0);
@@ -33,6 +38,17 @@ end VMEMON;
 
 architecture VMEMON_Arch of VMEMON is
 
+  component PULSE_EDGE is
+    port (
+      DOUT   : out std_logic;
+      PULSE1 : out std_logic;
+      CLK    : in  std_logic;
+      RST    : in  std_logic;
+      NPULSE : in  integer;
+      DIN    : in  std_logic
+      );
+  end component;
+
   signal DTACK_INNER : std_logic;
   signal CMDDEV      : unsigned(12 downto 0);
 
@@ -41,13 +57,16 @@ architecture VMEMON_Arch of VMEMON is
   signal W_ODMB_CTRL, R_ODMB_CTRL, READ_ODMB_DATA : std_logic;
   signal W_DCFEB_CTRL, R_DCFEB_CTRL               : std_logic;
 
-  signal ODMB_CTRL_INNER                                    : std_logic_vector(15 downto 0);
-  signal DCFEB_CTRL_INNER                                   : std_logic_vector(15 downto 0);
+  signal ODMB_CTRL_INNER, DCFEB_CTRL_INNER                  : std_logic_vector(15 downto 0) := (others => '0');
   signal D_OUTDATA_1, Q_OUTDATA_1, D_OUTDATA_2, Q_OUTDATA_2 : std_logic;
 
   signal OUT_TP_SEL, TP_SEL_INNER         : std_logic_vector(15 downto 0) := (others => '0');
   signal W_TP_SEL, D_W_TP_SEL, Q_W_TP_SEL : std_logic                     := '0';
   signal R_TP_SEL, D_R_TP_SEL, Q_R_TP_SEL : std_logic                     := '0';
+
+  signal DCFEB_RST                                          : std_logic_vector(15 downto 0) := (others => '0');
+  signal RESYNC_RST, REPROG_RST, TEST_INJ_RST, TEST_PLS_RST : std_logic                     := '0';
+  signal REPROG, DO_RESYNC                                  : std_logic                     := '0';
 
 begin
 
@@ -62,7 +81,7 @@ begin
   R_ODMB_CTRL    <= '1' when (COMMAND(3 downto 0) = "0001" and CMDHIGH = '1')  else '0';
   READ_ODMB_DATA <= '1' when (COMMAND(3 downto 0) = "0010" and CMDHIGH = '1')  else '0';
   W_DCFEB_CTRL   <= '1' when (COMMAND(3 downto 0) = "0100" and CMDHIGH = '1')  else '0';
-  R_DCFEB_CTRL   <= '1' when (COMMAND(3 downto 0) = "0101" and CMDHIGH = '1') else '0';
+  R_DCFEB_CTRL   <= '1' when (COMMAND(3 downto 0) = "0101" and CMDHIGH = '1')  else '0';
 
 
 -- Write TP_SEL
@@ -85,25 +104,38 @@ begin
 
   GEN_ODMB_CTRL : for K in 0 to 15 generate
   begin
-    ODMB_CTRL_K : FDCE port map (ODMB_CTRL_INNER(K) , STROBE , W_ODMB_CTRL , RST , INDATA(K));
+    ODMB_CTRL_K : FDCE port map (ODMB_CTRL_INNER(K), STROBE, W_ODMB_CTRL, RST, INDATA(K));
   end generate GEN_ODMB_CTRL;
 
   ODMB_CTRL <= ODMB_CTRL_INNER;
 
+
   GEN_DCFEB_CTRL : for K in 0 to 15 generate
   begin
-    ODMB_DCFEB_K : FDCE port map (DCFEB_CTRL_INNER(K) , STROBE , W_DCFEB_CTRL , RST , INDATA(K));
+    DCFEB_RST(K) <= REPROG_RST when K = 0 else
+                    RESYNC_RST   when K = 1 else
+                    TEST_INJ_RST when K = 2 else
+                    TEST_PLS_RST when K = 3 else
+                    RST;
+    ODMB_DCFEB_K : FDCE port map (DCFEB_CTRL_INNER(K), STROBE, W_DCFEB_CTRL, DCFEB_RST(K), INDATA(K));
   end generate GEN_DCFEB_CTRL;
-
+  PULSE_REPROG : PULSE_EDGE port map(reprog, reprog_rst, slowclk, rst, 2, dcfeb_ctrl_inner(0));
+  DO_RESYNC  <= dcfeb_ctrl_inner(1) or RST or reprog;
+  PULSE_RESYNC : PULSE_EDGE port map(resync, resync_rst, slowclk, '0', 2, do_resync);
+  PULSE_INJ    : PULSE_EDGE port map(test_inj, test_inj_rst, slowclk, rst, 2, dcfeb_ctrl_inner(2));
+  PULSE_PLS    : PULSE_EDGE port map(test_pls, test_pls_rst, slowclk, rst, 2, dcfeb_ctrl_inner(3));
+  REPROG_B   <= not REPROG;
   DCFEB_CTRL <= DCFEB_CTRL_INNER;
 
   OUTDATA(15 downto 0) <= ODMB_CTRL_INNER(15 downto 0) when (STROBE = '1' and R_ODMB_CTRL = '1') else
                           DCFEB_CTRL_INNER(15 downto 0) when (STROBE = '1' and R_DCFEB_CTRL = '1')   else
-                          OUT_TP_SEL(15 downto 0) when (STROBE = '1' and R_TP_SEL = '1')   else
-                          ODMB_DATA(15 downto 0)        when (STROBE = '1' and READ_ODMB_DATA = '1') else "ZZZZZZZZZZZZZZZZ";
+                          OUT_TP_SEL(15 downto 0)       when (STROBE = '1' and R_TP_SEL = '1')       else
+                          ODMB_DATA(15 downto 0)        when (STROBE = '1' and READ_ODMB_DATA = '1') else
+                          "ZZZZZZZZZZZZZZZZ";
 
 -- bug in uncleaned version?
-  D_OUTDATA_1 <= '1' when ((STROBE = '1') and ((W_ODMB_CTRL = '1') or (R_ODMB_CTRL = '1') or (W_DCFEB_CTRL = '1') or (R_DCFEB_CTRL = '1'))) else '0';
+  D_OUTDATA_1 <= '1' when ((STROBE = '1') and ((W_ODMB_CTRL = '1') or (R_ODMB_CTRL = '1') or (W_DCFEB_CTRL = '1')
+                                               or (R_DCFEB_CTRL = '1'))) else '0';
 
   FD_OUTDATA_1 : FD port map(Q_OUTDATA_1, SLOWCLK, D_OUTDATA_1);
 
