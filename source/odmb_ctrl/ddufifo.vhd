@@ -1,4 +1,3 @@
-
 library IEEE;
 use IEEE.STD_LOGIC_UNSIGNED.all;
 --use IEEE.STD_LOGIC_INTEGER.all;
@@ -35,9 +34,12 @@ architecture ddufifo_architecture of ddufifo is
 
   component PULSE_EDGE is
     port (
-      CLK  : in  std_logic;
-      DIN  : in  std_logic;
-      DOUT : out std_logic
+      DOUT   : out std_logic;
+      PULSE1 : out std_logic;
+      CLK    : in  std_logic;
+      RST    : in  std_logic;
+      NPULSE : in  integer;
+      DIN    : in  std_logic
       );
   end component;
 
@@ -253,7 +255,7 @@ begin
 
 --  FDLD : FD port map(ld_in_q, clk_in, ld_in);
 
-  LD_PULSE_EDGE : pulse_edge port map(clk_in, ld_out, ld_out_pulse);
+  LD_PULSE_EDGE : pulse_edge port map(ld_out_pulse, open, clk_in, rst, 1, ld_out);
 
   pck_cnt : process (ld_in, ld_out, rst, clk_in)
     variable pck_cnt_data : std_logic_vector(7 downto 0);
