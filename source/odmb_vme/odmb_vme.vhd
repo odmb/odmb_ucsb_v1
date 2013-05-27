@@ -62,12 +62,6 @@ entity ODMB_VME is
     mbc_jtag_tdi : out std_logic;
     mbc_jtag_tdo : in  std_logic;
 
---              mbc_rtn_shft_en  : IN STD_LOGIC; -- ????
-
--- Reprogram To DCFEB FPGA (CFEBPRG)
-
-    dl_reprogram : out std_logic_vector(6 downto 0);
-
 -- Done from DCFEB FPGA (CFEBPRG)
 
     ul_done : in std_logic_vector(6 downto 0);
@@ -122,6 +116,12 @@ entity ODMB_VME is
     tfifo_rd_en : out std_logic_vector(7 downto 0);
     tfifo_sel   : out std_logic_vector(7 downto 0);
     tfifo_mode  : out std_logic;
+
+-- From VMEMON
+    RESYNC   : out std_logic;
+    REPROG_B : out std_logic;
+    TEST_INJ : out std_logic;
+    TEST_PLS : out std_logic;
 
     tp_sel     : out std_logic_vector(15 downto 0);
     odmb_ctrl  : out std_logic_vector(15 downto 0);
@@ -209,6 +209,11 @@ architecture ODMB_VME_architecture of ODMB_VME is
       OUTDATA : out std_logic_vector(15 downto 0);
 
       DTACK : out std_logic;
+
+      RESYNC   : out std_logic;
+      REPROG_B : out std_logic;
+      TEST_INJ : out std_logic;
+      TEST_PLS : out std_logic;
 
       TP_SEL     : out std_logic_vector(15 downto 0);
       ODMB_CTRL  : out std_logic_vector(15 downto 0);
@@ -684,7 +689,7 @@ begin
     port map (
 
       CLK     => clk,
-      DDUCLK  => dduclk,  -- Ideally, it'd be DDUCLK
+      DDUCLK  => dduclk,
       SLOWCLK => clk_s2,
       RST     => rst,
 
@@ -722,7 +727,12 @@ begin
 
       DTACK => vme_dtack_b,
 
-      TP_SEL  => tp_sel,
+      RESYNC   => resync,
+      REPROG_B => reprog_b,
+      TEST_INJ => test_inj,
+      TEST_PLS => test_pls,
+
+      TP_SEL     => tp_sel,
       ODMB_CTRL  => odmb_ctrl,
       DCFEB_CTRL => dcfeb_ctrl,
       ODMB_DATA  => odmb_data
@@ -811,9 +821,6 @@ begin
 
   fifo_in <= (others => '0');
 
--- reprogram To DCFEB FPGA (CFEBPRG)
-
-  dl_reprogram <= "0000000";
 
 end ODMB_VME_architecture;
 

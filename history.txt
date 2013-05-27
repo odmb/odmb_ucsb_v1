@@ -6,6 +6,11 @@
 =                                                                    =
 ======================================================================
 
+V01-09: 26 May 2013, Manuel
+--------------------------------
+Added functionality to send pulses to RESYNC and REPROG.
+KILL now turns off the data for the given DCFEBs.
+
 V01-08: 25 May 2013, Manuel
 --------------------------------
 Fixed CAFIFO so that now we are able to transmit real DCFEB data to
