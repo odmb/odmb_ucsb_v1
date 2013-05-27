@@ -366,7 +366,7 @@ begin
   begin
     if (rst = '1') then
       for index in 0 to FIFO_SIZE-1 loop
-        l1a_cnt(index) <= (others => '0');
+        l1a_cnt(index) <= (others => '1');
       end loop;
     elsif rising_edge(clk) then
       if (l1a_cnt_wren = '1') then
@@ -417,7 +417,7 @@ begin
   begin
     if (rst = '1') then
       for index in 0 to FIFO_SIZE-1 loop
-        l1a_dav(index) <= (others => '1');  -- mfs: Set to 1 because there are
+        l1a_dav(index) <= (others => '0');  -- mfs: Set to 1 because there are
                                             -- too many problems with 0
       end loop;
     elsif (l1a_match_wren = '1') then
